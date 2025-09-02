@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_Production_Planning 
    BackColor       =   &H00FDDFE3&
@@ -18,6 +18,7 @@ Begin VB.Form Frm_Production_Planning
       Strikethrough   =   0   'False
    EndProperty
    Icon            =   "Frm_Production_Planning.frx":0000
+   LockControls    =   -1  'True
    ScaleHeight     =   10950
    ScaleWidth      =   15045
    StartUpPosition =   3  'Windows Default
@@ -29,8 +30,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   3
       Left            =   9150
       Style           =   1  'Graphical
-      TabIndex        =   87
-      Top             =   10050
+      TabIndex        =   88
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.TextBox Text1 
@@ -39,8 +40,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   77
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   81
-      Top             =   8850
+      TabIndex        =   82
+      Top             =   9210
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -49,8 +50,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   76
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   80
-      Top             =   8850
+      TabIndex        =   81
+      Top             =   9210
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -59,8 +60,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   75
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   79
-      Top             =   8850
+      TabIndex        =   80
+      Top             =   9210
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -69,8 +70,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   74
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   78
-      Top             =   8850
+      TabIndex        =   79
+      Top             =   9210
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -79,8 +80,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   73
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   77
-      Top             =   8850
+      TabIndex        =   78
+      Top             =   9210
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -89,8 +90,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   72
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   76
-      Top             =   8850
+      TabIndex        =   77
+      Top             =   9210
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -99,8 +100,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   71
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   75
-      Top             =   8310
+      TabIndex        =   76
+      Top             =   8670
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -109,8 +110,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   70
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   74
-      Top             =   8310
+      TabIndex        =   75
+      Top             =   8670
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -119,8 +120,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   69
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   73
-      Top             =   8310
+      TabIndex        =   74
+      Top             =   8670
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -129,8 +130,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   68
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   72
-      Top             =   8310
+      TabIndex        =   73
+      Top             =   8670
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -139,8 +140,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   67
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   71
-      Top             =   8310
+      TabIndex        =   72
+      Top             =   8670
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -149,8 +150,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   66
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   70
-      Top             =   8310
+      TabIndex        =   71
+      Top             =   8670
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -159,8 +160,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   65
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   69
-      Top             =   7800
+      TabIndex        =   70
+      Top             =   8160
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -169,8 +170,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   64
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   68
-      Top             =   7800
+      TabIndex        =   69
+      Top             =   8160
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -179,8 +180,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   63
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   67
-      Top             =   7800
+      TabIndex        =   68
+      Top             =   8160
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -189,8 +190,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   62
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   66
-      Top             =   7800
+      TabIndex        =   67
+      Top             =   8160
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -199,8 +200,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   61
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   65
-      Top             =   7800
+      TabIndex        =   66
+      Top             =   8160
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -209,8 +210,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   60
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   64
-      Top             =   7800
+      TabIndex        =   65
+      Top             =   8160
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -219,8 +220,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   59
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   63
-      Top             =   7290
+      TabIndex        =   64
+      Top             =   7650
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -229,8 +230,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   58
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   62
-      Top             =   7290
+      TabIndex        =   63
+      Top             =   7650
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -239,8 +240,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   57
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   61
-      Top             =   7290
+      TabIndex        =   62
+      Top             =   7650
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -249,8 +250,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   56
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   60
-      Top             =   7290
+      TabIndex        =   61
+      Top             =   7650
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -259,8 +260,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   55
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   59
-      Top             =   7290
+      TabIndex        =   60
+      Top             =   7650
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -269,8 +270,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   54
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   58
-      Top             =   7290
+      TabIndex        =   59
+      Top             =   7650
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -279,8 +280,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   53
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   57
-      Top             =   6720
+      TabIndex        =   58
+      Top             =   7080
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -289,8 +290,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   52
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   56
-      Top             =   6720
+      TabIndex        =   57
+      Top             =   7080
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -299,8 +300,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   51
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   55
-      Top             =   6720
+      TabIndex        =   56
+      Top             =   7080
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -309,8 +310,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   50
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   54
-      Top             =   6720
+      TabIndex        =   55
+      Top             =   7080
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -319,8 +320,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   49
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   53
-      Top             =   6720
+      TabIndex        =   54
+      Top             =   7080
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -329,8 +330,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   48
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   52
-      Top             =   6720
+      TabIndex        =   53
+      Top             =   7080
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -339,8 +340,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   47
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   51
-      Top             =   6210
+      TabIndex        =   52
+      Top             =   6570
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -349,8 +350,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   46
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   50
-      Top             =   6210
+      TabIndex        =   51
+      Top             =   6570
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -359,8 +360,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   45
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   49
-      Top             =   6210
+      TabIndex        =   50
+      Top             =   6570
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -369,8 +370,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   44
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   48
-      Top             =   6210
+      TabIndex        =   49
+      Top             =   6570
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -379,8 +380,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   43
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   47
-      Top             =   6210
+      TabIndex        =   48
+      Top             =   6570
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -389,8 +390,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   42
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   46
-      Top             =   6210
+      TabIndex        =   47
+      Top             =   6570
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -399,8 +400,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   41
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   45
-      Top             =   5640
+      TabIndex        =   46
+      Top             =   6000
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -409,8 +410,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   40
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   44
-      Top             =   5640
+      TabIndex        =   45
+      Top             =   6000
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -419,8 +420,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   39
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   43
-      Top             =   5640
+      TabIndex        =   44
+      Top             =   6000
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -429,8 +430,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   38
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   42
-      Top             =   5640
+      TabIndex        =   43
+      Top             =   6000
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -439,8 +440,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   37
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   41
-      Top             =   5640
+      TabIndex        =   42
+      Top             =   6000
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -449,8 +450,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   36
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   40
-      Top             =   5640
+      TabIndex        =   41
+      Top             =   6000
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -459,8 +460,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   35
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   39
-      Top             =   5160
+      TabIndex        =   40
+      Top             =   5520
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -469,8 +470,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   34
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   38
-      Top             =   5160
+      TabIndex        =   39
+      Top             =   5520
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -479,8 +480,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   33
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   37
-      Top             =   5160
+      TabIndex        =   38
+      Top             =   5520
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -489,8 +490,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   32
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   36
-      Top             =   5160
+      TabIndex        =   37
+      Top             =   5520
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -499,8 +500,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   31
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   35
-      Top             =   5160
+      TabIndex        =   36
+      Top             =   5520
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -509,8 +510,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   30
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   34
-      Top             =   5160
+      TabIndex        =   35
+      Top             =   5520
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -519,8 +520,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   29
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   33
-      Top             =   4590
+      TabIndex        =   34
+      Top             =   4950
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -529,8 +530,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   28
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   32
-      Top             =   4590
+      TabIndex        =   33
+      Top             =   4950
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -539,8 +540,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   27
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   31
-      Top             =   4590
+      TabIndex        =   32
+      Top             =   4950
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -549,8 +550,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   26
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   30
-      Top             =   4590
+      TabIndex        =   31
+      Top             =   4950
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -559,8 +560,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   25
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   29
-      Top             =   4590
+      TabIndex        =   30
+      Top             =   4950
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -569,8 +570,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   24
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   28
-      Top             =   4590
+      TabIndex        =   29
+      Top             =   4950
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -579,8 +580,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   23
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   27
-      Top             =   4080
+      TabIndex        =   28
+      Top             =   4440
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -589,8 +590,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   22
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   26
-      Top             =   4080
+      TabIndex        =   27
+      Top             =   4440
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -599,8 +600,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   21
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   25
-      Top             =   4080
+      TabIndex        =   26
+      Top             =   4440
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -609,8 +610,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   20
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   24
-      Top             =   4080
+      TabIndex        =   25
+      Top             =   4440
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -619,8 +620,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   19
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   23
-      Top             =   4080
+      TabIndex        =   24
+      Top             =   4440
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -629,8 +630,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   18
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   22
-      Top             =   4080
+      TabIndex        =   23
+      Top             =   4440
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -639,8 +640,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   17
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   21
-      Top             =   3510
+      TabIndex        =   22
+      Top             =   3870
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -649,8 +650,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   16
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   20
-      Top             =   3510
+      TabIndex        =   21
+      Top             =   3870
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -659,8 +660,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   15
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   19
-      Top             =   3510
+      TabIndex        =   20
+      Top             =   3870
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -669,8 +670,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   14
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   18
-      Top             =   3510
+      TabIndex        =   19
+      Top             =   3870
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -679,8 +680,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   13
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   17
-      Top             =   3510
+      TabIndex        =   18
+      Top             =   3870
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -689,8 +690,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   12
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   16
-      Top             =   3510
+      TabIndex        =   17
+      Top             =   3870
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -699,8 +700,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   11
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   15
-      Top             =   2970
+      TabIndex        =   16
+      Top             =   3330
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -709,8 +710,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   10
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   14
-      Top             =   2970
+      TabIndex        =   15
+      Top             =   3330
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -719,8 +720,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   9
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   13
-      Top             =   2970
+      TabIndex        =   14
+      Top             =   3330
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -729,8 +730,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   8
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   12
-      Top             =   2970
+      TabIndex        =   13
+      Top             =   3330
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -739,8 +740,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   7
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   11
-      Top             =   2970
+      TabIndex        =   12
+      Top             =   3330
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -749,8 +750,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   6
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   10
-      Top             =   2970
+      TabIndex        =   11
+      Top             =   3330
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -759,8 +760,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   5
       Left            =   13080
       MaxLength       =   16
-      TabIndex        =   9
-      Top             =   2400
+      TabIndex        =   10
+      Top             =   2760
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -769,8 +770,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   4
       Left            =   11400
       MaxLength       =   16
-      TabIndex        =   8
-      Top             =   2400
+      TabIndex        =   9
+      Top             =   2760
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -779,8 +780,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   3
       Left            =   9720
       MaxLength       =   16
-      TabIndex        =   7
-      Top             =   2400
+      TabIndex        =   8
+      Top             =   2760
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -789,8 +790,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   2
       Left            =   8040
       MaxLength       =   16
-      TabIndex        =   6
-      Top             =   2400
+      TabIndex        =   7
+      Top             =   2760
       Width           =   1455
    End
    Begin VB.TextBox Text1 
@@ -799,8 +800,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   1
       Left            =   6360
       MaxLength       =   16
-      TabIndex        =   5
-      Top             =   2400
+      TabIndex        =   6
+      Top             =   2760
       Width           =   1455
    End
    Begin VB.CommandButton cmdAction 
@@ -810,8 +811,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   1
       Left            =   10410
       Style           =   1  'Graphical
-      TabIndex        =   88
-      Top             =   10050
+      TabIndex        =   89
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.CommandButton cmdAction 
@@ -821,8 +822,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   2
       Left            =   11670
       Style           =   1  'Graphical
-      TabIndex        =   82
-      Top             =   10050
+      TabIndex        =   83
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.CommandButton cmdAction 
@@ -832,8 +833,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   0
       Left            =   330
       Style           =   1  'Graphical
-      TabIndex        =   89
-      Top             =   10050
+      TabIndex        =   90
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.CommandButton cmdMove 
@@ -843,8 +844,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   3
       Left            =   7500
       Style           =   1  'Graphical
-      TabIndex        =   86
-      Top             =   10050
+      TabIndex        =   87
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.CommandButton cmdMove 
@@ -854,8 +855,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   0
       Left            =   3630
       Style           =   1  'Graphical
-      TabIndex        =   83
-      Top             =   10050
+      TabIndex        =   84
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.CommandButton cmdMove 
@@ -865,8 +866,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   1
       Left            =   4920
       Style           =   1  'Graphical
-      TabIndex        =   84
-      Top             =   10050
+      TabIndex        =   85
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.CommandButton cmdMove 
@@ -876,8 +877,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   2
       Left            =   6210
       Style           =   1  'Graphical
-      TabIndex        =   85
-      Top             =   10050
+      TabIndex        =   86
+      Top             =   10410
       Width           =   1200
    End
    Begin VB.Frame Frame2 
@@ -893,8 +894,8 @@ Begin VB.Form Frm_Production_Planning
       EndProperty
       Height          =   615
       Left            =   330
-      TabIndex        =   132
-      Top             =   9360
+      TabIndex        =   133
+      Top             =   9720
       Width           =   12540
       Begin VB.Label lblerror 
          Alignment       =   2  'Center
@@ -911,7 +912,7 @@ Begin VB.Form Frm_Production_Planning
          ForeColor       =   &H00FF00FF&
          Height          =   285
          Left            =   90
-         TabIndex        =   133
+         TabIndex        =   134
          Top             =   180
          Width           =   12255
       End
@@ -922,8 +923,8 @@ Begin VB.Form Frm_Production_Planning
       Index           =   0
       Left            =   4710
       MaxLength       =   16
-      TabIndex        =   4
-      Top             =   2400
+      TabIndex        =   5
+      Top             =   2760
       Width           =   1455
    End
    Begin VB.Frame Frame1 
@@ -937,42 +938,85 @@ Begin VB.Form Frm_Production_Planning
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   1215
-      Left            =   330
-      TabIndex        =   91
+      Height          =   1620
+      Left            =   315
+      TabIndex        =   92
       Top             =   630
       Width           =   14505
+      Begin VB.TextBox TxtCompanyName 
+         BackColor       =   &H00FDDFE3&
+         BorderStyle     =   0  'None
+         Height          =   255
+         Left            =   3630
+         Locked          =   -1  'True
+         TabIndex        =   141
+         TabStop         =   0   'False
+         Top             =   270
+         Width           =   6615
+      End
       Begin VB.CommandButton Command1 
          Caption         =   "..."
          Height          =   300
-         Left            =   4110
-         TabIndex        =   139
-         Top             =   750
+         Left            =   4155
+         TabIndex        =   140
+         Top             =   1155
          Width           =   300
       End
       Begin VB.TextBox Text2 
          BackColor       =   &H00FDDFE3&
          BorderStyle     =   0  'None
          Height          =   225
-         Left            =   4500
-         TabIndex        =   137
+         Left            =   4545
+         TabIndex        =   138
          Text            =   "Text2"
-         Top             =   780
+         Top             =   1185
          Width           =   2715
       End
       Begin MSComCtl2.DTPicker Mydate 
          Height          =   315
-         Left            =   8130
-         TabIndex        =   2
-         Top             =   750
+         Left            =   8175
+         TabIndex        =   3
+         Top             =   1155
          Width           =   1335
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "MMM yyyy"
-         Format          =   287571971
+         Format          =   59047939
          UpDown          =   -1  'True
          CurrentDate     =   37867
+      End
+      Begin VB.Label Label4 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         Height          =   255
+         Left            =   135
+         TabIndex        =   142
+         Top             =   330
+         Width           =   1635
+      End
+      Begin MSForms.ComboBox TxtCc 
+         Height          =   345
+         Left            =   2130
+         TabIndex        =   0
+         Top             =   270
+         Width           =   1335
+         VariousPropertyBits=   746604571
+         MaxLength       =   10
+         DisplayStyle    =   3
+         Size            =   "2355;609"
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Line Line2 
+         X1              =   3630
+         X2              =   10230
+         Y1              =   630
+         Y2              =   630
       End
       Begin VB.Label Label3 
          AutoSize        =   -1  'True
@@ -988,9 +1032,9 @@ Begin VB.Form Frm_Production_Planning
          EndProperty
          ForeColor       =   &H00800000&
          Height          =   195
-         Left            =   11760
-         TabIndex        =   136
-         Top             =   960
+         Left            =   11805
+         TabIndex        =   137
+         Top             =   1365
          Visible         =   0   'False
          Width           =   2400
       End
@@ -1000,34 +1044,34 @@ Begin VB.Form Frm_Production_Planning
          Caption         =   "Last Update"
          ForeColor       =   &H00000000&
          Height          =   195
-         Left            =   13320
-         TabIndex        =   135
-         Top             =   870
+         Left            =   13365
+         TabIndex        =   136
+         Top             =   1275
          Visible         =   0   'False
          Width           =   1005
       End
       Begin VB.Line Line1 
          Index           =   2
-         X1              =   4530
-         X2              =   7290
-         Y1              =   1020
-         Y2              =   1020
+         X1              =   4575
+         X2              =   7335
+         Y1              =   1425
+         Y2              =   1425
       End
       Begin VB.Label lbldesc 
          BackStyle       =   0  'Transparent
          Caption         =   "xxxxxxxxxxxxxxxxxxxxxxxxxx"
          Height          =   195
          Index           =   2
-         Left            =   4500
-         TabIndex        =   98
-         Top             =   780
+         Left            =   4545
+         TabIndex        =   99
+         Top             =   1185
          Width           =   2760
       End
       Begin MSForms.ComboBox CboPart 
          Height          =   315
-         Left            =   2100
-         TabIndex        =   1
-         Top             =   750
+         Left            =   2145
+         TabIndex        =   2
+         Top             =   1155
          Width           =   1965
          VariousPropertyBits=   746604571
          MaxLength       =   17
@@ -1046,9 +1090,9 @@ Begin VB.Form Frm_Production_Planning
          Caption         =   "Product Code/Part No."
          Height          =   195
          Index           =   6
-         Left            =   90
-         TabIndex        =   97
-         Top             =   855
+         Left            =   135
+         TabIndex        =   98
+         Top             =   1260
          Width           =   1920
       End
       Begin VB.Label lbldesc 
@@ -1056,23 +1100,23 @@ Begin VB.Form Frm_Production_Planning
          Caption         =   "xxxxxxxxxxxxxxxxxxxxxxxxxx"
          Height          =   195
          Index           =   1
-         Left            =   11790
-         TabIndex        =   96
-         Top             =   780
+         Left            =   11835
+         TabIndex        =   97
+         Top             =   1185
          Width           =   2190
       End
       Begin VB.Line Line1 
          Index           =   1
-         X1              =   11760
-         X2              =   13950
-         Y1              =   1020
-         Y2              =   1020
+         X1              =   11805
+         X2              =   13995
+         Y1              =   1425
+         Y2              =   1425
       End
       Begin MSForms.ComboBox cbogroup 
          Height          =   315
-         Left            =   10590
-         TabIndex        =   3
-         Top             =   750
+         Left            =   10635
+         TabIndex        =   4
+         Top             =   1155
          Width           =   1095
          VariousPropertyBits=   746604571
          DisplayStyle    =   3
@@ -1086,9 +1130,9 @@ Begin VB.Form Frm_Production_Planning
       End
       Begin MSForms.ComboBox cbodealer 
          Height          =   315
-         Left            =   2100
-         TabIndex        =   0
-         Top             =   300
+         Left            =   2145
+         TabIndex        =   1
+         Top             =   705
          Width           =   1335
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -1108,8 +1152,8 @@ Begin VB.Form Frm_Production_Planning
          Height          =   195
          Index           =   0
          Left            =   135
-         TabIndex        =   95
-         Top             =   330
+         TabIndex        =   96
+         Top             =   810
          Width           =   1140
       End
       Begin VB.Label Label1 
@@ -1118,9 +1162,9 @@ Begin VB.Form Frm_Production_Planning
          Caption         =   "Period"
          Height          =   195
          Index           =   2
-         Left            =   7440
-         TabIndex        =   94
-         Top             =   810
+         Left            =   7485
+         TabIndex        =   95
+         Top             =   1215
          Width           =   540
       End
       Begin VB.Label Label1 
@@ -1129,9 +1173,9 @@ Begin VB.Form Frm_Production_Planning
          Caption         =   "Group Cls"
          Height          =   195
          Index           =   3
-         Left            =   9630
-         TabIndex        =   93
-         Top             =   810
+         Left            =   9675
+         TabIndex        =   94
+         Top             =   1215
          Width           =   855
       End
       Begin VB.Label lbldesc 
@@ -1139,23 +1183,23 @@ Begin VB.Form Frm_Production_Planning
          Caption         =   "xxxxxxxxxxxxxxxxxxxxxxxxxx"
          Height          =   195
          Index           =   0
-         Left            =   3600
-         TabIndex        =   92
-         Top             =   330
+         Left            =   3645
+         TabIndex        =   93
+         Top             =   735
          Width           =   9240
       End
       Begin VB.Line Line1 
          Index           =   0
-         X1              =   3600
-         X2              =   12840
-         Y1              =   540
-         Y2              =   540
+         X1              =   3645
+         X2              =   12885
+         Y1              =   945
+         Y2              =   945
       End
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   435
       Left            =   12990
-      TabIndex        =   138
+      TabIndex        =   139
       Top             =   150
       Width           =   1905
       _ExtentX        =   3360
@@ -1177,86 +1221,86 @@ Begin VB.Form Frm_Production_Planning
       ForeColor       =   &H00FF00FF&
       Height          =   195
       Left            =   13560
-      TabIndex        =   134
-      Top             =   9450
+      TabIndex        =   135
+      Top             =   9810
       Width           =   1095
    End
    Begin VB.Line Line1 
       Index           =   14
       X1              =   4440
       X2              =   14850
-      Y1              =   8730
-      Y2              =   8730
+      Y1              =   9090
+      Y2              =   9090
    End
    Begin VB.Line Line1 
       Index           =   13
       X1              =   4440
       X2              =   14850
-      Y1              =   8190
-      Y2              =   8190
+      Y1              =   8550
+      Y2              =   8550
    End
    Begin VB.Line Line1 
       Index           =   12
       X1              =   4440
       X2              =   14850
-      Y1              =   7680
-      Y2              =   7680
+      Y1              =   8040
+      Y2              =   8040
    End
    Begin VB.Line Line1 
       Index           =   11
       X1              =   4440
       X2              =   14850
-      Y1              =   7140
-      Y2              =   7140
+      Y1              =   7500
+      Y2              =   7500
    End
    Begin VB.Line Line1 
       Index           =   10
       X1              =   4440
       X2              =   14850
-      Y1              =   6630
-      Y2              =   6630
+      Y1              =   6990
+      Y2              =   6990
    End
    Begin VB.Line Line1 
       Index           =   9
       X1              =   4440
       X2              =   14850
-      Y1              =   6090
-      Y2              =   6090
+      Y1              =   6450
+      Y2              =   6450
    End
    Begin VB.Line Line1 
       Index           =   8
       X1              =   4440
       X2              =   14850
-      Y1              =   5550
-      Y2              =   5550
+      Y1              =   5910
+      Y2              =   5910
    End
    Begin VB.Line Line1 
       Index           =   7
       X1              =   4440
       X2              =   14850
-      Y1              =   5010
-      Y2              =   5010
+      Y1              =   5370
+      Y2              =   5370
    End
    Begin VB.Line Line1 
       Index           =   6
       X1              =   4440
       X2              =   14850
-      Y1              =   4470
-      Y2              =   4470
+      Y1              =   4830
+      Y2              =   4830
    End
    Begin VB.Line Line1 
       Index           =   5
       X1              =   4440
       X2              =   14850
-      Y1              =   3930
-      Y2              =   3930
+      Y1              =   4290
+      Y2              =   4290
    End
    Begin VB.Line Line1 
       Index           =   4
       X1              =   4440
       X2              =   14880
-      Y1              =   3390
-      Y2              =   3390
+      Y1              =   3750
+      Y2              =   3750
    End
    Begin VB.Shape Shape1 
       BackColor       =   &H0080C0FF&
@@ -1264,7 +1308,7 @@ Begin VB.Form Frm_Production_Planning
       Height          =   7365
       Index           =   2
       Left            =   4350
-      Top             =   1920
+      Top             =   2280
       Width           =   90
    End
    Begin VB.Label Descitem 
@@ -1274,8 +1318,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   12
       Left            =   420
-      TabIndex        =   131
-      Top             =   9000
+      TabIndex        =   132
+      Top             =   9360
       Width           =   960
    End
    Begin VB.Label lblitem 
@@ -1285,8 +1329,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   12
       Left            =   420
-      TabIndex        =   130
-      Top             =   8790
+      TabIndex        =   131
+      Top             =   9150
       Width           =   3450
    End
    Begin VB.Shape Shape2 
@@ -1295,7 +1339,7 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   11
       Left            =   300
-      Top             =   8700
+      Top             =   9060
       Width           =   4065
    End
    Begin VB.Label Descitem 
@@ -1305,8 +1349,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   11
       Left            =   420
-      TabIndex        =   129
-      Top             =   8460
+      TabIndex        =   130
+      Top             =   8820
       Width           =   960
    End
    Begin VB.Label lblitem 
@@ -1316,8 +1360,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   11
       Left            =   420
-      TabIndex        =   128
-      Top             =   8250
+      TabIndex        =   129
+      Top             =   8610
       Width           =   3450
    End
    Begin VB.Shape Shape2 
@@ -1326,7 +1370,7 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   10
       Left            =   300
-      Top             =   8160
+      Top             =   8520
       Width           =   4095
    End
    Begin VB.Label Descitem 
@@ -1336,8 +1380,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   10
       Left            =   420
-      TabIndex        =   127
-      Top             =   7920
+      TabIndex        =   128
+      Top             =   8280
       Width           =   960
    End
    Begin VB.Label lblitem 
@@ -1347,8 +1391,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   10
       Left            =   420
-      TabIndex        =   126
-      Top             =   7710
+      TabIndex        =   127
+      Top             =   8070
       Width           =   3450
    End
    Begin VB.Shape Shape2 
@@ -1357,29 +1401,29 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   9
       Left            =   300
-      Top             =   7650
+      Top             =   8010
       Width           =   4065
    End
    Begin VB.Label Descitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Description"
+      Height          =   195
+      Index           =   9
+      Left            =   420
+      TabIndex        =   126
+      Top             =   7770
+      Width           =   960
+   End
+   Begin VB.Label lblitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Part No./SEBANGO"
       Height          =   195
       Index           =   9
       Left            =   420
       TabIndex        =   125
-      Top             =   7410
-      Width           =   960
-   End
-   Begin VB.Label lblitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Part No./SEBANGO"
-      Height          =   195
-      Index           =   9
-      Left            =   420
-      TabIndex        =   124
-      Top             =   7200
+      Top             =   7560
       Width           =   3450
    End
    Begin VB.Shape Shape2 
@@ -1388,29 +1432,29 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   8
       Left            =   300
-      Top             =   7110
+      Top             =   7470
       Width           =   4065
    End
    Begin VB.Label Descitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Description"
+      Height          =   195
+      Index           =   8
+      Left            =   420
+      TabIndex        =   124
+      Top             =   7230
+      Width           =   960
+   End
+   Begin VB.Label lblitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Part No./SEBANGO"
       Height          =   195
       Index           =   8
       Left            =   420
       TabIndex        =   123
-      Top             =   6870
-      Width           =   960
-   End
-   Begin VB.Label lblitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Part No./SEBANGO"
-      Height          =   195
-      Index           =   8
-      Left            =   420
-      TabIndex        =   122
-      Top             =   6660
+      Top             =   7020
       Width           =   3450
    End
    Begin VB.Shape Shape2 
@@ -1419,29 +1463,29 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   7
       Left            =   300
-      Top             =   6600
+      Top             =   6960
       Width           =   4065
    End
    Begin VB.Label Descitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Description"
+      Height          =   195
+      Index           =   7
+      Left            =   420
+      TabIndex        =   122
+      Top             =   6720
+      Width           =   960
+   End
+   Begin VB.Label lblitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Part No./SEBANGO"
       Height          =   195
       Index           =   7
       Left            =   420
       TabIndex        =   121
-      Top             =   6360
-      Width           =   960
-   End
-   Begin VB.Label lblitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Part No./SEBANGO"
-      Height          =   195
-      Index           =   7
-      Left            =   420
-      TabIndex        =   120
-      Top             =   6150
+      Top             =   6510
       Width           =   3450
    End
    Begin VB.Shape Shape2 
@@ -1450,29 +1494,29 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   6
       Left            =   300
-      Top             =   6060
+      Top             =   6420
       Width           =   4065
    End
    Begin VB.Label Descitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Description"
+      Height          =   195
+      Index           =   6
+      Left            =   420
+      TabIndex        =   120
+      Top             =   6180
+      Width           =   960
+   End
+   Begin VB.Label lblitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Part No./SEBANGO"
       Height          =   195
       Index           =   6
       Left            =   420
       TabIndex        =   119
-      Top             =   5820
-      Width           =   960
-   End
-   Begin VB.Label lblitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Part No./SEBANGO"
-      Height          =   195
-      Index           =   6
-      Left            =   420
-      TabIndex        =   118
-      Top             =   5610
+      Top             =   5970
       Width           =   3450
    End
    Begin VB.Shape Shape2 
@@ -1481,51 +1525,51 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   5
       Left            =   300
-      Top             =   5520
+      Top             =   5880
       Width           =   4065
    End
    Begin VB.Label Descitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Description"
+      Height          =   195
+      Index           =   5
+      Left            =   390
+      TabIndex        =   118
+      Top             =   5640
+      Width           =   960
+   End
+   Begin VB.Label lblitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Part No./SEBANGO"
       Height          =   195
       Index           =   5
       Left            =   390
       TabIndex        =   117
-      Top             =   5280
-      Width           =   960
-   End
-   Begin VB.Label lblitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Part No./SEBANGO"
-      Height          =   195
-      Index           =   5
-      Left            =   390
-      TabIndex        =   116
-      Top             =   5070
+      Top             =   5430
       Width           =   3450
    End
    Begin VB.Label lblitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Part No./SEBANGO"
+      Height          =   195
+      Index           =   4
+      Left            =   420
+      TabIndex        =   116
+      Top             =   4890
+      Width           =   3450
+   End
+   Begin VB.Label Descitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Description"
       Height          =   195
       Index           =   4
       Left            =   420
       TabIndex        =   115
-      Top             =   4530
-      Width           =   3450
-   End
-   Begin VB.Label Descitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Description"
-      Height          =   195
-      Index           =   4
-      Left            =   420
-      TabIndex        =   114
-      Top             =   4740
+      Top             =   5100
       Width           =   960
    End
    Begin VB.Shape Shape2 
@@ -1534,29 +1578,29 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   4
       Left            =   300
-      Top             =   4980
+      Top             =   5340
       Width           =   4065
    End
    Begin VB.Label lblitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Part No./SEBANGO"
+      Height          =   195
+      Index           =   3
+      Left            =   420
+      TabIndex        =   114
+      Top             =   4350
+      Width           =   3450
+   End
+   Begin VB.Label Descitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Description"
       Height          =   195
       Index           =   3
       Left            =   420
       TabIndex        =   113
-      Top             =   3990
-      Width           =   3450
-   End
-   Begin VB.Label Descitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Description"
-      Height          =   195
-      Index           =   3
-      Left            =   420
-      TabIndex        =   112
-      Top             =   4200
+      Top             =   4560
       Width           =   960
    End
    Begin VB.Shape Shape2 
@@ -1565,29 +1609,29 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   3
       Left            =   300
-      Top             =   4440
+      Top             =   4800
       Width           =   4065
    End
    Begin VB.Label lblitem 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
       Caption         =   "Part No./SEBANGO"
+      Height          =   195
+      Index           =   2
+      Left            =   420
+      TabIndex        =   112
+      Top             =   3810
+      Width           =   3450
+   End
+   Begin VB.Label Descitem 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Description"
       Height          =   195
       Index           =   2
       Left            =   420
       TabIndex        =   111
-      Top             =   3450
-      Width           =   3450
-   End
-   Begin VB.Label Descitem 
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "Description"
-      Height          =   195
-      Index           =   2
-      Left            =   420
-      TabIndex        =   110
-      Top             =   3660
+      Top             =   4020
       Width           =   960
    End
    Begin VB.Shape Shape2 
@@ -1596,7 +1640,7 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   2
       Left            =   300
-      Top             =   3900
+      Top             =   4260
       Width           =   4065
    End
    Begin VB.Label lblitem 
@@ -1606,8 +1650,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   1
       Left            =   420
-      TabIndex        =   109
-      Top             =   2910
+      TabIndex        =   110
+      Top             =   3270
       Width           =   3450
    End
    Begin VB.Label Descitem 
@@ -1617,8 +1661,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   1
       Left            =   420
-      TabIndex        =   108
-      Top             =   3120
+      TabIndex        =   109
+      Top             =   3480
       Width           =   960
    End
    Begin VB.Shape Shape2 
@@ -1627,15 +1671,15 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   1
       Left            =   300
-      Top             =   3360
+      Top             =   3720
       Width           =   4065
    End
    Begin VB.Line Line1 
       Index           =   3
       X1              =   4410
       X2              =   14820
-      Y1              =   2820
-      Y2              =   2820
+      Y1              =   3180
+      Y2              =   3180
    End
    Begin VB.Shape Shape2 
       BackStyle       =   1  'Opaque
@@ -1643,7 +1687,7 @@ Begin VB.Form Frm_Production_Planning
       Height          =   45
       Index           =   0
       Left            =   300
-      Top             =   2790
+      Top             =   3150
       Width           =   4065
    End
    Begin VB.Label Descitem 
@@ -1653,8 +1697,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   0
       Left            =   420
-      TabIndex        =   107
-      Top             =   2550
+      TabIndex        =   108
+      Top             =   2910
       Width           =   960
    End
    Begin VB.Label lblitem 
@@ -1664,8 +1708,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   0
       Left            =   420
-      TabIndex        =   106
-      Top             =   2340
+      TabIndex        =   107
+      Top             =   2700
       Width           =   3450
    End
    Begin VB.Label lblmonth 
@@ -1675,8 +1719,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   5
       Left            =   13080
-      TabIndex        =   105
-      Top             =   2010
+      TabIndex        =   106
+      Top             =   2370
       Width           =   390
    End
    Begin VB.Label lblmonth 
@@ -1686,8 +1730,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   4
       Left            =   11400
-      TabIndex        =   104
-      Top             =   2010
+      TabIndex        =   105
+      Top             =   2370
       Width           =   345
    End
    Begin VB.Label lblmonth 
@@ -1697,8 +1741,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   3
       Left            =   9720
-      TabIndex        =   103
-      Top             =   2010
+      TabIndex        =   104
+      Top             =   2370
       Width           =   390
    End
    Begin VB.Label lblmonth 
@@ -1708,8 +1752,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   2
       Left            =   8040
-      TabIndex        =   102
-      Top             =   2010
+      TabIndex        =   103
+      Top             =   2370
       Width           =   510
    End
    Begin VB.Label lblmonth 
@@ -1719,8 +1763,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   1
       Left            =   6360
-      TabIndex        =   101
-      Top             =   2010
+      TabIndex        =   102
+      Top             =   2370
       Width           =   765
    End
    Begin VB.Label lblmonth 
@@ -1730,8 +1774,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   0
       Left            =   4710
-      TabIndex        =   100
-      Top             =   2010
+      TabIndex        =   101
+      Top             =   2370
       Width           =   675
    End
    Begin VB.Label Headeritem 
@@ -1741,8 +1785,8 @@ Begin VB.Form Frm_Production_Planning
       Height          =   195
       Index           =   0
       Left            =   600
-      TabIndex        =   99
-      Top             =   2010
+      TabIndex        =   100
+      Top             =   2370
       Width           =   1920
    End
    Begin VB.Shape Shape1 
@@ -1751,7 +1795,7 @@ Begin VB.Form Frm_Production_Planning
       Height          =   7005
       Index           =   0
       Left            =   300
-      Top             =   2280
+      Top             =   2640
       Width           =   14550
    End
    Begin VB.Shape Shape1 
@@ -1760,7 +1804,7 @@ Begin VB.Form Frm_Production_Planning
       Height          =   375
       Index           =   1
       Left            =   300
-      Top             =   1920
+      Top             =   2280
       Width           =   14550
    End
    Begin VB.Label title 
@@ -1780,7 +1824,7 @@ Begin VB.Form Frm_Production_Planning
       ForeColor       =   &H00800000&
       Height          =   435
       Left            =   330
-      TabIndex        =   90
+      TabIndex        =   91
       Top             =   150
       Width           =   14595
    End
@@ -1799,8 +1843,43 @@ Dim i As Integer, Y As Integer, X As String, thn(5) As String, bln(5) As String
 Dim blnsubmit As Boolean, thn_sb As String * 4
 Dim boldelete As Boolean, TempQty As Double, bolzero As Boolean
 
+'----------------------update multi company------------------------
+
+Private Sub CompanyMaster()
+    Dim sql As String, rsCompany As New ADODB.Recordset
+    Dim i As Integer
+    
+    If rsCompany.State <> adStateClosed Then rsCompany.Close
+    rsCompany.CursorLocation = adUseClient
+    rsCompany.Open "Company_Profile order by Company_Code asc", Db, adOpenDynamic, adLockOptimistic, adCmdTable
+    TxtCc.columnCount = 2
+    TxtCc.TextColumn = 1
+    i = 0
+    Do While Not rsCompany.EOF
+        TxtCc.AddItem ""
+        TxtCc.List(i, 0) = Trim(rsCompany("Company_Code"))
+        TxtCc.List(i, 1) = Trim(rsCompany("Company_Name"))
+        i = i + 1
+        rsCompany.MoveNext
+    Loop
+    TxtCc.ColumnWidths = "50 pt; 300 pt"
+    TxtCc.ListWidth = 350
+    TxtCc.ListRows = 15
+End Sub
+
+Private Sub TxtCc_Change()
+    If TxtCc.matchFound Then
+        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+    Else
+        TxtCompanyName = ""
+        lblerror.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
+    Call adtocombo
+End Sub
+'------------------------------------------------------------------
+
 Sub adtocombo()
-sql = "select *, trade_code from trade_master where trade_code in (select distinct manufacture_code from manufacture_line)"
+sql = "select *, trade_code from trade_master where trade_code in (select distinct manufacture_code from manufacture_line where Company_Code = '" & Trim(TxtCc) & "')"
 Set rstcust = New Recordset
 rstcust.Open sql, Db, adOpenKeyset, adLockOptimistic
 With cbodealer
@@ -1823,7 +1902,7 @@ End With
 sql = "select * from group_cls"
 Set rstgroup = New Recordset
 rstgroup.Open sql, Db, adOpenKeyset, adLockOptimistic
-With cboGroup
+With cbogroup
     .clear
     .columnCount = 2
     .ColumnWidths = "50 pt;75 pt"
@@ -1842,10 +1921,10 @@ End Sub
 
 Sub adpartcombo()
 Dim sq As String
-If Trim(cboGroup.Text) = "" Then
+If Trim(cbogroup.Text) = "" Then
     sq = ""
 Else
-    sq = "and group_cls = '" & cboGroup & "'"
+    sq = "and group_cls = '" & cbogroup & "'"
 End If
 sql = "select item_code,rtrim(makeritem_code) makeritem_code, rtrim(item_name) item_name  from item_master where " & _
         " manufacture_code = '" & cbodealer.Text & "' and finishgoodpart_cls = '01' and production_cls = '01' " & sq & " and use_endday >= convert(char(8), getdate(), 112) " & _
@@ -1883,10 +1962,10 @@ If Trim(cbodealer.Text) <> "" Then
     rstcust.Find "trade_code = '" & cbodealer.Text & "'"
     If Not rstcust.EOF Then
         lbldesc(0) = Trim(rstcust!trade_name)
-        If Trim(cboGroup) <> "" Then
+        If Trim(cbogroup) <> "" Then
             adpartcombo
             rstgroup.Requery
-            rstgroup.Find "group_cls = '" & cboGroup.Text & "'"
+            rstgroup.Find "group_cls = '" & cbogroup.Text & "'"
             If Not rstgroup.EOF Then
                 adpartcombo
                 lbldesc(1) = Trim(rstgroup!Description)
@@ -1942,12 +2021,12 @@ KeyAscii = Asc(UCase(Chr(KeyAscii)))
 End Sub
 
 Private Sub cbodealer_LostFocus()
-rstcust.Requery
-rstcust.Find "trade_code = '" & cbodealer.Text & "'"
-If rstcust.EOF Then
-    rstcust.Requery
-    lblerror = DisplayMsg(4060)
-End If
+'rstcust.Requery
+'rstcust.Find "trade_code = '" & cbodealer.Text & "'"
+'If rstcust.EOF Then
+'    rstcust.Requery
+'    lblerror = DisplayMsg(4060)
+'End If
 End Sub
 
 Private Sub CboGroup_Click()
@@ -1956,10 +2035,10 @@ If Trim(cbodealer.Text) <> "" Then
     rstcust.Find "trade_code = '" & cbodealer.Text & "'"
     If Not rstcust.EOF Then
         lbldesc(0) = Trim(rstcust!trade_name)
-        If Trim(cboGroup) <> "" Then
+        If Trim(cbogroup) <> "" Then
             adpartcombo
             rstgroup.Requery
-            rstgroup.Find "group_cls = '" & cboGroup.Text & "'"
+            rstgroup.Find "group_cls = '" & cbogroup.Text & "'"
             If Not rstgroup.EOF Then
                 adpartcombo
                 lbldesc(1) = Trim(rstgroup!Description)
@@ -2023,9 +2102,9 @@ Else
     Exit Sub
 End If
 
-If Trim(cboGroup) <> "" Then
+If Trim(cbogroup) <> "" Then
     rstgroup.Requery
-    rstgroup.Find "group_cls ='" & cboGroup.Text & "'"
+    rstgroup.Find "group_cls ='" & cbogroup.Text & "'"
     If Not rstgroup.EOF Then
         lbldesc(1) = Trim(rstgroup!Description)
     Else
@@ -2044,8 +2123,8 @@ If Trim(CboPart) <> "" Then
     rstpart.Requery
 End If
 
-If Trim(cboGroup) <> "" Then
-    sqlP = "and IM.group_cls = '" & cboGroup.Text & "'"
+If Trim(cbogroup) <> "" Then
+    sqlP = "and IM.group_cls = '" & cbogroup.Text & "'"
 Else
     sqlP = ""
 End If
@@ -2118,9 +2197,9 @@ Select Case Index
             clear
             clearheader
             cbodealer.ListIndex = -1
-            cboGroup.ListIndex = -1
+            cbogroup.ListIndex = -1
             CboPart.ListIndex = -1
-            MYDate = Format(Now, "MMM YYYY")
+            Mydate = Format(Now, "MMM YYYY")
         End If
 End Select
 End Sub
@@ -2183,18 +2262,19 @@ End Sub
 Private Sub Form_Load()
   If gb_Simulation = True Then Call up_InitSimulation(Me)
 HakU = hakUpdate(Me.Name)
-adtocombo
-MYDate = Format(Now, "mmm yyyy")
-X = Format(Me.MYDate, "mm")
+Call CompanyMaster
+'adtocombo
+Mydate = Format(Now, "mmm yyyy")
+X = Format(Me.Mydate, "mm")
 For i = 0 To 5
     If X + i <= 12 Then
-        LblMonth(i) = MonthName(X + i)
-        thn(i) = Year(MYDate)
+        lblmonth(i) = MonthName(X + i)
+        thn(i) = Year(Mydate)
         bln(i) = (X + i)
     Else
-        LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
+        lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(Mydate) + 1)
         bln(i) = ((X + i) - 12)
-        thn(i) = Year(MYDate) + 1
+        thn(i) = Year(Mydate) + 1
     End If
 Next
 clear
@@ -2217,26 +2297,26 @@ End Sub
 Private Sub MYDate_Change()
 blnsubmit = False
 If edited Then
-    MYDate.Month = tgl_sb
-    MYDate.Year = thn_sb
-    MYDate.Year = MYDate.Year
+    Mydate.Month = tgl_sb
+    Mydate.Year = thn_sb
+    Mydate.Year = Mydate.Year
     Frame1.Enabled = False
     Exit Sub
 End If
 
 MYDate_Click
-tgl_sb = MYDate.Month
-thn_sb = MYDate.Year
-X = Format(Me.MYDate, "mm")
+tgl_sb = Mydate.Month
+thn_sb = Mydate.Year
+X = Format(Me.Mydate, "mm")
 For i = 0 To 5
     If X + i <= 12 Then
-        LblMonth(i) = MonthName(X + i)
-        thn(i) = Year(MYDate)
+        lblmonth(i) = MonthName(X + i)
+        thn(i) = Year(Mydate)
         bln(i) = (X + i)
     Else
-        LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
+        lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(Mydate) + 1)
         bln(i) = ((X + i) - 12)
-        thn(i) = Year(MYDate) + 1
+        thn(i) = Year(Mydate) + 1
     End If
 Next
 If Trim(cbodealer.Text) <> "" Then
@@ -2323,8 +2403,8 @@ End If
 End Sub
 
 Private Sub MYDate_Click()
-If MYDate.Month = 1 And Val(tgl_sb) = 12 Then MYDate.Year = MYDate.Year + 1
-If MYDate.Month = 12 And Val(tgl_sb) = 1 Then MYDate.Year = MYDate.Year - 1
+If Mydate.Month = 1 And Val(tgl_sb) = 12 Then Mydate.Year = Mydate.Year + 1
+If Mydate.Month = 12 And Val(tgl_sb) = 1 Then Mydate.Year = Mydate.Year - 1
 End Sub
 
 Private Sub MYDate_GotFocus()
@@ -2470,13 +2550,13 @@ If Trim(cbodealer.Text) = "" Then
     Exit Function
 Else
     cbodealer = Trim(cbodealer)
-    If cbodealer.MatchFound Then
+    If cbodealer.matchFound Then
         If Trim(CboPart) <> "" Then
             CboPart = Trim(CboPart)
-            If CboPart.MatchFound Then
-                If Trim(cboGroup) <> "" Then
-                    cboGroup = Trim(cboGroup)
-                    If cboGroup.MatchFound = False Then
+            If CboPart.matchFound Then
+                If Trim(cbogroup) <> "" Then
+                    cbogroup = Trim(cbogroup)
+                    If cbogroup.matchFound = False Then
                         errcheck = True
                         lblerror = DisplayMsg(4064)
                         Exit Function
@@ -2563,3 +2643,11 @@ rsRoot.Close
 Set rsRoot = Nothing
 End Function
 
+Private Sub TxtCc_LostFocus()
+rstcust.Requery
+rstcust.Find "trade_code = '" & cbodealer.Text & "'"
+If rstcust.EOF Then
+    rstcust.Requery
+    lblerror = DisplayMsg(4060)
+End If
+End Sub
