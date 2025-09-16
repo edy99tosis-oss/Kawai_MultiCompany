@@ -9,11 +9,11 @@ Begin VB.Form frmDailyProdEntry
    ClientHeight    =   10515
    ClientLeft      =   75
    ClientTop       =   375
-   ClientWidth     =   15210
+   ClientWidth     =   15255
    Icon            =   "frmDailyProdEntry.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   10515
-   ScaleWidth      =   15210
+   ScaleWidth      =   15255
    WindowState     =   2  'Maximized
    Begin VB.TextBox TxtSerialTo 
       BeginProperty Font 
@@ -28,7 +28,8 @@ Begin VB.Form frmDailyProdEntry
       Height          =   315
       Left            =   13320
       MaxLength       =   7
-      TabIndex        =   9
+      TabIndex        =   10
+      Tag             =   "TFFT*/"
       Top             =   7725
       Width           =   1635
    End
@@ -45,7 +46,8 @@ Begin VB.Form frmDailyProdEntry
       Height          =   315
       Left            =   11610
       MaxLength       =   7
-      TabIndex        =   8
+      TabIndex        =   9
+      Tag             =   "TFFT*/"
       Top             =   7725
       Width           =   1635
    End
@@ -53,14 +55,14 @@ Begin VB.Form frmDailyProdEntry
       Caption         =   "..."
       Height          =   300
       Left            =   2250
-      TabIndex        =   44
+      TabIndex        =   45
+      Tag             =   "TFFT*/"
       Top             =   7725
       Width           =   300
    End
    Begin VB.TextBox lblPart 
       Appearance      =   0  'Flat
-      BackColor       =   &H00FDDFE3&
-      BorderStyle     =   0  'None
+      BackColor       =   &H00C0C0C0&
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -70,12 +72,13 @@ Begin VB.Form frmDailyProdEntry
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   195
-      Left            =   2625
+      Height          =   285
+      Left            =   2640
       Locked          =   -1  'True
-      TabIndex        =   43
+      TabIndex        =   44
       TabStop         =   0   'False
-      Top             =   7755
+      Tag             =   "TFFT*/"
+      Top             =   7725
       Width           =   2055
    End
    Begin VB.TextBox txtremark1 
@@ -91,14 +94,14 @@ Begin VB.Form frmDailyProdEntry
       Height          =   315
       Left            =   2100
       MaxLength       =   35
-      TabIndex        =   11
+      TabIndex        =   12
+      Tag             =   "TFFT*/"
       Top             =   8700
       Width           =   6105
    End
    Begin VB.TextBox lbldesc 
       Appearance      =   0  'Flat
-      BackColor       =   &H00FDDFE3&
-      BorderStyle     =   0  'None
+      BackColor       =   &H00C0C0C0&
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -108,12 +111,13 @@ Begin VB.Form frmDailyProdEntry
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   195
+      Height          =   285
       Left            =   4860
       Locked          =   -1  'True
-      TabIndex        =   41
+      TabIndex        =   42
       TabStop         =   0   'False
-      Top             =   7755
+      Tag             =   "TFFT*/"
+      Top             =   7725
       Width           =   3825
    End
    Begin VB.CommandButton command1 
@@ -132,8 +136,9 @@ Begin VB.Form frmDailyProdEntry
       Index           =   6
       Left            =   6180
       Style           =   1  'Graphical
-      TabIndex        =   19
+      TabIndex        =   20
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   9960
       Visible         =   0   'False
       Width           =   1950
@@ -154,8 +159,9 @@ Begin VB.Form frmDailyProdEntry
       Index           =   5
       Left            =   2925
       Style           =   1  'Graphical
-      TabIndex        =   17
+      TabIndex        =   18
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   9960
       Visible         =   0   'False
       Width           =   1425
@@ -176,8 +182,9 @@ Begin VB.Form frmDailyProdEntry
       Index           =   4
       Left            =   8235
       Style           =   1  'Graphical
-      TabIndex        =   20
+      TabIndex        =   21
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   9960
       Visible         =   0   'False
       Width           =   1950
@@ -195,8 +202,9 @@ Begin VB.Form frmDailyProdEntry
       Height          =   315
       Left            =   4470
       MaxLength       =   18
-      TabIndex        =   18
+      TabIndex        =   19
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   10005
       Visible         =   0   'False
       Width           =   1575
@@ -217,7 +225,8 @@ Begin VB.Form frmDailyProdEntry
       Index           =   1
       Left            =   11520
       Style           =   1  'Graphical
-      TabIndex        =   14
+      TabIndex        =   15
+      Tag             =   "FFTT*/"
       Top             =   9960
       Width           =   1125
    End
@@ -237,7 +246,8 @@ Begin VB.Form frmDailyProdEntry
       Index           =   3
       Left            =   12750
       Style           =   1  'Graphical
-      TabIndex        =   15
+      TabIndex        =   16
+      Tag             =   "FFTT*/"
       Top             =   9960
       Width           =   1125
    End
@@ -254,7 +264,8 @@ Begin VB.Form frmDailyProdEntry
       Height          =   315
       Left            =   8820
       MaxLength       =   7
-      TabIndex        =   6
+      TabIndex        =   7
+      Tag             =   "TFFT*/"
       Top             =   7725
       Width           =   885
    End
@@ -274,7 +285,8 @@ Begin VB.Form frmDailyProdEntry
       Index           =   2
       Left            =   10290
       Style           =   1  'Graphical
-      TabIndex        =   13
+      TabIndex        =   14
+      Tag             =   "FFTT*/"
       Top             =   9960
       Width           =   1125
    End
@@ -282,7 +294,8 @@ Begin VB.Form frmDailyProdEntry
       BackColor       =   &H00FDDFE3&
       Height          =   615
       Left            =   105
-      TabIndex        =   26
+      TabIndex        =   27
+      Tag             =   "TFTT*/"
       Top             =   9210
       Width           =   15000
       Begin VB.Label lblErrMsg 
@@ -300,7 +313,8 @@ Begin VB.Form frmDailyProdEntry
          ForeColor       =   &H00FF00FF&
          Height          =   300
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   28
+         Tag             =   "TFTT*/"
          Top             =   195
          Width           =   14760
       End
@@ -319,7 +333,8 @@ Begin VB.Form frmDailyProdEntry
       Height          =   315
       Left            =   9750
       MaxLength       =   12
-      TabIndex        =   7
+      TabIndex        =   8
+      Tag             =   "TFFT*/"
       Top             =   7725
       Width           =   1125
    End
@@ -339,7 +354,8 @@ Begin VB.Form frmDailyProdEntry
       Index           =   0
       Left            =   13980
       Style           =   1  'Graphical
-      TabIndex        =   12
+      TabIndex        =   13
+      Tag             =   "FFTT*/"
       Top             =   9960
       Width           =   1125
    End
@@ -358,14 +374,16 @@ Begin VB.Form frmDailyProdEntry
       Height          =   375
       Left            =   120
       Style           =   1  'Graphical
-      TabIndex        =   16
+      TabIndex        =   17
+      Tag             =   "TFFT*/"
       Top             =   9960
       Width           =   1125
    End
    Begin MSComCtl2.DTPicker scheduledate 
       Height          =   315
       Left            =   240
-      TabIndex        =   10
+      TabIndex        =   11
+      Tag             =   "TFFT*/"
       Top             =   8700
       Width           =   1545
       _ExtentX        =   2725
@@ -381,18 +399,19 @@ Begin VB.Form frmDailyProdEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128909315
+      Format          =   129695747
       CurrentDate     =   37859
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
-      Height          =   4905
+      Height          =   4545
       Left            =   105
-      TabIndex        =   4
+      TabIndex        =   5
       TabStop         =   0   'False
-      Top             =   2250
+      Tag             =   "TTTT*/"
+      Top             =   2610
       Width           =   15000
       _cx             =   26458
-      _cy             =   8652
+      _cy             =   8017
       Appearance      =   1
       BorderStyle     =   1
       Enabled         =   -1  'True
@@ -484,18 +503,20 @@ Begin VB.Form frmDailyProdEntry
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   1170
-      Left            =   105
-      TabIndex        =   28
-      Top             =   1005
+      Height          =   1650
+      Left            =   120
+      TabIndex        =   29
+      Tag             =   "TTTF*/"
+      Top             =   840
       Width           =   15000
       Begin MSComCtl2.DTPicker scheduledate1 
          Height          =   315
-         Left            =   9390
-         TabIndex        =   2
-         Top             =   690
-         Width           =   1665
-         _ExtentX        =   2937
+         Left            =   9360
+         TabIndex        =   3
+         Tag             =   "TTFF*/"
+         Top             =   720
+         Width           =   1545
+         _ExtentX        =   2725
          _ExtentY        =   556
          _Version        =   393216
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -508,7 +529,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   129695747
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -522,11 +543,12 @@ Begin VB.Form frmDailyProdEntry
             SubFormatType   =   3
          EndProperty
          Height          =   315
-         Left            =   11490
-         TabIndex        =   3
-         Top             =   690
-         Width           =   1665
-         _ExtentX        =   2937
+         Left            =   11280
+         TabIndex        =   4
+         Tag             =   "TTFF*/"
+         Top             =   720
+         Width           =   1545
+         _ExtentX        =   2725
          _ExtentY        =   556
          _Version        =   393216
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -539,8 +561,53 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   129695747
          CurrentDate     =   37798
+      End
+      Begin VB.Label Label3 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Index           =   2
+         Left            =   240
+         TabIndex        =   52
+         Tag             =   "TTFF*/"
+         Top             =   390
+         Width           =   1335
+      End
+      Begin VB.Label lblCompany 
+         BackStyle       =   0  'Transparent
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   3360
+         TabIndex        =   51
+         Tag             =   "TTFF*/"
+         Top             =   390
+         Width           =   3255
+      End
+      Begin VB.Line Line6 
+         X1              =   3360
+         X2              =   6480
+         Y1              =   600
+         Y2              =   600
       End
       Begin VB.Label Label3 
          AutoSize        =   -1  'True
@@ -557,16 +624,18 @@ Begin VB.Form frmDailyProdEntry
          EndProperty
          Height          =   195
          Index           =   1
-         Left            =   9390
-         TabIndex        =   47
-         Top             =   300
+         Left            =   6960
+         TabIndex        =   48
+         Tag             =   "TTFF*/"
+         Top             =   390
          Width           =   855
       End
       Begin MSForms.ComboBox CboGroup 
          Height          =   315
-         Left            =   10365
-         TabIndex        =   46
-         Top             =   240
+         Left            =   9360
+         TabIndex        =   47
+         Tag             =   "TTFF*/"
+         Top             =   280
          Width           =   1125
          VariousPropertyBits=   746604571
          MaxLength       =   10
@@ -581,6 +650,7 @@ Begin VB.Form frmDailyProdEntry
       End
       Begin VB.Label Label11 
          BackStyle       =   0  'Transparent
+         Caption         =   "a"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -591,16 +661,17 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   11625
-         TabIndex        =   45
-         Top             =   300
-         Width           =   2955
+         Left            =   10560
+         TabIndex        =   46
+         Tag             =   "TTFF*/"
+         Top             =   390
+         Width           =   2235
       End
       Begin VB.Line Line5 
-         X1              =   11625
-         X2              =   14610
-         Y1              =   540
-         Y2              =   540
+         X1              =   10560
+         X2              =   12820
+         Y1              =   600
+         Y2              =   600
       End
       Begin VB.Label Label3 
          AutoSize        =   -1  'True
@@ -617,9 +688,10 @@ Begin VB.Form frmDailyProdEntry
          EndProperty
          Height          =   195
          Index           =   0
-         Left            =   6975
-         TabIndex        =   35
-         Top             =   750
+         Left            =   6960
+         TabIndex        =   36
+         Tag             =   "TTFF*/"
+         Top             =   795
          Width           =   2205
       End
       Begin VB.Label Label4 
@@ -636,19 +708,21 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   11190
-         TabIndex        =   34
-         Top             =   750
+         Left            =   11000
+         TabIndex        =   35
+         Tag             =   "TTFF*/"
+         Top             =   795
          Width           =   165
       End
       Begin VB.Line Line1 
-         X1              =   3105
-         X2              =   6345
-         Y1              =   990
-         Y2              =   990
+         X1              =   3360
+         X2              =   6480
+         Y1              =   1470
+         Y2              =   1470
       End
       Begin VB.Label lbllinecd 
          BackStyle       =   0  'Transparent
+         Caption         =   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -659,16 +733,18 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   3105
-         TabIndex        =   33
-         Top             =   750
+         Left            =   3360
+         TabIndex        =   34
+         Tag             =   "TTFF*/"
+         Top             =   1210
          Width           =   3255
       End
       Begin MSForms.ComboBox cbolinecd 
          Height          =   315
-         Left            =   1695
-         TabIndex        =   1
-         Top             =   690
+         Left            =   1920
+         TabIndex        =   2
+         Tag             =   "TTFF*/"
+         Top             =   1170
          Width           =   1305
          VariousPropertyBits=   746604571
          MaxLength       =   10
@@ -696,16 +772,18 @@ Begin VB.Form frmDailyProdEntry
          EndProperty
          Height          =   195
          Index           =   3
-         Left            =   360
-         TabIndex        =   32
-         Top             =   750
+         Left            =   240
+         TabIndex        =   33
+         Tag             =   "TTFF*/"
+         Top             =   1230
          Width           =   975
       End
       Begin MSForms.ComboBox cbocust 
          Height          =   315
-         Left            =   1695
-         TabIndex        =   0
-         Top             =   255
+         Left            =   1920
+         TabIndex        =   1
+         Tag             =   "TTFF*/"
+         Top             =   735
          Width           =   1305
          VariousPropertyBits=   612386843
          MaxLength       =   10
@@ -720,10 +798,10 @@ Begin VB.Form frmDailyProdEntry
       End
       Begin VB.Line Line2 
          Index           =   0
-         X1              =   3105
-         X2              =   9105
-         Y1              =   555
-         Y2              =   555
+         X1              =   3360
+         X2              =   6480
+         Y1              =   1035
+         Y2              =   1035
       End
       Begin VB.Label LblCode 
          AutoSize        =   -1  'True
@@ -739,13 +817,15 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   360
-         TabIndex        =   30
-         Top             =   315
+         Left            =   240
+         TabIndex        =   31
+         Tag             =   "TTFF*/"
+         Top             =   795
          Width           =   1140
       End
       Begin VB.Label lblcust 
          BackStyle       =   0  'Transparent
+         Caption         =   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -756,21 +836,47 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   3105
-         TabIndex        =   29
-         Top             =   315
-         Width           =   6015
+         Left            =   3360
+         TabIndex        =   30
+         Tag             =   "TTFF*/"
+         Top             =   795
+         Width           =   3135
+      End
+      Begin MSForms.ComboBox cboCompany 
+         Height          =   315
+         Left            =   1920
+         TabIndex        =   0
+         Tag             =   "TTFF*/"
+         Top             =   280
+         Width           =   1305
+         VariousPropertyBits=   746604571
+         MaxLength       =   10
+         DisplayStyle    =   3
+         Size            =   "2302;556"
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
       End
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
       Left            =   13260
-      TabIndex        =   40
+      TabIndex        =   41
       TabStop         =   0   'False
+      Tag             =   "FTTF*/"
       Top             =   255
       Width           =   1845
       _extentx        =   3254
       _extenty        =   714
+   End
+   Begin EZRunnerv3.Anchor Anchor1 
+      Left            =   240
+      Top             =   120
+      _extentx        =   847
+      _extenty        =   820
    End
    Begin VB.Label Label14 
       AutoSize        =   -1  'True
@@ -787,7 +893,8 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   13320
-      TabIndex        =   49
+      TabIndex        =   50
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   1050
    End
@@ -806,15 +913,10 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   11640
-      TabIndex        =   48
+      TabIndex        =   49
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   1275
-   End
-   Begin VB.Line Line4 
-      X1              =   2625
-      X2              =   4650
-      Y1              =   8040
-      Y2              =   8040
    End
    Begin VB.Label Label7 
       AutoSize        =   -1  'True
@@ -831,21 +933,17 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   2685
-      TabIndex        =   42
+      TabIndex        =   43
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   1080
-   End
-   Begin VB.Line Line3 
-      X1              =   4890
-      X2              =   8700
-      Y1              =   8040
-      Y2              =   8040
    End
    Begin VB.Shape Shape2 
       BackColor       =   &H00A6D2FF&
       Height          =   525
       Index           =   2
       Left            =   90
+      Tag             =   "TFTT*/"
       Top             =   7635
       Width           =   15000
    End
@@ -864,7 +962,8 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   2490
-      TabIndex        =   39
+      TabIndex        =   40
+      Tag             =   "TTFF*/"
       Top             =   10050
       Visible         =   0   'False
       Width           =   210
@@ -884,7 +983,8 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   8820
-      TabIndex        =   38
+      TabIndex        =   39
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   540
    End
@@ -906,7 +1006,8 @@ Begin VB.Form frmDailyProdEntry
       ForeColor       =   &H80000008&
       Height          =   315
       Left            =   10965
-      TabIndex        =   37
+      TabIndex        =   38
+      Tag             =   "TFFT*/"
       Top             =   7725
       Width           =   570
    End
@@ -925,7 +1026,8 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   2160
-      TabIndex        =   36
+      TabIndex        =   37
+      Tag             =   "TFFT*/"
       Top             =   8355
       Width           =   675
    End
@@ -944,14 +1046,16 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   10980
-      TabIndex        =   31
+      TabIndex        =   32
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   330
    End
    Begin MSForms.ComboBox cboitemcode 
       Height          =   315
       Left            =   225
-      TabIndex        =   5
+      TabIndex        =   6
+      Tag             =   "TFFT*/"
       Top             =   7725
       Width           =   1950
       VariousPropertyBits=   746604571
@@ -981,7 +1085,8 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   4860
-      TabIndex        =   25
+      TabIndex        =   26
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   960
    End
@@ -1000,7 +1105,8 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   255
-      TabIndex        =   24
+      TabIndex        =   25
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   1155
    End
@@ -1019,7 +1125,8 @@ Begin VB.Form frmDailyProdEntry
       EndProperty
       Height          =   195
       Left            =   10590
-      TabIndex        =   23
+      TabIndex        =   24
+      Tag             =   "TFFT*/"
       Top             =   7365
       Width           =   300
    End
@@ -1039,7 +1146,8 @@ Begin VB.Form frmDailyProdEntry
       Height          =   195
       Index           =   0
       Left            =   240
-      TabIndex        =   22
+      TabIndex        =   23
+      Tag             =   "TFFT*/"
       Top             =   8355
       Width           =   1245
    End
@@ -1059,7 +1167,8 @@ Begin VB.Form frmDailyProdEntry
       ForeColor       =   &H00800000&
       Height          =   390
       Left            =   105
-      TabIndex        =   21
+      TabIndex        =   22
+      Tag             =   "TTTF*/"
       Top             =   345
       Width           =   15000
    End
@@ -1069,6 +1178,7 @@ Begin VB.Form frmDailyProdEntry
       Height          =   375
       Index           =   0
       Left            =   90
+      Tag             =   "TFTT*/"
       Top             =   7275
       Width           =   15000
    End
@@ -1078,6 +1188,7 @@ Begin VB.Form frmDailyProdEntry
       Height          =   375
       Index           =   1
       Left            =   90
+      Tag             =   "TFTT*/"
       Top             =   8250
       Width           =   15000
    End
@@ -1085,7 +1196,8 @@ Begin VB.Form frmDailyProdEntry
       BackColor       =   &H00A6D2FF&
       Height          =   525
       Index           =   0
-      Left            =   60
+      Left            =   90
+      Tag             =   "TFTT*/"
       Top             =   8610
       Width           =   15000
    End
@@ -1227,12 +1339,13 @@ End Sub
 Sub Kosong()
     scheduledate1.Value = Format(Now, "dd MMM yyyy")
     scheduledate2.Value = Format(Now, "dd MMM yyyy")
-    lblcust.Caption = ""
-    cbocust.Text = ""
+    lblCust.Caption = ""
+    cboCompany.Text = ""
+    cboCust.Text = ""
     cbolinecd.clear
     cbolinecd.Text = ""
     lbllinecd.Caption = ""
-    CboGroup.ListIndex = 0   'Add 20090207
+    cboGroup.ListIndex = 0   'Add 20090207
     
     lblErrMsg = ""
     scheduledate.Value = Format(Now, "dd MMM yyyy")
@@ -1244,14 +1357,14 @@ Sub Kosong()
 End Sub
 
 Sub kosongBwh()
-    cboitemcode.Enabled = True
-    cboitemcode.Text = ""
-    lblPart.Text = ""
+    CboItemCode.Enabled = True
+    CboItemCode.Text = ""
+    LblPart.Text = ""
     lbldesc.Text = ""
-    txtqty.Text = Format(0, gs_formatQty)
+    txtQty.Text = Format(0, gs_formatQty)
     lblQty = 0
-    lblunit.Caption = ""
-    txtlotno.Text = ""
+    lblUnit.Caption = ""
+    TxtLotNo.Text = ""
 ' Add Serial No For KAWAI 20090207
     TxtSerialFrom = ""
     TxtSerialTo = ""
@@ -1260,11 +1373,15 @@ Sub kosongBwh()
     txtremark1.Text = ""
     lblFNo = ""
     ubah = False
-    txtseqno.Text = ""
+    TxtSeqNo.Text = ""
     lblunit1.Caption = ""
     PONO = ""
     poSEqNo = 0
     Status = ""
+End Sub
+
+Sub adcboCompany()
+    FillCompanyCombo cboCompany
 End Sub
 
 Sub adtocboCust()
@@ -1272,16 +1389,15 @@ Dim sqlcust As String
 Dim RsCust As New Recordset
 Dim i As Integer
 
-    sqlcust = "select distinct(manufacture_code), trade_name from manufacture_line inner join trade_master " & _
-              "on trade_master.trade_code = manufacture_line.manufacture_code order by manufacture_code"
+    sqlcust = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany.Text & "'"
 
     Set RsCust = Db.Execute(sqlcust)
     
-    With cbocust
+    With cboCust
         .clear
         .columnCount = 2
-        .ColumnWidths = "50pt;300pt"
-        .ListWidth = 350
+        .ColumnWidths = "50pt;175pt"
+        .ListWidth = 225
         .ListRows = 15
         
         i = 0
@@ -1304,11 +1420,11 @@ Dim i As Integer
 
     Set RsGroup = Db.Execute(SqlGroup)
     
-    With CboGroup
+    With cboGroup
         .clear
         .columnCount = 2
-        .ColumnWidths = "50pt;100pt"
-        .ListWidth = 150
+        .ColumnWidths = "50pt;125pt"
+        .ListWidth = 175
         .ListRows = 5
         
        .AddItem
@@ -1332,18 +1448,18 @@ Dim RsLine As New Recordset
 Dim i As Long
 
     sqlLine = "select item_code, makeritem_code, item_name, unit_cls, (select description from unit_cls uc where uc.unit_cls=item_master.unit_cls)  Unit_Desc " & _
-        "from item_master where production_cls = 01 and manufacture_code = '" & Trim(cbocust.Text) & "' " & _
+        "from item_master where production_cls = 01 and manufacture_code = '" & Trim(cboCust.Text) & "' " & _
         "and use_endday > convert(char(8), getdate(), 112) order by item_name"
     Set RsLine = Db.Execute(sqlLine)
     
-    With cboitemcode
+    With CboItemCode
         .clear
         .columnCount = 5
         .ColumnWidths = "80pt;80pt;240pt;0pt;0pt"
         .ListWidth = 400
         .ListRows = 10
         
-        lblPart.Text = ""
+        LblPart.Text = ""
         lbldesc.Text = ""
         i = 0
         Do While Not RsLine.EOF
@@ -1364,14 +1480,14 @@ Dim sqlLine As String
 Dim RsLine As New Recordset
 Dim i As Integer
 
-    sqlLine = "select * from manufacture_line where manufacture_code='" & cbocust.Text & "'"
+    sqlLine = "select * from manufacture_line where manufacture_code='" & cboCust.Text & "'"
     Set RsLine = Db.Execute(sqlLine)
     
     With cbolinecd
         .clear
         .columnCount = 2
-        .ColumnWidths = "50pt;140pt"
-        .ListWidth = 190
+        .ColumnWidths = "50pt;175pt"
+        .ListWidth = 225
         .ListRows = 15
         
         lbllinecd.Caption = ""
@@ -1417,11 +1533,11 @@ Sub Browse()
         "left join item_master b on b.item_code=a.item_code " & _
         "left join productioncalculate_detail pcd on a.plancust_code = pcd.cust_code and a.planpo_seqno = pcd.seq_no and a.plan_seqno = pcd.plan_seqno and a.item_code = pcd.planitem_code  and a.planpo_no = pcd.po_no " & _
         "left join trade_master tm on pcd.cust_code = tm.trade_code " & _
-        "where a.factory_code='" & Trim(cbocust.Text) & "' " & _
+        "where a.factory_code='" & Trim(cboCust.Text) & "' " & _
         "and a.line_code='" & Trim(cbolinecd.Text) & "' "
     
 ' Add Group Filter for Browsing Grid 20090207
-    If CboGroup.Text <> "All" Then strSQL = strSQL & " And b.group_cls='" & Trim(CboGroup.Text) & "' "
+    If cboGroup.Text <> "All" Then strSQL = strSQL & " And b.group_cls='" & Trim(cboGroup.Text) & "' "
 '--------
     strSQL = strSQL & _
         "and a.schedule_date>='" & Format(scheduledate1.Value, "yyyymmdd") & "' " & _
@@ -1526,9 +1642,21 @@ Function cekQty(ByVal i As String, ByVal pn As String, ByVal psn As String, ByVa
     cekQty = OrderQty - DailyQty
 End Function
 
+Private Sub cboCompany_Click()
+If cboCompany.ListIndex <> -1 Then
+        lblCompany.Caption = cboCompany.Column(1)
+        adtocboCust
+    End If
+    If cboCompany.Text <> "" And cboCust.Text <> "" Then
+        Browse
+    Else
+        Header
+    End If
+End Sub
+
 Private Sub cboGroup_Change()
-    If CboGroup.ListIndex <> -1 Then
-        Label11.Caption = CboGroup.Column(1)
+    If cboGroup.ListIndex <> -1 Then
+        Label11.Caption = cboGroup.Column(1)
         Else
         Label11.Caption = "All"
     End If
@@ -1536,7 +1664,7 @@ Private Sub cboGroup_Change()
 End Sub
 
 Private Sub CboGroup_LostFocus()
-If CboGroup.ListIndex = -1 Then CboGroup.ListIndex = 0
+If cboGroup.ListIndex = -1 Then cboGroup.ListIndex = 0
 End Sub
 
 Private Sub CboItemCode_Change()
@@ -1544,11 +1672,11 @@ Private Sub CboItemCode_Change()
 End Sub
 
 Private Sub cboitemcode_Click()
-    If cboitemcode.ListIndex <> -1 Then
-        lblPart.Text = cboitemcode.Column(1)
-        lbldesc.Text = cboitemcode.Column(2)
-        lblunit1.Caption = cboitemcode.Column(3)
-        lblunit.Caption = cboitemcode.Column(4)
+    If CboItemCode.ListIndex <> -1 Then
+        LblPart.Text = CboItemCode.Column(1)
+        lbldesc.Text = CboItemCode.Column(2)
+        lblunit1.Caption = CboItemCode.Column(3)
+        lblUnit.Caption = CboItemCode.Column(4)
     End If
     Call StartSerial
 End Sub
@@ -1556,10 +1684,10 @@ End Sub
 Private Sub cboitemcode_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
   Dim i As Integer
   If KeyCode = 13 Then
-    For i = 0 To cboitemcode.ListCount - 1
-        If cboitemcode.Text = cboitemcode.List(i) Then
-            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
-                cboitemcode.ListIndex = i
+    For i = 0 To CboItemCode.ListCount - 1
+        If CboItemCode.Text = CboItemCode.List(i) Then
+            If CboItemCode.Column(1) = CboItemCode.List(i, 1) Then
+                CboItemCode.ListIndex = i
                 Exit For
             End If
         End If
@@ -1571,10 +1699,10 @@ End Sub
 
 Private Sub cboItemCode_LostFocus()
     Dim i As Integer
-    For i = 0 To cboitemcode.ListCount - 1
-        If cboitemcode.Text = cboitemcode.List(i) Then
-            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
-                cboitemcode.ListIndex = i
+    For i = 0 To CboItemCode.ListCount - 1
+        If CboItemCode.Text = CboItemCode.List(i) Then
+            If CboItemCode.Column(1) = CboItemCode.List(i, 1) Then
+                CboItemCode.ListIndex = i
                 cboitemcode_Click
                 Exit For
             End If
@@ -1583,11 +1711,11 @@ Private Sub cboItemCode_LostFocus()
 End Sub
 
 Private Sub cmdBrowser_Click()
- If cboitemcode.Enabled = True Then
+ If CboItemCode.Enabled = True Then
   Me.MousePointer = vbHourglass
-  frm_BrowseItem.getItemCode = cboitemcode.Text
+  frm_BrowseItem.getItemCode = CboItemCode.Text
   frm_BrowseItem.Show 1
-  cboitemcode.Text = frm_BrowseItem.getItemCode
+  CboItemCode.Text = frm_BrowseItem.getItemCode
   Me.MousePointer = vbDefault
  End If
 End Sub
@@ -1598,7 +1726,8 @@ Private Sub Form_Load()
     
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
-        
+    
+    adcboCompany
     adtocboCust
     adtocboGroup
     
@@ -1610,14 +1739,19 @@ Private Sub Form_Load()
     NC = GetPrivateProfileString("StartDaily", "Date", "", Ret, 255, IniFile)
     If NC <> 0 Then Ret = Left$(Ret, NC)
     startDaily = Ret
+    
+    With Anchor1
+      .RegString = "AnchorCtrl,Positions," & Me.Name & "0|0"
+      .DoInit
+    End With
 End Sub
 
 Private Sub cboCust_Click()
-    If cbocust.ListIndex <> -1 Then
-        lblcust.Caption = cbocust.Column(1)
+    If cboCust.ListIndex <> -1 Then
+        lblCust.Caption = cboCust.Column(1)
         adtocbolinecd
     End If
-    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
+    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     Else
         Header
@@ -1633,7 +1767,7 @@ Private Sub cbolinecd_Click()
     If cbolinecd.ListIndex <> -1 Then
         lbllinecd.Caption = cbolinecd.Column(1)
     End If
-    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
+    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     Else
         Header
@@ -1652,7 +1786,7 @@ Private Sub scheduledate1_Change()
       lblErrMsg.Caption = ""
    End If
     
-    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
+    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     End If
 End Sub
@@ -1664,15 +1798,15 @@ Private Sub scheduledate2_Change()
    Else
       lblErrMsg.Caption = ""
    End If
-    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
+    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     End If
 End Sub
 
 Private Sub txtqty_Change()
-If txtqty <> "" Then
+If txtQty <> "" Then
     TxtSerialFrom = StrStartSerial
-    If TxtSerialFrom <> "" Then TxtSerialTo = GetSerialTo(Trim(TxtSerialFrom), txtqty)
+    If TxtSerialFrom <> "" Then TxtSerialTo = GetSerialTo(Trim(TxtSerialFrom), txtQty)
 End If
 End Sub
 
@@ -1695,26 +1829,26 @@ With grid
 
     If TextGrid = "S" Then
         Status = "update"
-        cboitemcode.Text = .TextMatrix(Row, bteColProdCode)
-        cboitemcode.Enabled = False
-        lblPart.Text = .TextMatrix(Row, bteColPart)
+        CboItemCode.Text = .TextMatrix(Row, bteColProdCode)
+        CboItemCode.Enabled = False
+        LblPart.Text = .TextMatrix(Row, bteColPart)
         lbldesc.Text = .TextMatrix(Row, bteColDesc)
-        txtlotno.Text = .TextMatrix(Row, bteColLotNo)
+        TxtLotNo.Text = .TextMatrix(Row, bteColLotNo)
         lbllotno = .TextMatrix(Row, bteColLotNo)
         
         If InStr(1, .TextMatrix(Row, bteColQty), ".") > 0 Then
-            txtqty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
+            txtQty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
         Else
-            txtqty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
+            txtQty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
         End If
         lblQty = CDbl(.TextMatrix(Row, bteColQty))
                         
         lblunit1.Caption = .TextMatrix(Row, bteColUnitCls)
-        lblunit.Caption = .TextMatrix(Row, bteColUnit)
+        lblUnit.Caption = .TextMatrix(Row, bteColUnit)
         scheduledate.Value = .TextMatrix(Row, bteColDate)
         lblschdate = .TextMatrix(Row, bteColDate)
         txtremark1.Text = .TextMatrix(Row, bteColRemark)
-        txtseqno.Text = .TextMatrix(Row, bteColSeqNo)
+        TxtSeqNo.Text = .TextMatrix(Row, bteColSeqNo)
         TxtSerialFrom = .TextMatrix(Row, BteColSerialFrom)
         TxtSerialTo = .TextMatrix(Row, BteColSerialTo)
        Call kosongColGrid
@@ -1799,8 +1933,8 @@ Select Case Index
   Case 0:   If hakUpdate(Me.Name) = 0 Then _
             lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
             
-            If cbocust.Text = "" Then
-              cbocust.SetFocus
+            If cboCust.Text = "" Then
+              cboCust.SetFocus
               lblErrMsg = DisplayMsg(1040)  '"Please Select Factory Code"
               Exit Sub
             ElseIf cbolinecd.Text = "" Then
@@ -1809,23 +1943,23 @@ Select Case Index
               Exit Sub
             End If
                         
-            If cbocust.Text <> "" Then
-                cbocust.MatchEntry = 1
-                cbocust.Text = cbocust.Text
-                If cbocust.MatchFound = False Then
+            If cboCust.Text <> "" Then
+                cboCust.MatchEntry = 1
+                cboCust.Text = cboCust.Text
+                If cboCust.matchFound = False Then
                     lblErrMsg = DisplayMsg(4016)    'Record with this Factory code not found
-                    cbocust.SetFocus
-                    cbocust.MatchEntry = 2
+                    cboCust.SetFocus
+                    cboCust.MatchEntry = 2
                     Exit Sub
                 End If
-                cbocust.MatchEntry = 2
+                cboCust.MatchEntry = 2
             End If
             
                         
             If cbolinecd.Text <> "" Then
                 cbolinecd.MatchEntry = 1
                 cbolinecd.Text = cbolinecd.Text
-                If cbolinecd.MatchFound = False Then
+                If cbolinecd.matchFound = False Then
                     lblErrMsg = DisplayMsg(4017)    'Record With this Machine No. not found
                     cbolinecd.SetFocus
                     cbolinecd.MatchEntry = 2
@@ -1846,17 +1980,17 @@ Select Case Index
                                        
                            
                 
-            If cboitemcode.Text <> "" Then
-                cboitemcode.MatchEntry = 1
-                cboitemcode.Text = cboitemcode.Text
-                If cboitemcode.MatchFound = False Then
+            If CboItemCode.Text <> "" Then
+                CboItemCode.MatchEntry = 1
+                CboItemCode.Text = CboItemCode.Text
+                If CboItemCode.matchFound = False Then
                     '**** cek Data cocok / tdk dgn Database
                     Dim rsDB As New ADODB.Recordset
-                    rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(cboitemcode.Text) & "'", Db, adOpenKeyset, adLockOptimistic
+                    rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(CboItemCode.Text) & "'", Db, adOpenKeyset, adLockOptimistic
                     If rsDB.EOF = True Then
                         lblErrMsg = DisplayMsg(4003)    'Record With this Product No. not found
-                        cboitemcode.SetFocus
-                        cboitemcode.MatchEntry = 2
+                        CboItemCode.SetFocus
+                        CboItemCode.MatchEntry = 2
                         Exit Sub
                     End If
                     rsDB.Close
@@ -2021,11 +2155,11 @@ Select Case Index
                 End If
                 
                 'Validasi Schedule Date
-                sql1 = "select * from calendar_master where factory_code = '" & cbocust.Text & "' and cal_date = '" & CDate(scheduledate.Value) & "'"
+                sql1 = "select * from calendar_master where factory_code = '" & cboCust.Text & "' and cal_date = '" & CDate(scheduledate.Value) & "'"
                 Set rs1 = Db.Execute(sql1)
                 If Not (rs1.BOF And rs1.EOF) Then
                   lblErrMsg.Caption = DisplayMsg(1022)
-                  command1(3).SetFocus
+                  Command1(3).SetFocus
                   Exit Sub
                 'Bila ada perubahan Schedule Date maka perubahan harus tetap dalam Bulan atau Tahun yg sama
                 ElseIf ubah And Not (Month(scheduledate.Value) = Month(lblschdate) And Year(scheduledate.Value) = Year(lblschdate)) Then
@@ -2035,30 +2169,30 @@ Select Case Index
                    If Not rs1.EOF Then
                         If rs1("Qtyresult") > 0 Then
                             lblErrMsg.Caption = DisplayMsg(1022)
-                            command1(3).SetFocus
+                            Command1(3).SetFocus
                             Exit Sub
                         End If
                    End If
                 End If
                 
-                If cboitemcode.Text <> "" Or txtqty.Text <> "" Or txtremark1.Text <> "" Or txtlotno.Text <> "" Then
+                If CboItemCode.Text <> "" Or txtQty.Text <> "" Or txtremark1.Text <> "" Or TxtLotNo.Text <> "" Then
                 
-                    If cboitemcode.Text = "" Then
-                       cboitemcode.SetFocus
+                    If CboItemCode.Text = "" Then
+                       CboItemCode.SetFocus
                        lblErrMsg = DisplayMsg(1024)  '"Please Select Product code"
                        Exit Sub
-                    ElseIf txtlotno = "" Then
-                       txtlotno.SetFocus
+                    ElseIf TxtLotNo = "" Then
+                       TxtLotNo.SetFocus
                        lblErrMsg = " [2008] Please Input LOT Number "
                        Exit Sub
-                    ElseIf CDbl(txtqty.Text) = 0 Then
-                       txtqty.SetFocus
+                    ElseIf CDbl(txtQty.Text) = 0 Then
+                       txtQty.SetFocus
                        SendKeys "{home}"
                        SendKeys "+{end}"
                        lblErrMsg = DisplayMsg(1012) '"Please Input Quantity"
                        Exit Sub
-                    ElseIf CDbl(txtqty.Text) > gd_MaxQty Then
-                       txtqty.SetFocus
+                    ElseIf CDbl(txtQty.Text) > gd_MaxQty Then
+                       txtQty.SetFocus
                        lblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
                        Exit Sub
                     Else
@@ -2085,7 +2219,7 @@ Select Case Index
                             Exit Sub
                         End If
                         
-                        If (akhir - awal) + 1 <> CDbl(txtqty) Then
+                        If (akhir - awal) + 1 <> CDbl(txtQty) Then
                             lblErrMsg = "[000] - Data doesn't match between Qty and Serial No ! "
                             Me.MousePointer = vbDefault
                             Exit Sub
@@ -2110,7 +2244,7 @@ Select Case Index
                                 For X = awal To akhir
                                     TempSerial = Depan & Format(X, String(Panjang - 1, "0"))
                                 ' sql1 = "Select * from Serial_Detail where item_code='" & cboitemcode.Text & "' and "
-                                   sql1 = "Select * from Serial_Detail where --item_code='" & cboitemcode.Text & "' and " & vbCrLf & _
+                                   sql1 = "Select * from Serial_Detail where --item_code='" & CboItemCode.Text & "' and " & vbCrLf & _
                                     " Serial_NO='" & TempSerial & "' "
                                     Set rsCek = Db.Execute(sql1)
                                     If Not rsCek.EOF Then
@@ -2123,7 +2257,7 @@ Select Case Index
 '                                        lblErrMsg = "[000] - Serial Number " & TempSerial & " doesn't Exist at Order Data !!! "
 '                                        Me.MousePointer = vbDefault
 '                                        Exit Sub
-                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(cboitemcode) & "'," & _
+                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(CboItemCode) & "'," & _
                                         vbLf & "'" & Trim(TempSerial) & "','',0,'1')"
                                         dbw.Execute (sql1)
                                         SerialStatus = True
@@ -2133,7 +2267,7 @@ Select Case Index
                                 ' -------------------------
                        
                             sql1 = "select a.*, b.item_name from daily_production a left join item_master b on b.item_code=a.item_code " & _
-                                      "where a.factory_code='" & cbocust.Text & "' and " & _
+                                      "where a.factory_code='" & cboCust.Text & "' and " & _
                                       "a.line_code='" & cbolinecd.Text & "' and a.schedule_date>='" & Format(scheduledate1.Value, "yyyymmdd") & _
                                       "' and a.schedule_date<='" & Format(scheduledate2.Value, "yyyymmdd") & "' order by a.schedule_date, a.item_code, a.lot_no, a.seq_no"
 
@@ -2143,9 +2277,9 @@ Select Case Index
 
                             'TAMBAHKAN RECORD BARU KE DAILY_PRODUCTION
                             rsUpdate.AddNew
-                            rsUpdate("factory_Code") = cbocust.Text
+                            rsUpdate("factory_Code") = cboCust.Text
                             rsUpdate("line_code") = cbolinecd.Text
-                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & seqNo
+                            rsUpdate("prod_barcode") = Trim(cboCust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & seqNo
                             
                             NO = seqNo
                             rsUpdate("seq_no") = NO ' Udah mo nyimpen Niy
@@ -2163,7 +2297,7 @@ Select Case Index
                                 
                                 sql1 = " select * From ( " & vbLf & _
                                     " Select * From Serial_Detail Where Po_SeqNo is not null ) n " & vbLf & _
-                                    " Where Item_Code='" & cboitemcode.Text & "' and Serial_No='" & TempSerial & "' and product_No <>'" & txtseqno & "'"
+                                    " Where Item_Code='" & CboItemCode.Text & "' and Serial_No='" & TempSerial & "' and product_No <>'" & TxtSeqNo & "'"
                                 
 '                                sql1 = " Select * From " & _
 '                                    vbLf & " (Select * from Serial_Detail where item_code='" & cboItemCode.Text & "' and " & _
@@ -2178,7 +2312,7 @@ Select Case Index
                                         Exit Sub
                                     End If
                                 Else
-                                    sql1 = "Select * From Serial_Detail Where Item_Code='" & cboitemcode & "' And " & _
+                                    sql1 = "Select * From Serial_Detail Where Item_Code='" & CboItemCode & "' And " & _
                                             "Serial_No='" & TempSerial & "'"
                                     Set rsCek = Db.Execute(sql1)
                                     If rsCek.EOF Then
@@ -2186,7 +2320,7 @@ Select Case Index
 '                                        Me.MousePointer = vbDefault
 '                                        Exit Sub
 
-                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(cboitemcode) & "'," & _
+                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(CboItemCode) & "'," & _
                                         vbLf & "'" & Trim(TempSerial) & "','',0,'1')"
                                         dbw.Execute (sql1)
                                         
@@ -2197,17 +2331,17 @@ Select Case Index
                         End If
                         ' -------------------------
                        
-                            sqlGrid = "select * from daily_production where seq_no='" & txtseqno.Text & "' " & _
+                            sqlGrid = "select * from daily_production where seq_no='" & TxtSeqNo.Text & "' " & _
                                       "order by schedule_date, item_code, lot_no, seq_no"
                             If rsUpdate.State <> adStateClosed Then rsUpdate.Close
                             rsUpdate.Open sqlGrid, dbw, adOpenKeyset, adLockOptimistic
-                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & txtseqno.Text
+                            rsUpdate("prod_barcode") = Trim(cboCust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & TxtSeqNo.Text
                        End If
                        
-                       rsUpdate("item_Code") = cboitemcode.Text
-                       rsUpdate("lot_no") = txtlotno.Text
+                       rsUpdate("item_Code") = CboItemCode.Text
+                       rsUpdate("lot_no") = TxtLotNo.Text
                        rsUpdate("schedule_date") = Format(scheduledate.Value, "YYYY-MM-DD")
-                       rsUpdate("qty") = txtqty.Text
+                       rsUpdate("qty") = txtQty.Text
                        rsUpdate("unit_cls") = lblunit1.Caption
                        rsUpdate("remark") = txtremark1.Text
                        rsUpdate("SerialNoFrom") = TxtSerialFrom     ' Add 20090207
@@ -2220,7 +2354,7 @@ Select Case Index
                         ' Save and update Serial Number Status - 20090210
                         
                         sql1 = "Update Serial_Detail Set Product_No=NULL, " & _
-                                 " Serial_Status = '1' Where item_Code='" & cboitemcode.Text & "' And " & _
+                                 " Serial_Status = '1' Where item_Code='" & CboItemCode.Text & "' And " & _
                                  " Product_No='" & rsUpdate("seq_no") & "'"
                         dbw.Execute (sql1)
                         
@@ -2229,7 +2363,7 @@ Select Case Index
                            For X = awal To akhir
                                 TempSerial = Depan & Format(X, String(Panjang - 1, "0"))
                                 sql1 = "Update Serial_Detail Set Product_No='" & rsUpdate("seq_no") & "' , " & _
-                                         " Serial_Status = '2' Where item_Code='" & cboitemcode.Text & "' And " & _
+                                         " Serial_Status = '2' Where item_Code='" & CboItemCode.Text & "' And " & _
                                          " Serial_No='" & TempSerial & "'"
                                 dbw.Execute (sql1)
                             Next X
@@ -2272,15 +2406,15 @@ Select Case Index
                 End If
     Case 1
         Command1_Click 3
-        cbocust = ""
-        lblcust = ""
+        cboCust = ""
+        lblCust = ""
         cboCust_Click
         cbolinecd = ""
         lbllinecd = ""
         scheduledate1.Value = Date
         scheduledate2.Value = Date
     Case 2:
-            If cbocust.Text <> "" Then
+            If cboCust.Text <> "" Then
             
             Dim application As New CRAXDDRT.application
             Dim report As New CRAXDDRT.report
@@ -2292,9 +2426,9 @@ Select Case Index
             
             SqlRpt = "select rtrim(a.factory_code) as factory_code, rtrim(a.line_code) as line_code, a.schedule_date, " & _
                      "rtrim(a.item_code) as item_code, rtrim(a.lot_no) as lot_no, a.seq_no, a.qty,rtrim(a.serialNoFrom) as serialNoFrom,rTrim(a.SerialNoTo) as SerialNoTo, rtrim(a.unit_cls) as unit_cls, (select description from unit_cls uc where uc.unit_cls=a.unit_cls) unit_desc,rtrim(a.remark) as remark1, " & _
-                     "b.makeritem_code, b.item_name, (select trade_name from trade_master where trade_code = '" & cbocust.Text & "') factory_name " & _
+                     "b.makeritem_code, b.item_name, (select trade_name from trade_master where trade_code = '" & cboCust.Text & "') factory_name " & _
                      "from daily_production a left join item_master b on b.item_code=a.item_code " & _
-                     "where a.factory_code='" & cbocust.Text & "' and " & _
+                     "where a.factory_code='" & cboCust.Text & "' and " & _
                      "a.line_code='" & cbolinecd.Text & "' and a.schedule_date>='" & Format(scheduledate1.Value, "yyyymmdd") & _
                      "' and a.schedule_date<='" & Format(scheduledate2.Value, "yyyymmdd") & "' order by a.schedule_date, a.item_code, a.lot_no, a.seq_no"
 
@@ -2361,15 +2495,15 @@ End Sub
 
 
 Private Sub txtQty_LostFocus()
-    If IsNumeric(txtqty.Text) Then
-        txtqty.Text = Format(txtqty.Text, gs_formatQty)
+    If IsNumeric(txtQty.Text) Then
+        txtQty.Text = Format(txtQty.Text, gs_formatQty)
     Else
-        txtqty.Text = Format(0, gs_formatQty)
+        txtQty.Text = Format(0, gs_formatQty)
     End If
 End Sub
 
 Private Sub TxtSerialFrom_LostFocus()
-If TxtSerialFrom <> "" Then TxtSerialTo.Text = GetSerialTo(Trim(TxtSerialFrom), txtqty)
+If TxtSerialFrom <> "" Then TxtSerialTo.Text = GetSerialTo(Trim(TxtSerialFrom), txtQty)
 If TxtSerialFrom = "" Then TxtSerialTo = ""
 End Sub
 
@@ -2382,7 +2516,7 @@ Dim LongAwal As Long
 
 'On Error Resume Next
 
-strSQL = "Select * From Item_Master Where Item_Code='" & Trim(cboitemcode) & "'"
+strSQL = "Select * From Item_Master Where Item_Code='" & Trim(CboItemCode) & "'"
 Set RsSerial = Db.Execute(strSQL)
 
 If RsSerial.EOF Then
@@ -2431,10 +2565,10 @@ Dim strSQL As String, seqNo As Integer
 lblErrMsg.Caption = ""
 
 
-If txtseqno.Text = "" Then
+If TxtSeqNo.Text = "" Then
     seqNo = 0
 Else
-    seqNo = txtseqno.Text
+    seqNo = TxtSeqNo.Text
 End If
 
 strSQL = "exec SP_DailyProductionEntry_Validasi_SerialNo " & seqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "

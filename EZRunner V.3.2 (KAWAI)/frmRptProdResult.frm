@@ -28,8 +28,8 @@ Begin VB.Form frmRptProdResult
       Height          =   375
       Left            =   6818
       Style           =   1  'Graphical
-      TabIndex        =   5
-      Top             =   4155
+      TabIndex        =   6
+      Top             =   4395
       Width           =   1185
    End
    Begin VB.CommandButton cmdSubMenu 
@@ -38,22 +38,22 @@ Begin VB.Form frmRptProdResult
       Height          =   375
       Left            =   353
       Style           =   1  'Graphical
-      TabIndex        =   6
-      Top             =   4155
+      TabIndex        =   7
+      Top             =   4395
       Width           =   1140
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   2040
+      Height          =   2400
       Left            =   353
-      TabIndex        =   11
-      Top             =   1290
+      TabIndex        =   12
+      Top             =   1200
       Width           =   8895
       Begin MSComCtl2.DTPicker dtAwal 
          Height          =   330
          Left            =   1860
-         TabIndex        =   2
-         Top             =   1335
+         TabIndex        =   3
+         Top             =   1815
          Width           =   1530
          _ExtentX        =   2699
          _ExtentY        =   582
@@ -68,14 +68,14 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   293535747
+         Format          =   121176067
          CurrentDate     =   37860
       End
       Begin MSComCtl2.DTPicker dtAkhir 
          Height          =   330
          Left            =   3795
-         TabIndex        =   3
-         Top             =   1335
+         TabIndex        =   4
+         Top             =   1815
          Width           =   1530
          _ExtentX        =   2699
          _ExtentY        =   582
@@ -90,15 +90,64 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   293535747
+         Format          =   121176067
          CurrentDate     =   37799
+      End
+      Begin VB.Line Line8 
+         Index           =   2
+         X1              =   3465
+         X2              =   8625
+         Y1              =   660
+         Y2              =   660
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         Height          =   195
+         Index           =   3
+         Left            =   240
+         TabIndex        =   20
+         Top             =   420
+         Width           =   1335
+      End
+      Begin VB.Label lblCompany 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Description"
+         Height          =   195
+         Index           =   2
+         Left            =   3465
+         TabIndex        =   19
+         Top             =   420
+         Width           =   960
+      End
+      Begin MSForms.ComboBox cboCompany 
+         Height          =   330
+         Index           =   2
+         Left            =   1830
+         TabIndex        =   0
+         Top             =   360
+         Width           =   1530
+         VariousPropertyBits=   746604571
+         MaxLength       =   6
+         DisplayStyle    =   3
+         Size            =   "2699;582"
+         ListRows        =   15
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         Value           =   "AAAAAA"
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
       End
       Begin VB.Line Line8 
          Index           =   1
          X1              =   3495
          X2              =   8670
-         Y1              =   1155
-         Y2              =   1155
+         Y1              =   1635
+         Y2              =   1635
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -107,8 +156,8 @@ Begin VB.Form frmRptProdResult
          Height          =   195
          Index           =   2
          Left            =   270
-         TabIndex        =   17
-         Top             =   915
+         TabIndex        =   18
+         Top             =   1395
          Width           =   1065
       End
       Begin VB.Label lblNm 
@@ -118,16 +167,16 @@ Begin VB.Form frmRptProdResult
          Height          =   195
          Index           =   1
          Left            =   3495
-         TabIndex        =   16
-         Top             =   915
+         TabIndex        =   17
+         Top             =   1395
          Width           =   960
       End
       Begin MSForms.ComboBox cbo 
          Height          =   330
          Index           =   1
          Left            =   1860
-         TabIndex        =   1
-         Top             =   855
+         TabIndex        =   2
+         Top             =   1335
          Width           =   1530
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -146,8 +195,8 @@ Begin VB.Form frmRptProdResult
          Height          =   330
          Index           =   0
          Left            =   1860
-         TabIndex        =   0
-         Top             =   375
+         TabIndex        =   1
+         Top             =   855
          Width           =   1530
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -169,8 +218,8 @@ Begin VB.Form frmRptProdResult
          Height          =   195
          Index           =   2
          Left            =   3495
-         TabIndex        =   15
-         Top             =   1410
+         TabIndex        =   16
+         Top             =   1890
          Width           =   165
       End
       Begin VB.Label lblNm 
@@ -180,8 +229,8 @@ Begin VB.Form frmRptProdResult
          Height          =   195
          Index           =   0
          Left            =   3495
-         TabIndex        =   14
-         Top             =   435
+         TabIndex        =   15
+         Top             =   915
          Width           =   960
       End
       Begin VB.Label Label1 
@@ -191,16 +240,16 @@ Begin VB.Form frmRptProdResult
          Height          =   195
          Index           =   0
          Left            =   270
-         TabIndex        =   13
-         Top             =   435
+         TabIndex        =   14
+         Top             =   915
          Width           =   1140
       End
       Begin VB.Line Line8 
          Index           =   0
          X1              =   3495
          X2              =   8655
-         Y1              =   675
-         Y2              =   675
+         Y1              =   1155
+         Y2              =   1155
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -209,8 +258,8 @@ Begin VB.Form frmRptProdResult
          Height          =   195
          Index           =   1
          Left            =   270
-         TabIndex        =   12
-         Top             =   1410
+         TabIndex        =   13
+         Top             =   1890
          Width           =   1365
       End
    End
@@ -218,8 +267,8 @@ Begin VB.Form frmRptProdResult
       BackColor       =   &H00FDDFE3&
       Height          =   600
       Left            =   353
-      TabIndex        =   9
-      Top             =   3390
+      TabIndex        =   10
+      Top             =   3630
       Width           =   8895
       Begin VB.Label LblErrMsg 
          Alignment       =   2  'Center
@@ -237,7 +286,7 @@ Begin VB.Form frmRptProdResult
          ForeColor       =   &H00FF00FF&
          Height          =   285
          Left            =   105
-         TabIndex        =   10
+         TabIndex        =   11
          Top             =   195
          Width           =   8670
       End
@@ -248,19 +297,19 @@ Begin VB.Form frmRptProdResult
       Height          =   375
       Left            =   8063
       Style           =   1  'Graphical
-      TabIndex        =   4
-      Top             =   4155
+      TabIndex        =   5
+      Top             =   4395
       Width           =   1185
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
       Left            =   7410
-      TabIndex        =   7
+      TabIndex        =   8
       TabStop         =   0   'False
       Top             =   450
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VB.Label lblJudul 
       Alignment       =   2  'Center
@@ -279,7 +328,7 @@ Begin VB.Form frmRptProdResult
       ForeColor       =   &H00800000&
       Height          =   330
       Left            =   3375
-      TabIndex        =   8
+      TabIndex        =   9
       Top             =   450
       Width           =   2865
    End
@@ -299,15 +348,18 @@ Dim QtyLoss As Double, GrandLoss As Double
 Sub isiCboCust() 'Isi Combo Dealer CD dr Customer Master
 Dim RsCust As New ADODB.Recordset 'Data Customer
 
-With Cbo(0)
+With cbo(0)
     .clear
     .columnCount = 2
     .TextColumn = 1
     
     '******** Ambil dr Customer Master utk Combo Dealer CD
-    sql = "select Trade_Code,Trade_Name from Trade_Master " & _
-        "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
-        "order by Trade_Code"
+'    sql = "select Trade_Code,Trade_Name from Trade_Master " & _
+'        "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
+'        "order by Trade_Code"
+
+     sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany(2).Text & "'"
+     
     Set RsCust = Db.Execute(sql)
     
     i = 0
@@ -327,10 +379,14 @@ With Cbo(0)
 End With
 End Sub
 
+Sub adcboCompany()
+    FillCompanyCombo cboCompany(2)
+End Sub
+
 Sub isiCboWH()
 Dim rscbo As New ADODB.Recordset
 
-With Cbo(1)
+With cbo(1)
     .clear
     .columnCount = 2
     .TextColumn = 1
@@ -379,6 +435,14 @@ Sub GrandTotal(xl As Excel.application, Row As Long, Col As String, Col2 As Stri
     End With
 End Sub
 
+Private Sub cboCompany_Click(Index As Integer)
+    If cboCompany(2).ListIndex <> -1 Then
+        lblCompany(2).Caption = cboCompany(2).Column(1)
+        isiCboCust
+        isiCboWH
+    End If
+End Sub
+
 Private Sub CmdExcel_Click()
     Dim xlapp As New Excel.application
     Dim rsCek As New Recordset, Idx As Long, tempi As String, tempcls As String
@@ -408,11 +472,11 @@ Private Sub CmdExcel_Click()
                 vbLf & " Where A.Item_Code = B.Item_Code and a.Supplier_Code = c.Trade_Code and receipt_cls <> 'P1' " & _
                 vbLf & " and ProductionResult_Cls = '1' And a.DailySeq_No = d.Seq_No " & _
                 vbLf & " group by a.supplier_code,a.warehouse_code,po_no,a.item_code,b.makeritem_code,b.Item_Name,c.Trade_Name,receipt_Date,suratjalan_no,remarks, d.schedule_date,a.unit_cls,d.qty, d.seq_No, b.wh_code, d.serialNoFrom,d.SerialNoTo) dt " & _
-                vbLf & " where supplier_code= '" & Cbo(0) & "' " & _
+                vbLf & " where supplier_code= '" & cbo(0) & "' " & _
                 vbLf & " and receipt_Date > = '" & Format(dtAwal, "yyyy-MM-dd") & "'" & _
                 vbLf & " and receipt_Date < = '" & Format(dtAkhir, "yyyy-MM-dd") & "'"
 
-            If Cbo(1) <> strAll Then sql = sql & " and wh_code = '" & Cbo(1) & "' "
+            If cbo(1) <> strAll Then sql = sql & " and wh_code = '" & cbo(1) & "' "
             sql = sql & " order by supplier_code, po_no, receipt_date, item_wh, item_code "
     
     If rsCek.State <> adStateClosed Then rsCek.Close
@@ -484,9 +548,9 @@ Private Sub CmdExcel_Click()
                 tempLine = rsCek!po_no
                 
                 'Content
-                .Range("a" & Idx).HorizontalAlignment = xlCenter
+                .Range("a" & Idx).horizontalAlignment = xlCenter
                 .Range("a" & Idx) = Format(rsCek!Receipt_Date, "DD-MMM-YYYY")
-                .Range("b" & Idx).HorizontalAlignment = xlCenter
+                .Range("b" & Idx).horizontalAlignment = xlCenter
                 .Range("b" & Idx) = Format(rsCek!schedule_date, "DD-MMM-YYYY")
                 .Range("c" & Idx) = Trim(rsCek!Item_Code)
                 .Range("d" & Idx) = Trim(rsCek!MakerItem_Code)
@@ -522,8 +586,8 @@ Private Sub CmdExcel_Click()
             .Range("a2", "m2").Columns.Font.Name = "Arial"
             .Range("a2", "m2").Columns.Font.Size = "10"
             .Range("a2", "m2").Columns.Font.Bold = True
-            .Range("a2", "m2").HorizontalAlignment = xlCenter
-            .Range("c8", "c8").HorizontalAlignment = xlCenter
+            .Range("a2", "m2").horizontalAlignment = xlCenter
+            .Range("c8", "c8").horizontalAlignment = xlCenter
 
             .ActiveSheet.PageSetup.Orientation = 2
             .WindowState = xlMaximized
@@ -546,8 +610,17 @@ Private Sub Form_Load()
     lblNm(1) = ""
     dtAwal = Now
     dtAkhir = Now
-    Call isiCboCust
-    Call isiCboWH
+    
+    cbo(0) = ""
+    cbo(1) = ""
+    
+    cboCompany(2).Text = ""
+    lblCompany(2).Caption = ""
+    
+    adcboCompany
+    
+'    Call isiCboCust
+'    Call isiCboWH
 End Sub
 
 Private Sub cbo_KeyDown(Index As Integer, KeyCode As MSForms.ReturnInteger, Shift As Integer)
@@ -555,9 +628,9 @@ Private Sub cbo_KeyDown(Index As Integer, KeyCode As MSForms.ReturnInteger, Shif
 End Sub
 
 Public Sub cbo_Click(Index As Integer)
-    Cbo(Index) = Cbo(Index)
-    If Cbo(Index).MatchFound Then
-        lblNm(Index) = Cbo(Index).Column(1)
+    cbo(Index) = cbo(Index)
+    If cbo(Index).matchFound Then
+        lblNm(Index) = cbo(Index).Column(1)
         LblErrMsg = ""
     Else
         lblNm(Index) = ""
@@ -600,14 +673,14 @@ Dim Rpt As New FrmRpt3
 
     Me.MousePointer = vbHourglass
     
-    If Cbo(0) = "" Then
+    If cbo(0) = "" Then
         LblErrMsg = DisplayMsg(1040)
-        Cbo(0).SetFocus
+        cbo(0).SetFocus
     Else
-        Cbo(0) = Cbo(0)
-        If Cbo(0).MatchFound = False Then
+        cbo(0) = cbo(0)
+        If cbo(0).matchFound = False Then
             LblErrMsg = DisplayMsg(4016)
-            Cbo(0).SetFocus
+            cbo(0).SetFocus
         Else
             LblErrMsg = ""
             
@@ -629,11 +702,11 @@ Dim Rpt As New FrmRpt3
                     vbLf & " Where A.Item_Code = B.Item_Code and a.Supplier_Code = c.Trade_Code and receipt_cls <> 'P1' " & _
                     vbLf & " and ProductionResult_Cls = '1' And a.DailySeq_No = d.Seq_No " & _
                     vbLf & " group by a.supplier_code,a.warehouse_code,po_no,a.item_code,b.makeritem_code,b.Item_Name,c.Trade_Name,receipt_Date,suratjalan_no,remarks, d.schedule_date,a.unit_cls,d.qty, d.seq_No, b.wh_code, d.serialNoFrom,d.SerialNoTo) dt " & _
-                    vbLf & " where supplier_code= '" & Cbo(0) & "' " & _
+                    vbLf & " where supplier_code= '" & cbo(0) & "' " & _
                     vbLf & " and receipt_Date > = '" & Format(dtAwal, "yyyy-MM-dd") & "'" & _
                     vbLf & " and receipt_Date < = '" & Format(dtAkhir, "yyyy-MM-dd") & "'"
             
-            If Cbo(1) <> strAll Then sql = sql & " and wh_code = '" & Cbo(1) & "' "
+            If cbo(1) <> strAll Then sql = sql & " and wh_code = '" & cbo(1) & "' "
             sql = sql & " order by supplier_code, po_no, receipt_date, item_wh, item_code "
 
             
@@ -695,5 +768,7 @@ Else
 End If
 End Sub
 '**************
+
+
 
 

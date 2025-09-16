@@ -3,8 +3,7 @@ Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmRptDailySchedule 
    BackColor       =   &H00FDDFE3&
-   Caption         =   "Production Result Report"
-   ClientHeight    =   4830
+   ClientHeight    =   4905
    ClientLeft      =   60
    ClientTop       =   450
    ClientWidth     =   10065
@@ -19,15 +18,14 @@ Begin VB.Form frmRptDailySchedule
    EndProperty
    Icon            =   "frmRptDailySchedule.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
-   ScaleHeight     =   4830
+   ScaleHeight     =   4905
    ScaleWidth      =   10065
    StartUpPosition =   2  'CenterScreen
    Begin VB.TextBox Text1 
       Height          =   285
       Left            =   3120
       MultiLine       =   -1  'True
-      TabIndex        =   17
+      TabIndex        =   18
       Top             =   4320
       Visible         =   0   'False
       Width           =   735
@@ -38,22 +36,22 @@ Begin VB.Form frmRptDailySchedule
       Height          =   375
       Left            =   600
       Style           =   1  'Graphical
-      TabIndex        =   5
-      Top             =   4080
+      TabIndex        =   6
+      Top             =   4320
       Width           =   1140
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   1770
+      Height          =   2175
       Left            =   600
-      TabIndex        =   10
-      Top             =   1380
+      TabIndex        =   11
+      Top             =   1320
       Width           =   8895
       Begin MSComCtl2.DTPicker dtAwal 
          Height          =   330
-         Left            =   1890
-         TabIndex        =   2
-         Top             =   1245
+         Left            =   1770
+         TabIndex        =   3
+         Top             =   1605
          Width           =   1695
          _ExtentX        =   2990
          _ExtentY        =   582
@@ -68,14 +66,14 @@ Begin VB.Form frmRptDailySchedule
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   138149891
+         Format          =   121044995
          CurrentDate     =   37860
       End
       Begin MSComCtl2.DTPicker dtAkhir 
          Height          =   330
-         Left            =   4020
-         TabIndex        =   3
-         Top             =   1245
+         Left            =   3900
+         TabIndex        =   4
+         Top             =   1605
          Width           =   1665
          _ExtentX        =   2937
          _ExtentY        =   582
@@ -90,15 +88,64 @@ Begin VB.Form frmRptDailySchedule
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   138149891
+         Format          =   121044995
          CurrentDate     =   37799
       End
       Begin VB.Line Line8 
+         Index           =   2
+         X1              =   3180
+         X2              =   8430
+         Y1              =   600
+         Y2              =   600
+      End
+      Begin VB.Label lblCompany 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Description"
+         Height          =   195
+         Index           =   2
+         Left            =   3188
+         TabIndex        =   20
+         Top             =   360
+         Width           =   960
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         Height          =   195
+         Index           =   3
+         Left            =   150
+         TabIndex        =   19
+         Top             =   360
+         Width           =   1335
+      End
+      Begin MSForms.ComboBox cboCompany 
+         Height          =   315
+         Index           =   2
+         Left            =   1740
+         TabIndex        =   0
+         Top             =   300
+         Width           =   1335
+         VariousPropertyBits=   746604571
+         MaxLength       =   6
+         DisplayStyle    =   3
+         Size            =   "2355;556"
+         ListRows        =   15
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         Value           =   "AAAAAA"
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Line Line8 
          Index           =   1
-         X1              =   3300
-         X2              =   8550
-         Y1              =   1065
-         Y2              =   1065
+         X1              =   3180
+         X2              =   8430
+         Y1              =   1440
+         Y2              =   1440
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -106,9 +153,9 @@ Begin VB.Form frmRptDailySchedule
          Caption         =   "Machine"
          Height          =   195
          Index           =   2
-         Left            =   270
-         TabIndex        =   16
-         Top             =   825
+         Left            =   150
+         TabIndex        =   17
+         Top             =   1185
          Width           =   690
       End
       Begin VB.Label lblNm 
@@ -117,17 +164,17 @@ Begin VB.Form frmRptDailySchedule
          Caption         =   "Description"
          Height          =   195
          Index           =   1
-         Left            =   3300
-         TabIndex        =   15
-         Top             =   825
+         Left            =   3180
+         TabIndex        =   16
+         Top             =   1200
          Width           =   960
       End
       Begin MSForms.ComboBox cbo 
          Height          =   315
          Index           =   1
-         Left            =   1860
-         TabIndex        =   1
-         Top             =   765
+         Left            =   1740
+         TabIndex        =   2
+         Top             =   1125
          Width           =   1335
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -144,9 +191,9 @@ Begin VB.Form frmRptDailySchedule
       Begin MSForms.ComboBox cbo 
          Height          =   315
          Index           =   0
-         Left            =   1860
-         TabIndex        =   0
-         Top             =   330
+         Left            =   1740
+         TabIndex        =   1
+         Top             =   700
          Width           =   1335
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -167,9 +214,9 @@ Begin VB.Form frmRptDailySchedule
          Caption         =   "to"
          Height          =   195
          Index           =   2
-         Left            =   3660
-         TabIndex        =   14
-         Top             =   1320
+         Left            =   3540
+         TabIndex        =   15
+         Top             =   1680
          Width           =   165
       End
       Begin VB.Label lblNm 
@@ -178,9 +225,9 @@ Begin VB.Form frmRptDailySchedule
          Caption         =   "Description"
          Height          =   195
          Index           =   0
-         Left            =   3300
-         TabIndex        =   13
-         Top             =   390
+         Left            =   3180
+         TabIndex        =   14
+         Top             =   750
          Width           =   960
       End
       Begin VB.Label Label1 
@@ -189,17 +236,17 @@ Begin VB.Form frmRptDailySchedule
          Caption         =   "Factory"
          Height          =   195
          Index           =   0
-         Left            =   270
-         TabIndex        =   12
-         Top             =   390
+         Left            =   150
+         TabIndex        =   13
+         Top             =   720
          Width           =   630
       End
       Begin VB.Line Line8 
          Index           =   0
-         X1              =   3300
-         X2              =   8550
-         Y1              =   630
-         Y2              =   630
+         X1              =   3180
+         X2              =   8430
+         Y1              =   990
+         Y2              =   990
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -207,9 +254,9 @@ Begin VB.Form frmRptDailySchedule
          Caption         =   "Production Date"
          Height          =   195
          Index           =   1
-         Left            =   270
-         TabIndex        =   11
-         Top             =   1320
+         Left            =   150
+         TabIndex        =   12
+         Top             =   1680
          Width           =   1365
       End
    End
@@ -217,8 +264,8 @@ Begin VB.Form frmRptDailySchedule
       BackColor       =   &H00FDDFE3&
       Height          =   600
       Left            =   600
-      TabIndex        =   8
-      Top             =   3270
+      TabIndex        =   9
+      Top             =   3600
       Width           =   8895
       Begin VB.Label LblErrMsg 
          Alignment       =   2  'Center
@@ -236,7 +283,7 @@ Begin VB.Form frmRptDailySchedule
          ForeColor       =   &H00FF00FF&
          Height          =   240
          Left            =   90
-         TabIndex        =   9
+         TabIndex        =   10
          Top             =   225
          Width           =   8985
       End
@@ -247,19 +294,19 @@ Begin VB.Form frmRptDailySchedule
       Height          =   375
       Left            =   8310
       Style           =   1  'Graphical
-      TabIndex        =   4
-      Top             =   4080
+      TabIndex        =   5
+      Top             =   4320
       Width           =   1185
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
       Left            =   7650
-      TabIndex        =   6
+      TabIndex        =   7
       TabStop         =   0   'False
       Top             =   540
       Width           =   1845
-      _ExtentX        =   3254
-      _ExtentY        =   714
+      _extentx        =   3254
+      _extenty        =   714
    End
    Begin VB.Label lblJudul 
       Alignment       =   2  'Center
@@ -278,7 +325,7 @@ Begin VB.Form frmRptDailySchedule
       ForeColor       =   &H00800000&
       Height          =   330
       Left            =   3135
-      TabIndex        =   7
+      TabIndex        =   8
       Top             =   540
       Width           =   3825
    End
@@ -304,8 +351,11 @@ With cbo(0)
     .TextColumn = 1
     
     '******** Ambil dr Customer Master utk Combo Dealer CD
-    sql = "select distinct(manufacture_code), trade_name from manufacture_line inner join trade_master " & _
-          "on trade_master.trade_code = manufacture_line.manufacture_code order by manufacture_code"
+'    sql = "select distinct(manufacture_code), trade_name from manufacture_line inner join trade_master " & _
+'          "on trade_master.trade_code = manufacture_line.manufacture_code order by manufacture_code"
+          
+    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany(2).Text & "'"
+    
     Set RsCust = Db.Execute(sql)
     
     i = 0
@@ -318,8 +368,8 @@ With cbo(0)
     Loop
     
     .Text = ""
-    .ListWidth = 350
-    .ColumnWidths = "50 pt;300 pt"
+    .ListWidth = 335
+    .ColumnWidths = "50 pt;285 pt"
     
     Set RsCust = Nothing
 End With
@@ -346,11 +396,22 @@ With cbo(1)
     Loop
     
     .Text = ""
-    .ListWidth = 350
-    .ColumnWidths = "50 pt;300 pt"
+     .ListWidth = 335
+    .ColumnWidths = "50 pt;285 pt"
     
     Set RsLine = Nothing
 End With
+End Sub
+
+Sub adcboCompany()
+    FillCompanyCombo cboCompany(2)
+End Sub
+
+Private Sub cboCompany_Click(Index As Integer)
+    If cboCompany(2).ListIndex <> -1 Then
+        lblCompany(2).Caption = cboCompany(2).Column(1)
+        isiCboCust
+    End If
 End Sub
 
 Private Sub Form_Load()
@@ -361,9 +422,15 @@ Private Sub Form_Load()
     cbo(1) = ""
     lblNm(0) = ""
     lblNm(1) = ""
+    
+    cboCompany(2).Text = ""
+    lblCompany(2).Caption = ""
+'    lblCompany = ""
+    
     dtAwal = Format(Now, "mmm 01 yyyy")
     dtAkhir = Now
     Call isiCboCust
+    Call adcboCompany
 End Sub
 
 Private Sub cbo_KeyDown(Index As Integer, KeyCode As MSForms.ReturnInteger, Shift As Integer)
@@ -372,7 +439,7 @@ End Sub
 
 Public Sub cbo_Click(Index As Integer)
     cbo(Index) = cbo(Index)
-    If cbo(Index).MatchFound Then
+    If cbo(Index).matchFound Then
         lblNm(Index) = cbo(Index).Column(1)
         LblErrMsg = ""
         If Index = 0 Then isiCboLine
@@ -429,10 +496,10 @@ Dim Rpt As New FrmRpt3
     Else
         cbo(0) = cbo(0)
         cbo(1) = cbo(1)
-        If cbo(0).MatchFound = False Then
+        If cbo(0).matchFound = False Then
             LblErrMsg = DisplayMsg(4016)
             cbo(0).SetFocus
-        ElseIf cbo(1).MatchFound = False Then
+        ElseIf cbo(1).matchFound = False Then
             LblErrMsg = DisplayMsg(4017)
             cbo(1).SetFocus
         Else
@@ -691,5 +758,6 @@ End If
 'sqlholiday = sqlholiday & ", (Select 0) Holiday" & i + 1 & ""
 
 End Sub
+
 
 

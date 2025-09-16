@@ -1331,3 +1331,33 @@ Dim rs1 As Recordset
  
 End Function
 
+Public Sub FillCompanyCombo(cbo As Object)
+    Dim sql As String
+    Dim RS As ADODB.Recordset
+    Dim i As Integer
+
+    sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile ORDER BY Company_Code"
+
+    Set RS = Db.Execute(sql)
+
+    With cbo
+        .clear
+        .columnCount = 2
+        .ColumnWidths = "50pt;175pt"
+        .ListWidth = 225
+        .ListRows = 15
+
+        i = 0
+        Do While Not RS.EOF
+            .AddItem
+            .List(i, 0) = Trim(RS("Company_Code"))
+            .List(i, 1) = IIf(IsNull(RS("Company_Name")), "", Trim(RS("Company_Name")))
+            RS.MoveNext
+            i = i + 1
+        Loop
+    End With
+
+    RS.Close
+    Set RS = Nothing
+End Sub
+

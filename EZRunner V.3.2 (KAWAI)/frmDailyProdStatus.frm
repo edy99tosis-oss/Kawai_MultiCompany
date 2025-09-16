@@ -20,7 +20,6 @@ Begin VB.Form frmDailyProdStatus
    EndProperty
    Icon            =   "frmDailyProdStatus.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    ScaleHeight     =   10980
    ScaleWidth      =   15120
    StartUpPosition =   2  'CenterScreen
@@ -32,7 +31,8 @@ Begin VB.Form frmDailyProdStatus
       Index           =   2
       Left            =   12780
       Style           =   1  'Graphical
-      TabIndex        =   10
+      TabIndex        =   11
+      Tag             =   "FFTT*/"
       Top             =   10005
       Width           =   1065
    End
@@ -43,7 +43,8 @@ Begin VB.Form frmDailyProdStatus
       Index           =   1
       Left            =   11640
       Style           =   1  'Graphical
-      TabIndex        =   9
+      TabIndex        =   10
+      Tag             =   "FFTT*/"
       Top             =   10005
       Width           =   1065
    End
@@ -53,8 +54,9 @@ Begin VB.Form frmDailyProdStatus
       Height          =   405
       Left            =   8970
       Style           =   1  'Graphical
-      TabIndex        =   5
-      Top             =   2460
+      TabIndex        =   6
+      Tag             =   "TTFF*/"
+      Top             =   2820
       Width           =   1065
    End
    Begin VB.CommandButton cmdReport 
@@ -63,7 +65,8 @@ Begin VB.Form frmDailyProdStatus
       Height          =   375
       Left            =   10485
       Style           =   1  'Graphical
-      TabIndex        =   8
+      TabIndex        =   9
+      Tag             =   "FFTT*/"
       Top             =   10005
       Width           =   1065
    End
@@ -74,7 +77,8 @@ Begin VB.Form frmDailyProdStatus
       Index           =   0
       Left            =   13935
       Style           =   1  'Graphical
-      TabIndex        =   7
+      TabIndex        =   8
+      Tag             =   "FFTT*/"
       Top             =   10005
       Width           =   1065
    End
@@ -84,7 +88,8 @@ Begin VB.Form frmDailyProdStatus
       Height          =   375
       Left            =   180
       Style           =   1  'Graphical
-      TabIndex        =   11
+      TabIndex        =   12
+      Tag             =   "TFFT*/"
       Top             =   10005
       Width           =   1140
    End
@@ -92,7 +97,8 @@ Begin VB.Form frmDailyProdStatus
       BackColor       =   &H00FDDFE3&
       Height          =   555
       Left            =   180
-      TabIndex        =   22
+      TabIndex        =   23
+      Tag             =   "TFTT*/"
       Top             =   9330
       Width           =   14865
       Begin VB.Label LblErrMsg 
@@ -111,7 +117,8 @@ Begin VB.Form frmDailyProdStatus
          ForeColor       =   &H00FF00FF&
          Height          =   240
          Left            =   105
-         TabIndex        =   23
+         TabIndex        =   24
+         Tag             =   "TFTT*/"
          Top             =   195
          Width           =   14640
       End
@@ -122,45 +129,102 @@ Begin VB.Form frmDailyProdStatus
       Left            =   7725
       List            =   "frmDailyProdStatus.frx":0E4C
       Style           =   2  'Dropdown List
-      TabIndex        =   4
-      Top             =   2505
+      TabIndex        =   5
+      Tag             =   "TTFF*/"
+      Top             =   2865
       Width           =   885
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   1170
+      Height          =   1650
       Left            =   180
-      TabIndex        =   14
+      TabIndex        =   15
+      Tag             =   "TTTF*/"
       Top             =   1125
       Width           =   14865
+      Begin VB.Line Line8 
+         Index           =   2
+         X1              =   3300
+         X2              =   8370
+         Y1              =   600
+         Y2              =   600
+      End
+      Begin VB.Label lblCompany 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Description"
+         Height          =   195
+         Index           =   2
+         Left            =   3300
+         TabIndex        =   26
+         Tag             =   "TTFF*/"
+         Top             =   360
+         Width           =   960
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         Height          =   195
+         Index           =   5
+         Left            =   240
+         TabIndex        =   25
+         Tag             =   "TTFF*/"
+         Top             =   360
+         Width           =   1335
+      End
+      Begin MSForms.ComboBox cboCompany 
+         Height          =   315
+         Index           =   2
+         Left            =   1860
+         TabIndex        =   0
+         Tag             =   "TTFF*/"
+         Top             =   300
+         Width           =   1335
+         VariousPropertyBits=   746604571
+         MaxLength       =   6
+         DisplayStyle    =   3
+         Size            =   "2355;556"
+         ListRows        =   15
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         Value           =   "AAAAAA"
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
       Begin VB.Label lblNm 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Description"
          Height          =   195
          Index           =   0
-         Left            =   2940
-         TabIndex        =   18
-         Top             =   300
+         Left            =   3300
+         TabIndex        =   19
+         Tag             =   "TTFF*/"
+         Top             =   780
          Width           =   960
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Machine No :"
+         Caption         =   "Machine No "
          Height          =   195
          Index           =   1
          Left            =   240
-         TabIndex        =   17
-         Top             =   750
-         Width           =   1110
+         TabIndex        =   18
+         Tag             =   "TTFF*/"
+         Top             =   1230
+         Width           =   1035
       End
       Begin MSForms.ComboBox cbo 
          Height          =   315
          Index           =   0
-         Left            =   1500
-         TabIndex        =   0
-         Top             =   240
+         Left            =   1860
+         TabIndex        =   1
+         Tag             =   "TTFF*/"
+         Top             =   720
          Width           =   1335
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -178,9 +242,10 @@ Begin VB.Form frmDailyProdStatus
       Begin MSForms.ComboBox cbo 
          Height          =   315
          Index           =   1
-         Left            =   1500
-         TabIndex        =   1
-         Top             =   690
+         Left            =   1860
+         TabIndex        =   2
+         Tag             =   "TTFF*/"
+         Top             =   1170
          Width           =   1335
          VariousPropertyBits=   746604571
          MaxLength       =   3
@@ -200,42 +265,45 @@ Begin VB.Form frmDailyProdStatus
          Caption         =   "Description"
          Height          =   195
          Index           =   1
-         Left            =   2940
-         TabIndex        =   16
-         Top             =   720
+         Left            =   3300
+         TabIndex        =   17
+         Tag             =   "TTFF*/"
+         Top             =   1200
          Width           =   960
       End
       Begin VB.Line Line8 
          Index           =   1
-         X1              =   2940
-         X2              =   4440
-         Y1              =   990
-         Y2              =   990
+         X1              =   3300
+         X2              =   4800
+         Y1              =   1470
+         Y2              =   1470
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Factory CD :"
+         Caption         =   "Factory Code"
          Height          =   195
          Index           =   0
          Left            =   240
-         TabIndex        =   15
-         Top             =   300
-         Width           =   1095
+         TabIndex        =   16
+         Tag             =   "TTFF*/"
+         Top             =   780
+         Width           =   1140
       End
       Begin VB.Line Line8 
          Index           =   0
-         X1              =   2940
-         X2              =   8010
-         Y1              =   540
-         Y2              =   540
+         X1              =   3300
+         X2              =   8370
+         Y1              =   1020
+         Y2              =   1020
       End
    End
    Begin MSComCtl2.DTPicker dtAwal 
       Height          =   330
       Left            =   1950
-      TabIndex        =   2
-      Top             =   2490
+      TabIndex        =   3
+      Tag             =   "TTFF*/"
+      Top             =   2850
       Width           =   1785
       _ExtentX        =   3149
       _ExtentY        =   582
@@ -250,14 +318,15 @@ Begin VB.Form frmDailyProdStatus
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   141230083
+      Format          =   121044995
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
       Height          =   330
       Left            =   4140
-      TabIndex        =   3
-      Top             =   2490
+      TabIndex        =   4
+      Tag             =   "TTFF*/"
+      Top             =   2850
       Width           =   1785
       _ExtentX        =   3149
       _ExtentY        =   582
@@ -272,18 +341,19 @@ Begin VB.Form frmDailyProdStatus
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   141230083
+      Format          =   121044995
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
-      Height          =   6255
+      Height          =   5895
       Left            =   180
-      TabIndex        =   6
+      TabIndex        =   7
       TabStop         =   0   'False
-      Top             =   3030
+      Tag             =   "TTTT*/"
+      Top             =   3390
       Width           =   14865
       _cx             =   26220
-      _cy             =   11033
+      _cy             =   10398
       Appearance      =   1
       BorderStyle     =   1
       Enabled         =   -1  'True
@@ -376,12 +446,19 @@ Begin VB.Form frmDailyProdStatus
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
       Left            =   13110
-      TabIndex        =   12
+      TabIndex        =   13
       TabStop         =   0   'False
+      Tag             =   "FTTF*/"
       Top             =   330
       Width           =   1845
-      _ExtentX        =   3254
-      _ExtentY        =   714
+      _extentx        =   3254
+      _extenty        =   714
+   End
+   Begin EZRunnerv3.Anchor Anchor1 
+      Left            =   0
+      Top             =   0
+      _ExtentX        =   847
+      _ExtentY        =   820
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
@@ -390,8 +467,9 @@ Begin VB.Form frmDailyProdStatus
       Height          =   195
       Index           =   4
       Left            =   6360
-      TabIndex        =   21
-      Top             =   2565
+      TabIndex        =   22
+      Tag             =   "TTFF*/"
+      Top             =   2925
       Width           =   1230
    End
    Begin VB.Label Label1 
@@ -401,8 +479,9 @@ Begin VB.Form frmDailyProdStatus
       Height          =   195
       Index           =   3
       Left            =   3840
-      TabIndex        =   20
-      Top             =   2565
+      TabIndex        =   21
+      Tag             =   "TTFF*/"
+      Top             =   2925
       Width           =   165
    End
    Begin VB.Label Label1 
@@ -412,8 +491,9 @@ Begin VB.Form frmDailyProdStatus
       Height          =   195
       Index           =   2
       Left            =   450
-      TabIndex        =   19
-      Top             =   2565
+      TabIndex        =   20
+      Tag             =   "TTFF*/"
+      Top             =   2925
       Width           =   1380
    End
    Begin VB.Label lblJudul 
@@ -432,7 +512,8 @@ Begin VB.Form frmDailyProdStatus
       ForeColor       =   &H00800000&
       Height          =   390
       Left            =   180
-      TabIndex        =   13
+      TabIndex        =   14
+      Tag             =   "TTTF*/"
       Top             =   345
       Width           =   14865
    End
@@ -493,7 +574,7 @@ Private Sub headerGrid()
     bteColComplete = 17
     bteColCheck = 18
     
-    With grid
+    With Grid
         .clear
         
         .Rows = 1
@@ -564,11 +645,19 @@ Sub Kosong()
     lblNm(0) = ""
     cbo(1) = ""
     lblNm(1) = ""
+    
+    cboCompany(2).Text = ""
+    lblCompany(2).Caption = ""
+    
     dtAwal = Format(Year(Now) & "-" & Format(Month(Now), "#0") & "-01", "dd MMM yyyy")
     dtAkhir = Format(Now, "dd MMM yyyy")
     cboRemaining.ListIndex = 0
     Call headerGrid
     nilKosong = False
+End Sub
+
+Sub adcboCompany()
+    FillCompanyCombo cboCompany(2)
 End Sub
 
 '******** Combo Factory Code **********
@@ -581,9 +670,11 @@ With cbo(0)
     .TextColumn = 1
     
     '******** Ambil dr Customer Master utk Combo Dealer CD
-    sql = "select Trade_Code,Trade_Name from Trade_Master " & _
-        "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
-        "order by Trade_Code"
+'    sql = "select Trade_Code,Trade_Name from Trade_Master " & _
+'        "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
+'        "order by Trade_Code"
+    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany(2).Text & "'"
+    
     Set RsCust = Db.Execute(sql)
     
     i = 0
@@ -634,6 +725,18 @@ With cbo(1)
 End With
 End Sub
 
+Private Sub cboCompany_Click(Index As Integer)
+    If cboCompany(2).ListIndex <> -1 Then
+        lblCompany(2).Caption = cboCompany(2).Column(1)
+        isiCboCust
+    End If
+'    If cboCompany.Text <> "" And cboCust.Text <> "" Then
+'        Browse
+'    Else
+'        Header
+'    End If
+End Sub
+
 Private Sub Form_Load()
   If gb_Simulation = True Then Call up_InitSimulation(Me)
     fromProd = True
@@ -641,11 +744,18 @@ Private Sub Form_Load()
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 '    frm_part_supply.ls_dataStatus = "invalid"
+    
+    Call adcboCompany
     Call isiCboCust
     Call Kosong
     dtAwal = Date
     dtAkhir = Date
     nilKosong = False
+    
+    With Anchor1
+      .RegString = "AnchorCtrl,Positions," & Me.Name & "0|0"
+      .DoInit
+    End With
     
 End Sub
 
@@ -672,7 +782,7 @@ If nilKosong = True Then Exit Sub
 
 If cbo(Index) <> "" Then
     cbo(Index) = cbo(Index)
-    If cbo(Index).MatchFound = True Then
+    If cbo(Index).matchFound = True Then
         lblNm(Index) = cbo(Index).Column(1)
         If Index = 0 Then 'panggil Manufacture Line
             Call isiCboLine(cbo(0)): lblNm(1) = ""
@@ -700,10 +810,10 @@ Public Sub cmdSearch_Click()
     If cbo(0) = "" Then
         LblErrMsg = DisplayMsg(1040)
         cbo(0).SetFocus
-    ElseIf cbo(0).MatchFound = False Then
+    ElseIf cbo(0).matchFound = False Then
         LblErrMsg = DisplayMsg(4016)
         cbo(0).SetFocus
-    ElseIf cbo(1).MatchFound = False And cbo(1) <> "" Then
+    ElseIf cbo(1).matchFound = False And cbo(1) <> "" Then
         LblErrMsg = DisplayMsg(4017)
         cbo(1).SetFocus
     Else
@@ -747,7 +857,7 @@ Call headerGrid
     
     i = 1
     If Not (rsGrid.BOF And rsGrid.EOF) Then
-    With grid
+    With Grid
     Do While Not rsGrid.EOF
         .Rows = .Rows + 1
         .TextMatrix(i, bteColDate) = Format(Trim(rsGrid("schedule_date")), "dd MMM yyyy")
@@ -804,7 +914,7 @@ End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim tampung As Long
-With grid
+With Grid
     If Row <> 0 And Col = bteColComplete Then
         If .Cell(flexcpChecked, Row, bteColCheck) = flexUnchecked Then
             .Cell(flexcpChecked, Row, bteColCheck) = flexChecked
@@ -829,91 +939,91 @@ dbw.ConnectionString = Db.ConnectionString
     If Index = 0 Then
         dbw.Open
         dbw.BeginTrans
-        For i = 1 To grid.Rows - 1
-            If grid.Cell(flexcpChecked, i, bteColCheck) = flexChecked Then
-                If grid.Cell(flexcpChecked, i, bteColComplete) = flexChecked Then
+        For i = 1 To Grid.Rows - 1
+            If Grid.Cell(flexcpChecked, i, bteColCheck) = flexChecked Then
+                If Grid.Cell(flexcpChecked, i, bteColComplete) = flexChecked Then
                     updateValue = 1
                     
                     'JIKA REMAINING > 0
-                    If grid.TextMatrix(i, bteColRemain) > 0 Then
+                    If Grid.TextMatrix(i, bteColRemain) > 0 Then
                         'UPDATE OFF_QTY DAN CHILD_OFF_QTY PADA REQUIREMENT
                         sqlUpdate = "UPDATE requirement " & _
-                                    "SET Off_Qty = Off_Qty + " & CDbl(grid.TextMatrix(i, bteColRemain)) & ", " & _
+                                    "SET Off_Qty = Off_Qty + " & CDbl(Grid.TextMatrix(i, bteColRemain)) & ", " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
+                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
                         dbw.Execute sqlUpdate
                         sqlUpdate = "UPDATE requirement " & _
                                     "SET OffChildRequirement_Qty = ChildRequirement_Qty * (Off_Qty / Qty), " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
+                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
                         dbw.Execute sqlUpdate
                         'AUTO COMPLETE PADA REQUIREMENT JIKA QTY = OFF_QTY
                         sqlUpdate = "UPDATE requirement " & _
                                     "SET Complete_Cls = 1, " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
+                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
                                     "AND Qty = Off_Qty"
                         dbw.Execute sqlUpdate
                     End If
                 Else
                     updateValue = 0
-                    If grid.TextMatrix(i, bteColRemain) > 0 Then
+                    If Grid.TextMatrix(i, bteColRemain) > 0 Then
                         'UPDATE OFF_QTY DAN CHILD_OFF_QTY PADA REQUIREMENT
                         sqlUpdate = "UPDATE requirement " & _
-                                    "SET Off_Qty = Off_Qty - " & CDbl(grid.TextMatrix(i, bteColRemain)) & ", " & _
+                                    "SET Off_Qty = Off_Qty - " & CDbl(Grid.TextMatrix(i, bteColRemain)) & ", " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
+                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
                         dbw.Execute sqlUpdate
                         sqlUpdate = "UPDATE requirement " & _
                                     "SET OffChildRequirement_Qty = ChildRequirement_Qty * (Off_Qty / Qty), " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
+                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
                         dbw.Execute sqlUpdate
                     End If
                 End If
                 ''''''
                 strTemp = "SELECT * FROM requirement " & _
-                          "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' AND " & _
-                                "Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' AND " & _
-                                "Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
+                          "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' AND " & _
+                                "Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' AND " & _
+                                "Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
                 If rsTemp.State = adStateOpen Then rsTemp.Close
                 rsTemp.Open strTemp, dbw, adOpenKeyset, adLockOptimistic
                 Do While Not rsTemp.EOF
-                    clsMRP.UpdateRequirementResult dbw, Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd"), "'" & grid.TextMatrix(i, bteColProdCode) & "'", grid.TextMatrix(i, bteColLotNo), "'" & rsTemp("ChildItem_Code") & "'"
+                    clsMRP.UpdateRequirementResult dbw, Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd"), "'" & Grid.TextMatrix(i, bteColProdCode) & "'", Grid.TextMatrix(i, bteColLotNo), "'" & rsTemp("ChildItem_Code") & "'"
                     rsTemp.MoveNext
                 Loop
                 ''''''
                 sqlUpdate = "UPDATE daily_production " & _
                                 "SET complete_cls = " & updateValue & ", Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                "WHERE Seq_no = " & grid.TextMatrix(i, bteColSeqNo)
+                                "WHERE Seq_no = " & Grid.TextMatrix(i, bteColSeqNo)
                 dbw.Execute sqlUpdate
                 
                 'AUTO COMPLETE PADA MRP JIKA SEMUA RENCANA PADA DAILY SUDAH COMPLETE
                 sqlUpdate = " UPDATE requirement SET complete_cls = 1, " & _
                             " Last_Update = getdate(), Last_User = '" & userLogin & "'" & _
-                            " WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "'  " & _
-                            "   AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "'  " & _
-                            "   AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
+                            " WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "'  " & _
+                            "   AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "'  " & _
+                            "   AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
                             "   AND NOT EXISTS  ( " & _
                             "           SELECT * FROM daily_production  " & _
-                            "           WHERE   item_code = '" & grid.TextMatrix(i, bteColProdCode) & "'  " & _
-                            "               AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "'  " & _
-                            "               AND schedule_date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'  " & _
+                            "           WHERE   item_code = '" & Grid.TextMatrix(i, bteColProdCode) & "'  " & _
+                            "               AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "'  " & _
+                            "               AND schedule_date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'  " & _
                             "               AND (complete_cls = NULL OR complete_cls = 0) " & _
                             "           )  "
                 dbw.Execute sqlUpdate
                 
-                grid.Cell(flexcpChecked, i, bteColCheck) = flexUnchecked
+                Grid.Cell(flexcpChecked, i, bteColCheck) = flexUnchecked
             End If
         Next i
         
@@ -924,10 +1034,10 @@ dbw.ConnectionString = Db.ConnectionString
         If cbo(0) = "" Then
             LblErrMsg = DisplayMsg(1040)
             cbo(0).SetFocus
-        ElseIf cbo(0).MatchFound = False Then
+        ElseIf cbo(0).matchFound = False Then
             LblErrMsg = DisplayMsg(4016)
             cbo(0).SetFocus
-        ElseIf cbo(1).MatchFound = False And cbo(1) <> "" Then
+        ElseIf cbo(1).matchFound = False And cbo(1) <> "" Then
             LblErrMsg = DisplayMsg(4017)
             cbo(1).SetFocus
         Else
@@ -938,13 +1048,16 @@ dbw.ConnectionString = Db.ConnectionString
     ElseIf Index = 1 Then
         cbo(0) = ""
         cbo(1) = ""
+        cboCompany(2).Text = ""
+        lblCompany(2).Caption = ""
+        
         dtAwal = Date
         dtAkhir = Date
         LblErrMsg = ""
         Call headerGrid
     'RESET
     ElseIf Index = 2 Then
-        With grid
+        With Grid
             For i = 1 To .Rows - 1
                 If .Cell(flexcpChecked, i, bteColCheck) = flexChecked Then
                     If .Cell(flexcpChecked, i, bteColComplete) = flexUnchecked Then
@@ -974,7 +1087,7 @@ Dim sqlResult As String
         cbo(0).SetFocus
     Else
         cbo(0) = cbo(0)
-        If cbo(0).MatchFound = False Then
+        If cbo(0).matchFound = False Then
             LblErrMsg = DisplayMsg(4016)
             cbo(0).SetFocus
         Else
@@ -1072,7 +1185,7 @@ End Sub
 
 '************ Unload **********
 Private Sub CmdSubMenu_Click()
-    If cmdsubmenu.Caption = "&Back" Then
+    If cmdSubMenu.Caption = "&Back" Then
         Call Command1_Click(1)
     Else
         Unload frmProdResult
