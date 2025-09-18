@@ -9,7 +9,7 @@ Public ErrSt As Boolean
 
 Public IniFile As String
 Public ConnStr As String, dsn As String, userName As String, Password
-Public userLogin As String, StatusAdmin As Integer, UserInitPO As String
+Public userLogin As String, StatusAdmin As Integer, UserCompanyCode As String, UserInitPO As String
 
 Public sql As String
 Public ls_FG As String
@@ -1360,4 +1360,40 @@ Public Sub FillCompanyCombo(cbo As Object)
     RS.Close
     Set RS = Nothing
 End Sub
+
+Public Sub FillCompanyComboByUser(cbo As Object)
+    Dim sql As String
+    Dim RS As ADODB.Recordset
+    Dim i As Integer
+
+    ' admin
+    If Trim(vCompanyCode) = "9999" Then
+        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile ORDER BY Company_Code"
+    Else
+        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile WHERE Company_Code = '" & Replace(UserCompanyCode, "'", "''") & "' ORDER BY Company_Code"
+    End If
+
+    Set RS = Db.Execute(sql)
+
+    With cbo
+        .clear
+        .columnCount = 2
+        .ColumnWidths = "50pt;175pt"
+        .ListWidth = 225
+        .ListRows = 15
+
+        i = 0
+        Do While Not RS.EOF
+            .AddItem
+            .List(i, 0) = Trim(RS("Company_Code"))
+            .List(i, 1) = IIf(IsNull(RS("Company_Name")), "", Trim(RS("Company_Name")))
+            RS.MoveNext
+            i = i + 1
+        Loop
+    End With
+
+    RS.Close
+    Set RS = Nothing
+End Sub
+
 
