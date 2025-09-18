@@ -298,7 +298,7 @@ Sub Kosong()
     txtUser.Text = ""
     txtPass.Text = ""
     txtmenu.Text = ""
-    LblErrMsg = ""
+    lblErrMsg = ""
 End Sub
 
 Private Sub Form_Load()
@@ -397,10 +397,10 @@ Dim passLogin As String
     Me.MousePointer = vbHourglass
     If txtUser = "" Then
         txtUser.SetFocus
-        LblErrMsg = DisplayMsg(1002)
+        lblErrMsg = DisplayMsg(1002)
     ElseIf txtPass = "" Then
         txtPass.SetFocus
-        LblErrMsg = DisplayMsg(1004)
+        lblErrMsg = DisplayMsg(1004)
     Else
         sql = "select * from user_Setup where userName = '" & txtUser & "'"
         If rsUser.State <> adStateClosed Then rsUser.Close
@@ -408,7 +408,7 @@ Dim passLogin As String
         
         If (rsUser.EOF And rsUser.BOF) Then 'jika salah user
             txtUser.SetFocus
-            LblErrMsg = DisplayMsg(3000)
+            lblErrMsg = DisplayMsg(3000)
             
         Else 'jika usernya sesuai
         
@@ -418,6 +418,7 @@ Dim passLogin As String
             lockOut = rsUser("locked")
             InvalidLogin = rsUser("InvalidLogin")
             UserInitPO = IIf(IsNull(rsUser("InitPO")), "", rsUser("InitPO"))
+            UserCompanyCode = Trim(rsUser("Company_Code"))
             
             'DBName
             Dim Rct As String, CC As Long
@@ -427,9 +428,9 @@ Dim passLogin As String
             gs_DBName = fc_Decrypt(Rct)
             
             If lockOut = 1 Then 'cek dulu udah dilockout atau belum
-                LblErrMsg = DisplayMsg(3002)
+                lblErrMsg = DisplayMsg(3002)
             ElseIf txtPass <> passLogin Then 'jika salah pass
-                LblErrMsg = DisplayMsg(3001)
+                lblErrMsg = DisplayMsg(3001)
                 
                 sql = "update User_Setup set InvalidLogin=" & InvalidLogin + 1 & ", Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
                     "where UserName ='" & txtUser & "'"  ' 'tambah jml invalidlogin
@@ -460,7 +461,7 @@ Dim passLogin As String
                 rsUser.Requery
                 
                 DoEvents
-                On Error GoTo errHandler
+                On Error GoTo ErrHandler
                 
                 If txtmenu = "" Then
                     DoEvents
@@ -472,7 +473,7 @@ Dim passLogin As String
                     If panggilForm(txtmenu) = 0 Then
                         DoEvents: Me.Hide
                     Else
-                        LblErrMsg = DisplayMsg(3006)
+                        lblErrMsg = DisplayMsg(3006)
                     End If
                 End If
             End If
@@ -482,7 +483,7 @@ Dim passLogin As String
     Me.MousePointer = vbCustom
 Exit Sub
 
-errHandler:
+ErrHandler:
 If err.number = 440 Then
    MsgBox "Windows out of memory!" & vbCrLf & "Please close other application to free some memory!. This application will be closed! ", vbExclamation, "Kawai"
    End
@@ -514,19 +515,19 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub TxtMenu_KeyPress(KeyAscii As Integer)
-    LblErrMsg = ""
+    lblErrMsg = ""
     If KeyAscii = Asc("'") Then KeyAscii = 0
     KeyAscii = Asc(UCase(Chr(KeyAscii)))
 End Sub
 
 Private Sub txtPass_KeyPress(KeyAscii As Integer)
-    LblErrMsg = ""
+    lblErrMsg = ""
     If KeyAscii = Asc("'") Then KeyAscii = 0
     If KeyAscii = 13 Then SendKeys vbTab
 End Sub
 
 Private Sub txtUser_KeyPress(KeyAscii As Integer)
-    LblErrMsg = ""
+    lblErrMsg = ""
     If KeyAscii = Asc("'") Then KeyAscii = 0
     If KeyAscii = 13 Then SendKeys vbTab
 End Sub
