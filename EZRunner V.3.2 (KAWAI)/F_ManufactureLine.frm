@@ -927,25 +927,7 @@ Private Sub Find()
 End Sub
 
 Private Sub CompanyMaster()
-    Dim sql As String, rsCompany As New ADODB.Recordset
-    Dim i As Integer
-    
-    If rsCompany.State <> adStateClosed Then rsCompany.Close
-    rsCompany.CursorLocation = adUseClient
-    rsCompany.Open "Company_Profile order by Company_Code asc", Db, adOpenDynamic, adLockOptimistic, adCmdTable
-    TxtCC.columnCount = 2
-    TxtCC.TextColumn = 1
-    i = 0
-    Do While Not rsCompany.EOF
-        TxtCC.AddItem ""
-        TxtCC.List(i, 0) = Trim(rsCompany("Company_Code"))
-        TxtCC.List(i, 1) = Trim(rsCompany("Company_Name"))
-        i = i + 1
-        rsCompany.MoveNext
-    Loop
-    TxtCC.ColumnWidths = "50 pt; 300 pt"
-    TxtCC.ListWidth = 350
-    TxtCC.ListRows = 15
+FillCompanyComboByUser TxtCC
 End Sub
 
 Private Sub TradeMaster()

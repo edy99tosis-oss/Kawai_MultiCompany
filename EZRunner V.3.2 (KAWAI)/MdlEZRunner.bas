@@ -1336,7 +1336,12 @@ Public Sub FillCompanyCombo(cbo As Object)
     Dim RS As ADODB.Recordset
     Dim i As Integer
 
-    sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile ORDER BY Company_Code"
+    ' admin
+    If Trim(UserCompanyCode) = "9999" Then
+        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile ORDER BY Company_Code"
+    Else
+        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile WHERE Company_Code = '" & Replace(UserCompanyCode, "'", "''") & "' ORDER BY Company_Code"
+    End If
 
     Set RS = Db.Execute(sql)
 
@@ -1361,13 +1366,13 @@ Public Sub FillCompanyCombo(cbo As Object)
     Set RS = Nothing
 End Sub
 
-Public Sub FillCompanyComboByUser(cbo As Object)
+Public Sub FillCompanyCombo()
     Dim sql As String
     Dim RS As ADODB.Recordset
     Dim i As Integer
 
     ' admin
-    If Trim(vCompanyCode) = "9999" Then
+    If Trim(UserCompanyCode) = "9999" Then
         sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile ORDER BY Company_Code"
     Else
         sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile WHERE Company_Code = '" & Replace(UserCompanyCode, "'", "''") & "' ORDER BY Company_Code"
