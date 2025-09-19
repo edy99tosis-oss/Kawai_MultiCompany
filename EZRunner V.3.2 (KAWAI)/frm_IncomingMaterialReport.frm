@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_IncomingMaterialReport 
    BackColor       =   &H00FDDFE3&
@@ -15,6 +15,26 @@ Begin VB.Form frm_IncomingMaterialReport
    ScaleHeight     =   6030
    ScaleWidth      =   8295
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox TxtCompanyName 
+      BackColor       =   &H00FDDFE3&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   3780
+      Locked          =   -1  'True
+      TabIndex        =   25
+      TabStop         =   0   'False
+      Top             =   1170
+      Width           =   3870
+   End
    Begin VB.CheckBox ChkInclude 
       BackColor       =   &H00FDDFE3&
       Caption         =   "Tools"
@@ -30,7 +50,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   2160
       TabIndex        =   22
-      Top             =   2880
+      Top             =   3240
       Visible         =   0   'False
       Width           =   1695
    End
@@ -59,7 +79,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   585
       Left            =   2190
       TabIndex        =   17
-      Top             =   2130
+      Top             =   2490
       Width           =   3675
       Begin VB.OptionButton OptMaterial 
          BackColor       =   &H00FDDFE3&
@@ -135,7 +155,7 @@ Begin VB.Form frm_IncomingMaterialReport
       TabIndex        =   16
       TabStop         =   0   'False
       Text            =   "LblLocationName"
-      Top             =   3345
+      Top             =   3705
       Visible         =   0   'False
       Width           =   3870
    End
@@ -157,7 +177,7 @@ Begin VB.Form frm_IncomingMaterialReport
       TabIndex        =   12
       TabStop         =   0   'False
       Text            =   "LblLocationName"
-      Top             =   1785
+      Top             =   2145
       Width           =   3870
    End
    Begin VB.CommandButton Command1 
@@ -262,7 +282,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   315
       Left            =   4290
       TabIndex        =   0
-      Top             =   1260
+      Top             =   1620
       Width           =   1500
       _ExtentX        =   2646
       _ExtentY        =   556
@@ -277,7 +297,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   141230083
+      Format          =   58916867
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -285,7 +305,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   315
       Left            =   2190
       TabIndex        =   23
-      Top             =   1260
+      Top             =   1620
       Width           =   1500
       _ExtentX        =   2646
       _ExtentY        =   556
@@ -300,9 +320,50 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   141230083
+      Format          =   58916867
       UpDown          =   -1  'True
       CurrentDate     =   37798
+   End
+   Begin VB.Label Label6 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Company Code"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   540
+      TabIndex        =   27
+      Top             =   1185
+      Width           =   1635
+   End
+   Begin MSForms.ComboBox TxtCc 
+      Height          =   345
+      Left            =   2175
+      TabIndex        =   26
+      Top             =   1125
+      Width           =   1500
+      VariousPropertyBits=   746604571
+      MaxLength       =   10
+      DisplayStyle    =   3
+      Size            =   "2646;609"
+      MatchEntry      =   1
+      ShowDropButtonWhen=   2
+      FontName        =   "Verdana"
+      FontHeight      =   165
+      FontCharSet     =   0
+      FontPitchAndFamily=   2
+   End
+   Begin VB.Line Line3 
+      X1              =   3780
+      X2              =   7605
+      Y1              =   1485
+      Y2              =   1485
    End
    Begin VB.Label Label5 
       AutoSize        =   -1  'True
@@ -320,7 +381,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   3870
       TabIndex        =   24
-      Top             =   1350
+      Top             =   1710
       Width           =   210
    End
    Begin VB.Label Label4 
@@ -338,7 +399,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   255
       Left            =   570
       TabIndex        =   21
-      Top             =   2880
+      Top             =   3240
       Visible         =   0   'False
       Width           =   1335
    End
@@ -358,7 +419,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   570
       TabIndex        =   18
-      Top             =   3360
+      Top             =   3720
       Visible         =   0   'False
       Width           =   1005
    End
@@ -366,8 +427,8 @@ Begin VB.Form frm_IncomingMaterialReport
       Visible         =   0   'False
       X1              =   3795
       X2              =   7650
-      Y1              =   3585
-      Y2              =   3585
+      Y1              =   3945
+      Y2              =   3945
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
@@ -385,14 +446,14 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   570
       TabIndex        =   15
-      Top             =   2325
+      Top             =   2685
       Width           =   915
    End
    Begin MSForms.ComboBox CboMaterialCls 
       Height          =   315
       Left            =   2175
       TabIndex        =   1
-      Top             =   3285
+      Top             =   3645
       Visible         =   0   'False
       Width           =   1500
       VariousPropertyBits=   612386843
@@ -410,8 +471,8 @@ Begin VB.Form frm_IncomingMaterialReport
    Begin VB.Line Line1 
       X1              =   3795
       X2              =   7635
-      Y1              =   2025
-      Y2              =   2025
+      Y1              =   2385
+      Y2              =   2385
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
@@ -429,7 +490,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   570
       TabIndex        =   14
-      Top             =   1320
+      Top             =   1680
       Width           =   900
    End
    Begin VB.Label Label19 
@@ -448,14 +509,14 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   570
       TabIndex        =   13
-      Top             =   1785
+      Top             =   2145
       Width           =   705
    End
    Begin MSForms.ComboBox CboLocationCD 
       Height          =   315
       Left            =   2175
       TabIndex        =   2
-      Top             =   1725
+      Top             =   2085
       Width           =   1500
       VariousPropertyBits=   612386843
       MaxLength       =   15
@@ -507,13 +568,49 @@ Dim GrandTotal_Ori, GrandTotal_USD As Double
 Const Include = "07"
 Dim bteHakPrice As Byte
 
+
+'----------------------update multi company------------------------
+
+Private Sub CompanyMaster()
+    Dim sql As String, rsCompany As New ADODB.Recordset
+    Dim i As Integer
+    
+    If rsCompany.State <> adStateClosed Then rsCompany.Close
+    rsCompany.CursorLocation = adUseClient
+    rsCompany.Open "Company_Profile order by Company_Code asc", Db, adOpenDynamic, adLockOptimistic, adCmdTable
+    TxtCC.columnCount = 2
+    TxtCC.TextColumn = 1
+    i = 0
+    Do While Not rsCompany.EOF
+        TxtCC.AddItem ""
+        TxtCC.List(i, 0) = Trim(rsCompany("Company_Code"))
+        TxtCC.List(i, 1) = Trim(rsCompany("Company_Name"))
+        i = i + 1
+        rsCompany.MoveNext
+    Loop
+    TxtCC.ColumnWidths = "50 pt; 300 pt"
+    TxtCC.ListWidth = 350
+    TxtCC.ListRows = 15
+End Sub
+
+Private Sub TxtCc_Change()
+    If TxtCC.matchFound Then
+        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
+    Else
+        TxtCompanyName = ""
+        lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
+    'Call IsiCombo
+End Sub
+'------------------------------------------------------------------
+
 Private Sub CboLocationCD_Change()
-If CboLocationCD.MatchFound Then
+If CboLocationCD.matchFound Then
    LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
-   LblErrMsg = ""
+   lblErrMsg = ""
 Else
    LblLocationName = ""
-   LblErrMsg = DisplayMsg("0032")
+   lblErrMsg = DisplayMsg("0032")
 End If
 End Sub
 
@@ -530,9 +627,9 @@ For i = 0 To CboLocationCD.ListCount - 1
 Next
 
 If j = 0 Then
-    LblErrMsg = DisplayMsg("0032"): Exit Sub
+    lblErrMsg = DisplayMsg("0032"): Exit Sub
 Else
-    LblErrMsg = ""
+    lblErrMsg = ""
 End If
 End If
 End Sub
@@ -542,7 +639,7 @@ Private Sub CboLocationCD_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub CboMaterialCls_Change()
-If CboMaterialCls.MatchFound Then
+If CboMaterialCls.matchFound Then
     lblWHName = CboMaterialCls.Column(1)
 Else
     lblWHName = ""
@@ -578,9 +675,9 @@ Select Case Index
                     End If
                 Next
                 
-                If j = 0 Then LblErrMsg = DisplayMsg("0032"): Exit Sub
+                If j = 0 Then lblErrMsg = DisplayMsg("0032"): Exit Sub
              
-              LblErrMsg = ""
+              lblErrMsg = ""
               Me.MousePointer = vbHourglass
                                 
               If CboLocationCD.Text = strAll Then
@@ -603,7 +700,8 @@ Select Case Index
                 "left outer join unit_cls uc on pr.unit_cls = uc.unit_cls " & _
                 "left outer join curr_cls cc on pr.currency_code = cc.curr_cls, company_profile cp " & _
                 "where (receipt_cls = 'R' or receipt_cls = 'R1') " & sqlcd & "" & _
-                " pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  "
+                " pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & _
+                " AND wh.Company_Code='" & Trim(TxtCC) & "' "
                 
                 
                 If CboMaterialCls <> strAll Then sql = sql & "and pr.warehouse_code = '" & Trim(CboMaterialCls) & "' "
@@ -613,7 +711,7 @@ Select Case Index
               rsRpt.Open sql, Db, adOpenDynamic, adLockOptimistic
               
             
-              If rsRpt.EOF Then LblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
+              If rsRpt.EOF Then lblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
               sqlprint = sql
               reportcode = "AccPay"
               printorient = 1
@@ -723,14 +821,14 @@ Private Sub Command1_Click() 'EXCEL
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         
         If rsCek.EOF Then
-            LblErrMsg.Caption = DisplayMsg(4006)
+            lblErrMsg.Caption = DisplayMsg(4006)
         Else
                 
             With xlapp
             
-                LblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
+                lblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
                 
-                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile "
+                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtCC) & "'"
                 If rsCompany.State <> adStateClosed Then rsCompany.Close
                 rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If rsCompany.EOF Then MousePointer = vbDefault: Exit Sub
@@ -836,7 +934,7 @@ Private Sub Command1_Click() 'EXCEL
                 .WindowState = xlMaximized
                 
                 .Visible = True
-                LblErrMsg.Caption = ""
+                lblErrMsg.Caption = ""
             End With
         End If
         
@@ -889,14 +987,14 @@ Private Sub Command1_Click() 'EXCEL
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         
         If rsCek.EOF Then
-            LblErrMsg.Caption = DisplayMsg(4006)
+            lblErrMsg.Caption = DisplayMsg(4006)
         Else
                 
             With xlapp
             
-                LblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
+                lblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
                 
-                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile "
+                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtCC) & "'"
                 If rsCompany.State <> adStateClosed Then rsCompany.Close
                 rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If rsCompany.EOF Then MousePointer = vbDefault: Exit Sub
@@ -1046,7 +1144,7 @@ Private Sub Command1_Click() 'EXCEL
 '                    .Range("e" & Idx).Interior.ColorIndex = Idx
 '                Next Idx
                 .Visible = True
-                LblErrMsg.Caption = ""
+                lblErrMsg.Caption = ""
             End With
         End If
         
@@ -1112,14 +1210,14 @@ Private Sub Command1_Click() 'EXCEL
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         
         If rsCek.EOF Then
-            LblErrMsg.Caption = DisplayMsg(4006)
+            lblErrMsg.Caption = DisplayMsg(4006)
         Else
                 
             With xlapp
             
-                LblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
+                lblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
                 
-                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile "
+                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtCC) & "'"
                 If rsCompany.State <> adStateClosed Then rsCompany.Close
                 rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If rsCompany.EOF Then MousePointer = vbDefault: Exit Sub
@@ -1560,7 +1658,7 @@ Private Sub Command1_Click() 'EXCEL
                 .WindowState = xlMaximized
                 
                 .Visible = True
-                LblErrMsg.Caption = ""
+                lblErrMsg.Caption = ""
             End With
         End If
     End If
@@ -1572,7 +1670,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
@@ -1599,12 +1697,13 @@ Dim RsW As New Recordset
 Dim ir As Integer
 If gb_Simulation = True Then Call up_InitSimulation(Me)
 LblLocationName = ""
-LblErrMsg = ""
+lblErrMsg = ""
 ChkInclude.Value = 0
 CtrlMenu1.FormName = Me.Name
 Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
 bteHakPrice = hakPrice(Me.Name)
 Call StockLocation
+Call CompanyMaster
 DFrom = Format(Date, "dd MMM yyyy")
 DTo = Format(Date, "dd MMM yyyy")
 
@@ -1787,7 +1886,7 @@ Do While Not rsupload.EOF
     rsupload.MoveNext
 Loop
 
-LblErrMsg.Caption = "data Inserted " & a & " Record, Updated " & b
+lblErrMsg.Caption = "data Inserted " & a & " Record, Updated " & b
 
 
 
