@@ -927,7 +927,7 @@ Private Sub Find()
 End Sub
 
 Private Sub CompanyMaster()
-FillCompanyComboByUser TxtCC
+FillCompanyCombo TxtCC
 End Sub
 
 Private Sub TradeMaster()

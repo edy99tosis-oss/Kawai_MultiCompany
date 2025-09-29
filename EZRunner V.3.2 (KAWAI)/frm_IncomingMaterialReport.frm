@@ -297,7 +297,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   58916867
+      Format          =   60686339
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -320,7 +320,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   58916867
+      Format          =   60686339
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -570,27 +570,8 @@ Dim bteHakPrice As Byte
 
 
 '----------------------update multi company------------------------
-
 Private Sub CompanyMaster()
-    Dim sql As String, rsCompany As New ADODB.Recordset
-    Dim i As Integer
-    
-    If rsCompany.State <> adStateClosed Then rsCompany.Close
-    rsCompany.CursorLocation = adUseClient
-    rsCompany.Open "Company_Profile order by Company_Code asc", Db, adOpenDynamic, adLockOptimistic, adCmdTable
-    TxtCC.columnCount = 2
-    TxtCC.TextColumn = 1
-    i = 0
-    Do While Not rsCompany.EOF
-        TxtCC.AddItem ""
-        TxtCC.List(i, 0) = Trim(rsCompany("Company_Code"))
-        TxtCC.List(i, 1) = Trim(rsCompany("Company_Name"))
-        i = i + 1
-        rsCompany.MoveNext
-    Loop
-    TxtCC.ColumnWidths = "50 pt; 300 pt"
-    TxtCC.ListWidth = 350
-    TxtCC.ListRows = 15
+    FillCompanyCombo TxtCC
 End Sub
 
 Private Sub TxtCc_Change()

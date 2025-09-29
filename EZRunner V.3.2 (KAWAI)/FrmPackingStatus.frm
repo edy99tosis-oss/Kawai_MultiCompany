@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmPackingStatus 
    BackColor       =   &H00FDDFE3&
@@ -104,11 +104,31 @@ Begin VB.Form FrmPackingStatus
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   1140
+      Height          =   1620
       Left            =   664
       TabIndex        =   8
       Top             =   1009
       Width           =   13905
+      Begin VB.TextBox TxtCompanyName 
+         BackColor       =   &H00FDDFE3&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   3270
+         Locked          =   -1  'True
+         TabIndex        =   17
+         TabStop         =   0   'False
+         Top             =   240
+         Width           =   6615
+      End
       Begin VB.CommandButton cmdSearch 
          BackColor       =   &H0000FFFF&
          Caption         =   "Sea&rch"
@@ -125,7 +145,7 @@ Begin VB.Form FrmPackingStatus
          Left            =   8085
          Style           =   1  'Graphical
          TabIndex        =   16
-         Top             =   630
+         Top             =   1110
          Width           =   1140
       End
       Begin VB.TextBox LblCust 
@@ -144,14 +164,14 @@ Begin VB.Form FrmPackingStatus
          Left            =   3285
          TabIndex        =   6
          TabStop         =   0   'False
-         Top             =   690
+         Top             =   1170
          Width           =   4485
       End
       Begin MSComCtl2.DTPicker DTDel1 
          Height          =   315
          Left            =   1665
          TabIndex        =   0
-         Top             =   255
+         Top             =   735
          Width           =   1500
          _ExtentX        =   2646
          _ExtentY        =   556
@@ -166,7 +186,7 @@ Begin VB.Form FrmPackingStatus
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   334692355
+         Format          =   60096515
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtDel2 
@@ -182,7 +202,7 @@ Begin VB.Form FrmPackingStatus
          Height          =   315
          Left            =   3615
          TabIndex        =   1
-         Top             =   255
+         Top             =   735
          Width           =   1500
          _ExtentX        =   2646
          _ExtentY        =   556
@@ -197,8 +217,51 @@ Begin VB.Form FrmPackingStatus
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   334692355
+         Format          =   60096515
          CurrentDate     =   37798
+      End
+      Begin VB.Label Label3 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   1
+         Left            =   135
+         TabIndex        =   19
+         Top             =   300
+         Width           =   1635
+      End
+      Begin MSForms.ComboBox TxtCc 
+         Height          =   345
+         Left            =   1665
+         TabIndex        =   18
+         Top             =   240
+         Width           =   1515
+         VariousPropertyBits=   746604571
+         MaxLength       =   10
+         DisplayStyle    =   3
+         Size            =   "2672;609"
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Line Line2 
+         Index           =   1
+         X1              =   3270
+         X2              =   9870
+         Y1              =   600
+         Y2              =   600
       End
       Begin VB.Label LblCode 
          AutoSize        =   -1  'True
@@ -214,23 +277,23 @@ Begin VB.Form FrmPackingStatus
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   315
+         Left            =   585
          TabIndex        =   11
-         Top             =   720
+         Top             =   1215
          Width           =   840
       End
       Begin VB.Line Line2 
          Index           =   0
          X1              =   3285
          X2              =   7815
-         Y1              =   960
-         Y2              =   960
+         Y1              =   1440
+         Y2              =   1440
       End
       Begin MSForms.ComboBox cbocust 
          Height          =   315
          Left            =   1665
          TabIndex        =   2
-         Top             =   660
+         Top             =   1140
          Width           =   1500
          VariousPropertyBits=   612386843
          MaxLength       =   6
@@ -259,7 +322,7 @@ Begin VB.Form FrmPackingStatus
          Height          =   195
          Left            =   3285
          TabIndex        =   10
-         Top             =   315
+         Top             =   795
          Width           =   165
       End
       Begin VB.Label Label3 
@@ -279,18 +342,18 @@ Begin VB.Form FrmPackingStatus
          Index           =   0
          Left            =   315
          TabIndex        =   9
-         Top             =   315
+         Top             =   765
          Width           =   1125
       End
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
-      Height          =   6825
+      Height          =   6225
       Left            =   675
       TabIndex        =   7
-      Top             =   2235
+      Top             =   2835
       Width           =   13905
-      _cx             =   95903695
-      _cy             =   95891207
+      _cx             =   24527
+      _cy             =   10980
       Appearance      =   1
       BorderStyle     =   1
       Enabled         =   -1  'True
@@ -424,15 +487,30 @@ Dim KondisiStock As String
 Dim ColPac, ColCustCode, ColCustName, ColConsignee, ColPacDate, ColSail, ColQty, ColTtW, ColTTWG, ColTTVol, ColIssue, ColFix, ColFixT, colin As Long
 Dim ColSerialFrom As Byte, ColSerialTo As Byte
 
+'----------------------update multi company------------------------
+Private Sub CompanyMaster()
+    FillCompanyCombo TxtCC
+End Sub
+
+Private Sub TxtCc_Change()
+    If TxtCC.matchFound Then
+        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
+    Else
+        TxtCompanyName = ""
+        lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
+    Call IsiCombo
+End Sub
+'------------------------------------------------------------------
 
 Private Sub CboCust_Change()
-LblErrMsg = ""
+lblErrMsg = ""
 Header
-If cboCust.MatchFound Then
-    lblcust.Text = cboCust.Column(1)
+If cboCust.matchFound Then
+    lblCust.Text = cboCust.Column(1)
 Else
-    lblcust.Text = ""
-    LblErrMsg.Caption = DisplayMsg(4072)
+    lblCust.Text = ""
+    lblErrMsg.Caption = DisplayMsg(4072)
 End If
 End Sub
 
@@ -448,6 +526,7 @@ SSql = "select packing_no, packing_date, stuffing_date, total_qty, " & _
     "from packing_master pm " & _
     "left outer join trade_master tm on pm.cust_code = tm.trade_code " & _
     "where packing_date >= '" & Format(DTDel1.Value, "yyyy-MM-dd") & "' " & _
+    "and pm.Company_Code = '" & Trim(TxtCC.Text) & "' " & _
     "and packing_date <= '" & Format(DtDel2.Value, "yyyy-MM-dd") & "' "
 If cboCust <> strAll Then SSql = SSql & "and cust_code = '" & cboCust.Text & "' "
 SSql = SSql & "order by packing_no "
@@ -553,7 +632,7 @@ End Sub
 
 Private Sub cmdSearch_Click()
 Header
-LblErrMsg = ""
+lblErrMsg = ""
 FillGrid
 End Sub
 
@@ -565,7 +644,7 @@ Private Sub CmdSubMenu_Click()
 End Sub
 
 Private Sub CmdSubmit_Click()
-LblErrMsg = ""
+lblErrMsg = ""
 Dim LMPMonth, TMPMonth, NMPMonth As Long
 Dim LMRec, TMRec, NMRec As Long
 Dim LMSupply, TMSupply, NMSupply As Long
@@ -578,14 +657,14 @@ Dim booUpdate As Boolean
 
 Me.MousePointer = vbHourglass
 
-If cboCust.MatchFound = False Then
-    LblErrMsg.Caption = DisplayMsg(4072)
+If cboCust.matchFound = False Then
+    lblErrMsg.Caption = DisplayMsg(4072)
     Me.MousePointer = vbDefault
     Exit Sub
 End If
 
 If hakUpdate(Me.Name) = 0 Then _
-LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Me.MousePointer = vbDefault: Exit Sub
+lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Me.MousePointer = vbDefault: Exit Sub
 
 booUpdate = False
 
@@ -862,11 +941,11 @@ For i = 1 To grid.Rows - 1
 '            End If
             
         If grid.Cell(flexcpChecked, i, ColFix) = flexChecked And grid.Cell(flexcpChecked, i, ColFixT) = flexUnchecked Then
-            SSql = "update packing_master set fix_cls = '1' where packing_no = '" & grid.TextMatrix(i, ColPac) & "' " & _
+            SSql = "update packing_master set fix_cls = '1' where Company_Code = '" & Trim(TxtCC.Text) & "' and packing_no = '" & grid.TextMatrix(i, ColPac) & "' " & _
             "and cust_code = '" & Trim(grid.TextMatrix(i, ColCustCode)) & "'"
             booUpdate = True
         ElseIf grid.Cell(flexcpChecked, i, ColFix) = flexUnchecked And grid.Cell(flexcpChecked, i, ColFixT) = flexChecked Then
-            SSql = "update packing_master set fix_cls = '0' where packing_no = '" & grid.TextMatrix(i, ColPac) & "' " & _
+            SSql = "update packing_master set fix_cls = '0' where Company_Code = '" & Trim(TxtCC.Text) & "' and packing_no = '" & grid.TextMatrix(i, ColPac) & "' " & _
             "and cust_code = '" & Trim(grid.TextMatrix(i, ColCustCode)) & "'"
             booUpdate = True
         End If
@@ -877,7 +956,7 @@ Db.CommitTrans
 If booUpdate Then
     Header
     FillGrid
-    LblErrMsg = DisplayMsg(1000)
+    lblErrMsg = DisplayMsg(1000)
 End If
 Me.MousePointer = vbDefault
 End Sub
@@ -886,18 +965,18 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
 Private Sub DTDel1_Change()
 Header
-LblErrMsg = ""
+lblErrMsg = ""
 End Sub
 
 Private Sub DtDel2_Change()
 Header
-LblErrMsg = ""
+lblErrMsg = ""
 End Sub
 
 Private Sub Form_Load()
@@ -921,7 +1000,7 @@ ColFixT = 12
 colin = 13
 KondisiStock = ""
 'Conec
-IsiCombo
+Call CompanyMaster
 Header
 DTDel1.Value = Date - Day(Date) + 1
 DtDel2.Value = Now
@@ -942,7 +1021,7 @@ Dim i As Long
     cboCust.List(0, 1) = strAll
     
     If rsisi.State = 1 Then rsisi.Close
-    SSql = "select trade_code, trade_name from trade_master where (trade_cls = 2 or trade_cls = 4) --and country_cls='1'"
+    SSql = "select trade_code, trade_name from trade_master where Company_Code = '" & Trim(TxtCC.Text) & "' and (trade_cls = 2 or trade_cls = 4) --and country_cls='1'"
     rsisi.Open SSql, Db, adOpenKeyset, adLockOptimistic
     If Not rsisi.EOF And Not rsisi.BOF Then
         i = 1
@@ -979,13 +1058,13 @@ If Col = ColIssue Then
 End If
 
 If Col = ColFix Then
-    LblErrMsg = up_ValidateDateRange(Format(grid.TextMatrix(Row, ColPacDate), "yyyy-MM-dd"), True)
-    If LblErrMsg <> "" Then Cancel = True
+    lblErrMsg = up_ValidateDateRange(Format(grid.TextMatrix(Row, ColPacDate), "yyyy-MM-dd"), True)
+    If lblErrMsg <> "" Then Cancel = True
 End If
 End Sub
 
 Private Sub grid_Click()
-LblErrMsg = ""
+lblErrMsg = ""
 grid.FocusRect = flexFocusInset
 If grid.Col = ColFix Then
     Exit Sub
@@ -997,7 +1076,7 @@ Private Function SSeqNo()
 Dim rsmax As New ADODB.Recordset
 Dim strSQL As String
 
-strSQL = "Select Max(seq_No) from part_supply"
+strSQL = "Select Max(seq_No) from part_supply where Company_Code = '" & Trim(TxtCC.Text) & "'"
 
 Set rsmax = Db.Execute(strSQL)
 

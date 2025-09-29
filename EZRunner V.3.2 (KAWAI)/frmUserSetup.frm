@@ -1079,7 +1079,7 @@ Private Sub headerGrid()
     bteColUpdate = 5
     bteColPrice = 6
     
-    With Grid
+    With grid
         .clear
         .ColS = 7
         .Rows = 1
@@ -1116,15 +1116,15 @@ End Sub
 
 '----------------------update multi company------------------------
 Private Sub CompanyMaster()
-    FillCompanyCombo TxtCc
+    FillCompanyCombo TxtCC
 End Sub
 
 Private Sub TxtCc_Change()
-    If TxtCc.matchFound Then
-        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+    If TxtCC.matchFound Then
+        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
     Else
         TxtCompanyName = ""
-        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+        lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
     End If
     'Call IsiCombo
 End Sub
@@ -1138,8 +1138,8 @@ Sub Kosong()
     txtPass2 = ""
     cboUser = ""
     txtDesc = ""
-    txtPO = ""
-    TxtCc.clear
+    txtpo = ""
+    TxtCC.clear
     Check1.Value = 0
     optStatus(1).Value = True
     ubah = False
@@ -1147,7 +1147,7 @@ Sub Kosong()
     Call isiList
     Call CompanyMaster
     Call isiCbo
-    LblErrMsg = ""
+    lblErrMsg = ""
 End Sub
 
 Sub isiCbo() 'Isi Combo User Group (spy privilege nya sama dgn user yg dipilih)
@@ -1224,7 +1224,7 @@ Dim rsPriv As New ADODB.Recordset
     rsPriv.CursorLocation = adUseClient
     rsPriv.Open sql, Db, adOpenDynamic, adLockOptimistic
     
-With Grid
+With grid
     For i = 1 To rsPriv.RecordCount
         DoEvents
         .Rows = .Rows + 1
@@ -1252,7 +1252,7 @@ End Sub
 Sub cekSelect(kol As Long)
 Dim cek, noCek As Integer
 
-With Grid
+With grid
     '******** agar cekBox nya jika semuanya udah ke-select/not
     cek = 0
     For i = 1 To .Rows - 1
@@ -1276,7 +1276,7 @@ End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim cek As Integer
 
-With Grid
+With grid
     If Row <> 0 Then
         If Col = bteColAccess Or Col = bteColUpdate Or Col = bteColPrice Then Call cekSelect(Col)
     Else
@@ -1296,7 +1296,7 @@ End With
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-With Grid
+With grid
     If Col <> bteColAccess And Col <> bteColUpdate And Col <> bteColPrice Then Cancel = 1
 End With
 End Sub
@@ -1319,7 +1319,7 @@ Private Sub cboUser_Click()
         If cboUser.matchFound Then
             Call IsiGrid(1, cboUser)
         Else
-            LblErrMsg = DisplayMsg(4001)
+            lblErrMsg = DisplayMsg(4001)
         End If
     End If
 End Sub
@@ -1331,16 +1331,16 @@ Select Case Index
     Case 0: 'Simpan & Ubah
         If txtUser = "" Then
             txtUser.SetFocus
-            LblErrMsg = DisplayMsg(1002)
+            lblErrMsg = DisplayMsg(1002)
         ElseIf txtName = "" Then
             txtName.SetFocus
-            LblErrMsg = DisplayMsg(1003)
+            lblErrMsg = DisplayMsg(1003)
         ElseIf txtPass1 = "" Or txtPass2 = "" Then
             txtPass1.SetFocus
-            LblErrMsg = DisplayMsg(1004)
+            lblErrMsg = DisplayMsg(1004)
         ElseIf txtPass1 <> txtPass2 Then
             txtPass2.SetFocus
-            LblErrMsg = DisplayMsg(1005)
+            lblErrMsg = DisplayMsg(1005)
         Else
             'Penambahan Validasi Charater dan symbol 20250128
             If CheckUserPassword(txtPass1) = False Then
@@ -1352,18 +1352,18 @@ Select Case Index
             With rsUser
                 .filter = ""
                 .Requery
-                .filter = "userName ='" & txtUser & "' and App_ID = 'P01'"
+                .filter = "userName ='" & txtUser & "' and App_ID = 'P01'" & "' and Company_Code = '" & UserCompanyCode & "'"
                     
-                If Not (.EOF) And ubah = False Then LblErrMsg = DisplayMsg(1001): Me.MousePointer = vbDefault: Exit Sub
+                If Not (.EOF) And ubah = False Then lblErrMsg = DisplayMsg(1001): Me.MousePointer = vbDefault: Exit Sub
                 
                 If .EOF Then .AddNew
-                !Company_Code = TxtCc 'update company code (multi company)
+                !Company_Code = TxtCC 'update company code (multi company)
                 !app_ID = "P01"
                 !userName = txtUser
                 !Name = txtName
                 !Password = fc_Encrypt(txtPass1)
                 !Description = txtDesc
-                !InitPO = txtPO
+                !InitPO = txtpo
                 !status_Admin = IIf(optStatus(0).Value, 1, 0)
                 !locked = Check1.Value
                 !InvalidLogin = 0
@@ -1379,7 +1379,7 @@ Select Case Index
             Call IsiGrid(1, txtUser)
             txtUser.Enabled = False
             ubah = True
-            LblErrMsg = DisplayMsg(1000)
+            lblErrMsg = DisplayMsg(1000)
         End If
     
     Case 1: 'Clear
@@ -1396,13 +1396,13 @@ Select Case Index
             Set rsCek = Db.Execute(sql)
             
             If rsCek("jml") = 1 And pilihAdmin = 1 Then
-                LblErrMsg = DisplayMsg(1206)
+                lblErrMsg = DisplayMsg(1206)
             Else
                 sql = "delete user_setup where userName = '" & txtUser & "' and App_ID ='P01'"
                 Db.Execute sql
                 Call Kosong
                 Call IsiGrid
-                LblErrMsg = DisplayMsg(1201)
+                lblErrMsg = DisplayMsg(1201)
             End If
         End If
 End Select
@@ -1414,11 +1414,11 @@ Sub simpanGrid()
 Dim rsSimpan As New ADODB.Recordset
 Dim sqlB As String
     
-    With Grid
+    With grid
         sqlB = "select * from user_Privilege " & _
             "where userName = '" & txtUser & "' and App_ID = 'P01'"
         
-        For i = 1 To Grid.Rows - 1
+        For i = 1 To grid.Rows - 1
             sql = sqlB & " and Menu_Id ='" & Trim(.TextMatrix(i, bteColMenuID)) & "'"
             If rsSimpan.State <> adStateClosed Then rsSimpan.Close
             rsSimpan.Open sql, Db, adOpenStatic, adLockOptimistic
@@ -1453,7 +1453,7 @@ End Sub
 
 Private Sub lvw1_ItemClick(ByVal Item As MSComctlLib.ListItem)
     ubah = True
-    LblErrMsg = ""
+    lblErrMsg = ""
     Call tampil   'utk menampilkan data yg diklik
 End Sub
 
@@ -1480,13 +1480,13 @@ With rsUser
             pilihAdmin = 0
         End If
         
-        TxtCc.Text = Trim(!Company_Code)
+        TxtCC.Text = Trim(!Company_Code)
         Call TxtCc_Change
         
         Check1.Value = !locked
         Call Check1_Click
         txtDesc = Trim(!Description)
-        txtPO = Trim(!InitPO & "")
+        txtpo = Trim(!InitPO & "")
         cboUser = ""
     End If
 End With
@@ -1552,7 +1552,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
@@ -1567,7 +1567,7 @@ If Not RS.EOF Then
         CheckUserPassword = True
     Else
         CheckUserPassword = False
-        LblErrMsg = RS.Fields("Message").Value
+        lblErrMsg = RS.Fields("Message").Value
     End If
 End If
 
