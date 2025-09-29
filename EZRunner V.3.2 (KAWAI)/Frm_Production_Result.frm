@@ -1,16 +1,16 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_Production_Result 
    BackColor       =   &H00FDDFE3&
    Caption         =   "Production Planning/Result Inquiry"
-   ClientHeight    =   10950
+   ClientHeight    =   11055
    ClientLeft      =   75
    ClientTop       =   390
    ClientWidth     =   15075
    Icon            =   "Frm_Production_Result.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   10950
+   ScaleHeight     =   11055
    ScaleWidth      =   15075
    StartUpPosition =   2  'CenterScreen
    WindowState     =   2  'Maximized
@@ -29,7 +29,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   29
       Left            =   13286
-      TabIndex        =   181
+      TabIndex        =   182
       Top             =   9375
       Width           =   1455
    End
@@ -48,7 +48,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   28
       Left            =   11726
-      TabIndex        =   180
+      TabIndex        =   181
       Top             =   9375
       Width           =   1455
    End
@@ -67,7 +67,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   27
       Left            =   10166
-      TabIndex        =   179
+      TabIndex        =   180
       Top             =   9375
       Width           =   1455
    End
@@ -86,7 +86,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   26
       Left            =   8576
-      TabIndex        =   178
+      TabIndex        =   179
       Top             =   9375
       Width           =   1455
    End
@@ -105,7 +105,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   25
       Left            =   6986
-      TabIndex        =   177
+      TabIndex        =   178
       Top             =   9375
       Width           =   1455
    End
@@ -124,7 +124,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   24
       Left            =   5396
-      TabIndex        =   176
+      TabIndex        =   177
       Top             =   9375
       Width           =   1455
    End
@@ -143,7 +143,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   23
       Left            =   13286
-      TabIndex        =   175
+      TabIndex        =   176
       Top             =   7875
       Width           =   1455
    End
@@ -162,7 +162,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   22
       Left            =   11726
-      TabIndex        =   174
+      TabIndex        =   175
       Top             =   7875
       Width           =   1455
    End
@@ -181,7 +181,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   21
       Left            =   10166
-      TabIndex        =   173
+      TabIndex        =   174
       Top             =   7875
       Width           =   1455
    End
@@ -200,7 +200,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   20
       Left            =   8576
-      TabIndex        =   172
+      TabIndex        =   173
       Top             =   7875
       Width           =   1455
    End
@@ -219,7 +219,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   19
       Left            =   6986
-      TabIndex        =   171
+      TabIndex        =   172
       Top             =   7875
       Width           =   1455
    End
@@ -238,7 +238,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   18
       Left            =   5396
-      TabIndex        =   170
+      TabIndex        =   171
       Top             =   7875
       Width           =   1455
    End
@@ -257,7 +257,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   17
       Left            =   13286
-      TabIndex        =   169
+      TabIndex        =   170
       Top             =   6375
       Width           =   1455
    End
@@ -276,7 +276,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   16
       Left            =   11726
-      TabIndex        =   168
+      TabIndex        =   169
       Top             =   6375
       Width           =   1455
    End
@@ -295,7 +295,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   15
       Left            =   10166
-      TabIndex        =   167
+      TabIndex        =   168
       Top             =   6375
       Width           =   1455
    End
@@ -314,7 +314,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   14
       Left            =   8576
-      TabIndex        =   166
+      TabIndex        =   167
       Top             =   6375
       Width           =   1455
    End
@@ -333,7 +333,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   13
       Left            =   6986
-      TabIndex        =   165
+      TabIndex        =   166
       Top             =   6375
       Width           =   1455
    End
@@ -352,7 +352,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   12
       Left            =   5396
-      TabIndex        =   164
+      TabIndex        =   165
       Top             =   6375
       Width           =   1455
    End
@@ -371,7 +371,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   11
       Left            =   13286
-      TabIndex        =   163
+      TabIndex        =   164
       Top             =   4875
       Width           =   1455
    End
@@ -390,7 +390,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   10
       Left            =   11726
-      TabIndex        =   162
+      TabIndex        =   163
       Top             =   4875
       Width           =   1455
    End
@@ -409,7 +409,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   9
       Left            =   10166
-      TabIndex        =   161
+      TabIndex        =   162
       Top             =   4875
       Width           =   1455
    End
@@ -428,7 +428,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   8
       Left            =   8576
-      TabIndex        =   160
+      TabIndex        =   161
       Top             =   4875
       Width           =   1455
    End
@@ -447,7 +447,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   7
       Left            =   6986
-      TabIndex        =   159
+      TabIndex        =   160
       Top             =   4875
       Width           =   1455
    End
@@ -466,7 +466,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   6
       Left            =   5396
-      TabIndex        =   158
+      TabIndex        =   159
       Top             =   4875
       Width           =   1455
    End
@@ -485,7 +485,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   5
       Left            =   13286
-      TabIndex        =   157
+      TabIndex        =   158
       Top             =   3345
       Width           =   1455
    End
@@ -504,7 +504,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   4
       Left            =   11726
-      TabIndex        =   156
+      TabIndex        =   157
       Top             =   3345
       Width           =   1455
    End
@@ -523,7 +523,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   3
       Left            =   10166
-      TabIndex        =   155
+      TabIndex        =   156
       Top             =   3345
       Width           =   1455
    End
@@ -542,7 +542,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   2
       Left            =   8576
-      TabIndex        =   154
+      TabIndex        =   155
       Top             =   3345
       Width           =   1455
    End
@@ -561,7 +561,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   1
       Left            =   6986
-      TabIndex        =   153
+      TabIndex        =   154
       Top             =   3345
       Width           =   1455
    End
@@ -580,7 +580,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   0
       Left            =   5396
-      TabIndex        =   151
+      TabIndex        =   152
       Top             =   3345
       Width           =   1455
    End
@@ -600,7 +600,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   4
       Left            =   9776
       Style           =   1  'Graphical
-      TabIndex        =   40
+      TabIndex        =   41
       Top             =   10335
       Width           =   1200
    End
@@ -620,7 +620,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   3
       Left            =   8516
       Style           =   1  'Graphical
-      TabIndex        =   39
+      TabIndex        =   40
       Top             =   10320
       Width           =   1200
    End
@@ -639,7 +639,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Left            =   5520
       Locked          =   -1  'True
-      TabIndex        =   146
+      TabIndex        =   147
       Text            =   "Text4"
       Top             =   1350
       Width           =   2625
@@ -659,7 +659,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   29
       Left            =   13286
       MaxLength       =   16
-      TabIndex        =   33
+      TabIndex        =   34
       Top             =   8295
       Width           =   1455
    End
@@ -678,7 +678,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   28
       Left            =   11726
       MaxLength       =   16
-      TabIndex        =   32
+      TabIndex        =   33
       Top             =   8295
       Width           =   1455
    End
@@ -697,7 +697,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   27
       Left            =   10166
       MaxLength       =   16
-      TabIndex        =   31
+      TabIndex        =   32
       Top             =   8295
       Width           =   1455
    End
@@ -716,7 +716,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   26
       Left            =   8576
       MaxLength       =   16
-      TabIndex        =   30
+      TabIndex        =   31
       Top             =   8295
       Width           =   1455
    End
@@ -735,7 +735,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   25
       Left            =   6986
       MaxLength       =   16
-      TabIndex        =   29
+      TabIndex        =   30
       Top             =   8295
       Width           =   1455
    End
@@ -754,7 +754,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   24
       Left            =   5396
       MaxLength       =   16
-      TabIndex        =   28
+      TabIndex        =   29
       Top             =   8295
       Width           =   1455
    End
@@ -773,7 +773,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   23
       Left            =   13286
       MaxLength       =   16
-      TabIndex        =   27
+      TabIndex        =   28
       Top             =   6795
       Width           =   1455
    End
@@ -792,7 +792,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   22
       Left            =   11726
       MaxLength       =   16
-      TabIndex        =   26
+      TabIndex        =   27
       Top             =   6795
       Width           =   1455
    End
@@ -811,7 +811,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   21
       Left            =   10166
       MaxLength       =   16
-      TabIndex        =   25
+      TabIndex        =   26
       Top             =   6795
       Width           =   1455
    End
@@ -830,7 +830,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   20
       Left            =   8576
       MaxLength       =   16
-      TabIndex        =   24
+      TabIndex        =   25
       Top             =   6795
       Width           =   1455
    End
@@ -849,7 +849,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   19
       Left            =   6986
       MaxLength       =   16
-      TabIndex        =   23
+      TabIndex        =   24
       Top             =   6795
       Width           =   1455
    End
@@ -868,7 +868,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   18
       Left            =   5396
       MaxLength       =   16
-      TabIndex        =   22
+      TabIndex        =   23
       Top             =   6795
       Width           =   1455
    End
@@ -887,7 +887,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   17
       Left            =   13286
       MaxLength       =   16
-      TabIndex        =   21
+      TabIndex        =   22
       Top             =   5295
       Width           =   1455
    End
@@ -906,7 +906,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   16
       Left            =   11726
       MaxLength       =   16
-      TabIndex        =   20
+      TabIndex        =   21
       Top             =   5295
       Width           =   1455
    End
@@ -925,7 +925,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   15
       Left            =   10166
       MaxLength       =   16
-      TabIndex        =   19
+      TabIndex        =   20
       Top             =   5295
       Width           =   1455
    End
@@ -944,7 +944,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   14
       Left            =   8576
       MaxLength       =   16
-      TabIndex        =   18
+      TabIndex        =   19
       Top             =   5295
       Width           =   1455
    End
@@ -963,7 +963,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   13
       Left            =   6986
       MaxLength       =   16
-      TabIndex        =   17
+      TabIndex        =   18
       Top             =   5295
       Width           =   1455
    End
@@ -982,7 +982,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   12
       Left            =   5396
       MaxLength       =   16
-      TabIndex        =   16
+      TabIndex        =   17
       Top             =   5295
       Width           =   1455
    End
@@ -1001,7 +1001,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   11
       Left            =   13286
       MaxLength       =   16
-      TabIndex        =   15
+      TabIndex        =   16
       Top             =   3765
       Width           =   1455
    End
@@ -1020,7 +1020,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   10
       Left            =   11726
       MaxLength       =   16
-      TabIndex        =   14
+      TabIndex        =   15
       Top             =   3765
       Width           =   1455
    End
@@ -1039,7 +1039,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   9
       Left            =   10166
       MaxLength       =   16
-      TabIndex        =   13
+      TabIndex        =   14
       Top             =   3765
       Width           =   1455
    End
@@ -1058,7 +1058,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   8
       Left            =   8576
       MaxLength       =   16
-      TabIndex        =   12
+      TabIndex        =   13
       Top             =   3765
       Width           =   1455
    End
@@ -1077,7 +1077,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   7
       Left            =   6986
       MaxLength       =   16
-      TabIndex        =   11
+      TabIndex        =   12
       Top             =   3765
       Width           =   1455
    End
@@ -1096,7 +1096,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   6
       Left            =   5396
       MaxLength       =   16
-      TabIndex        =   10
+      TabIndex        =   11
       Top             =   3765
       Width           =   1455
    End
@@ -1115,7 +1115,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   5
       Left            =   13286
       MaxLength       =   16
-      TabIndex        =   9
+      TabIndex        =   10
       Top             =   2265
       Width           =   1455
    End
@@ -1134,7 +1134,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   4
       Left            =   11726
       MaxLength       =   16
-      TabIndex        =   8
+      TabIndex        =   9
       Top             =   2265
       Width           =   1455
    End
@@ -1153,7 +1153,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   3
       Left            =   10166
       MaxLength       =   16
-      TabIndex        =   7
+      TabIndex        =   8
       Top             =   2265
       Width           =   1455
    End
@@ -1172,7 +1172,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   2
       Left            =   8576
       MaxLength       =   16
-      TabIndex        =   6
+      TabIndex        =   7
       Top             =   2265
       Width           =   1455
    End
@@ -1191,7 +1191,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   1
       Left            =   6986
       MaxLength       =   16
-      TabIndex        =   5
+      TabIndex        =   6
       Top             =   2265
       Width           =   1455
    End
@@ -1211,7 +1211,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   1
       Left            =   11066
       Style           =   1  'Graphical
-      TabIndex        =   41
+      TabIndex        =   42
       Top             =   10335
       Width           =   1200
    End
@@ -1231,7 +1231,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   2
       Left            =   12356
       Style           =   1  'Graphical
-      TabIndex        =   34
+      TabIndex        =   35
       Top             =   10335
       Width           =   1200
    End
@@ -1250,7 +1250,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   29
       Left            =   13286
-      TabIndex        =   131
+      TabIndex        =   132
       Top             =   9015
       Width           =   1455
    End
@@ -1269,11 +1269,30 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   29
       Left            =   13286
-      TabIndex        =   130
+      TabIndex        =   131
       Top             =   8655
       Width           =   1455
    End
    Begin VB.TextBox text3 
+      Alignment       =   1  'Right Justify
+      Appearance      =   0  'Flat
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Index           =   28
+      Left            =   11726
+      TabIndex        =   130
+      Top             =   9015
+      Width           =   1455
+   End
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1289,10 +1308,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   28
       Left            =   11726
       TabIndex        =   129
-      Top             =   9015
+      Top             =   8655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1305,13 +1324,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   28
-      Left            =   11726
+      Index           =   27
+      Left            =   10166
       TabIndex        =   128
-      Top             =   8655
+      Top             =   9015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1327,10 +1346,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   27
       Left            =   10166
       TabIndex        =   127
-      Top             =   9015
+      Top             =   8655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1343,13 +1362,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   27
-      Left            =   10166
+      Index           =   26
+      Left            =   8576
       TabIndex        =   126
-      Top             =   8655
+      Top             =   9015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1365,10 +1384,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   26
       Left            =   8576
       TabIndex        =   125
-      Top             =   9015
+      Top             =   8655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1381,13 +1400,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   26
-      Left            =   8576
+      Index           =   25
+      Left            =   6986
       TabIndex        =   124
-      Top             =   8655
+      Top             =   9015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1403,10 +1422,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   25
       Left            =   6986
       TabIndex        =   123
-      Top             =   9015
+      Top             =   8655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1419,13 +1438,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   25
-      Left            =   6986
+      Index           =   24
+      Left            =   5396
       TabIndex        =   122
-      Top             =   8655
+      Top             =   9015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1441,25 +1460,6 @@ Begin VB.Form Frm_Production_Result
       Index           =   24
       Left            =   5396
       TabIndex        =   121
-      Top             =   9015
-      Width           =   1455
-   End
-   Begin VB.TextBox text2 
-      Alignment       =   1  'Right Justify
-      Appearance      =   0  'Flat
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   315
-      Index           =   24
-      Left            =   5396
-      TabIndex        =   120
       Top             =   8655
       Width           =   1455
    End
@@ -1478,7 +1478,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   23
       Left            =   13286
-      TabIndex        =   116
+      TabIndex        =   117
       Top             =   7515
       Width           =   1455
    End
@@ -1497,11 +1497,30 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   23
       Left            =   13286
-      TabIndex        =   115
+      TabIndex        =   116
       Top             =   7155
       Width           =   1455
    End
    Begin VB.TextBox text3 
+      Alignment       =   1  'Right Justify
+      Appearance      =   0  'Flat
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Index           =   22
+      Left            =   11726
+      TabIndex        =   115
+      Top             =   7515
+      Width           =   1455
+   End
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1517,10 +1536,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   22
       Left            =   11726
       TabIndex        =   114
-      Top             =   7515
+      Top             =   7155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1533,13 +1552,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   22
-      Left            =   11726
+      Index           =   21
+      Left            =   10166
       TabIndex        =   113
-      Top             =   7155
+      Top             =   7515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1555,10 +1574,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   21
       Left            =   10166
       TabIndex        =   112
-      Top             =   7515
+      Top             =   7155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1571,13 +1590,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   21
-      Left            =   10166
+      Index           =   20
+      Left            =   8576
       TabIndex        =   111
-      Top             =   7155
+      Top             =   7515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1593,10 +1612,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   20
       Left            =   8576
       TabIndex        =   110
-      Top             =   7515
+      Top             =   7155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1609,13 +1628,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   20
-      Left            =   8576
+      Index           =   19
+      Left            =   6986
       TabIndex        =   109
-      Top             =   7155
+      Top             =   7515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1631,10 +1650,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   19
       Left            =   6986
       TabIndex        =   108
-      Top             =   7515
+      Top             =   7155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1647,13 +1666,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   19
-      Left            =   6986
+      Index           =   18
+      Left            =   5396
       TabIndex        =   107
-      Top             =   7155
+      Top             =   7515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1669,25 +1688,6 @@ Begin VB.Form Frm_Production_Result
       Index           =   18
       Left            =   5396
       TabIndex        =   106
-      Top             =   7515
-      Width           =   1455
-   End
-   Begin VB.TextBox text2 
-      Alignment       =   1  'Right Justify
-      Appearance      =   0  'Flat
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   315
-      Index           =   18
-      Left            =   5396
-      TabIndex        =   105
       Top             =   7155
       Width           =   1455
    End
@@ -1706,7 +1706,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   17
       Left            =   13286
-      TabIndex        =   101
+      TabIndex        =   102
       Top             =   6015
       Width           =   1455
    End
@@ -1725,11 +1725,30 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   17
       Left            =   13286
-      TabIndex        =   100
+      TabIndex        =   101
       Top             =   5655
       Width           =   1455
    End
    Begin VB.TextBox text3 
+      Alignment       =   1  'Right Justify
+      Appearance      =   0  'Flat
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Index           =   16
+      Left            =   11726
+      TabIndex        =   100
+      Top             =   6015
+      Width           =   1455
+   End
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1745,10 +1764,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   16
       Left            =   11726
       TabIndex        =   99
-      Top             =   6015
+      Top             =   5655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1761,13 +1780,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   16
-      Left            =   11726
+      Index           =   15
+      Left            =   10166
       TabIndex        =   98
-      Top             =   5655
+      Top             =   6015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1783,10 +1802,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   15
       Left            =   10166
       TabIndex        =   97
-      Top             =   6015
+      Top             =   5655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1799,13 +1818,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   15
-      Left            =   10166
+      Index           =   14
+      Left            =   8576
       TabIndex        =   96
-      Top             =   5655
+      Top             =   6015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1821,10 +1840,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   14
       Left            =   8576
       TabIndex        =   95
-      Top             =   6015
+      Top             =   5655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1837,13 +1856,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   14
-      Left            =   8576
+      Index           =   13
+      Left            =   6986
       TabIndex        =   94
-      Top             =   5655
+      Top             =   6015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1859,10 +1878,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   13
       Left            =   6986
       TabIndex        =   93
-      Top             =   6015
+      Top             =   5655
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1875,13 +1894,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   13
-      Left            =   6986
+      Index           =   12
+      Left            =   5396
       TabIndex        =   92
-      Top             =   5655
+      Top             =   6015
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1897,25 +1916,6 @@ Begin VB.Form Frm_Production_Result
       Index           =   12
       Left            =   5396
       TabIndex        =   91
-      Top             =   6015
-      Width           =   1455
-   End
-   Begin VB.TextBox text2 
-      Alignment       =   1  'Right Justify
-      Appearance      =   0  'Flat
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   315
-      Index           =   12
-      Left            =   5396
-      TabIndex        =   90
       Top             =   5655
       Width           =   1455
    End
@@ -1934,7 +1934,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   11
       Left            =   13286
-      TabIndex        =   86
+      TabIndex        =   87
       Top             =   4515
       Width           =   1455
    End
@@ -1953,11 +1953,30 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   11
       Left            =   13286
-      TabIndex        =   85
+      TabIndex        =   86
       Top             =   4155
       Width           =   1455
    End
    Begin VB.TextBox text3 
+      Alignment       =   1  'Right Justify
+      Appearance      =   0  'Flat
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Index           =   10
+      Left            =   11726
+      TabIndex        =   85
+      Top             =   4515
+      Width           =   1455
+   End
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1973,10 +1992,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   10
       Left            =   11726
       TabIndex        =   84
-      Top             =   4515
+      Top             =   4155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -1989,13 +2008,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   10
-      Left            =   11726
+      Index           =   9
+      Left            =   10166
       TabIndex        =   83
-      Top             =   4155
+      Top             =   4515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2011,10 +2030,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   9
       Left            =   10166
       TabIndex        =   82
-      Top             =   4515
+      Top             =   4155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2027,13 +2046,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   9
-      Left            =   10166
+      Index           =   8
+      Left            =   8576
       TabIndex        =   81
-      Top             =   4155
+      Top             =   4515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2049,10 +2068,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   8
       Left            =   8576
       TabIndex        =   80
-      Top             =   4515
+      Top             =   4155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2065,13 +2084,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   8
-      Left            =   8576
+      Index           =   7
+      Left            =   6986
       TabIndex        =   79
-      Top             =   4155
+      Top             =   4515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2087,10 +2106,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   7
       Left            =   6986
       TabIndex        =   78
-      Top             =   4515
+      Top             =   4155
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2103,13 +2122,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   7
-      Left            =   6986
+      Index           =   6
+      Left            =   5396
       TabIndex        =   77
-      Top             =   4155
+      Top             =   4515
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2125,25 +2144,6 @@ Begin VB.Form Frm_Production_Result
       Index           =   6
       Left            =   5396
       TabIndex        =   76
-      Top             =   4515
-      Width           =   1455
-   End
-   Begin VB.TextBox text2 
-      Alignment       =   1  'Right Justify
-      Appearance      =   0  'Flat
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   315
-      Index           =   6
-      Left            =   5396
-      TabIndex        =   75
       Top             =   4155
       Width           =   1455
    End
@@ -2162,7 +2162,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   5
       Left            =   13286
-      TabIndex        =   71
+      TabIndex        =   72
       Top             =   2985
       Width           =   1455
    End
@@ -2181,11 +2181,30 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   5
       Left            =   13286
-      TabIndex        =   70
+      TabIndex        =   71
       Top             =   2625
       Width           =   1455
    End
    Begin VB.TextBox text3 
+      Alignment       =   1  'Right Justify
+      Appearance      =   0  'Flat
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Index           =   4
+      Left            =   11726
+      TabIndex        =   70
+      Top             =   2985
+      Width           =   1455
+   End
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2201,10 +2220,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   4
       Left            =   11726
       TabIndex        =   69
-      Top             =   2985
+      Top             =   2625
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2217,13 +2236,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   4
-      Left            =   11726
+      Index           =   3
+      Left            =   10166
       TabIndex        =   68
-      Top             =   2625
+      Top             =   2985
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2239,10 +2258,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   3
       Left            =   10166
       TabIndex        =   67
-      Top             =   2985
+      Top             =   2625
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2255,13 +2274,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   3
-      Left            =   10166
+      Index           =   2
+      Left            =   8576
       TabIndex        =   66
-      Top             =   2625
+      Top             =   2985
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2277,10 +2296,10 @@ Begin VB.Form Frm_Production_Result
       Index           =   2
       Left            =   8576
       TabIndex        =   65
-      Top             =   2985
+      Top             =   2625
       Width           =   1455
    End
-   Begin VB.TextBox text2 
+   Begin VB.TextBox text3 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2293,13 +2312,13 @@ Begin VB.Form Frm_Production_Result
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Index           =   2
-      Left            =   8576
+      Index           =   1
+      Left            =   6986
       TabIndex        =   64
-      Top             =   2625
+      Top             =   2985
       Width           =   1455
    End
-   Begin VB.TextBox text3 
+   Begin VB.TextBox text2 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
       BeginProperty Font 
@@ -2315,25 +2334,6 @@ Begin VB.Form Frm_Production_Result
       Index           =   1
       Left            =   6986
       TabIndex        =   63
-      Top             =   2985
-      Width           =   1455
-   End
-   Begin VB.TextBox text2 
-      Alignment       =   1  'Right Justify
-      Appearance      =   0  'Flat
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   315
-      Index           =   1
-      Left            =   6986
-      TabIndex        =   62
       Top             =   2625
       Width           =   1455
    End
@@ -2352,7 +2352,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   0
       Left            =   5396
-      TabIndex        =   61
+      TabIndex        =   62
       Top             =   2985
       Width           =   1455
    End
@@ -2371,7 +2371,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   315
       Index           =   0
       Left            =   5396
-      TabIndex        =   60
+      TabIndex        =   61
       Top             =   2625
       Width           =   1455
    End
@@ -2390,7 +2390,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   0
       Left            =   5396
       MaxLength       =   16
-      TabIndex        =   4
+      TabIndex        =   5
       Top             =   2265
       Width           =   1455
    End
@@ -2398,21 +2398,42 @@ Begin VB.Form Frm_Production_Result
       BackColor       =   &H00FDDFE3&
       Height          =   1065
       Left            =   296
-      TabIndex        =   45
+      TabIndex        =   46
       Top             =   675
       Width           =   14565
+      Begin VB.TextBox TxtCompanyName 
+         BackColor       =   &H00FDDFE3&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   3600
+         Locked          =   -1  'True
+         TabIndex        =   188
+         TabStop         =   0   'False
+         Text            =   "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+         Top             =   270
+         Width           =   3060
+      End
       Begin VB.CommandButton Command1 
          Caption         =   "..."
          Height          =   300
          Left            =   4800
-         TabIndex        =   186
+         TabIndex        =   187
          Top             =   630
          Width           =   300
       End
       Begin MSComCtl2.DTPicker MYDate 
          Height          =   315
          Left            =   8790
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   630
          Width           =   1395
          _ExtentX        =   2461
@@ -2428,9 +2449,50 @@ Begin VB.Form Frm_Production_Result
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   141230083
+         Format          =   59441155
          UpDown          =   -1  'True
          CurrentDate     =   37802
+      End
+      Begin VB.Label Label4 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   189
+         Top             =   315
+         Width           =   1635
+      End
+      Begin MSForms.ComboBox TxtCc 
+         Height          =   345
+         Left            =   2115
+         TabIndex        =   0
+         Top             =   225
+         Width           =   1290
+         VariousPropertyBits=   746604571
+         MaxLength       =   10
+         DisplayStyle    =   3
+         Size            =   "2275;609"
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Line Line2 
+         X1              =   3555
+         X2              =   6615
+         Y1              =   540
+         Y2              =   540
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -2448,7 +2510,7 @@ Begin VB.Form Frm_Production_Result
          Height          =   195
          Index           =   6
          Left            =   135
-         TabIndex        =   149
+         TabIndex        =   150
          Top             =   720
          Width           =   1920
       End
@@ -2468,7 +2530,7 @@ Begin VB.Form Frm_Production_Result
          Height          =   195
          Index           =   2
          Left            =   8100
-         TabIndex        =   148
+         TabIndex        =   149
          Top             =   690
          Width           =   540
       End
@@ -2488,7 +2550,7 @@ Begin VB.Form Frm_Production_Result
          Height          =   195
          Index           =   3
          Left            =   10260
-         TabIndex        =   147
+         TabIndex        =   148
          Top             =   690
          Width           =   855
       End
@@ -2499,7 +2561,7 @@ Begin VB.Form Frm_Production_Result
          ForeColor       =   &H00000000&
          Height          =   195
          Left            =   13290
-         TabIndex        =   145
+         TabIndex        =   146
          Top             =   240
          Visible         =   0   'False
          Width           =   1005
@@ -2519,17 +2581,17 @@ Begin VB.Form Frm_Production_Result
          ForeColor       =   &H00800000&
          Height          =   195
          Left            =   11970
-         TabIndex        =   144
+         TabIndex        =   145
          Top             =   780
          Visible         =   0   'False
          Width           =   2400
       End
       Begin VB.Line Line1 
          Index           =   0
-         X1              =   3600
-         X2              =   12480
-         Y1              =   540
-         Y2              =   540
+         X1              =   9675
+         X2              =   14445
+         Y1              =   495
+         Y2              =   495
       End
       Begin VB.Label lbldesc 
          BackStyle       =   0  'Transparent
@@ -2545,10 +2607,10 @@ Begin VB.Form Frm_Production_Result
          EndProperty
          Height          =   195
          Index           =   0
-         Left            =   3600
-         TabIndex        =   49
-         Top             =   330
-         Width           =   8850
+         Left            =   9720
+         TabIndex        =   50
+         Top             =   270
+         Width           =   4620
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -2565,16 +2627,16 @@ Begin VB.Form Frm_Production_Result
          EndProperty
          Height          =   195
          Index           =   0
-         Left            =   135
-         TabIndex        =   48
-         Top             =   315
+         Left            =   6930
+         TabIndex        =   49
+         Top             =   270
          Width           =   1140
       End
       Begin MSForms.ComboBox cbodealer 
          Height          =   315
-         Left            =   2100
-         TabIndex        =   0
-         Top             =   240
+         Left            =   8235
+         TabIndex        =   1
+         Top             =   225
          Width           =   1365
          VariousPropertyBits=   746604571
          MaxLength       =   10
@@ -2590,7 +2652,7 @@ Begin VB.Form Frm_Production_Result
       Begin MSForms.ComboBox cbogroup 
          Height          =   315
          Left            =   11190
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   630
          Width           =   1095
          VariousPropertyBits=   746604571
@@ -2625,14 +2687,14 @@ Begin VB.Form Frm_Production_Result
          Height          =   195
          Index           =   1
          Left            =   12330
-         TabIndex        =   47
+         TabIndex        =   48
          Top             =   690
          Width           =   1830
       End
       Begin MSForms.ComboBox CboPart 
          Height          =   315
          Left            =   2100
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   630
          Width           =   2655
          VariousPropertyBits=   746604571
@@ -2661,7 +2723,7 @@ Begin VB.Form Frm_Production_Result
          Height          =   195
          Index           =   2
          Left            =   5220
-         TabIndex        =   46
+         TabIndex        =   47
          Top             =   690
          Width           =   2640
       End
@@ -2677,7 +2739,7 @@ Begin VB.Form Frm_Production_Result
       BackColor       =   &H00FDDFE3&
       Height          =   495
       Left            =   296
-      TabIndex        =   43
+      TabIndex        =   44
       Top             =   9750
       Width           =   13245
       Begin VB.Label lblerror 
@@ -2695,7 +2757,7 @@ Begin VB.Form Frm_Production_Result
          ForeColor       =   &H00FF00FF&
          Height          =   195
          Left            =   105
-         TabIndex        =   44
+         TabIndex        =   45
          Top             =   195
          Width           =   13020
       End
@@ -2716,7 +2778,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   2
       Left            =   5606
       Style           =   1  'Graphical
-      TabIndex        =   37
+      TabIndex        =   38
       Top             =   10335
       Width           =   1200
    End
@@ -2736,7 +2798,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   1
       Left            =   4316
       Style           =   1  'Graphical
-      TabIndex        =   36
+      TabIndex        =   37
       Top             =   10335
       Width           =   1200
    End
@@ -2756,7 +2818,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   0
       Left            =   3026
       Style           =   1  'Graphical
-      TabIndex        =   35
+      TabIndex        =   36
       Top             =   10335
       Width           =   1200
    End
@@ -2776,7 +2838,7 @@ Begin VB.Form Frm_Production_Result
       Index           =   3
       Left            =   6896
       Style           =   1  'Graphical
-      TabIndex        =   38
+      TabIndex        =   39
       Top             =   10335
       Width           =   1200
    End
@@ -2796,14 +2858,14 @@ Begin VB.Form Frm_Production_Result
       Index           =   0
       Left            =   296
       Style           =   1  'Graphical
-      TabIndex        =   42
+      TabIndex        =   43
       Top             =   10335
       Width           =   1200
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   435
       Left            =   12960
-      TabIndex        =   150
+      TabIndex        =   151
       Top             =   165
       Width           =   1905
       _ExtentX        =   3360
@@ -2825,7 +2887,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   19
       Left            =   4500
-      TabIndex        =   185
+      TabIndex        =   186
       Top             =   9405
       Width           =   285
    End
@@ -2845,7 +2907,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   18
       Left            =   4500
-      TabIndex        =   184
+      TabIndex        =   185
       Top             =   7905
       Width           =   285
    End
@@ -2865,7 +2927,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   17
       Left            =   4500
-      TabIndex        =   183
+      TabIndex        =   184
       Top             =   6405
       Width           =   285
    End
@@ -2885,7 +2947,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   16
       Left            =   4500
-      TabIndex        =   182
+      TabIndex        =   183
       Top             =   4905
       Width           =   285
    End
@@ -2905,7 +2967,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   15
       Left            =   4530
-      TabIndex        =   152
+      TabIndex        =   153
       Top             =   3375
       Width           =   285
    End
@@ -2943,7 +3005,7 @@ Begin VB.Form Frm_Production_Result
       ForeColor       =   &H00FF00FF&
       Height          =   195
       Left            =   13740
-      TabIndex        =   143
+      TabIndex        =   144
       Top             =   9915
       Width           =   1095
    End
@@ -2963,7 +3025,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   4
       Left            =   360
-      TabIndex        =   142
+      TabIndex        =   143
       Top             =   8595
       Width           =   960
    End
@@ -2983,7 +3045,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   4
       Left            =   360
-      TabIndex        =   141
+      TabIndex        =   142
       Top             =   8325
       Width           =   3450
    End
@@ -3012,7 +3074,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   3
       Left            =   390
-      TabIndex        =   140
+      TabIndex        =   141
       Top             =   7065
       Width           =   960
    End
@@ -3032,7 +3094,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   3
       Left            =   390
-      TabIndex        =   139
+      TabIndex        =   140
       Top             =   6795
       Width           =   3450
    End
@@ -3061,7 +3123,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   2
       Left            =   360
-      TabIndex        =   138
+      TabIndex        =   139
       Top             =   5565
       Width           =   960
    End
@@ -3081,7 +3143,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   2
       Left            =   360
-      TabIndex        =   137
+      TabIndex        =   138
       Top             =   5295
       Width           =   3450
    End
@@ -3110,7 +3172,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   1
       Left            =   420
-      TabIndex        =   136
+      TabIndex        =   137
       Top             =   4065
       Width           =   960
    End
@@ -3130,7 +3192,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   1
       Left            =   420
-      TabIndex        =   135
+      TabIndex        =   136
       Top             =   3795
       Width           =   3450
    End
@@ -3150,7 +3212,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   14
       Left            =   4500
-      TabIndex        =   134
+      TabIndex        =   135
       Top             =   9075
       Width           =   810
    End
@@ -3170,7 +3232,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   13
       Left            =   4500
-      TabIndex        =   133
+      TabIndex        =   134
       Top             =   8715
       Width           =   495
    End
@@ -3190,7 +3252,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   12
       Left            =   4500
-      TabIndex        =   132
+      TabIndex        =   133
       Top             =   8325
       Width           =   720
    End
@@ -3210,7 +3272,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   11
       Left            =   4500
-      TabIndex        =   119
+      TabIndex        =   120
       Top             =   7575
       Width           =   810
    End
@@ -3230,7 +3292,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   10
       Left            =   4500
-      TabIndex        =   118
+      TabIndex        =   119
       Top             =   7215
       Width           =   495
    End
@@ -3250,7 +3312,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   9
       Left            =   4500
-      TabIndex        =   117
+      TabIndex        =   118
       Top             =   6825
       Width           =   720
    End
@@ -3277,7 +3339,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   8
       Left            =   4500
-      TabIndex        =   104
+      TabIndex        =   105
       Top             =   6075
       Width           =   810
    End
@@ -3297,7 +3359,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   7
       Left            =   4500
-      TabIndex        =   103
+      TabIndex        =   104
       Top             =   5715
       Width           =   495
    End
@@ -3317,7 +3379,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   6
       Left            =   4500
-      TabIndex        =   102
+      TabIndex        =   103
       Top             =   5325
       Width           =   720
    End
@@ -3344,7 +3406,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   5
       Left            =   4500
-      TabIndex        =   89
+      TabIndex        =   90
       Top             =   4575
       Width           =   810
    End
@@ -3364,7 +3426,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   4
       Left            =   4500
-      TabIndex        =   88
+      TabIndex        =   89
       Top             =   4215
       Width           =   495
    End
@@ -3384,7 +3446,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   3
       Left            =   4500
-      TabIndex        =   87
+      TabIndex        =   88
       Top             =   3825
       Width           =   720
    End
@@ -3411,7 +3473,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   2
       Left            =   4500
-      TabIndex        =   74
+      TabIndex        =   75
       Top             =   3045
       Width           =   810
    End
@@ -3431,7 +3493,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   1
       Left            =   4500
-      TabIndex        =   73
+      TabIndex        =   74
       Top             =   2685
       Width           =   495
    End
@@ -3451,7 +3513,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   0
       Left            =   4500
-      TabIndex        =   72
+      TabIndex        =   73
       Top             =   2295
       Width           =   720
    End
@@ -3472,7 +3534,7 @@ Begin VB.Form Frm_Production_Result
       ForeColor       =   &H00800000&
       Height          =   435
       Left            =   300
-      TabIndex        =   59
+      TabIndex        =   60
       Top             =   165
       Width           =   14595
    End
@@ -3492,7 +3554,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   0
       Left            =   570
-      TabIndex        =   58
+      TabIndex        =   59
       Top             =   1935
       Width           =   1920
    End
@@ -3512,7 +3574,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   0
       Left            =   5400
-      TabIndex        =   57
+      TabIndex        =   58
       Top             =   1935
       Width           =   675
    End
@@ -3532,7 +3594,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   1
       Left            =   6990
-      TabIndex        =   56
+      TabIndex        =   57
       Top             =   1935
       Width           =   765
    End
@@ -3552,7 +3614,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   2
       Left            =   8610
-      TabIndex        =   55
+      TabIndex        =   56
       Top             =   1935
       Width           =   510
    End
@@ -3572,7 +3634,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   3
       Left            =   10170
-      TabIndex        =   54
+      TabIndex        =   55
       Top             =   1935
       Width           =   390
    End
@@ -3592,7 +3654,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   4
       Left            =   11730
-      TabIndex        =   53
+      TabIndex        =   54
       Top             =   1935
       Width           =   345
    End
@@ -3612,7 +3674,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   5
       Left            =   13290
-      TabIndex        =   52
+      TabIndex        =   53
       Top             =   1935
       Width           =   390
    End
@@ -3632,7 +3694,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   0
       Left            =   390
-      TabIndex        =   51
+      TabIndex        =   52
       Top             =   2295
       Width           =   3450
    End
@@ -3652,7 +3714,7 @@ Begin VB.Form Frm_Production_Result
       Height          =   195
       Index           =   0
       Left            =   390
-      TabIndex        =   50
+      TabIndex        =   51
       Top             =   2565
       Width           =   960
    End
@@ -3702,8 +3764,8 @@ Private Sub adpartcombo()
     Dim rstpart As New ADODB.Recordset
     Dim sq As String
     
-    If Trim(cboGroup.Text) <> strAll Then
-        sq = "and group_cls = '" & cboGroup & "'"
+    If Trim(cbogroup.Text) <> strAll Then
+        sq = "and group_cls = '" & cbogroup & "'"
     End If
     
     If Trim(cbodealer.Text) = strAll Then
@@ -3742,11 +3804,27 @@ Private Sub adpartcombo()
 
 End Sub
 
+Private Sub TxtCc_Change()
+    If TxtCc.matchFound Then
+        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+        'DamiUpd = Trim(TxtCc)
+    Else
+        TxtCompanyName = ""
+        lblerror = DisplayMsg(4069)  '"Record is not found"
+        'DamiUpd = Trim(TxtCc)
+    End If
+    Call adtocombo
+End Sub
+
+Private Sub CompanyMaster()
+FillCompanyCombo TxtCc
+End Sub
+
 Private Sub adtocombo()
     
     Dim adoRs As New ADODB.Recordset
 
-    sql = "select *, trade_code from trade_master where trade_code in (select distinct manufacture_code from manufacture_line)"
+    sql = "select *, trade_code from trade_master where trade_code in (select distinct manufacture_code from manufacture_line where Company_Code =  '" & Trim(TxtCc) & "' )"
     adoRs.Open sql, Db, adOpenKeyset, adLockOptimistic
     With cbodealer
         .clear
@@ -3771,7 +3849,7 @@ Private Sub adtocombo()
     
     sql = "select * from group_cls"
     adoRs.Open sql, Db, adOpenKeyset, adLockOptimistic
-    With cboGroup
+    With cbogroup
         .clear
         .columnCount = 2
         .ColumnWidths = "50 pt;75 pt"
@@ -3804,14 +3882,14 @@ Private Sub clear()
         Text1(i).BackColor = vbWhite
         Text1(i).DataChanged = False
         Text1(i).Enabled = False
-        Text2(i).Text = 0
-        Text2(i).BackColor = vbWhite
-        Text2(i).DataChanged = False
-        Text2(i).Enabled = False
-        Text3(i).Text = 0
-        Text3(i).BackColor = vbWhite
-        Text3(i).DataChanged = False
-        Text3(i).Enabled = False
+        text2(i).Text = 0
+        text2(i).BackColor = vbWhite
+        text2(i).DataChanged = False
+        text2(i).Enabled = False
+        text3(i).Text = 0
+        text3(i).BackColor = vbWhite
+        text3(i).DataChanged = False
+        text3(i).Enabled = False
         Text4(i).Text = 0
         Text4(i).BackColor = vbWhite
         Text4(i).DataChanged = False
@@ -3831,13 +3909,13 @@ Private Function getdata() As Boolean
     Dim sqlP As String
     
     If Trim(cbodealer.Text) = "" Then Exit Function
-    If Trim(cboGroup.Text) = "" Then Exit Function
+    If Trim(cbogroup.Text) = "" Then Exit Function
     If Trim(CboPart.Text) = "" Then Exit Function
     
-    If Trim(cboGroup) = strAll Then
+    If Trim(cbogroup) = strAll Then
         sqlP = ") x "
     Else
-        sqlP = "and item_master.group_cls = '" & cboGroup.Text & "') x "
+        sqlP = "and item_master.group_cls = '" & cbogroup.Text & "') x "
     End If
     
     sql = "     select x.*,isnull(aqty,0) r1,isnull(bqty,0) r2,isnull(cqty,0) r3, isnull(dqty,0) r4,isnull(eqty,0) r5,isnull(fqty,0) r6,  " & vbCrLf & _
@@ -3926,29 +4004,29 @@ Private Sub displayrecords()
                     End If
                     'Order data
                     If InStr(1, rstresult.Fields(i + 10).Value, ".") Then
-                        Text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
+                        text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
                     Else
-                        Text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
+                        text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
                     End If
                     'Shipment data
                     If InStr(1, rstresult.Fields(i + 16).Value, ".") Then
-                        Text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
+                        text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
                     Else
-                        Text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
+                        text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
                     End If
                     
                     'Balance Order - Shipment
-                    If InStr(1, CDbl(Text1(i + Y * 6).Text) - CDbl(Text2(i + Y * 6).Text), ".") Then
-                        Text4(i + Y * 6).Text = Format(CDbl(Text2(i + Y * 6).Text) - CDbl(Text3(i + Y * 6).Text), gs_formatQty)
+                    If InStr(1, CDbl(Text1(i + Y * 6).Text) - CDbl(text2(i + Y * 6).Text), ".") Then
+                        Text4(i + Y * 6).Text = Format(CDbl(text2(i + Y * 6).Text) - CDbl(text3(i + Y * 6).Text), gs_formatQty)
                     Else
-                        Text4(i + Y * 6).Text = Format(CDbl(Text2(i + Y * 6).Text) - CDbl(Text3(i + Y * 6).Text), gs_formatQty)
+                        Text4(i + Y * 6).Text = Format(CDbl(text2(i + Y * 6).Text) - CDbl(text3(i + Y * 6).Text), gs_formatQty)
                     End If
                     
                     Text1(i + Y * 6).Tag = rstresult!Unit_cls & "," & CDbl(Text1(i + Y * 6))
                     Text1(i + Y * 6).BackColor = vbWhite
                     Text1(i + Y * 6).DataChanged = False
-                    Text2(i + Y * 6).DataChanged = False
-                    Text3(i + Y * 6).DataChanged = False
+                    text2(i + Y * 6).DataChanged = False
+                    text3(i + Y * 6).DataChanged = False
                     Text4(i + Y * 6).DataChanged = False
                 Next
             rstresult.MoveNext
@@ -4076,10 +4154,10 @@ Private Sub production_report()
         zbln(i) = rbln(i)
     Next
 
-    If Trim(cboGroup) = strAll Then
+    If Trim(cbogroup) = strAll Then
         sql3 = " )x "
     Else
-        sql3 = "and item_master.group_cls = '" & cboGroup.Text & "' ) x "
+        sql3 = "and item_master.group_cls = '" & cbogroup.Text & "' ) x "
     End If
     
     sql = "select x.item_code, x.makercode, x.itemname, x.unit_cls, " & vbCrLf & _
@@ -4161,7 +4239,7 @@ If Not rsCek.EOF Then
 Screen.MousePointer = vbHourglass
 With xlapp
 
-    sql1 = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile "
+    sql1 = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile where Company_Code = '" & Trim(TxtCc) & "'"
     If rsCompany.State <> adStateClosed Then rsCompany.Close
     rsCompany.Open sql1, Db, adOpenDynamic, adLockOptimistic
     
@@ -4198,12 +4276,12 @@ With xlapp
         If Idx = 11 Then
             .Range("A" & Idx) = "Part Number / Product Code"
             .Range("B" & Idx) = ""
-            .Range("C" & Idx) = LblMonth(0)
-            .Range("D" & Idx) = LblMonth(1)
-            .Range("E" & Idx) = LblMonth(2)
-            .Range("F" & Idx) = LblMonth(3)
-            .Range("G" & Idx) = LblMonth(4)
-            .Range("H" & Idx) = LblMonth(5)
+            .Range("C" & Idx) = lblmonth(0)
+            .Range("D" & Idx) = lblmonth(1)
+            .Range("E" & Idx) = lblmonth(2)
+            .Range("F" & Idx) = lblmonth(3)
+            .Range("G" & Idx) = lblmonth(4)
+            .Range("H" & Idx) = lblmonth(5)
             .Range("a" & Idx, "H" & Idx).Borders(xlEdgeTop).LineStyle = xlContinuous
             .Range("a" & Idx, "H" & Idx).Borders(xlEdgeBottom).LineStyle = xlDouble
             Idx = Idx + 1
@@ -4295,13 +4373,13 @@ Private Function errcheck() As Boolean
         Exit Function
     Else
         cbodealer = Trim(cbodealer)
-        If cbodealer.MatchFound Then
+        If cbodealer.matchFound Then
             If Trim(CboPart) <> "" Then
                 CboPart = Trim(CboPart)
-                If CboPart.MatchFound Then
-                    If Trim(cboGroup) <> "" Then
-                        cboGroup = Trim(cboGroup)
-                        If cboGroup.MatchFound = False Then
+                If CboPart.matchFound Then
+                    If Trim(cbogroup) <> "" Then
+                        cbogroup = Trim(cbogroup)
+                        If cbogroup.matchFound = False Then
                             errcheck = True
                             lblerror = DisplayMsg(4064)
                             Exit Function
@@ -4324,7 +4402,7 @@ Private Function errcheck() As Boolean
 End Function
 
 Private Sub cbodealer_Change()
-    If cbodealer.MatchFound Then
+    If cbodealer.matchFound Then
         lbldesc(0).Caption = cbodealer.Column(1)
         adpartcombo
         If getdata Then displayrecords
@@ -4342,8 +4420,8 @@ Private Sub cbodealer_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub cboGroup_Change()
-    If cboGroup.MatchFound Then
-        lbldesc(1).Caption = cboGroup.Column(1)
+    If cbogroup.matchFound Then
+        lbldesc(1).Caption = cbogroup.Column(1)
         adpartcombo
         If getdata Then displayrecords
     Else
@@ -4360,7 +4438,7 @@ Private Sub cbogroup_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub CboPart_Change()
-    If CboPart.MatchFound Then
+    If CboPart.matchFound Then
         txtproductdesc.Text = CboPart.Column(1)
         If getdata Then displayrecords
     Else
@@ -4421,7 +4499,7 @@ Private Sub cmdAction_Click(Index As Integer)
         clear
         clearheader
         cbodealer.ListIndex = -1
-        cboGroup.ListIndex = -1
+        cbogroup.ListIndex = -1
         CboPart.ListIndex = -1
         MYDate = Format(Now, "MMM YYYY")
         Me.MousePointer = vbDefault
@@ -4492,11 +4570,11 @@ Private Sub Form_Load()
     X = Format(Me.MYDate, "mm")
     For i = 0 To 5
         If X + i <= 12 Then
-            LblMonth(i) = MonthName(X + i)
+            lblmonth(i) = MonthName(X + i)
             thn(i) = Year(MYDate)
             bln(i) = (X + i)
         Else
-            LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
+            lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
             bln(i) = ((X + i) - 12)
             thn(i) = Year(MYDate) + 1
         End If
@@ -4506,7 +4584,8 @@ Private Sub Form_Load()
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
     tgl_sb = Month(Now)
-    adtocombo
+    CompanyMaster
+    'adtocombo
 
 End Sub
 
@@ -4541,11 +4620,11 @@ Private Sub MYDate_Change()
     X = Format(Me.MYDate, "mm")
     For i = 0 To 5
         If X + i <= 12 Then
-            LblMonth(i) = MonthName(X + i)
+            lblmonth(i) = MonthName(X + i)
             thn(i) = Year(MYDate)
             bln(i) = (X + i)
         Else
-            LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
+            lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
             bln(i) = ((X + i) - 12)
             thn(i) = Year(MYDate) + 1
         End If
@@ -4642,7 +4721,7 @@ Private Sub text2_GotFocus(Index As Integer)
 End Sub
 
 Private Sub text3_Change(Index As Integer)
-    Text3(Index).DataChanged = False
+    text3(Index).DataChanged = False
 End Sub
 
 Private Sub text3_GotFocus(Index As Integer)
