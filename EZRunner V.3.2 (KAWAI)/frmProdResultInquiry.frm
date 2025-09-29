@@ -316,7 +316,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   136249347
+      Format          =   121241603
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -339,7 +339,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   136249347
+      Format          =   121241603
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -1385,6 +1385,8 @@ Dim rsCek As New ADODB.Recordset
                                 LblErrMsg = DisplayMsg(1113): Exit Sub 'Daily Already Completed
                             End If
                             frmProdResult.is_LoadByItemCode = Trim(.TextMatrix(cek, bteColProdCode))
+                            frmProdResult.cboCompany(2) = cboCompany(2).Text
+                            frmProdResult.lblCompany(2) = lblCompany(2).Caption
                             frmProdResult.cbo(0) = cbo(0) 'Factory CD
                             frmProdResult.cbo(1) = cbo(1) 'Line Code
                             frmProdResult.cbo(2) = Trim(.TextMatrix(cek, bteColWHCode)) ' WH Code 20090212 - Default WH Code = Factory Code
@@ -1393,7 +1395,7 @@ Dim rsCek As New ADODB.Recordset
                             frmProdResult.cbo(3) = Trim(.TextMatrix(cek, bteColProdCode)) 'Item Code
                             frmProdResult.txtLot = Trim(.TextMatrix(cek, bteColLotNo)) 'Lot NO
                             frmProdResult.txtQty = Format(0, gs_formatQty)
-                            frmProdResult.txtremarks = ""
+                            frmProdResult.txtRemarks = ""
                             frmProdResult.dailyseqno = .TextMatrix(cek, bteColSeqNo) 'Daily Seq No
                             frmProdResult.qtyDaily = .TextMatrix(cek, bteColPlan) 'Daily Qty
                             frmProdResult.txtUnit = uf_GetUnitDescription(Trim(.TextMatrix(cek, bteColUnitCls)))
