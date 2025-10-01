@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
 Begin VB.Form FrmWarehouse 
    BackColor       =   &H00FDDFE3&
    BorderStyle     =   1  'Fixed Single
@@ -17,6 +17,26 @@ Begin VB.Form FrmWarehouse
    ScaleHeight     =   9360
    ScaleWidth      =   14010
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox TxtCompanyName 
+      BackColor       =   &H00FDDFE3&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   3765
+      Locked          =   -1  'True
+      TabIndex        =   28
+      TabStop         =   0   'False
+      Top             =   945
+      Width           =   6615
+   End
    Begin VB.TextBox LblAdm 
       Appearance      =   0  'Flat
       BackColor       =   &H00FDDFE3&
@@ -271,8 +291,8 @@ Begin VB.Form FrmWarehouse
       TabStop         =   0   'False
       Top             =   525
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   5445
@@ -393,8 +413,49 @@ Begin VB.Form FrmWarehouse
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   295305219
+      Format          =   60620803
       CurrentDate     =   37818
+   End
+   Begin VB.Label Label3 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Company Code"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   405
+      TabIndex        =   30
+      Top             =   1005
+      Width           =   1635
+   End
+   Begin MSForms.ComboBox TxtCc 
+      Height          =   345
+      Left            =   2130
+      TabIndex        =   29
+      Top             =   945
+      Width           =   1560
+      VariousPropertyBits=   746604571
+      MaxLength       =   10
+      DisplayStyle    =   3
+      Size            =   "2752;609"
+      MatchEntry      =   1
+      ShowDropButtonWhen=   2
+      FontName        =   "Verdana"
+      FontHeight      =   165
+      FontCharSet     =   0
+      FontPitchAndFamily=   2
+   End
+   Begin VB.Line Line4 
+      X1              =   3765
+      X2              =   10365
+      Y1              =   1305
+      Y2              =   1305
    End
    Begin VB.Label LblWh 
       AutoSize        =   -1  'True
@@ -728,7 +789,7 @@ Sub Header()
 End Sub
 
 Private Sub cboNG_Change()
-If cboNG.MatchFound Then
+If cboNG.matchFound Then
     lblNG.Caption = cboNG.List(cboNG.ListIndex, 1)
 Else
     lblNG.Caption = ""
@@ -747,12 +808,12 @@ End Sub
 Private Sub cbotrade_Change()
     On Error Resume Next
     LblAdm = cbotrade.List(cbotrade.ListIndex, 1)
-    If cbotrade.MatchFound = False Then cbotrade.SetFocus: LblAdm = ""
+    If cbotrade.matchFound = False Then cbotrade.SetFocus: LblAdm = ""
 End Sub
 
 Private Sub CboTrade_Click()
     LblAdm = cbotrade.List(cbotrade.ListIndex, 1)
-    If cbotrade.MatchFound = False Then cbotrade.SetFocus: LblAdm = ""
+    If cbotrade.matchFound = False Then cbotrade.SetFocus: LblAdm = ""
 End Sub
 
 Private Sub cmdClear_Click()
@@ -929,16 +990,22 @@ Private Sub CmdSubmit_Click()
             Else
                 UseEnd = Format(Tgl1, "YYYYMMDD")
             End If
-            SqlU = " insert into WareHouse_master " & vbLf & _
+            SqlU = "INSERT INTO WareHouse_master " & vbLf & _
                    "       ( " & vbLf & _
                    "          WH_Code, WH_Name, Adm_Group, StockControl_Cls, Use_EndDay, " & vbLf & _
-                   "          Last_Update, Last_User, NG_Cls " & vbLf & _
+                   "          Last_Update, Last_User, NG_Cls, Company_Code " & vbLf & _
                    "        ) " & vbLf & _
-                   " values ( " & vbLf & _
-                   "          '" & TxtWh(0) & "','" & TxtWh(1) & "','" & cbotrade.List(cbotrade.ListIndex, 0) & "', " & vbLf & _
-                   "          '" & CboStock.List(CboStock.ListIndex, 0) & "','" & UseEnd & "', getdate(), " & vbLf & _
-                   "          '" & userLogin & "', '" & cboNG.List(cboNG.ListIndex, 0) & "' " & vbLf & _
-                   "        ) "
+                   "VALUES ( " & vbLf & _
+                   "          '" & TxtWh(0) & "', " & vbLf & _
+                   "          '" & TxtWh(1) & "', " & vbLf & _
+                   "          '" & cbotrade.List(cbotrade.ListIndex, 0) & "', " & vbLf & _
+                   "          '" & CboStock.List(CboStock.ListIndex, 0) & "', " & vbLf & _
+                   "          '" & UseEnd & "', " & vbLf & _
+                   "          getdate(), " & vbLf & _
+                   "          '" & userLogin & "', " & vbLf & _
+                   "          '" & cboNG.List(cboNG.ListIndex, 0) & "', " & vbLf & _
+                   "          '" & Trim(TxtCC) & "' " & vbLf & _
+                   "        )"
             PosRec = grid.FindRow(Trim$(TxtWh(0)), 0, bteColWHCode, False)
             If PosRec < 0 Then
                 Db.Execute SqlU
@@ -956,6 +1023,22 @@ Private Sub CmdSubmit_Click()
     End If
 End Sub
 
+'----------------------update multi company------------------------
+Private Sub CompanyMaster()
+    FillCompanyCombo TxtCC
+End Sub
+
+Private Sub TxtCc_Change()
+    If TxtCC.matchFound Then
+        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
+    Else
+        TxtCompanyName = ""
+        LblErr.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
+    Call Browse
+End Sub
+'------------------------------------------------------------------
+
 Private Sub Form_Load()
  If gb_Simulation = True Then Call up_InitSimulation(Me)
 Dim RS As Recordset, ir As Integer, StG As String
@@ -964,7 +1047,8 @@ Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
 HakU = hakUpdate(Me.Name)
 StrWDel = ""
 Header
-Browse
+'Browse
+Call CompanyMaster
 baru = True
 StG = ""
 Tgl1 = "99/99/9999"
@@ -1028,7 +1112,10 @@ sql = "select WH_Code,WH_Name,Adm_group,trade_name,Use_EndDay,warehouse_master.L
     "   when '02' then warehouse_master.NG_Cls + ' - No' " & vbLf & _
     " end " & vbLf & _
     " from warehouse_master INNER JOIN trade_master  " & vbLf & _
-    " On trade_master.trade_code=warehouse_master.adm_group order by wh_code"
+    " On trade_master.trade_code=warehouse_master.adm_group " & vbLf & _
+    " WHERE warehouse_master.Company_Code='" & Trim(TxtCC) & "'" & vbLf & _
+    " order by wh_code"
+    
 Set rswh = New ADODB.Recordset
 rswh.Open sql, Db, adOpenKeyset, adLockOptimistic
 Dim RSA As Recordset
@@ -1052,7 +1139,12 @@ While Not rswh.EOF
         Else
             grid.TextMatrix(i, bteColUseEndDate) = Format(Mid(Trim$(rswh!Use_EndDay), 1, 4) + "/" + Mid(Trim$(rswh!Use_EndDay), 5, 2) + "/" + Mid(Trim$(rswh!Use_EndDay), 7, 2), "dd mmm yyyy")
         End If
-        grid.TextMatrix(i, bteColLastUpdate) = Format(Trim$(rswh!Last_Update), "dd mmm yyyy hh:mm:ss AM/PM")
+        'Grid.TextMatrix(i, bteColLastUpdate) = Format(Trim$(rswh!Last_Update), "dd mmm yyyy hh:mm:ss AM/PM")
+        If Not IsNull(rswh!Last_Update) Then
+            grid.TextMatrix(i, bteColLastUpdate) = Format(Trim$(rswh!Last_Update), "dd mmm yyyy hh:mm:ss AM/PM")
+        Else
+            grid.TextMatrix(i, bteColLastUpdate) = ""  ' atau nilai default lain jika Last_Update Null
+        End If
         grid.Cell(flexcpBackColor, i, bteColWHCode, i, bteColUseEndDate) = &HDFFFFF
         grid.Cell(flexcpBackColor, i, bteColSelect) = vbWhite
         
@@ -1143,11 +1235,11 @@ cek = False
     Next
 If Trim$(cbotrade) = "" Then cbotrade.SetFocus: LblErr = DisplayMsg("0002"): cek = False: Exit Function
 cbotrade = Trim(cbotrade)
-If cbotrade.MatchFound = False Then cbotrade.SetFocus: LblErr = DisplayMsg("0003"): cek = False: Exit Function
+If cbotrade.matchFound = False Then cbotrade.SetFocus: LblErr = DisplayMsg("0003"): cek = False: Exit Function
 
 If Trim$(CboStock) = "" Then CboStock.SetFocus: LblErr = DisplayMsg("0004"): cek = False: Exit Function
 CboStock = CboStock
-If CboStock.MatchFound = False Then CboStock.SetFocus: LblErr = DisplayMsg("0005"): cek = False: Exit Function
+If CboStock.matchFound = False Then CboStock.SetFocus: LblErr = DisplayMsg("0005"): cek = False: Exit Function
 If Tgl1 <> "99/99/9999" Then
     On Error GoTo tgx
     DTPicker1.Month = Mid(Tgl1, 1, 2)
@@ -1203,7 +1295,8 @@ If PosS > 0 Then
                  " last_update=getdate(), " & vbLf & _
                  " last_user='" & userLogin & "'," & vbLf & _
                  " NG_Cls = '" & cboNG.List(cboNG.ListIndex, 0) & "' " & vbLf & _
-                 " where WH_Code ='" & kode & "'"
+                 " where WH_Code ='" & kode & "'" & vbLf & _
+                 "  and warehouse_master.Company_Code='" & Trim(TxtCC) & "'"
     Db.Execute (strSQL)
     
     If err.number <> 0 Then
@@ -1221,7 +1314,9 @@ For ix = 1 To grid.Rows - 1
 kode = Trim$(grid.TextMatrix(ix, bteColWHCode))
 Sta = Trim$(grid.TextMatrix(ix, bteColSelect))
     If Sta = "D" Then
-        strSQL = "delete from WareHouse_master  where WH_Code ='" & kode & "'"
+        strSQL = "DELETE FROM WareHouse_master " & vbLf & _
+         "WHERE WH_Code = '" & Trim(kode) & "' " & vbLf & _
+         "AND Company_Code = '" & Trim(TxtCC) & "'"
         
         '#Check Code in Trade_Master
         Dim rs2 As New ADODB.Recordset
