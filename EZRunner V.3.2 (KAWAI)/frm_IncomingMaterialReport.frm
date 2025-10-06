@@ -297,7 +297,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60686339
+      Format          =   60948483
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -320,7 +320,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60686339
+      Format          =   60948483
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -775,12 +775,14 @@ Private Sub Command1_Click() 'EXCEL
         
         sql = sql + "  from part_receipt pr     join item_master im on pr.item_code=im.item_code   " & vbCrLf & _
                     "    join Trade_master tm on pr.supplier_code=tm.trade_code    " & vbCrLf & _
+                    "    join Warehouse_Master wm on pr.Warehouse_Code = wm.WH_Code " & vbCrLf & _
                     "    Left Join PurchaseOrder_Master POM on PR.PO_NO = POM.PO_No  " & vbCrLf & _
                     "    left join InvoiceSupplier_Detail isd on pr.seq_no=isd.receiptseq_no  " & vbCrLf & _
                     "    left join InvoiceSupplier_Master ism on isd.invoice_no=ism.invoice_no  " & vbCrLf & _
                     "    left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,company_profile cp    " & vbCrLf & _
                     "  where pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & vbCrLf & _
                     "    and (pr.receipt_cls ='R' or pr.receipt_cls ='R1') " & vbCrLf & _
+                    "    and wm.company_code = '" & Trim(TxtCC.Text) & "' " & vbCrLf & _
                     "    " & IIf(Trim(CboLocationCD.Text) <> strAll, "   and pr.supplier_code='" & Trim(CboLocationCD.Text) & "'", "") & vbCrLf & _
                     " ) a " & vbCrLf
                     
@@ -951,12 +953,14 @@ Private Sub Command1_Click() 'EXCEL
         
         sql = sql + "   join item_master im on pr.item_code=im.item_code    " & vbCrLf & _
                     "     join Trade_master tm on pr.supplier_code=tm.trade_code     " & vbCrLf & _
+                    "   join Warehouse_Master wm on pr.Warehouse_Code = wm.WH_Code " & vbCrLf & _
                     "     Left Join PurchaseOrder_Master POM on PR.PO_NO = POM.PO_No   " & vbCrLf & _
                     "     left join InvoiceSupplier_Detail isd on pr.seq_no=isd.receiptseq_no   " & vbCrLf & _
                     "     left join InvoiceSupplier_Master ism on isd.invoice_no=ism.invoice_no   " & vbCrLf & _
                     "     left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,company_profile cp     " & vbCrLf & _
                     "   where pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & vbCrLf & _
                     "     and (pr.receipt_cls ='R' or pr.receipt_cls ='R1')  " & vbCrLf & _
+                    "     and wm.company_code='" & Trim(TxtCC.Text) & "' " & vbCrLf & _
                     IIf(Trim(CboLocationCD.Text) <> strAll, "  and pr.supplier_code='" & Trim(CboLocationCD.Text) & "' ", "") & " " & IIf(Trim(CboMaterialCls.Text) <> strAll, "  and im.material_cls='" & Trim(CboMaterialCls.Text) & "' ", "") & " " & IIf(ChkInclude.Value = 0, "  and im.Group_Cls<>'" & Include & "' ", "") & vbCrLf & _
                     "  ) a  " & vbCrLf & _
                     "  group by a.item_code,a.partName,a.country_cls   "
@@ -1171,12 +1175,15 @@ Private Sub Command1_Click() 'EXCEL
             
             sql = sql + "   join item_master im on pr.item_code=im.item_code  " & vbCrLf & _
                         "   join Trade_master tm on pr.supplier_code=tm.trade_code   " & vbCrLf & _
+                        "   join Warehouse_Master wm on pr.Warehouse_Code = wm.WH_Code " & vbCrLf & _
                         "   Left Join PurchaseOrder_Master POM on PR.PO_NO = POM.PO_No " & vbCrLf & _
                         "   left join InvoiceSupplier_Detail isd on pr.seq_no=isd.receiptseq_no " & vbCrLf & _
                         "   left join InvoiceSupplier_Master ism on isd.invoice_no=ism.invoice_no " & vbCrLf & _
                         "   left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,company_profile cp   " & vbCrLf & _
                         " where pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & vbCrLf & _
                         "   and (pr.receipt_cls ='R' or pr.receipt_cls ='R1')  " & vbCrLf
+            
+            sql = sql + "    and wm.company_code = '" & Trim(TxtCC.Text) & "' " & vbCrLf
                         
             If Trim(CboLocationCD.Text) <> strAll Then
                 sql = sql + "   and pr.supplier_code='" & Trim(CboLocationCD.Text) & "'" & vbCrLf
