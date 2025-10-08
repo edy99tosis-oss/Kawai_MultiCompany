@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_SheetDOD 
    BackColor       =   &H00FDDFE3&
@@ -20,7 +20,6 @@ Begin VB.Form Frm_SheetDOD
    EndProperty
    Icon            =   "Frm_SheetDOD.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    ScaleHeight     =   10605
    ScaleWidth      =   14835
    StartUpPosition =   2  'CenterScreen
@@ -32,7 +31,7 @@ Begin VB.Form Frm_SheetDOD
       Index           =   3
       Left            =   12900
       Style           =   1  'Graphical
-      TabIndex        =   17
+      TabIndex        =   18
       Top             =   10230
       Visible         =   0   'False
       Width           =   1260
@@ -40,11 +39,11 @@ Begin VB.Form Frm_SheetDOD
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
       Left            =   12300
-      TabIndex        =   15
+      TabIndex        =   16
       Top             =   360
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VB.CommandButton cmdAction 
       BackColor       =   &H0080FFFF&
@@ -53,7 +52,7 @@ Begin VB.Form Frm_SheetDOD
       Index           =   2
       Left            =   12915
       Style           =   1  'Graphical
-      TabIndex        =   3
+      TabIndex        =   4
       Top             =   9825
       Width           =   1260
    End
@@ -64,7 +63,7 @@ Begin VB.Form Frm_SheetDOD
       Index           =   0
       Left            =   690
       Style           =   1  'Graphical
-      TabIndex        =   5
+      TabIndex        =   6
       Top             =   9825
       Width           =   1260
    End
@@ -81,7 +80,7 @@ Begin VB.Form Frm_SheetDOD
       EndProperty
       Height          =   615
       Left            =   690
-      TabIndex        =   12
+      TabIndex        =   13
       Top             =   9075
       Width           =   13485
       Begin VB.Label lblerror 
@@ -99,7 +98,7 @@ Begin VB.Form Frm_SheetDOD
          ForeColor       =   &H00FF00FF&
          Height          =   330
          Left            =   60
-         TabIndex        =   13
+         TabIndex        =   14
          Top             =   180
          Width           =   13185
       End
@@ -115,16 +114,27 @@ Begin VB.Form Frm_SheetDOD
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   1155
+      Height          =   1560
       Left            =   690
-      TabIndex        =   6
-      Top             =   1395
+      TabIndex        =   7
+      Top             =   990
       Width           =   13485
+      Begin VB.TextBox TxtCompanyName 
+         BackColor       =   &H00FDDFE3&
+         BorderStyle     =   0  'None
+         Height          =   255
+         Left            =   3330
+         Locked          =   -1  'True
+         TabIndex        =   19
+         TabStop         =   0   'False
+         Top             =   225
+         Width           =   6615
+      End
       Begin MSComCtl2.DTPicker edate 
          Height          =   315
-         Left            =   3390
-         TabIndex        =   1
-         Top             =   270
+         Left            =   3570
+         TabIndex        =   2
+         Top             =   675
          Width           =   1485
          _ExtentX        =   2619
          _ExtentY        =   556
@@ -139,14 +149,14 @@ Begin VB.Form Frm_SheetDOD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   287703043
+         Format          =   60227587
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker sdate 
          Height          =   315
-         Left            =   1530
-         TabIndex        =   0
-         Top             =   270
+         Left            =   1710
+         TabIndex        =   1
+         Top             =   675
          Width           =   1485
          _ExtentX        =   2619
          _ExtentY        =   556
@@ -161,14 +171,46 @@ Begin VB.Form Frm_SheetDOD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   287703043
+         Format          =   60227587
          CurrentDate     =   37798
+      End
+      Begin VB.Label Label3 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Company Code"
+         Height          =   255
+         Left            =   195
+         TabIndex        =   20
+         Top             =   285
+         Width           =   1635
+      End
+      Begin MSForms.ComboBox TxtCc 
+         Height          =   345
+         Left            =   1695
+         TabIndex        =   0
+         Top             =   225
+         Width           =   1560
+         VariousPropertyBits=   746604571
+         MaxLength       =   10
+         DisplayStyle    =   3
+         Size            =   "2752;609"
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Line Line2 
+         X1              =   3330
+         X2              =   9930
+         Y1              =   585
+         Y2              =   585
       End
       Begin MSForms.ComboBox cboisu 
          Height          =   315
-         Left            =   1530
-         TabIndex        =   2
-         Top             =   675
+         Left            =   1710
+         TabIndex        =   3
+         Top             =   1080
          Width           =   855
          VariousPropertyBits=   746604571
          MaxLength       =   1
@@ -187,9 +229,9 @@ Begin VB.Form Frm_SheetDOD
          Caption         =   "1.New"
          Height          =   195
          Index           =   5
-         Left            =   2520
-         TabIndex        =   11
-         Top             =   735
+         Left            =   2700
+         TabIndex        =   12
+         Top             =   1140
          Width           =   525
       End
       Begin VB.Label Label1 
@@ -198,9 +240,9 @@ Begin VB.Form Frm_SheetDOD
          Caption         =   "Issue Cls"
          Height          =   195
          Index           =   4
-         Left            =   240
-         TabIndex        =   10
-         Top             =   735
+         Left            =   195
+         TabIndex        =   11
+         Top             =   1185
          Width           =   795
       End
       Begin VB.Label Label1 
@@ -209,9 +251,9 @@ Begin VB.Form Frm_SheetDOD
          Caption         =   "to"
          Height          =   195
          Index           =   3
-         Left            =   3090
-         TabIndex        =   9
-         Top             =   330
+         Left            =   3270
+         TabIndex        =   10
+         Top             =   735
          Width           =   165
       End
       Begin VB.Label Label1 
@@ -220,9 +262,9 @@ Begin VB.Form Frm_SheetDOD
          Caption         =   "DN Date"
          Height          =   195
          Index           =   2
-         Left            =   240
-         TabIndex        =   8
-         Top             =   330
+         Left            =   195
+         TabIndex        =   9
+         Top             =   780
          Width           =   720
       End
       Begin VB.Label Label1 
@@ -231,9 +273,9 @@ Begin VB.Form Frm_SheetDOD
          Caption         =   " 2.Reissue"
          Height          =   195
          Index           =   7
-         Left            =   3120
-         TabIndex        =   7
-         Top             =   735
+         Left            =   3300
+         TabIndex        =   8
+         Top             =   1140
          Width           =   885
       End
    End
@@ -244,14 +286,14 @@ Begin VB.Form Frm_SheetDOD
       Index           =   1
       Left            =   11580
       Style           =   1  'Graphical
-      TabIndex        =   4
+      TabIndex        =   5
       Top             =   9825
       Width           =   1260
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   6270
       Left            =   690
-      TabIndex        =   16
+      TabIndex        =   17
       Top             =   2715
       Width           =   13485
       _cx             =   23786
@@ -363,7 +405,7 @@ Begin VB.Form Frm_SheetDOD
       Height          =   435
       Index           =   6
       Left            =   690
-      TabIndex        =   14
+      TabIndex        =   15
       Top             =   330
       Width           =   13485
    End
@@ -398,7 +440,7 @@ Sub Header()
     bteColSJAmount = 5
     bteColFix = 6
     
-    With grid
+    With Grid
         .ColS = 7
         .Rows = 1
         
@@ -424,6 +466,22 @@ Sub Header()
         .EditMaxLength = 1
     End With
 End Sub
+
+'----------------------update multi company------------------------
+Private Sub CompanyMaster()
+    FillCompanyCombo TxtCc
+End Sub
+
+Private Sub TxtCc_Change()
+    If TxtCc.matchFound Then
+        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+    Else
+        TxtCompanyName = ""
+        lblerror.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
+    Call adtocombo
+End Sub
+'------------------------------------------------------------------
 
 Private Sub cboisu_Change()
 If cboisu.ListIndex = 0 Then
@@ -452,12 +510,12 @@ Select Case Index
             Me.MousePointer = vbHourglass
             do_no = ""
             bolrpt = False
-            For i = 1 To grid.Rows - 1
-                If grid.Cell(flexcpChecked, i, bteColSelect) = 1 Then
+            For i = 1 To Grid.Rows - 1
+                If Grid.Cell(flexcpChecked, i, bteColSelect) = 1 Then
                     If do_no = "" Then
-                        do_no = "'" & Trim(grid.TextMatrix(i, bteColSJNo)) & "'"
+                        do_no = "'" & Trim(Grid.TextMatrix(i, bteColSJNo)) & "'"
                     Else
-                        do_no = do_no + ",'" & Trim(grid.TextMatrix(i, bteColSJNo)) & "'"
+                        do_no = do_no + ",'" & Trim(Grid.TextMatrix(i, bteColSJNo)) & "'"
                     End If
                     bolrpt = True
                 End If
@@ -503,9 +561,9 @@ Private Sub Form_Load()
   If gb_Simulation = True Then Call up_InitSimulation(Me)
 bteHakPrice = hakPrice(Me.Name)
 Header
-adtocombo
-SDate = Format(Now, "dd mmm yyyy")
-EDate = Format(Now, "dd mmm yyyy")
+FillCompanyCombo TxtCc
+sdate = Format(Now, "dd mmm yyyy")
+edate = Format(Now, "dd mmm yyyy")
 CtrlMenu1.FormName = Me.Name
 Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 End Sub
@@ -526,62 +584,86 @@ End With
 End Sub
 
 Sub display()
-Me.MousePointer = vbHourglass
-Dim sqlP As String
-If CDate(SDate) > CDate(EDate) Then
-    lblerror.Caption = DisplayMsg("4068")
+    Me.MousePointer = vbHourglass
+    
+    Dim sql As String
+    Dim sqlP As String
+    Dim companyFilter As String
+    
+    ' Validasi tanggal
+    If CDate(sdate) > CDate(edate) Then
+        lblerror.Caption = DisplayMsg("4068")  ' "Start date cannot be greater than End date"
+        Me.MousePointer = vbDefault
+        Exit Sub
+    ElseIf CDate(edate) < CDate(sdate) Then
+        lblerror.Caption = DisplayMsg("4066")  ' "End date cannot be smaller than Start date"
+        Me.MousePointer = vbDefault
+        Exit Sub
+    End If
+    
+    ' Filter berdasarkan ReIssue
+    If cboisu.Text = "1" Then
+        sqlP = " AND (d.Reissue_Cls IS NULL OR d.Reissue_Cls = '0') "
+    Else
+        sqlP = " AND (d.Reissue_Cls = '1') "
+    End If
+    
+    ' Filter berdasarkan Company
+    If Trim(TxtCc.Text) <> "" Then
+        companyFilter = " AND wh.company_code = '" & TxtCc.Text & "' "
+    Else
+        companyFilter = ""
+    End If
+    
+    ' Query utama dengan join warehouse_master
+    sql = "SELECT t.trade_code, t.trade_abbr, d.do_no, d.do_date, d.amount, d.fix_cls " & _
+          "FROM do_master d " & _
+          "INNER JOIN trade_master t ON d.cust_code = t.trade_code " & _
+          "INNER JOIN warehouse_master wh ON d.WHCode = wh.WH_Code " & _
+          "WHERE d.do_date >= '" & sdate & "' " & _
+          "AND d.do_date <= '" & edate & "' " & _
+          sqlP & companyFilter & _
+          " ORDER BY d.do_no"
+    
+    ' Open Recordset
+    Set rst = New Recordset
+    rst.CursorLocation = adUseClient
+    rst.Open sql, Db, adOpenDynamic, adLockOptimistic
+    
+    ' Isi grid
+    If Not rst.EOF Then
+        With Grid
+            .Refresh
+            .Rows = rst.RecordCount + 1
+            .Row = .Rows - 1
+            
+            For i = 1 To rst.RecordCount
+                .Cell(flexcpChecked, i, bteColSelect) = flexUnchecked
+                .TextMatrix(i, bteColCustCode) = Trim(rst!trade_code)
+                .TextMatrix(i, bteColCustName) = Trim(rst!trade_abbr)
+                .TextMatrix(i, bteColSJNo) = rst!do_no
+                .TextMatrix(i, bteColSJDate) = Format(rst!Do_date, "dd mmm yyyy")
+                .TextMatrix(i, bteColSJAmount) = Format(rst!Amount, gs_formatAmountIDR)
+                
+                If IsNull(rst!fix_cls) Or rst!fix_cls = 0 Then
+                    .Cell(flexcpChecked, i, bteColFix) = flexUnchecked
+                Else
+                    .Cell(flexcpChecked, i, bteColFix) = 1
+                End If
+                
+                .Cell(flexcpAlignment, i, bteColCustCode, i, bteColSJDate) = flexAlignLeftCenter
+                .Cell(flexcpAlignment, i, bteColSJAmount, i, bteColSJAmount) = flexAlignRightCenter
+                .Cell(flexcpBackColor, i, bteColSelect) = &HFFFFFF
+                rst.MoveNext
+            Next i
+        End With
+        lblerror.Caption = ""
+    Else
+        Header
+        lblerror.Caption = DisplayMsg(4006)  ' "Data not found"
+    End If
+    
     Me.MousePointer = vbDefault
-    Exit Sub
-ElseIf CDate(EDate) < CDate(SDate) Then
-    lblerror.Caption = DisplayMsg("4066")
-    Me.MousePointer = vbDefault
-    Exit Sub
-End If
-        
-If cboisu.Text = "1" Then
-sqlP = "AND (DO_Master.Reissue_Cls IS NULL OR DO_Master.Reissue_Cls = '0')"
-Else
-    sqlP = "AND (DO_Master.Reissue_Cls = '1')"
-End If
-
-sql = " select trade_code,trade_abbr,Do_no,Do_date,amount, Fix_Cls from do_master,trade_master " & _
-        "Where do_master.cust_code = trade_master.trade_code " & _
-        "and do_date >= '" & SDate & "' " & _
-        "and do_date <='" & EDate & "' " & _
-        sqlP & " order by do_no"
-Set rst = New Recordset
-rst.CursorLocation = adUseClient
-rst.Open sql, Db, adOpenDynamic, adLockOptimistic
-If Not rst.EOF Then
-    With grid
-        .Refresh
-        .Rows = rst.RecordCount + 1
-        .Row = .Rows - 1
-    For i = 1 To rst.RecordCount
-        .Cell(flexcpChecked, i, bteColSelect) = flexUnchecked
-        .TextMatrix(i, bteColCustCode) = Trim(rst!Trade_Code)
-        .TextMatrix(i, bteColCustName) = Trim(rst!trade_abbr)
-        .TextMatrix(i, bteColSJNo) = rst!do_no
-        .TextMatrix(i, bteColSJDate) = Format(rst!do_date, "dd mmm yyyy")
-        .TextMatrix(i, bteColSJAmount) = Format(rst!Amount, gs_formatAmountIDR)
-        If IsNull(rst!fix_cls) Or rst!fix_cls = 0 Then
-            .Cell(flexcpChecked, i, bteColFix) = flexUnchecked
-        Else
-            .Cell(flexcpChecked, i, bteColFix) = 1
-        End If
-       .Cell(flexcpAlignment, i, bteColCustCode, i, bteColSJDate) = flexAlignLeftCenter
-       .Cell(flexcpAlignment, i, bteColSJAmount, i, bteColSJAmount) = flexAlignRightCenter
-       'whitecols
-       .Cell(flexcpBackColor, i, bteColSelect) = &HFFFFFF
-    rst.MoveNext
-    Next i
-    End With
-    lblerror.Caption = ""
-Else
-    Header
-    lblerror.Caption = DisplayMsg(4006)
-End If
-Me.MousePointer = vbDefault
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -596,8 +678,8 @@ End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 If Col = bteColSelect Then
-    If grid.Cell(flexcpChecked, Row, bteColFix) = flexUnchecked Then
-        grid.Cell(flexcpChecked, Row, bteColSelect) = flexUnchecked
+    If Grid.Cell(flexcpChecked, Row, bteColFix) = flexUnchecked Then
+        Grid.Cell(flexcpChecked, Row, bteColSelect) = flexUnchecked
         lblerror = DisplayMsg("0042")
     Else
         lblerror = ""
@@ -629,8 +711,8 @@ End Sub
 
 Sub blank()
 cboisu.ListIndex = -1
-SDate = Format(Now, "dd MMM YYYY")
-EDate = Format(Now, "dd MMM YYYY")
+sdate = Format(Now, "dd MMM YYYY")
+edate = Format(Now, "dd MMM YYYY")
 End Sub
 
 Private Sub sdate_KeyDown(KeyCode As Integer, Shift As Integer)
