@@ -66,7 +66,7 @@ Begin VB.Form frmRptDailySchedule
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   121044995
+         Format          =   129236995
          CurrentDate     =   37860
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -88,7 +88,7 @@ Begin VB.Form frmRptDailySchedule
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   121044995
+         Format          =   129236995
          CurrentDate     =   37799
       End
       Begin VB.Line Line8 
@@ -98,7 +98,7 @@ Begin VB.Form frmRptDailySchedule
          Y1              =   600
          Y2              =   600
       End
-      Begin VB.Label lblCompany 
+      Begin VB.Label lblFactory 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Description"
@@ -112,15 +112,15 @@ Begin VB.Form frmRptDailySchedule
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          Height          =   195
          Index           =   3
          Left            =   150
          TabIndex        =   19
          Top             =   360
-         Width           =   1335
+         Width           =   1140
       End
-      Begin MSForms.ComboBox cboCompany 
+      Begin MSForms.ComboBox cboFactory 
          Height          =   315
          Index           =   2
          Left            =   1740
@@ -150,13 +150,13 @@ Begin VB.Form frmRptDailySchedule
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Machine"
+         Caption         =   "Line Code"
          Height          =   195
          Index           =   2
          Left            =   150
          TabIndex        =   17
          Top             =   1185
-         Width           =   690
+         Width           =   855
       End
       Begin VB.Label lblNm 
          AutoSize        =   -1  'True
@@ -233,13 +233,13 @@ Begin VB.Form frmRptDailySchedule
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Factory"
+         Caption         =   "Process Code"
          Height          =   195
          Index           =   0
          Left            =   150
          TabIndex        =   13
          Top             =   720
-         Width           =   630
+         Width           =   1170
       End
       Begin VB.Line Line8 
          Index           =   0
@@ -305,8 +305,8 @@ Begin VB.Form frmRptDailySchedule
       TabStop         =   0   'False
       Top             =   540
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VB.Label lblJudul 
       Alignment       =   2  'Center
@@ -354,7 +354,7 @@ With cbo(0)
 '    sql = "select distinct(manufacture_code), trade_name from manufacture_line inner join trade_master " & _
 '          "on trade_master.trade_code = manufacture_line.manufacture_code order by manufacture_code"
           
-    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany(2).Text & "'"
+    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboFactory(2).Text & "'"
     
     Set RsCust = Db.Execute(sql)
     
@@ -404,12 +404,12 @@ End With
 End Sub
 
 Sub adcboCompany()
-    FillCompanyCombo cboCompany(2)
+    FillCompanyCombo cboFactory(2)
 End Sub
 
-Private Sub cboCompany_Click(Index As Integer)
-    If cboCompany(2).ListIndex <> -1 Then
-        lblCompany(2).Caption = cboCompany(2).Column(1)
+Private Sub cboFactory_Click(Index As Integer)
+    If cboFactory(2).ListIndex <> -1 Then
+        lblFactory(2).Caption = cboFactory(2).Column(1)
         isiCboCust
     End If
 End Sub
@@ -423,8 +423,8 @@ Private Sub Form_Load()
     lblNm(0) = ""
     lblNm(1) = ""
     
-    cboCompany(2).Text = ""
-    lblCompany(2).Caption = ""
+    cboFactory(2).Text = ""
+    lblFactory(2).Caption = ""
 '    lblCompany = ""
     
     dtAwal = Format(Now, "mmm 01 yyyy")

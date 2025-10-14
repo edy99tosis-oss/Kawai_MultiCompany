@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_IncomingMaterialReport 
    BackColor       =   &H00FDDFE3&
@@ -15,7 +15,7 @@ Begin VB.Form frm_IncomingMaterialReport
    ScaleHeight     =   6030
    ScaleWidth      =   8295
    StartUpPosition =   2  'CenterScreen
-   Begin VB.TextBox TxtCompanyName 
+   Begin VB.TextBox TxtFactoryName 
       BackColor       =   &H00FDDFE3&
       BorderStyle     =   0  'None
       BeginProperty Font 
@@ -30,7 +30,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   255
       Left            =   3780
       Locked          =   -1  'True
-      TabIndex        =   25
+      TabIndex        =   26
       TabStop         =   0   'False
       Top             =   1170
       Width           =   3870
@@ -49,7 +49,7 @@ Begin VB.Form frm_IncomingMaterialReport
       EndProperty
       Height          =   195
       Left            =   2160
-      TabIndex        =   22
+      TabIndex        =   24
       Top             =   3240
       Visible         =   0   'False
       Width           =   1695
@@ -69,7 +69,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   375
       Left            =   4410
       Style           =   1  'Graphical
-      TabIndex        =   20
+      TabIndex        =   22
       Top             =   4980
       Visible         =   0   'False
       Width           =   1035
@@ -78,7 +78,7 @@ Begin VB.Form frm_IncomingMaterialReport
       BackColor       =   &H00FDDFE3&
       Height          =   585
       Left            =   2190
-      TabIndex        =   17
+      TabIndex        =   19
       Top             =   2490
       Width           =   3675
       Begin VB.OptionButton OptMaterial 
@@ -95,7 +95,7 @@ Begin VB.Form frm_IncomingMaterialReport
          EndProperty
          Height          =   405
          Left            =   2190
-         TabIndex        =   19
+         TabIndex        =   21
          Top             =   120
          Width           =   1335
       End
@@ -113,7 +113,7 @@ Begin VB.Form frm_IncomingMaterialReport
          EndProperty
          Height          =   405
          Left            =   90
-         TabIndex        =   3
+         TabIndex        =   5
          Top             =   120
          Value           =   -1  'True
          Width           =   1095
@@ -132,7 +132,7 @@ Begin VB.Form frm_IncomingMaterialReport
          EndProperty
          Height          =   405
          Left            =   1200
-         TabIndex        =   4
+         TabIndex        =   6
          Top             =   120
          Width           =   945
       End
@@ -152,7 +152,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   3792
       Locked          =   -1  'True
-      TabIndex        =   16
+      TabIndex        =   18
       TabStop         =   0   'False
       Text            =   "LblLocationName"
       Top             =   3705
@@ -174,7 +174,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   195
       Left            =   3792
       Locked          =   -1  'True
-      TabIndex        =   12
+      TabIndex        =   14
       TabStop         =   0   'False
       Text            =   "LblLocationName"
       Top             =   2145
@@ -195,19 +195,19 @@ Begin VB.Form frm_IncomingMaterialReport
       Height          =   375
       Left            =   6780
       Style           =   1  'Graphical
-      TabIndex        =   5
+      TabIndex        =   7
       Top             =   4965
       Width           =   1035
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   420
       Left            =   5989
-      TabIndex        =   8
+      TabIndex        =   10
       TabStop         =   0   'False
       Top             =   285
       Width           =   1860
-      _ExtentX        =   3281
-      _ExtentY        =   741
+      _extentx        =   3281
+      _extenty        =   741
    End
    Begin VB.CommandButton Cmd_Save 
       BackColor       =   &H00C0E0FF&
@@ -225,7 +225,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Index           =   8
       Left            =   379
       Style           =   1  'Graphical
-      TabIndex        =   7
+      TabIndex        =   9
       Top             =   4965
       Width           =   1125
    End
@@ -233,7 +233,7 @@ Begin VB.Form frm_IncomingMaterialReport
       BackColor       =   &H00FDDFE3&
       Height          =   555
       Left            =   379
-      TabIndex        =   9
+      TabIndex        =   11
       Top             =   4170
       Width           =   7470
       Begin VB.Label LblErrMsg 
@@ -252,7 +252,7 @@ Begin VB.Form frm_IncomingMaterialReport
          ForeColor       =   &H00FF00FF&
          Height          =   240
          Left            =   105
-         TabIndex        =   10
+         TabIndex        =   12
          Top             =   195
          Width           =   7260
       End
@@ -273,7 +273,7 @@ Begin VB.Form frm_IncomingMaterialReport
       Index           =   0
       Left            =   5670
       Style           =   1  'Graphical
-      TabIndex        =   6
+      TabIndex        =   8
       Top             =   4950
       Visible         =   0   'False
       Width           =   1035
@@ -281,7 +281,7 @@ Begin VB.Form frm_IncomingMaterialReport
    Begin MSComCtl2.DTPicker DTo 
       Height          =   315
       Left            =   4290
-      TabIndex        =   0
+      TabIndex        =   2
       Top             =   1620
       Width           =   1500
       _ExtentX        =   2646
@@ -297,14 +297,14 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60948483
+      Format          =   130351107
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker DFrom 
       Height          =   315
       Left            =   2190
-      TabIndex        =   23
+      TabIndex        =   1
       Top             =   1620
       Width           =   1500
       _ExtentX        =   2646
@@ -320,13 +320,13 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60948483
+      Format          =   130351107
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
    Begin VB.Label Label6 
       BackStyle       =   0  'Transparent
-      Caption         =   "Company Code"
+      Caption         =   "Factory Code"
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -342,10 +342,10 @@ Begin VB.Form frm_IncomingMaterialReport
       Top             =   1185
       Width           =   1635
    End
-   Begin MSForms.ComboBox TxtCc 
+   Begin MSForms.ComboBox TxtFc 
       Height          =   345
       Left            =   2175
-      TabIndex        =   26
+      TabIndex        =   0
       Top             =   1125
       Width           =   1500
       VariousPropertyBits=   746604571
@@ -380,7 +380,7 @@ Begin VB.Form frm_IncomingMaterialReport
       EndProperty
       Height          =   195
       Left            =   3870
-      TabIndex        =   24
+      TabIndex        =   25
       Top             =   1710
       Width           =   210
    End
@@ -398,7 +398,7 @@ Begin VB.Form frm_IncomingMaterialReport
       EndProperty
       Height          =   255
       Left            =   570
-      TabIndex        =   21
+      TabIndex        =   23
       Top             =   3240
       Visible         =   0   'False
       Width           =   1335
@@ -418,7 +418,7 @@ Begin VB.Form frm_IncomingMaterialReport
       EndProperty
       Height          =   195
       Left            =   570
-      TabIndex        =   18
+      TabIndex        =   20
       Top             =   3720
       Visible         =   0   'False
       Width           =   1005
@@ -445,14 +445,14 @@ Begin VB.Form frm_IncomingMaterialReport
       EndProperty
       Height          =   195
       Left            =   570
-      TabIndex        =   15
+      TabIndex        =   17
       Top             =   2685
       Width           =   915
    End
    Begin MSForms.ComboBox CboMaterialCls 
       Height          =   315
       Left            =   2175
-      TabIndex        =   1
+      TabIndex        =   3
       Top             =   3645
       Visible         =   0   'False
       Width           =   1500
@@ -489,7 +489,7 @@ Begin VB.Form frm_IncomingMaterialReport
       EndProperty
       Height          =   195
       Left            =   570
-      TabIndex        =   14
+      TabIndex        =   16
       Top             =   1680
       Width           =   900
    End
@@ -508,14 +508,14 @@ Begin VB.Form frm_IncomingMaterialReport
       EndProperty
       Height          =   195
       Left            =   570
-      TabIndex        =   13
+      TabIndex        =   15
       Top             =   2145
       Width           =   705
    End
    Begin MSForms.ComboBox CboLocationCD 
       Height          =   315
       Left            =   2175
-      TabIndex        =   2
+      TabIndex        =   4
       Top             =   2085
       Width           =   1500
       VariousPropertyBits=   612386843
@@ -546,7 +546,7 @@ Begin VB.Form frm_IncomingMaterialReport
       ForeColor       =   &H00800000&
       Height          =   390
       Left            =   375
-      TabIndex        =   11
+      TabIndex        =   13
       Top             =   570
       Width           =   7470
    End
@@ -571,15 +571,15 @@ Dim bteHakPrice As Byte
 
 '----------------------update multi company------------------------
 Private Sub CompanyMaster()
-    FillCompanyCombo TxtCC
+    FillCompanyCombo TxtFc
 End Sub
 
-Private Sub TxtCc_Change()
-    If TxtCC.matchFound Then
-        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
+Private Sub TxtFc_Change()
+    If TxtFc.matchFound Then
+        TxtFactoryName = TxtFc.List(TxtFc.ListIndex, 1)
     Else
-        TxtCompanyName = ""
-        lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+        TxtFactoryName = ""
+        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
     End If
     'Call IsiCombo
 End Sub
@@ -588,10 +588,10 @@ End Sub
 Private Sub CboLocationCD_Change()
 If CboLocationCD.matchFound Then
    LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
-   lblErrMsg = ""
+   LblErrMsg = ""
 Else
    LblLocationName = ""
-   lblErrMsg = DisplayMsg("0032")
+   LblErrMsg = DisplayMsg("0032")
 End If
 End Sub
 
@@ -608,9 +608,9 @@ For i = 0 To CboLocationCD.ListCount - 1
 Next
 
 If j = 0 Then
-    lblErrMsg = DisplayMsg("0032"): Exit Sub
+    LblErrMsg = DisplayMsg("0032"): Exit Sub
 Else
-    lblErrMsg = ""
+    LblErrMsg = ""
 End If
 End If
 End Sub
@@ -656,9 +656,9 @@ Select Case Index
                     End If
                 Next
                 
-                If j = 0 Then lblErrMsg = DisplayMsg("0032"): Exit Sub
+                If j = 0 Then LblErrMsg = DisplayMsg("0032"): Exit Sub
              
-              lblErrMsg = ""
+              LblErrMsg = ""
               Me.MousePointer = vbHourglass
                                 
               If CboLocationCD.Text = strAll Then
@@ -682,7 +682,7 @@ Select Case Index
                 "left outer join curr_cls cc on pr.currency_code = cc.curr_cls, company_profile cp " & _
                 "where (receipt_cls = 'R' or receipt_cls = 'R1') " & sqlcd & "" & _
                 " pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & _
-                " AND wh.Company_Code='" & Trim(TxtCC) & "' "
+                " AND wh.Company_Code='" & Trim(TxtFc) & "' "
                 
                 
                 If CboMaterialCls <> strAll Then sql = sql & "and pr.warehouse_code = '" & Trim(CboMaterialCls) & "' "
@@ -692,7 +692,7 @@ Select Case Index
               rsRpt.Open sql, Db, adOpenDynamic, adLockOptimistic
               
             
-              If rsRpt.EOF Then lblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
+              If rsRpt.EOF Then LblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
               sqlprint = sql
               reportcode = "AccPay"
               printorient = 1
@@ -782,7 +782,7 @@ Private Sub Command1_Click() 'EXCEL
                     "    left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,company_profile cp    " & vbCrLf & _
                     "  where pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & vbCrLf & _
                     "    and (pr.receipt_cls ='R' or pr.receipt_cls ='R1') " & vbCrLf & _
-                    "    and wm.company_code = '" & Trim(TxtCC.Text) & "' " & vbCrLf & _
+                    "    and wm.company_code = '" & Trim(TxtFc.Text) & "' " & vbCrLf & _
                     "    " & IIf(Trim(CboLocationCD.Text) <> strAll, "   and pr.supplier_code='" & Trim(CboLocationCD.Text) & "'", "") & vbCrLf & _
                     " ) a " & vbCrLf
                     
@@ -804,14 +804,14 @@ Private Sub Command1_Click() 'EXCEL
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         
         If rsCek.EOF Then
-            lblErrMsg.Caption = DisplayMsg(4006)
+            LblErrMsg.Caption = DisplayMsg(4006)
         Else
                 
             With xlapp
             
-                lblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
+                LblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
                 
-                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtCC) & "'"
+                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtFc) & "'"
                 If rsCompany.State <> adStateClosed Then rsCompany.Close
                 rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If rsCompany.EOF Then MousePointer = vbDefault: Exit Sub
@@ -917,7 +917,7 @@ Private Sub Command1_Click() 'EXCEL
                 .WindowState = xlMaximized
                 
                 .Visible = True
-                lblErrMsg.Caption = ""
+                LblErrMsg.Caption = ""
             End With
         End If
         
@@ -960,7 +960,7 @@ Private Sub Command1_Click() 'EXCEL
                     "     left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,company_profile cp     " & vbCrLf & _
                     "   where pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & vbCrLf & _
                     "     and (pr.receipt_cls ='R' or pr.receipt_cls ='R1')  " & vbCrLf & _
-                    "     and wm.company_code='" & Trim(TxtCC.Text) & "' " & vbCrLf & _
+                    "     and wm.company_code='" & Trim(TxtFc.Text) & "' " & vbCrLf & _
                     IIf(Trim(CboLocationCD.Text) <> strAll, "  and pr.supplier_code='" & Trim(CboLocationCD.Text) & "' ", "") & " " & IIf(Trim(CboMaterialCls.Text) <> strAll, "  and im.material_cls='" & Trim(CboMaterialCls.Text) & "' ", "") & " " & IIf(ChkInclude.Value = 0, "  and im.Group_Cls<>'" & Include & "' ", "") & vbCrLf & _
                     "  ) a  " & vbCrLf & _
                     "  group by a.item_code,a.partName,a.country_cls   "
@@ -972,14 +972,14 @@ Private Sub Command1_Click() 'EXCEL
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         
         If rsCek.EOF Then
-            lblErrMsg.Caption = DisplayMsg(4006)
+            LblErrMsg.Caption = DisplayMsg(4006)
         Else
                 
             With xlapp
             
-                lblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
+                LblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
                 
-                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtCC) & "'"
+                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtFc) & "'"
                 If rsCompany.State <> adStateClosed Then rsCompany.Close
                 rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If rsCompany.EOF Then MousePointer = vbDefault: Exit Sub
@@ -1129,7 +1129,7 @@ Private Sub Command1_Click() 'EXCEL
 '                    .Range("e" & Idx).Interior.ColorIndex = Idx
 '                Next Idx
                 .Visible = True
-                lblErrMsg.Caption = ""
+                LblErrMsg.Caption = ""
             End With
         End If
         
@@ -1183,7 +1183,7 @@ Private Sub Command1_Click() 'EXCEL
                         " where pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & vbCrLf & _
                         "   and (pr.receipt_cls ='R' or pr.receipt_cls ='R1')  " & vbCrLf
             
-            sql = sql + "    and wm.company_code = '" & Trim(TxtCC.Text) & "' " & vbCrLf
+            sql = sql + "    and wm.company_code = '" & Trim(TxtFc.Text) & "' " & vbCrLf
                         
             If Trim(CboLocationCD.Text) <> strAll Then
                 sql = sql + "   and pr.supplier_code='" & Trim(CboLocationCD.Text) & "'" & vbCrLf
@@ -1198,14 +1198,14 @@ Private Sub Command1_Click() 'EXCEL
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         
         If rsCek.EOF Then
-            lblErrMsg.Caption = DisplayMsg(4006)
+            LblErrMsg.Caption = DisplayMsg(4006)
         Else
                 
             With xlapp
             
-                lblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
+                LblErrMsg.Caption = "[1719] Please Wait While Export To Excel....!"
                 
-                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtCC) & "'"
+                sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile Where Company_Code='" & Trim(TxtFc) & "'"
                 If rsCompany.State <> adStateClosed Then rsCompany.Close
                 rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If rsCompany.EOF Then MousePointer = vbDefault: Exit Sub
@@ -1646,7 +1646,7 @@ Private Sub Command1_Click() 'EXCEL
                 .WindowState = xlMaximized
                 
                 .Visible = True
-                lblErrMsg.Caption = ""
+                LblErrMsg.Caption = ""
             End With
         End If
     End If
@@ -1658,7 +1658,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    lblErrMsg.Caption = ErrMsg
+    LblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
@@ -1685,7 +1685,7 @@ Dim RsW As New Recordset
 Dim ir As Integer
 If gb_Simulation = True Then Call up_InitSimulation(Me)
 LblLocationName = ""
-lblErrMsg = ""
+LblErrMsg = ""
 ChkInclude.Value = 0
 CtrlMenu1.FormName = Me.Name
 Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
@@ -1874,7 +1874,7 @@ Do While Not rsupload.EOF
     rsupload.MoveNext
 Loop
 
-lblErrMsg.Caption = "data Inserted " & a & " Record, Updated " & b
+LblErrMsg.Caption = "data Inserted " & a & " Record, Updated " & b
 
 
 

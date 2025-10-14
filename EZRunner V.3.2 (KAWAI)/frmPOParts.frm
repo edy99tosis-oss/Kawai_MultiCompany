@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmPOParts 
    BackColor       =   &H00FDDFE3&
@@ -32,7 +32,7 @@ Begin VB.Form frmPOParts
       Height          =   315
       Left            =   14580
       MaxLength       =   2
-      TabIndex        =   91
+      TabIndex        =   92
       Top             =   855
       Visible         =   0   'False
       Width           =   450
@@ -50,7 +50,7 @@ Begin VB.Form frmPOParts
       Height          =   315
       Left            =   1920
       MaxLength       =   35
-      TabIndex        =   17
+      TabIndex        =   18
       TabStop         =   0   'False
       Top             =   8190
       Width           =   4650
@@ -69,7 +69,7 @@ Begin VB.Form frmPOParts
       Index           =   5
       Left            =   12990
       MaxLength       =   25
-      TabIndex        =   23
+      TabIndex        =   24
       Top             =   7305
       Width           =   2085
    End
@@ -88,7 +88,7 @@ Begin VB.Form frmPOParts
       Height          =   375
       Left            =   5460
       Style           =   1  'Graphical
-      TabIndex        =   86
+      TabIndex        =   87
       TabStop         =   0   'False
       Top             =   6480
       Width           =   1125
@@ -106,7 +106,7 @@ Begin VB.Form frmPOParts
       Height          =   315
       Left            =   2985
       MaxLength       =   25
-      TabIndex        =   85
+      TabIndex        =   86
       TabStop         =   0   'False
       Top             =   6510
       Width           =   2430
@@ -125,7 +125,7 @@ Begin VB.Form frmPOParts
       Height          =   315
       Left            =   5370
       MaxLength       =   2
-      TabIndex        =   7
+      TabIndex        =   8
       Top             =   2220
       Width           =   450
    End
@@ -133,10 +133,10 @@ Begin VB.Form frmPOParts
       BackColor       =   &H00FDDFE3&
       Height          =   1440
       Left            =   62
-      TabIndex        =   71
+      TabIndex        =   72
       Top             =   705
       Width           =   15105
-      Begin VB.TextBox TxtCompanyName 
+      Begin VB.TextBox TxtFactoryName 
          BackColor       =   &H00FDDFE3&
          BorderStyle     =   0  'None
          BeginProperty Font 
@@ -148,13 +148,13 @@ Begin VB.Form frmPOParts
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   255
-         Left            =   3180
+         Height          =   250
+         Left            =   3030
          Locked          =   -1  'True
-         TabIndex        =   92
+         TabIndex        =   93
          TabStop         =   0   'False
-         Top             =   180
-         Width           =   6615
+         Top             =   230
+         Width           =   4995
       End
       Begin VB.TextBox LblMat 
          BackColor       =   &H00FDDFE3&
@@ -171,7 +171,7 @@ Begin VB.Form frmPOParts
          Height          =   210
          Left            =   12000
          Locked          =   -1  'True
-         TabIndex        =   89
+         TabIndex        =   90
          TabStop         =   0   'False
          Top             =   1065
          Width           =   2670
@@ -191,7 +191,7 @@ Begin VB.Form frmPOParts
          Height          =   210
          Left            =   9360
          Locked          =   -1  'True
-         TabIndex        =   75
+         TabIndex        =   76
          TabStop         =   0   'False
          Top             =   630
          Width           =   5355
@@ -211,7 +211,7 @@ Begin VB.Form frmPOParts
          Height          =   210
          Left            =   3030
          Locked          =   -1  'True
-         TabIndex        =   74
+         TabIndex        =   75
          TabStop         =   0   'False
          Top             =   630
          Width           =   4995
@@ -231,7 +231,7 @@ Begin VB.Form frmPOParts
          Height          =   210
          Left            =   12015
          Locked          =   -1  'True
-         TabIndex        =   73
+         TabIndex        =   74
          TabStop         =   0   'False
          Top             =   600
          Visible         =   0   'False
@@ -252,7 +252,7 @@ Begin VB.Form frmPOParts
          Height          =   210
          Left            =   5895
          Locked          =   -1  'True
-         TabIndex        =   72
+         TabIndex        =   73
          TabStop         =   0   'False
          Top             =   1035
          Width           =   3345
@@ -260,7 +260,7 @@ Begin VB.Form frmPOParts
       Begin MSComCtl2.DTPicker dtpPeriod 
          Height          =   315
          Left            =   1560
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   975
          Width           =   1305
          _ExtentX        =   2302
@@ -276,13 +276,13 @@ Begin VB.Form frmPOParts
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   60686339
+         Format          =   129171459
          UpDown          =   -1  'True
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory CD"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -293,21 +293,21 @@ Begin VB.Form frmPOParts
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   135
+         Left            =   240
          TabIndex        =   94
          Top             =   225
          Width           =   1635
       End
-      Begin MSForms.ComboBox TxtCc 
-         Height          =   345
-         Left            =   1545
-         TabIndex        =   93
+      Begin MSForms.ComboBox TxtFc 
+         Height          =   315
+         Left            =   1560
+         TabIndex        =   0
          Top             =   180
-         Width           =   1515
+         Width           =   1305
          VariousPropertyBits=   746604571
          MaxLength       =   10
          DisplayStyle    =   3
-         Size            =   "2672;609"
+         Size            =   "2302;556"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
@@ -316,8 +316,8 @@ Begin VB.Form frmPOParts
          FontPitchAndFamily=   2
       End
       Begin VB.Line Line11 
-         X1              =   3180
-         X2              =   9780
+         X1              =   3030
+         X2              =   8070
          Y1              =   540
          Y2              =   540
       End
@@ -330,7 +330,7 @@ Begin VB.Form frmPOParts
       Begin MSForms.ComboBox CboMat 
          Height          =   315
          Left            =   10545
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   1020
          Width           =   1305
          VariousPropertyBits=   612386843
@@ -360,7 +360,7 @@ Begin VB.Form frmPOParts
          Height          =   195
          Index           =   29
          Left            =   9420
-         TabIndex        =   90
+         TabIndex        =   91
          Top             =   1080
          Width           =   1005
       End
@@ -380,7 +380,7 @@ Begin VB.Form frmPOParts
          Height          =   195
          Index           =   0
          Left            =   240
-         TabIndex        =   80
+         TabIndex        =   81
          Top             =   645
          Width           =   1035
       End
@@ -393,7 +393,7 @@ Begin VB.Form frmPOParts
       Begin MSForms.ComboBox cboSupplier 
          Height          =   315
          Left            =   1560
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   585
          Width           =   1305
          VariousPropertyBits=   612386843
@@ -423,7 +423,7 @@ Begin VB.Form frmPOParts
          Height          =   195
          Index           =   1
          Left            =   8355
-         TabIndex        =   79
+         TabIndex        =   80
          Top             =   645
          Width           =   690
       End
@@ -449,7 +449,7 @@ Begin VB.Form frmPOParts
          Height          =   195
          Index           =   2
          Left            =   240
-         TabIndex        =   78
+         TabIndex        =   79
          Top             =   1035
          Width           =   540
       End
@@ -469,7 +469,7 @@ Begin VB.Form frmPOParts
          Height          =   195
          Index           =   3
          Left            =   9555
-         TabIndex        =   77
+         TabIndex        =   78
          Top             =   615
          Visible         =   0   'False
          Width           =   885
@@ -477,7 +477,7 @@ Begin VB.Form frmPOParts
       Begin MSForms.ComboBox cboDeliverTo 
          Height          =   315
          Left            =   10560
-         TabIndex        =   5
+         TabIndex        =   6
          Top             =   555
          Visible         =   0   'False
          Width           =   1305
@@ -508,7 +508,7 @@ Begin VB.Form frmPOParts
       Begin MSForms.ComboBox cboWHTo 
          Height          =   315
          Left            =   4440
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   990
          Width           =   1305
          VariousPropertyBits=   612386843
@@ -538,7 +538,7 @@ Begin VB.Form frmPOParts
          Height          =   195
          Index           =   24
          Left            =   3030
-         TabIndex        =   76
+         TabIndex        =   77
          Top             =   1050
          Width           =   1230
       End
@@ -557,7 +557,7 @@ Begin VB.Form frmPOParts
       Index           =   1
       Left            =   7455
       MaxLength       =   25
-      TabIndex        =   19
+      TabIndex        =   20
       Top             =   7290
       Width           =   2085
    End
@@ -575,7 +575,7 @@ Begin VB.Form frmPOParts
       Index           =   3
       Left            =   10260
       MaxLength       =   25
-      TabIndex        =   21
+      TabIndex        =   22
       Top             =   7305
       Width           =   2085
    End
@@ -594,7 +594,7 @@ Begin VB.Form frmPOParts
       Height          =   210
       Left            =   2985
       Locked          =   -1  'True
-      TabIndex        =   68
+      TabIndex        =   69
       TabStop         =   0   'False
       Top             =   7575
       Width           =   3585
@@ -614,7 +614,7 @@ Begin VB.Form frmPOParts
       Height          =   210
       Left            =   2985
       Locked          =   -1  'True
-      TabIndex        =   67
+      TabIndex        =   68
       TabStop         =   0   'False
       Top             =   7905
       Visible         =   0   'False
@@ -634,7 +634,7 @@ Begin VB.Form frmPOParts
       Left            =   7710
       MaxLength       =   100
       MultiLine       =   -1  'True
-      TabIndex        =   24
+      TabIndex        =   25
       Top             =   7800
       Width           =   7470
    End
@@ -652,7 +652,7 @@ Begin VB.Form frmPOParts
       Index           =   4
       Left            =   12990
       MaxLength       =   25
-      TabIndex        =   22
+      TabIndex        =   23
       Top             =   6915
       Width           =   2085
    End
@@ -671,7 +671,7 @@ Begin VB.Form frmPOParts
       Height          =   210
       Left            =   2985
       Locked          =   -1  'True
-      TabIndex        =   65
+      TabIndex        =   66
       TabStop         =   0   'False
       Top             =   7890
       Width           =   3585
@@ -691,7 +691,7 @@ Begin VB.Form frmPOParts
       Height          =   210
       Left            =   2985
       Locked          =   -1  'True
-      TabIndex        =   64
+      TabIndex        =   65
       TabStop         =   0   'False
       Top             =   6900
       Width           =   3585
@@ -711,7 +711,7 @@ Begin VB.Form frmPOParts
       Height          =   210
       Left            =   2985
       Locked          =   -1  'True
-      TabIndex        =   63
+      TabIndex        =   64
       TabStop         =   0   'False
       Top             =   7230
       Width           =   3570
@@ -730,7 +730,7 @@ Begin VB.Form frmPOParts
       Index           =   0
       Left            =   7455
       MaxLength       =   25
-      TabIndex        =   18
+      TabIndex        =   19
       Top             =   6915
       Width           =   2085
    End
@@ -748,7 +748,7 @@ Begin VB.Form frmPOParts
       Index           =   2
       Left            =   10260
       MaxLength       =   25
-      TabIndex        =   20
+      TabIndex        =   21
       Top             =   6915
       Width           =   2085
    End
@@ -767,7 +767,7 @@ Begin VB.Form frmPOParts
       Height          =   255
       Left            =   2055
       MaxLength       =   25
-      TabIndex        =   6
+      TabIndex        =   7
       Top             =   2250
       Width           =   2430
    End
@@ -786,7 +786,7 @@ Begin VB.Form frmPOParts
       Height          =   375
       Left            =   10397
       Style           =   1  'Graphical
-      TabIndex        =   26
+      TabIndex        =   27
       Top             =   10080
       Width           =   1125
    End
@@ -806,7 +806,7 @@ Begin VB.Form frmPOParts
       Left            =   10277
       Locked          =   -1  'True
       MaxLength       =   25
-      TabIndex        =   38
+      TabIndex        =   39
       TabStop         =   0   'False
       Top             =   8955
       Width           =   2355
@@ -827,7 +827,7 @@ Begin VB.Form frmPOParts
       Left            =   7847
       Locked          =   -1  'True
       MaxLength       =   25
-      TabIndex        =   37
+      TabIndex        =   38
       TabStop         =   0   'False
       Top             =   8955
       Width           =   2355
@@ -847,7 +847,7 @@ Begin VB.Form frmPOParts
       Left            =   167
       Locked          =   -1  'True
       MaxLength       =   25
-      TabIndex        =   36
+      TabIndex        =   37
       TabStop         =   0   'False
       Top             =   8955
       Width           =   2490
@@ -868,7 +868,7 @@ Begin VB.Form frmPOParts
       Index           =   3
       Left            =   11612
       Style           =   1  'Graphical
-      TabIndex        =   27
+      TabIndex        =   28
       Top             =   10095
       Width           =   1125
    End
@@ -888,7 +888,7 @@ Begin VB.Form frmPOParts
       Index           =   2
       Left            =   12825
       Style           =   1  'Graphical
-      TabIndex        =   11
+      TabIndex        =   12
       Top             =   2190
       Width           =   1125
    End
@@ -908,7 +908,7 @@ Begin VB.Form frmPOParts
       Left            =   12707
       Locked          =   -1  'True
       MaxLength       =   35
-      TabIndex        =   39
+      TabIndex        =   40
       TabStop         =   0   'False
       Top             =   8955
       Width           =   2355
@@ -917,7 +917,7 @@ Begin VB.Form frmPOParts
       BackColor       =   &H00FDDFE3&
       Height          =   533
       Left            =   62
-      TabIndex        =   43
+      TabIndex        =   44
       Top             =   9375
       Width           =   15105
       Begin VB.Label lblErrMsg 
@@ -935,7 +935,7 @@ Begin VB.Form frmPOParts
          ForeColor       =   &H00FF00FF&
          Height          =   225
          Left            =   105
-         TabIndex        =   44
+         TabIndex        =   45
          Top             =   195
          Width           =   14880
       End
@@ -956,7 +956,7 @@ Begin VB.Form frmPOParts
       Index           =   0
       Left            =   14042
       Style           =   1  'Graphical
-      TabIndex        =   25
+      TabIndex        =   26
       Top             =   10095
       Width           =   1125
    End
@@ -975,7 +975,7 @@ Begin VB.Form frmPOParts
       Height          =   375
       Left            =   62
       Style           =   1  'Graphical
-      TabIndex        =   33
+      TabIndex        =   34
       Top             =   10095
       Width           =   1125
    End
@@ -995,7 +995,7 @@ Begin VB.Form frmPOParts
       Index           =   4
       Left            =   6722
       Style           =   1  'Graphical
-      TabIndex        =   32
+      TabIndex        =   33
       Top             =   10095
       Width           =   1125
    End
@@ -1015,7 +1015,7 @@ Begin VB.Form frmPOParts
       Index           =   3
       Left            =   5462
       Style           =   1  'Graphical
-      TabIndex        =   31
+      TabIndex        =   32
       Top             =   10095
       Width           =   1125
    End
@@ -1035,7 +1035,7 @@ Begin VB.Form frmPOParts
       Index           =   2
       Left            =   4202
       Style           =   1  'Graphical
-      TabIndex        =   30
+      TabIndex        =   31
       Top             =   10095
       Width           =   1125
    End
@@ -1055,7 +1055,7 @@ Begin VB.Form frmPOParts
       Index           =   1
       Left            =   2942
       Style           =   1  'Graphical
-      TabIndex        =   29
+      TabIndex        =   30
       Top             =   10095
       Width           =   1125
    End
@@ -1075,14 +1075,14 @@ Begin VB.Form frmPOParts
       Index           =   1
       Left            =   12827
       Style           =   1  'Graphical
-      TabIndex        =   28
+      TabIndex        =   29
       Top             =   10095
       Width           =   1125
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
       Left            =   13335
-      TabIndex        =   47
+      TabIndex        =   48
       TabStop         =   0   'False
       Top             =   255
       Width           =   1845
@@ -1092,28 +1092,6 @@ Begin VB.Form frmPOParts
    Begin MSComCtl2.DTPicker dtpPODate 
       Height          =   315
       Left            =   6720
-      TabIndex        =   8
-      Top             =   2220
-      Width           =   1500
-      _ExtentX        =   2646
-      _ExtentY        =   556
-      _Version        =   393216
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      CustomFormat    =   "dd MMM yyyy"
-      Format          =   60686339
-      CurrentDate     =   37798
-   End
-   Begin MSComCtl2.DTPicker dtpDeliveryDate 
-      Height          =   315
-      Left            =   9630
       TabIndex        =   9
       Top             =   2220
       Width           =   1500
@@ -1130,13 +1108,35 @@ Begin VB.Form frmPOParts
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60686339
+      Format          =   129171459
+      CurrentDate     =   37798
+   End
+   Begin MSComCtl2.DTPicker dtpDeliveryDate 
+      Height          =   315
+      Left            =   9630
+      TabIndex        =   10
+      Top             =   2220
+      Width           =   1500
+      _ExtentX        =   2646
+      _ExtentY        =   556
+      _Version        =   393216
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      CustomFormat    =   "dd MMM yyyy"
+      Format          =   129171459
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   3810
       Left            =   90
-      TabIndex        =   35
+      TabIndex        =   36
       TabStop         =   0   'False
       Top             =   2610
       Width           =   15105
@@ -1233,7 +1233,7 @@ Begin VB.Form frmPOParts
       Begin MSForms.ComboBox cboCurr 
          Height          =   285
          Left            =   11625
-         TabIndex        =   53
+         TabIndex        =   54
          TabStop         =   0   'False
          Top             =   -30
          Visible         =   0   'False
@@ -1251,7 +1251,7 @@ Begin VB.Form frmPOParts
       Begin MSForms.ComboBox cboPrice 
          Height          =   285
          Left            =   9585
-         TabIndex        =   52
+         TabIndex        =   53
          TabStop         =   0   'False
          Top             =   -30
          Visible         =   0   'False
@@ -1284,7 +1284,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   28
       Left            =   120
-      TabIndex        =   88
+      TabIndex        =   89
       Top             =   8250
       Width           =   630
    End
@@ -1304,14 +1304,14 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   27
       Left            =   12465
-      TabIndex        =   87
+      TabIndex        =   88
       Top             =   7365
       Width           =   450
    End
    Begin MSForms.ComboBox cboSearch 
       Height          =   315
       Left            =   825
-      TabIndex        =   84
+      TabIndex        =   85
       TabStop         =   0   'False
       Top             =   6510
       Width           =   2085
@@ -1342,7 +1342,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   26
       Left            =   135
-      TabIndex        =   83
+      TabIndex        =   84
       Top             =   6570
       Width           =   600
    End
@@ -1362,7 +1362,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   25
       Left            =   4890
-      TabIndex        =   82
+      TabIndex        =   83
       Top             =   2280
       Width           =   390
    End
@@ -1382,7 +1382,7 @@ Begin VB.Form frmPOParts
       ForeColor       =   &H00800000&
       Height          =   375
       Left            =   120
-      TabIndex        =   81
+      TabIndex        =   82
       Top             =   240
       Width           =   15105
    End
@@ -1396,7 +1396,7 @@ Begin VB.Form frmPOParts
    Begin MSForms.ComboBox cboPacking 
       Height          =   315
       Left            =   1935
-      TabIndex        =   14
+      TabIndex        =   15
       Top             =   7515
       Width           =   975
       VariousPropertyBits=   612386843
@@ -1426,7 +1426,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   19
       Left            =   6810
-      TabIndex        =   70
+      TabIndex        =   71
       Top             =   7350
       Width           =   510
    End
@@ -1446,7 +1446,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   21
       Left            =   9720
-      TabIndex        =   69
+      TabIndex        =   70
       Top             =   7365
       Width           =   450
    End
@@ -1473,7 +1473,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   8
       Left            =   6810
-      TabIndex        =   66
+      TabIndex        =   67
       Top             =   7830
       Width           =   765
    End
@@ -1517,7 +1517,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   22
       Left            =   6795
-      TabIndex        =   62
+      TabIndex        =   63
       Top             =   6555
       Width           =   975
    End
@@ -1537,7 +1537,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   23
       Left            =   12465
-      TabIndex        =   61
+      TabIndex        =   62
       Top             =   6975
       Width           =   450
    End
@@ -1557,7 +1557,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   16
       Left            =   135
-      TabIndex        =   60
+      TabIndex        =   61
       Top             =   7905
       Visible         =   0   'False
       Width           =   1650
@@ -1565,7 +1565,7 @@ Begin VB.Form frmPOParts
    Begin MSForms.ComboBox cboInsuranceCls 
       Height          =   315
       Left            =   1920
-      TabIndex        =   16
+      TabIndex        =   17
       Top             =   7860
       Visible         =   0   'False
       Width           =   975
@@ -1596,14 +1596,14 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   17
       Left            =   135
-      TabIndex        =   59
+      TabIndex        =   60
       Top             =   7905
       Width           =   1245
    End
    Begin MSForms.ComboBox cboTransport 
       Height          =   315
       Left            =   1935
-      TabIndex        =   15
+      TabIndex        =   16
       Top             =   7845
       Width           =   975
       VariousPropertyBits=   612386843
@@ -1633,7 +1633,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   18
       Left            =   6810
-      TabIndex        =   58
+      TabIndex        =   59
       Top             =   6975
       Width           =   450
    End
@@ -1653,7 +1653,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   20
       Left            =   9720
-      TabIndex        =   57
+      TabIndex        =   58
       Top             =   6975
       Width           =   450
    End
@@ -1673,7 +1673,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   15
       Left            =   135
-      TabIndex        =   56
+      TabIndex        =   57
       Top             =   7575
       Width           =   660
    End
@@ -1693,14 +1693,14 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   14
       Left            =   135
-      TabIndex        =   55
+      TabIndex        =   56
       Top             =   6915
       Width           =   1260
    End
    Begin MSForms.ComboBox cboPaymentTerm 
       Height          =   315
       Left            =   1935
-      TabIndex        =   12
+      TabIndex        =   13
       Top             =   6855
       Width           =   975
       VariousPropertyBits=   612386843
@@ -1730,14 +1730,14 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   13
       Left            =   135
-      TabIndex        =   54
+      TabIndex        =   55
       Top             =   7245
       Width           =   1290
    End
    Begin MSForms.ComboBox cboPriceCondition 
       Height          =   315
       Left            =   1935
-      TabIndex        =   13
+      TabIndex        =   14
       Top             =   7185
       Width           =   975
       VariousPropertyBits=   612386843
@@ -1761,7 +1761,7 @@ Begin VB.Form frmPOParts
    Begin MSForms.ComboBox cboStatus 
       Height          =   315
       Left            =   120
-      TabIndex        =   4
+      TabIndex        =   5
       TabStop         =   0   'False
       Top             =   2220
       Width           =   1215
@@ -1778,7 +1778,7 @@ Begin VB.Form frmPOParts
    Begin MSForms.ComboBox cboPONo 
       Height          =   315
       Left            =   2025
-      TabIndex        =   34
+      TabIndex        =   35
       TabStop         =   0   'False
       Top             =   2220
       Width           =   2775
@@ -1808,7 +1808,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   5
       Left            =   5910
-      TabIndex        =   51
+      TabIndex        =   52
       Top             =   2280
       Width           =   705
    End
@@ -1828,7 +1828,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   4
       Left            =   1425
-      TabIndex        =   50
+      TabIndex        =   51
       Top             =   2280
       Width           =   525
    End
@@ -1848,14 +1848,14 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   6
       Left            =   8340
-      TabIndex        =   49
+      TabIndex        =   50
       Top             =   2280
       Width           =   1185
    End
    Begin MSForms.ComboBox cboAlarm 
       Height          =   315
       Left            =   11865
-      TabIndex        =   10
+      TabIndex        =   11
       Top             =   2220
       Width           =   855
       VariousPropertyBits=   746604571
@@ -1884,7 +1884,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   7
       Left            =   11250
-      TabIndex        =   48
+      TabIndex        =   49
       Top             =   2280
       Width           =   510
    End
@@ -1905,7 +1905,7 @@ Begin VB.Form frmPOParts
       ForeColor       =   &H00FF00FF&
       Height          =   195
       Left            =   14085
-      TabIndex        =   46
+      TabIndex        =   47
       Top             =   2250
       Visible         =   0   'False
       Width           =   1005
@@ -1926,7 +1926,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   12
       Left            =   13395
-      TabIndex        =   45
+      TabIndex        =   46
       Top             =   8610
       Width           =   1005
    End
@@ -1946,7 +1946,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   10
       Left            =   8460
-      TabIndex        =   42
+      TabIndex        =   43
       Top             =   8610
       Width           =   1140
    End
@@ -1966,7 +1966,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   9
       Left            =   180
-      TabIndex        =   41
+      TabIndex        =   42
       Top             =   8610
       Width           =   525
    End
@@ -1986,7 +1986,7 @@ Begin VB.Form frmPOParts
       Height          =   195
       Index           =   11
       Left            =   11310
-      TabIndex        =   40
+      TabIndex        =   41
       Top             =   8610
       Width           =   315
    End
@@ -2100,7 +2100,7 @@ Sub Header()
     bteColPriceContractClsDetail = 24
     TotCol = 25
     
-    With grid
+    With Grid
         .clear
         
         .Rows = 2
@@ -2230,7 +2230,7 @@ Dim a As Double
 
     lblErrMsg = ""
 
-    sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
+    sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
     If RS.State <> adStateClosed Then RS.Close
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
 
@@ -2241,12 +2241,12 @@ Dim a As Double
         tempperiod2 = IIf(IsNull(RS("period")), " ", Left(Trim(RS("period")), 4) & "-" & Right(Trim(RS("period")), 2) & "-01")
         tempdeldate = IIf(IsNull(RS("delivery_date")), " ", Trim(RS("delivery_date")))
         
-        txtremarks.Text = IIf(IsNull(RS("remarks")), " ", Trim(RS("remarks")))
+        txtRemarks.Text = IIf(IsNull(RS("remarks")), " ", Trim(RS("remarks")))
         statusfix = IIf(IsNull(RS("fix_cls")), 0, RS("fix_cls"))
         
         cboPriceCondition.Text = RS.Fields("PriceCondition_Cls") & ""
         cboPaymentTerm.Text = RS.Fields("PaymentTerm_Cls") & ""
-        CboPacking.Text = RS.Fields("POPacking_Cls") & ""
+        cboPacking.Text = RS.Fields("POPacking_Cls") & ""
         cboInsuranceCls.Text = RS.Fields("Insurance_Cls") & ""
         cboTransport.Text = RS.Fields("Transportation_Cls") & ""
         
@@ -2267,18 +2267,18 @@ Dim a As Double
         BrowseGrid
         formatprice
         
-        For i = 2 To grid.Rows - 1
-            If grid.Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
-                a = a + grid.TextMatrix(i, bteColAmount)
+        For i = 2 To Grid.Rows - 1
+            If Grid.Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
+                a = a + Grid.TextMatrix(i, bteColAmount)
             End If
         Next i
-        txtamount.Text = Format(a, gs_formatAmount)
+        txtAmount.Text = Format(a, gs_formatAmount)
         If isippn = 0 Then
-            txtPPN.Text = Format(0, gs_formatAmount)
+            txtPPn.Text = Format(0, gs_formatAmount)
         Else
-            txtPPN.Text = Format(CDbl(isippn / 100) * CDbl(txtamount.Text), gs_formatAmount)
+            txtPPn.Text = Format(CDbl(isippn / 100) * CDbl(txtAmount.Text), gs_formatAmount)
         End If
-        txtGrandTotal = Format(CDbl(txtPPN.Text) + CDbl(txtamount.Text), gs_formatAmount)
+        txtGrandTotal = Format(CDbl(txtPPn.Text) + CDbl(txtAmount.Text), gs_formatAmount)
 
         If statusfix = 1 Then
             kunci (True)
@@ -2294,13 +2294,13 @@ End Sub
 
 Sub BrowseGrid()
     Dim R As Double, g As Double, Pos As Double
-    sqlGrid = "select * from purchaseorder_detail where po_no='" & txtPoNo.Text & "' order by item_code"
+    sqlGrid = "select * from purchaseorder_detail where po_no='" & txtPONo.Text & "' order by item_code"
     If rsGrid.State <> adStateClosed Then rsGrid.Close
     rsGrid.Open sqlGrid, Db, adOpenKeyset, adLockOptimistic
 
     R = 1
     Pos = 1
-    With grid
+    With Grid
     Do While Not rsGrid.EOF
         
         For g = 2 To .Rows - 1
@@ -2359,8 +2359,8 @@ Sub browseitem()
     
     Header
     If ubah = False Then
-        txtamount.Text = Format(0, gs_formatAmount)
-        txtPPN.Text = Format(0, gs_formatAmount)
+        txtAmount.Text = Format(0, gs_formatAmount)
+        txtPPn.Text = Format(0, gs_formatAmount)
         txtGrandTotal.Text = Format(0, gs_formatAmount)
     End If
     kodeitem = ""
@@ -2376,8 +2376,8 @@ Sub browseitem()
     adaim = True
     'Call Item(cboSupplier.Text)
     
-    jmlpage = Int((grid.Rows - 2) / 16) + 1
-    If grid.Rows > 2 Then
+    jmlpage = Int((Grid.Rows - 2) / 16) + 1
+    If Grid.Rows > 2 Then
         intpage = 1
     Else
         intpage = 0
@@ -2395,14 +2395,14 @@ Dim rs2 As New Recordset
 '           Format(dtpDeliveryDate.Value, "yyyymmdd") & "' order by trade_code desc, priority_cls desc"
     
     sql2 = "select trade_code, priority_cls, currency_code, price, unit_cls from price_master where " & _
-           "item_code='" & grid.TextMatrix(actrow, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
+           "item_code='" & Grid.TextMatrix(actrow, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
            "' or trade_code='000000') and month(start_date)='" & Month(dtpPeriod) & "' and Year(start_date)='" & _
            Year(dtpPeriod) & "' order by trade_code desc, priority_cls desc"
     
     Set rs2 = Db.Execute(sql2)
 
 
-    With cboprice
+    With cboPrice
         .clear
         .columnCount = 4
         .ColumnWidths = "70pt;70pt;0pt;0pt"
@@ -2617,7 +2617,7 @@ End If
 
         sqlitem = " EXEC dbo.SP_POParts_BrowseItem @SupplierCode = '" & cboSupplier.Text & "'," & vbCrLf & _
                     "@Period = '" & dtpPeriod.Value & "', @TempPeriod = '" & tempperiod2 & "' ," & vbCrLf & _
-                    "@ClosingMonth = '" & closingmonth & "' , @PONo = '" & Trim(txtPoNo.Text) & "' ," & vbCrLf & _
+                    "@ClosingMonth = '" & closingmonth & "' , @PONo = '" & Trim(txtPONo.Text) & "' ," & vbCrLf & _
                     "@MaterialCls    = '" & CboMat.Text & "', @AlarmCls = '" & cboAlarm.Text & "' "
 
     Else
@@ -2642,7 +2642,7 @@ End If
     
             
             If (Format(tempperiod2, "MMM yyyy") <> Format(dtpPeriod.Value, "MMM yyyy")) Or (Format(tempdeldate, "01 MMM yyyy") <> Format(dtpDeliveryDate.Value, "01 MMM yyyy")) Then _
-                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPoNo.Text) & "' "
+                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPONo.Text) & "' "
                       
             sqlitem = sqlitem & "                             ) tbE group by item_code " & _
                      vbLf & "                           )tbF where tbF.item_code=item_master.item_code) " & _
@@ -2728,7 +2728,7 @@ End If
                       vbLf & "          --and pod.delivery_date <'" & Format(tempdtpPeriod, "yyyy-mm-dd") & "' " & vbLf ' Line hanya PO setelah closing yg dihitung sisanya
                       
             If (Format(tempperiod2, "MMM yyyy") <> Format(dtpPeriod.Value, "MMM yyyy")) Or (Format(tempdeldate, "01 MMM yyyy") <> Format(dtpDeliveryDate.Value, "01 MMM yyyy")) Then _
-                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPoNo.Text) & "' "
+                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPONo.Text) & "' "
                       
             sqlitem = sqlitem & ") tbA group by item_code " & _
                       vbLf & "     )tbB where tbB.item_code=item_master.item_code " & _
@@ -2782,7 +2782,7 @@ End If
     Set RsItem = Db.Execute(sqlitem)
     
     If Not (RsItem.BOF And RsItem.EOF) Then
-    With grid
+    With Grid
     Do While Not RsItem.EOF
         
         .Rows = .Rows + 1
@@ -2904,14 +2904,14 @@ End Function
 
 '----------------------update multi company------------------------
 Private Sub CompanyMaster()
-    FillCompanyCombo TxtCC
+    FillCompanyCombo TxtFc
 End Sub
 
-Private Sub TxtCc_Change()
-    If TxtCC.matchFound Then
-        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
+Private Sub TxtFc_Change()
+    If TxtFc.matchFound Then
+        TxtFactoryName = TxtFc.List(TxtFc.ListIndex, 1)
     Else
-        TxtCompanyName = ""
+        TxtFactoryName = ""
         lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
     End If
     Call SetComboWHTo
@@ -2922,18 +2922,18 @@ Sub Kosong()
     cboWHTo.Text = ""
     CboMat = strAll
     cboDeliverTo.Text = ""
-    txtsupplier.Text = ""
+    txtSupplier.Text = ""
     txtAddress.Text = ""
     cboSupplier.Text = ""
     dtpPeriod.Value = Format(Now, "MMM yyyy")
     temptgl = dtpPeriod.Month
-    txtPoNo.Text = ""
+    txtPONo.Text = ""
     txtPONo2.Text = ""
     dtpPODate.Value = Format(Now, "dd MMM yyyy")
     isipodate = Format(dtpPODate, "yyyy-mm-dd")
     dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
     Call ppn(dtpDeliveryDate.Value)
-    grid.FocusRect = flexFocusNone
+    Grid.FocusRect = flexFocusNone
     cboAlarm.ListIndex = 1
     txtSearch = ""
     
@@ -2953,9 +2953,9 @@ Sub Kosong()
 End Sub
 
 Sub kosongBwh()
-    txtremarks.Text = ""
-    txtamount.Text = Format(0, gs_formatAmount)
-    txtPPN.Text = Format(0, gs_formatAmount)
+    txtRemarks.Text = ""
+    txtAmount.Text = Format(0, gs_formatAmount)
+    txtPPn.Text = Format(0, gs_formatAmount)
     txtGrandTotal.Text = Format(0, gs_formatAmount)
     TxtPOLOT.Text = ""
     txtSearch = ""
@@ -3088,7 +3088,7 @@ Private Sub GetDefaultValue()
     RsCust.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     If Not RsCust.EOF Then
         
-        CboPacking.Text = ""
+        cboPacking.Text = ""
         cboPriceCondition.Text = Trim(RsCust.Fields("Price_Condition") & "")
         cboPaymentTerm.Text = Trim(RsCust.Fields("POPayment_Terms") & "")
         cboInsuranceCls.Text = Trim(RsCust.Fields("Insurance_Cls") & "")
@@ -3102,7 +3102,7 @@ Private Sub GetDefaultValue()
     
     Else
     
-        CboPacking.Text = ""
+        cboPacking.Text = ""
         cboPriceCondition.Text = ""
         cboPaymentTerm.Text = ""
         cboInsuranceCls.Text = ""
@@ -3156,8 +3156,8 @@ Sub kunci(l As Boolean)
     dtpPODate.Enabled = Not l
     dtpDeliveryDate.Enabled = Not l
     dtpPeriod.Enabled = Not l
-    grid.Editable = Not l
-    Command1(0).Enabled = Not l
+    Grid.Editable = Not l
+    command1(0).Enabled = Not l
     lblFix.Visible = l
     statuskunci = l
 End Sub
@@ -3188,7 +3188,7 @@ statusprice = False
 '           Format(dtpDeliveryDate.Value, "yyyymmdd") & "' "
            
     sqlcp = "select price from price_master where " & _
-           "item_code='" & grid.TextMatrix(Baris, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
+           "item_code='" & Grid.TextMatrix(Baris, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
            "' or trade_code='000000') and month(start_date)='" & Month(dtpPeriod) & "' and year(Start_date)='" & _
            Year(dtpPeriod) & "' "
            
@@ -3208,7 +3208,7 @@ Dim p1 As Byte, p2 As String, p0 As String
 Dim jmldigit As Byte, jmldigit0 As Byte, j As Integer
 
 jmldigit = 0
-    With grid
+    With Grid
         For i = 1 To .Rows - 1
             If InStr(1, .TextMatrix(i, bteColPrice), ".") > 0 Then _
                 jmldigit0 = Len(Trim(.TextMatrix(i, bteColPrice))) - InStr(1, Trim(.TextMatrix(i, bteColPrice)), ".")
@@ -3248,7 +3248,7 @@ Dim kodeno As String
 
     If (Format(tempperiod2, "MMM yyyy") <> Format(dtpPeriod.Value, "MMM yyyy")) Or (Format(tempdeldate, "01 MMM yyyy") <> Format(dtpDeliveryDate.Value, "01 MMM yyyy")) Then
         sqlpo = "select po_no from purchaseorder_master where year(delivery_date)=" & _
-                Year(p) & " and month(delivery_date)=" & Month(p) & " and po_no<>'" & Trim(txtPoNo.Text) & "' "
+                Year(p) & " and month(delivery_date)=" & Month(p) & " and po_no<>'" & Trim(txtPONo.Text) & "' "
     Else
         sqlpo = "select po_no from purchaseorder_master where year(delivery_date)=" & _
                 Year(p) & " and month(delivery_date)=" & Month(p)   '& " and po_no<>'" & Trim(txtpono.Text) & "' "
@@ -3319,7 +3319,7 @@ End Sub
 
 Private Sub cboPacking_Change()
     
-    If CboPacking.matchFound Then TxtPacking.Text = CboPacking.Column(1) Else TxtPacking.Text = ""
+    If cboPacking.matchFound Then txtPacking.Text = cboPacking.Column(1) Else txtPacking.Text = ""
     
 End Sub
 
@@ -3343,7 +3343,7 @@ End Sub
 
 Private Sub cboTransport_Change()
     
-    If cboTransport.matchFound Then TxtTransport.Text = cboTransport.Column(1) Else TxtTransport.Text = ""
+    If cboTransport.matchFound Then txtTransport.Text = cboTransport.Column(1) Else txtTransport.Text = ""
     
 End Sub
 
@@ -3363,7 +3363,7 @@ Private Sub cmdReport_Click()
 '    If cboSupplier.Column(3) = "0" Then
 '        POLocal txtPONo.Text, bteHakPrice
 '    Else
-        POImport txtPoNo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value
+        POImport txtPONo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value
 '    End If
     Me.MousePointer = vbDefault
 
@@ -3375,24 +3375,24 @@ Private Sub cmdSearch_Click()
     
     lblErrMsg = ""
     
-    If txtSearch = "" Or grid.Rows = 2 Then txtSearch.SetFocus: Exit Sub
-    If grid.Row = grid.Rows - 1 Then i = 2 Else i = grid.Row + 1
+    If txtSearch = "" Or Grid.Rows = 2 Then txtSearch.SetFocus: Exit Sub
+    If Grid.Row = Grid.Rows - 1 Then i = 2 Else i = Grid.Row + 1
     
     Do
         Select Case cboSearch.ListIndex
         Case 0
-            grid.Col = bteColProdCode
-            If UCase(Mid(grid.TextMatrix(i, bteColProdCode), 1, Len(txtSearch))) = UCase(txtSearch) Then
+            Grid.Col = bteColProdCode
+            If UCase(Mid(Grid.TextMatrix(i, bteColProdCode), 1, Len(txtSearch))) = UCase(txtSearch) Then
                 Exit Do
             End If
         Case 1
-            grid.Col = bteColDesc
-            If InStr(UCase(grid.TextMatrix(i, bteColDesc)), UCase(txtSearch)) <> 0 Then
+            Grid.Col = bteColDesc
+            If InStr(UCase(Grid.TextMatrix(i, bteColDesc)), UCase(txtSearch)) <> 0 Then
                 Exit Do
             End If
         End Select
         i = i + 1
-        If i = grid.Rows - 1 Then
+        If i = Grid.Rows - 1 Then
             txtSearch = ""
             i = 2
             lblErrMsg = DisplayMsg(8012)
@@ -3400,9 +3400,9 @@ Private Sub cmdSearch_Click()
         End If
     Loop
     
-    grid.Row = i
-    grid.TopRow = i
-    grid.SetFocus
+    Grid.Row = i
+    Grid.TopRow = i
+    Grid.SetFocus
     
 End Sub
 
@@ -3447,8 +3447,8 @@ Private Sub Form_Load()
     lblCaption(11).Visible = (bteHakPrice = 1)
     lblCaption(12).Visible = (bteHakPrice = 1)
     
-    txtamount.Visible = (bteHakPrice = 1)
-    txtPPN.Visible = (bteHakPrice = 1)
+    txtAmount.Visible = (bteHakPrice = 1)
+    txtPPn.Visible = (bteHakPrice = 1)
     txtGrandTotal.Visible = (bteHakPrice = 1)
     
     AddToComboSupplier
@@ -3466,9 +3466,9 @@ Private Sub Form_Load()
     cboPaymentTerm.ListWidth = 225
     cboPaymentTerm.ColumnWidths = "50pt;175"
     
-    up_FillCombo CboPacking, "POPacking_Cls"
-    CboPacking.ListWidth = 225
-    CboPacking.ColumnWidths = "50pt;175"
+    up_FillCombo cboPacking, "POPacking_Cls"
+    cboPacking.ListWidth = 225
+    cboPacking.ColumnWidths = "50pt;175"
     
     up_FillCombo cboInsuranceCls, "Insurance_Cls"
     cboInsuranceCls.ListWidth = 225
@@ -3481,8 +3481,8 @@ Private Sub Form_Load()
     cboAlarm.AddItem "Yes"
     cboAlarm.AddItem "No"
     
-    Call up_FillCombo(cbocurr, "curr_cls")
-    cbocurr.TextColumn = 2
+    Call up_FillCombo(cboCurr, "curr_cls")
+    cboCurr.TextColumn = 2
     
     CompanyMaster
     'SetComboWHTo
@@ -3511,11 +3511,11 @@ Dim t As String
     Header
 
     If cboStatus.ListIndex = 0 Then
-        Command1(2).Caption = "Create"
+        command1(2).Caption = "Create"
         ClearPO
         ubah = False
         cboPONo.locked = True
-        txtPoNo.Text = "KI3-"
+        txtPONo.Text = "KI3-"
         dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
         If cboSupplier.Text <> "" Then
             t = Format(Month(dtpPODate), "0#") & "/" & Year(dtpPODate)
@@ -3527,26 +3527,26 @@ Dim t As String
     Else
         If cboSupplier.Text = "" Then
             cboPONo.clear
-            txtPoNo.Text = ""
+            txtPONo.Text = ""
         Else
             sql = " and supplier_Code='" & cboSupplier.Text & "' "
             AddToComboPONo (sql)
         End If
 
         ubah = True
-        Command1(2).Caption = "Update"
+        command1(2).Caption = "Update"
         cboPONo.locked = False
         'txtPONo.locked = False
 
         For i = 0 To cboPONo.ListCount - 1
-            If txtPoNo.Text = cboPONo.List(i) Then
+            If txtPONo.Text = cboPONo.List(i) Then
                 ketemu = True
                 cboPONo.ListIndex = i
                 Exit For
             End If
         Next
         If ketemu = False Then
-            txtPoNo.Text = ""
+            txtPONo.Text = ""
             dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
         End If
         cboWHTo.locked = cboPONo.matchFound
@@ -3560,14 +3560,14 @@ End Sub
 
 Private Sub cbopono_Click()
     lblErrMsg = ""
-    txtPoNo.Text = cboPONo.Text
+    txtPONo.Text = cboPONo.Text
     Header
     GetDefaultValue
     kosongBwh
     
     Dim p As String
     
-    sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
+    sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
     If RS.State <> adStateClosed Then RS.Close
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
 
@@ -3594,7 +3594,7 @@ Private Sub cbopono_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
 End Sub
 
 Private Sub lblCaption_DblClick(Index As Integer)
-    If txtPoNo.locked Then txtPoNo.locked = False Else txtPoNo.locked = True
+    If txtPONo.locked Then txtPONo.locked = False Else txtPONo.locked = True
 End Sub
 'If KeyAscii = Asc("'") Then KeyAscii = 0
 'End Sub
@@ -3604,10 +3604,10 @@ Private Sub txtpono_Change()
     
     Dim ketemu As Boolean
     
-    txtPONo2.Text = txtPoNo.Text
+    txtPONo2.Text = txtPONo.Text
     If cboStatus.ListIndex = 1 Then
         For i = 0 To cboPONo.ListCount - 1
-            If txtPoNo.Text = cboPONo.List(i) Then
+            If txtPONo.Text = cboPONo.List(i) Then
                 ketemu = True
                 cboPONo.ListIndex = i
                 Exit For
@@ -3633,7 +3633,7 @@ Private Sub txtpono_KeyPress(KeyAscii As Integer)
         kosongBwh
         Dim p As String
         lblErrMsg = ""
-        sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
+        sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
         If RS.State <> adStateClosed Then RS.Close
         RS.Open sql, Db, adOpenKeyset, adLockOptimistic
     
@@ -3665,7 +3665,7 @@ ClearPO
     If cboSupplier.ListIndex <> -1 Then
         cboWHTo.Text = ""
         cboDeliverTo.Text = ""
-        txtsupplier.Text = cboSupplier.Column(1)
+        txtSupplier.Text = cboSupplier.Column(1)
         txtAddress.Text = cboSupplier.Column(2)
         countrycls = cboSupplier.Column(3)
         GetDefaultValue
@@ -3674,7 +3674,7 @@ ClearPO
             AddToComboPONo (sql)
 
             For i = 0 To cboPONo.ListCount - 1
-                If txtPoNo.Text = cboPONo.List(i) Then
+                If txtPONo.Text = cboPONo.List(i) Then
                     ketemu = True
                     cboPONo.ListIndex = i
 '                    Browse
@@ -3682,7 +3682,7 @@ ClearPO
                 End If
             Next
             If ketemu = False Then
-                txtPoNo.Text = ""
+                txtPONo.Text = ""
                 dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
             End If
             GetDefaultValue
@@ -3696,18 +3696,18 @@ ClearPO
     Else
         cboWHTo.Text = ""
         cboDeliverTo.Text = ""
-        txtsupplier.Text = ""
+        txtSupplier.Text = ""
         txtAddress.Text = ""
         countrycls = 0
         cboPONo.clear
         If cboStatus.ListIndex = 1 Then
-            txtPoNo.Text = ""
+            txtPONo.Text = ""
             dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
             GetDefaultValue
             kosongBwh
             Header
         Else
-            txtPoNo.Text = ""
+            txtPONo.Text = ""
         End If
         lblErrMsg.Caption = DisplayMsg(4050) '"Record with this Supplier Code not Exist"
         cboSupplier.SetFocus
@@ -3749,21 +3749,21 @@ If DateDiff("m", isipodate, isidtpPO2) <> 0 Then
     If cboStatus.ListIndex = 1 Then
         If cboSupplier.Text = "" Then
             cboPONo.clear
-            txtPoNo.Text = ""
+            txtPONo.Text = ""
         Else
             sql = " and supplier_Code='" & cboSupplier.Text & "' "
             AddToComboPONo (sql)
         End If
 
         For i = 0 To cboPONo.ListCount - 1
-            If txtPoNo.Text = cboPONo.List(i) Then
+            If txtPONo.Text = cboPONo.List(i) Then
                 ketemu = True
                 cboPONo.ListIndex = i
                 Exit For
             End If
         Next
         If ketemu = False Then
-            txtPoNo.Text = ""
+            txtPONo.Text = ""
             dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
             GetDefaultValue
             kosongBwh
@@ -3811,9 +3811,9 @@ Private Sub dtpDeliveryDate_Change()
 End Sub
 
 Private Sub cbocurr_Click()
-    If cbocurr.ListIndex <> -1 Then
-        grid.TextMatrix(actrow, bteColCurrCode) = cbocurr.Column(0)
-        grid.TextMatrix(actrow, bteColCurr) = cbocurr.Column(1)
+    If cboCurr.ListIndex <> -1 Then
+        Grid.TextMatrix(actrow, bteColCurrCode) = cboCurr.Column(0)
+        Grid.TextMatrix(actrow, bteColCurr) = cboCurr.Column(1)
     End If
 End Sub
 
@@ -3822,25 +3822,25 @@ Private Sub cbocurr_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
 End Sub
 
 Private Sub cbocurr_LostFocus()
-    cbocurr.Visible = False
+    cboCurr.Visible = False
 End Sub
 
 Private Sub cboprice_Change()
-If InStr(1, cboprice.Text, ",") = 1 Then cboprice.Text = Right(cboprice, Len(cboprice) - 1)
+If InStr(1, cboPrice.Text, ",") = 1 Then cboPrice.Text = Right(cboPrice, Len(cboPrice) - 1)
 End Sub
 
 Private Sub cboprice_Click()
-    If cboprice.ListIndex <> -1 Then
-        grid.TextMatrix(actrow, bteColCurrCode) = cboprice.Column(2)
-        For i = 0 To cbocurr.ListCount - 1
-            If Trim(grid.TextMatrix(actrow, bteColCurrCode)) = Trim(cbocurr.List(i)) Then
-                cbocurr.ListIndex = i
+    If cboPrice.ListIndex <> -1 Then
+        Grid.TextMatrix(actrow, bteColCurrCode) = cboPrice.Column(2)
+        For i = 0 To cboCurr.ListCount - 1
+            If Trim(Grid.TextMatrix(actrow, bteColCurrCode)) = Trim(cboCurr.List(i)) Then
+                cboCurr.ListIndex = i
                 Exit For
             End If
         Next i
-        grid.TextMatrix(actrow, bteColCurr) = uf_GetCurrencyDescription(Trim(cboprice.Column(2)))
-        grid.TextMatrix(actrow, bteColUnitCls) = cboprice.Column(3)
-        grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(cboprice.Column(3)))
+        Grid.TextMatrix(actrow, bteColCurr) = uf_GetCurrencyDescription(Trim(cboPrice.Column(2)))
+        Grid.TextMatrix(actrow, bteColUnitCls) = cboPrice.Column(3)
+        Grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(cboPrice.Column(3)))
     End If
 End Sub
 
@@ -3852,9 +3852,9 @@ Private Sub CboPrice_KeyPress(KeyAscii As MSForms.ReturnInteger)
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
           KeyAscii = 0
     End If
-    If InStr(1, cboprice.Text, ".") > 1 Then If KeyAscii = Asc(".") Then KeyAscii = 0
-    If Trim(cboprice.Text) = "" Then cboprice.Text = Format(0, gs_formatPrice)
-    If CDbl(cboprice.Text & Chr(KeyAscii)) > gd_MaxPrice Then KeyAscii = 0
+    If InStr(1, cboPrice.Text, ".") > 1 Then If KeyAscii = Asc(".") Then KeyAscii = 0
+    If Trim(cboPrice.Text) = "" Then cboPrice.Text = Format(0, gs_formatPrice)
+    If CDbl(cboPrice.Text & Chr(KeyAscii)) > gd_MaxPrice Then KeyAscii = 0
 End Sub
 
 Private Sub cboPrice_LostFocus()
@@ -3862,37 +3862,37 @@ Dim sql3 As String
 Dim rs3 As New Recordset
 Dim ketemu As Boolean
     
-    If cboprice.Text = "" Then cboprice.Text = Format(0, gs_formatPrice)
+    If cboPrice.Text = "" Then cboPrice.Text = Format(0, gs_formatPrice)
     
     Dim z As Double
-    z = CDbl(cboprice.Text)
+    z = CDbl(cboPrice.Text)
     If z > gd_MaxPrice Then
-        cboprice.Text = Left(z, 10)
+        cboPrice.Text = Left(z, 10)
     End If
         
-    grid.TextMatrix(actrow, bteColPrice) = Format(cboprice.Text, gs_formatPrice)
+    Grid.TextMatrix(actrow, bteColPrice) = Format(cboPrice.Text, gs_formatPrice)
     Call Grid_AfterEdit(actrow, bteColPrice)
     
-    cboprice.Text = Format(cboprice.Text, gd_MaxPrice)    'If cboprice.Text <> 0 Then
+    cboPrice.Text = Format(cboPrice.Text, gd_MaxPrice)    'If cboprice.Text <> 0 Then
     
-    For i = 0 To cboprice.ListCount - 1
-        If Trim(cboprice.Text) = Trim(cboprice.List(i)) Then
+    For i = 0 To cboPrice.ListCount - 1
+        If Trim(cboPrice.Text) = Trim(cboPrice.List(i)) Then
             ketemu = True
-            cboprice.ListIndex = i
+            cboPrice.ListIndex = i
             Exit For
         End If
     Next i
     
     If ketemu = False Then
-        sql3 = "select unit_cls from item_master where item_code='" & grid.TextMatrix(actrow, bteColProdCode) & "' "
+        sql3 = "select unit_cls from item_master where item_code='" & Grid.TextMatrix(actrow, bteColProdCode) & "' "
         Set rs3 = Db.Execute(sql3)
         
         If Not (rs3.BOF And rs3.EOF) Then
-            grid.TextMatrix(actrow, bteColUnitCls) = rs3(0)
-            grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(rs3(0)))
+            Grid.TextMatrix(actrow, bteColUnitCls) = rs3(0)
+            Grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(rs3(0)))
         End If
     End If
-    cboprice.Visible = False
+    cboPrice.Visible = False
 End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
@@ -3903,9 +3903,9 @@ Dim RS As New Recordset
 
 a = 0
 
-Command1(0).Enabled = True
+command1(0).Enabled = True
 
-With grid
+With Grid
     If .Col = bteColOrder Then
         txtSearch = ""
         If .TextMatrix(Row, bteColOrder) = "" Then .TextMatrix(Row, bteColOrder) = Format(0, gs_formatQty)
@@ -3943,14 +3943,14 @@ With grid
                 lblErrMsg.Caption = "Invalid Qty, Qty Contract Remaining " & TempQtyBefore & " !"
                 .SetFocus
                 
-                Command1(0).Enabled = False
+                command1(0).Enabled = False
                 
                 .TextMatrix(Row, bteColRemainQtyContract) = TempQtyBefore
                 
                 Exit Sub
             Else
                 .TextMatrix(Row, bteColRemainQtyContract) = TempQtyBefore
-                Command1(0).Enabled = True
+                command1(0).Enabled = True
             End If
         End If
        
@@ -3980,16 +3980,16 @@ With grid
                 End If
             Next i
             
-            txtamount.Text = Format(a, gs_formatAmount)
+            txtAmount.Text = Format(a, gs_formatAmount)
             
             If isippn = 0 Then
-                txtPPN.Text = Format(0, gs_formatAmount)
+                txtPPn.Text = Format(0, gs_formatAmount)
             Else
-                txtPPN.Text = Format(CDbl(isippn / 100) * CDbl(txtamount.Text), gs_formatAmount)
+                txtPPn.Text = Format(CDbl(isippn / 100) * CDbl(txtAmount.Text), gs_formatAmount)
             End If
             
-            txtPPN.Text = Format(txtPPN.Text, gs_formatAmount)
-            txtGrandTotal = Format(CDbl(txtPPN.Text) + CDbl(txtamount.Text), gs_formatAmount)
+            txtPPn.Text = Format(txtPPn.Text, gs_formatAmount)
+            txtGrandTotal = Format(CDbl(txtPPn.Text) + CDbl(txtAmount.Text), gs_formatAmount)
             
             If CDec(.TextMatrix(Row, bteColQtyContract)) <> CDec(9999999) Then
                 .TextMatrix(Row, bteColPriceContractClsDetail) = 1
@@ -4009,7 +4009,7 @@ With grid
     
     'Validas edit Qty Order dan Price
         If .TextMatrix(actrow, bteColProdCode) = "" Then
-            sql = "select * from part_receipt where po_no='" & txtPoNo.Text & "' and item_code='" & .TextMatrix(actrow, bteColProdCode) & "' "
+            sql = "select * from part_receipt where po_no='" & txtPONo.Text & "' and item_code='" & .TextMatrix(actrow, bteColProdCode) & "' "
             
             Set RS = Db.Execute(sql)
                 If Not (RS.BOF And RS.EOF) Then
@@ -4036,31 +4036,31 @@ Dim RS As New Recordset
 
 If statusfix = 1 Then
   
-    If grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
+    If Grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
        Cancel = True
     Else
-      If grid.Col <> bteColOrder And grid.Col <> bteColPrice Then   'And Grid.Col <> bteColCurr And Grid.Col <> bteColPrice Then
+      If Grid.Col <> bteColOrder And Grid.Col <> bteColPrice Then   'And Grid.Col <> bteColCurr And Grid.Col <> bteColPrice Then
           Cancel = True
       End If
-      If grid.Col = bteColOrder Then orderawal = CDbl(grid.TextMatrix(Row, bteColOrder))
+      If Grid.Col = bteColOrder Then orderawal = CDbl(Grid.TextMatrix(Row, bteColOrder))
     End If
 Else
-    If grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
-      If grid.Col <> bteColSelect Then
+    If Grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
+      If Grid.Col <> bteColSelect Then
           Cancel = True
       End If
     Else
-      If grid.Col <> bteColSelect And grid.Col <> bteColOrder Then
+      If Grid.Col <> bteColSelect And Grid.Col <> bteColOrder Then
           Cancel = True
       End If
-      If grid.Col = bteColOrder Then orderawal = CDbl(grid.TextMatrix(Row, bteColOrder))
+      If Grid.Col = bteColOrder Then orderawal = CDbl(Grid.TextMatrix(Row, bteColOrder))
     End If
 End If
 End Sub
 
 Private Sub Grid_CellChanged(ByVal Row As Long, ByVal Col As Long)
-If grid.Col = bteColOrder Then _
-If InStr(1, grid.TextMatrix(Row, Col), ",") = 1 Then grid.TextMatrix(Row, Col) = Right(grid.TextMatrix(Row, Col), Len(grid.TextMatrix(Row, Col)) - 1)
+If Grid.Col = bteColOrder Then _
+If InStr(1, Grid.TextMatrix(Row, Col), ",") = 1 Then Grid.TextMatrix(Row, Col) = Right(Grid.TextMatrix(Row, Col), Len(Grid.TextMatrix(Row, Col)) - 1)
   
 
 End Sub
@@ -4083,9 +4083,9 @@ End Sub
 
 Private Sub grid_Click()
   If statuskunci = False Then
-  If grid.Row > 1 Then
-  If grid.Cell(flexcpChecked, grid.Row, bteColSelect) = flexChecked Then
-    With grid
+  If Grid.Row > 1 Then
+  If Grid.Cell(flexcpChecked, Grid.Row, bteColSelect) = flexChecked Then
+    With Grid
         If .Col = bteColCurr Then
 '            cboCurr.top = .Cell(flexcpTop, .Row, bteColCurr)
 '            cboCurr.Left = .Cell(flexcpLeft, .Row, bteColCurr)
@@ -4140,12 +4140,12 @@ End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
 lblErrMsg = ""
-  If grid.Col = bteColOrder Then
+  If Grid.Col = bteColOrder Then
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
       KeyAscii = 0
     End If
   End If
-  If grid.Col = bteColPrice Then
+  If Grid.Col = bteColPrice Then
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
       KeyAscii = 0
     End If
@@ -4153,8 +4153,8 @@ lblErrMsg = ""
 End Sub
 
 Private Sub Grid_AfterScroll(ByVal OldTopRow As Long, ByVal OldLeftCol As Long, ByVal NewTopRow As Long, ByVal NewLeftCol As Long)
-    cbocurr.Visible = False
-    cboprice.Visible = False
+    cboCurr.Visible = False
+    cboPrice.Visible = False
 End Sub
 
 Private Sub Grid_DblClick()
@@ -4163,19 +4163,19 @@ Dim diff As Integer
 Dim startm As Date
 Dim endm As Date
 
-If grid.Rows > 2 Then
+If Grid.Rows > 2 Then
     If hakAkses("frm_ReceiptSupplyScheculeInquiry") = 0 Then lblErrMsg = DisplayMsg(3007):   Exit Sub
     date1 = DateAdd("m", 1, dtpPeriod.Value)
     diff = DateDiff("d", Format(dtpPeriod, "yyyy-mm-01"), Format(date1, "yyyy-mm-01"))
     startm = CDate(Year(dtpPeriod) & "-" & Month(dtpPeriod) & "-01")
     endm = CDate(Year(dtpPeriod) & "-" & Month(dtpPeriod) & "-" & diff)
-    With grid
+    With Grid
         popanggil = "poparts"
         frm_ReceiptSupplyScheculeInquiry.CboItemCD = .TextMatrix(.Row, bteColProdCode)
         frm_ReceiptSupplyScheculeInquiry.DMonth(0) = Format(startm, "dd MMM yyyy")
         frm_ReceiptSupplyScheculeInquiry.DMonth(1) = Format(endm, "dd MMM yyyy")
         frm_ReceiptSupplyScheculeInquiry.ClickSearch
-        frm_ReceiptSupplyScheculeInquiry.grid.LeftCol = 12
+        frm_ReceiptSupplyScheculeInquiry.Grid.LeftCol = 12
         frm_ReceiptSupplyScheculeInquiry.Show
         frm_ReceiptSupplyScheculeInquiry.Cmd_save(8).Caption = "&Back"
     End With
@@ -4200,8 +4200,8 @@ Case 0
 
     If hakUpdate(Me.Name) = 0 Then lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
     
-    If txtPoNo.Text = "" Then
-        txtPoNo.SetFocus
+    If txtPONo.Text = "" Then
+        txtPONo.SetFocus
         lblErrMsg = DisplayMsg(1048) '"Please Select PO No"
         Me.MousePointer = vbDefault
         Exit Sub
@@ -4215,14 +4215,14 @@ Case 0
     
     'Sql = "select * from purchaseorder_master where left(po_no, 16) ='" & Mid(txtPONo.Text, 1, 16) & "' and sheetcoil_cls=0"
     
-    sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPoNo.Text) & "'"
+    sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPONo.Text) & "'"
     
     If RS.State <> adStateClosed Then RS.Close
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
 
     If RS.BOF And RS.EOF Then
       lblErrMsg.Caption = DisplayMsg(4015)
-      txtPoNo.SetFocus
+      txtPONo.SetFocus
       Me.MousePointer = vbDefault
       Exit Sub
     End If
@@ -4237,7 +4237,7 @@ Case 0
         RS("Revise_No") = txtRevisi.Text
         RS("PriceCondition_Cls") = cboPriceCondition.Text
         RS("PaymentTerm_Cls") = cboPaymentTerm.Text
-        RS("POPacking_Cls") = CboPacking.Text
+        RS("POPacking_Cls") = cboPacking.Text
         RS("Insurance_Cls") = cboInsuranceCls.Text
         RS("Transportation_Cls") = cboTransport.Text
         
@@ -4249,11 +4249,11 @@ Case 0
         RS("POMarking4") = txtMarking(3).Text
         RS("POMarking5") = txtMarking(4).Text
         RS("POMarking6") = txtMarking(5).Text
-        RS("remarks") = txtremarks.Text
-        RS("amount") = txtamount.Text
-        RS("ppn") = txtPPN.Text
+        RS("remarks") = txtRemarks.Text
+        RS("amount") = txtAmount.Text
+        RS("ppn") = txtPPn.Text
         RS("total_amount") = txtGrandTotal.Text
-        RS("remarks") = txtremarks.Text
+        RS("remarks") = txtRemarks.Text
         'RS("PriceContract_Cls") = txtPriceContract.Text
         RS("Last_Update") = Now
         RS("Last_User") = userLogin
@@ -4261,7 +4261,7 @@ Case 0
                 
         strTempCurr = ""
         
-        With grid
+        With Grid
             For i = 2 To .Rows - 1
                 If .Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
                     If strTempCurr = "" Then strTempCurr = .TextMatrix(i, bteColCurrCode)
@@ -4317,7 +4317,7 @@ Case 0
                  
                 Else
                     
-                    sql4 = "select * from part_receipt where po_no='" & txtPoNo.Text & "' and item_code='" & .TextMatrix(i, bteColProdCode) & "' "
+                    sql4 = "select * from part_receipt where po_no='" & txtPONo.Text & "' and item_code='" & .TextMatrix(i, bteColProdCode) & "' "
                     
                     Set rs4 = Db.Execute(sql4)
                     If Not (rs4.BOF And rs4.EOF) Then
@@ -4353,7 +4353,7 @@ Case 0
                                             
                 Set rsUpd = cmd.Execute
                         
-                sql3 = "delete from purchaseorder_detail where po_no='" & txtPoNo.Text & "' "
+                sql3 = "delete from purchaseorder_detail where po_no='" & txtPONo.Text & "' "
                 Db.Execute sql3
                 R = 1
                         
@@ -4390,7 +4390,7 @@ Case 0
                         rsGrid.AddNew
                         VSeq = SeqN
                         rsGrid("Seq_no") = VSeq
-                        rsGrid("po_no") = txtPoNo.Text
+                        rsGrid("po_no") = txtPONo.Text
                         rsGrid("item_Code") = .TextMatrix(i, bteColProdCode)
                         rsGrid("price") = .TextMatrix(i, bteColPrice)
                         rsGrid("currency_code") = .TextMatrix(i, bteColCurrCode)
@@ -4443,7 +4443,7 @@ Case 0
                 cmd.ActiveConnection = Db
                 cmd.CommandText = "sp_POMasterPriceContract_Upd"
                 
-                cmd.Parameters.append cmd.CreateParameter("PONo", adVarChar, adParamInput, 25, txtPoNo.Text)
+                cmd.Parameters.append cmd.CreateParameter("PONo", adVarChar, adParamInput, 25, txtPONo.Text)
                 cmd.Parameters.append cmd.CreateParameter("User", adVarChar, adParamInput, 15, userLogin)
                                         
                 Set rsUpdContractCls = cmd.Execute
@@ -4490,8 +4490,8 @@ Case 2
                 cboSupplier.MatchEntry = 2
             End If
                 
-            If txtPoNo.Text = "" Then
-                txtPoNo.SetFocus
+            If txtPONo.Text = "" Then
+                txtPONo.SetFocus
                 lblErrMsg = DisplayMsg(1046) '"Please Input PO No"
                 Me.MousePointer = vbDefault
                 Exit Sub
@@ -4502,7 +4502,7 @@ Case 2
                 
                 'Sql = "select * from purchaseorder_master where left(po_no, 16) ='" & Mid(txtPONo.Text, 1, 16) & "' and sheetcoil_cls=0"
                 
-                sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPoNo.Text) & "'"
+                sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPONo.Text) & "'"
                 
                 
                 If RS.State <> adStateClosed Then RS.Close
@@ -4510,12 +4510,12 @@ Case 2
                   
                 If Not (RS.BOF And RS.EOF) Then
                     lblErrMsg.Caption = DisplayMsg(1023)
-                    txtPoNo.SetFocus
+                    txtPONo.SetFocus
                     Me.MousePointer = vbDefault
                     Exit Sub
                 Else
                     RS.AddNew
-                    RS("po_no") = txtPoNo.Text
+                    RS("po_no") = txtPONo.Text
                     RS("supplier_code") = cboSupplier.Text
                 End If
 
@@ -4527,10 +4527,10 @@ Case 2
             RS("Deliver_To") = cboDeliverTo.Text
             RS("Revise_No") = txtRevisi.Text
             RS("delivery_date") = Format(dtpDeliveryDate.Value, "YYYY-MM-DD")
-            RS("amount") = txtamount.Text
-            RS("ppn") = txtPPN.Text
+            RS("amount") = txtAmount.Text
+            RS("ppn") = txtPPn.Text
             RS("total_amount") = txtGrandTotal.Text
-            RS("remarks") = txtremarks.Text
+            RS("remarks") = txtRemarks.Text
             RS("sheetcoil_cls") = 0
             RS("Last_Update") = Now
             RS("Last_User") = userLogin
@@ -4539,8 +4539,8 @@ Case 2
             If InStr(1, err.Description, "Violation of PRIMARY KEY constraint") > 0 Then
                 t = Format(Month(dtpPODate), "0#") & "/" & Year(dtpPODate)
                 Call PONO(t, cboSupplier.Text)
-                txtPONo2.Text = txtPoNo.Text
-                RS("po_No") = txtPoNo.Text
+                txtPONo2.Text = txtPONo.Text
+                RS("po_No") = txtPONo.Text
                 RS("Last_Update") = Now
                 RS("Last_User") = userLogin
                 RS.update
@@ -4554,8 +4554,8 @@ Case 2
     
     Else
     
-        If txtPoNo.Text = "" Then
-            txtPoNo.SetFocus
+        If txtPONo.Text = "" Then
+            txtPONo.SetFocus
             lblErrMsg = DisplayMsg(1048) '"Please Select PO No"
             Me.MousePointer = vbDefault
             Exit Sub
@@ -4563,13 +4563,13 @@ Case 2
             Browse
             If ada = False Then
                 dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
-                txtamount.Text = Format(0, gs_formatAmount)
-                txtPPN.Text = Format(0, gs_formatAmount)
+                txtAmount.Text = Format(0, gs_formatAmount)
+                txtPPn.Text = Format(0, gs_formatAmount)
                 txtGrandTotal.Text = Format(0, gs_formatAmount)
-                txtremarks.Text = ""
+                txtRemarks.Text = ""
     
                 lblErrMsg.Caption = DisplayMsg(4015)
-                txtPoNo.SetFocus
+                txtPONo.SetFocus
                 Me.MousePointer = vbDefault
                 Exit Sub
             End If
@@ -4579,11 +4579,11 @@ Case 2
     
 Case 3
 
-    If txtPoNo.Text <> "" And cboSupplier.Text <> "" Then
+    If txtPONo.Text <> "" And cboSupplier.Text <> "" Then
         
         Dim p As String
         
-        sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
+        sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
         If RS.State <> adStateClosed Then RS.Close
         RS.Open sql, Db, adOpenKeyset, adLockOptimistic
             
@@ -4620,7 +4620,7 @@ Select Case Index
             End If
 
             On Error Resume Next
-            grid.TopRow = 1
+            Grid.TopRow = 1
 
     Case 2:
             If intpage = 1 Then
@@ -4631,10 +4631,10 @@ Select Case Index
                lblErrMsg = ""
             End If
             On Error Resume Next
-            Atas = grid.TopRow
+            Atas = Grid.TopRow
 
-            grid.TopRow = grid.TopRow - 16
-            If Atas = grid.TopRow Then grid.TopRow = 1
+            Grid.TopRow = Grid.TopRow - 16
+            If Atas = Grid.TopRow Then Grid.TopRow = 1
 
     Case 3:
             If intpage < jmlpage Then
@@ -4646,7 +4646,7 @@ Select Case Index
             End If
 
             On Error Resume Next
-            grid.TopRow = grid.TopRow + 16
+            Grid.TopRow = Grid.TopRow + 16
 
     Case 4:
             If intpage = jmlpage Then
@@ -4657,7 +4657,7 @@ Select Case Index
             End If
 
             On Error Resume Next
-            grid.TopRow = grid.Rows
+            Grid.TopRow = Grid.Rows
 
 End Select
 End Sub
@@ -4703,7 +4703,7 @@ Private Sub SetComboWHTo()
             " where wh_code in ( " & _
             " select code from (select  trade_code code from trade_Master union select wh_code code from warehouse_master) a " & _
             " ) " & _
-            " AND Company_Code = '" & Trim(TxtCC) & "'" & _
+            " AND Company_Code = '" & Trim(TxtFc) & "'" & _
             " order by wh_code"
     adoRs.Open sql, Db, adOpenKeyset, adLockOptimistic
     
@@ -4728,7 +4728,7 @@ End Sub
 
 Private Sub ClearPO()
     
-    sql = "delete from purchaseorder_master where not exists(select po_no from purchaseorder_detail where po_no = purchaseorder_master.po_no) and po_no = '" & txtPoNo & "'"
+    sql = "delete from purchaseorder_master where not exists(select po_no from purchaseorder_detail where po_no = purchaseorder_master.po_no) and po_no = '" & txtPONo & "'"
     Db.Execute sql
     
 End Sub

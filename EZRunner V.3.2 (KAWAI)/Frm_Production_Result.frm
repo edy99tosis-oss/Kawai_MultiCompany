@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_Production_Result 
    BackColor       =   &H00FDDFE3&
@@ -2401,7 +2401,7 @@ Begin VB.Form Frm_Production_Result
       TabIndex        =   46
       Top             =   675
       Width           =   14565
-      Begin VB.TextBox TxtCompanyName 
+      Begin VB.TextBox TxtFactoryName 
          BackColor       =   &H00FDDFE3&
          BorderStyle     =   0  'None
          BeginProperty Font 
@@ -2414,12 +2414,11 @@ Begin VB.Form Frm_Production_Result
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   3600
+         Left            =   3555
          Locked          =   -1  'True
          TabIndex        =   188
          TabStop         =   0   'False
-         Text            =   "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-         Top             =   270
+         Top             =   240
          Width           =   3060
       End
       Begin VB.CommandButton Command1 
@@ -2449,13 +2448,13 @@ Begin VB.Form Frm_Production_Result
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   59441155
+         Format          =   128778243
          UpDown          =   -1  'True
          CurrentDate     =   37802
       End
       Begin VB.Label Label4 
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -2471,9 +2470,9 @@ Begin VB.Form Frm_Production_Result
          Top             =   315
          Width           =   1635
       End
-      Begin MSForms.ComboBox TxtCc 
+      Begin MSForms.ComboBox TxtFc 
          Height          =   345
-         Left            =   2115
+         Left            =   2100
          TabIndex        =   0
          Top             =   225
          Width           =   1290
@@ -2615,7 +2614,7 @@ Begin VB.Form Frm_Production_Result
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Factory Code"
+         Caption         =   "Process Code"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -2630,7 +2629,7 @@ Begin VB.Form Frm_Production_Result
          Left            =   6930
          TabIndex        =   49
          Top             =   270
-         Width           =   1140
+         Width           =   1170
       End
       Begin MSForms.ComboBox cbodealer 
          Height          =   315
@@ -3804,12 +3803,12 @@ Private Sub adpartcombo()
 
 End Sub
 
-Private Sub TxtCc_Change()
-    If TxtCc.matchFound Then
-        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+Private Sub TxtFc_Change()
+    If TxtFc.matchFound Then
+        TxtFactoryName = TxtFc.List(TxtFc.ListIndex, 1)
         'DamiUpd = Trim(TxtCc)
     Else
-        TxtCompanyName = ""
+        TxtFactoryName = ""
         lblerror = DisplayMsg(4069)  '"Record is not found"
         'DamiUpd = Trim(TxtCc)
     End If
@@ -3817,14 +3816,14 @@ Private Sub TxtCc_Change()
 End Sub
 
 Private Sub CompanyMaster()
-FillCompanyCombo TxtCc
+FillCompanyCombo TxtFc
 End Sub
 
 Private Sub adtocombo()
     
     Dim adoRs As New ADODB.Recordset
 
-    sql = "select *, trade_code from trade_master where trade_code in (select distinct manufacture_code from manufacture_line where Company_Code =  '" & Trim(TxtCc) & "' )"
+    sql = "select *, trade_code from trade_master where trade_code in (select distinct manufacture_code from manufacture_line where Company_Code =  '" & Trim(TxtFc) & "' )"
     adoRs.Open sql, Db, adOpenKeyset, adLockOptimistic
     With cbodealer
         .clear
@@ -4239,7 +4238,7 @@ If Not rsCek.EOF Then
 Screen.MousePointer = vbHourglass
 With xlapp
 
-    sql1 = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile where Company_Code = '" & Trim(TxtCc) & "'"
+    sql1 = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile where Company_Code = '" & Trim(TxtFc) & "'"
     If rsCompany.State <> adStateClosed Then rsCompany.Close
     rsCompany.Open sql1, Db, adOpenDynamic, adLockOptimistic
     

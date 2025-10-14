@@ -140,7 +140,7 @@ Begin VB.Form frmProdResultInquiry
       Tag             =   "TTTF*/"
       Top             =   1080
       Width           =   14925
-      Begin MSForms.ComboBox cboCompany 
+      Begin MSForms.ComboBox cboFactory 
          Height          =   315
          Index           =   2
          Left            =   1980
@@ -168,7 +168,7 @@ Begin VB.Form frmProdResultInquiry
          Y1              =   520
          Y2              =   520
       End
-      Begin VB.Label lblCompany 
+      Begin VB.Label lblFactory 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Description"
@@ -183,14 +183,14 @@ Begin VB.Form frmProdResultInquiry
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          Height          =   195
          Index           =   5
          Left            =   240
          TabIndex        =   24
          Tag             =   "TTFF*/"
          Top             =   285
-         Width           =   1335
+         Width           =   1140
       End
       Begin VB.Label lblNm 
          AutoSize        =   -1  'True
@@ -207,14 +207,14 @@ Begin VB.Form frmProdResultInquiry
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Machine No "
+         Caption         =   "Line Code"
          Height          =   195
          Index           =   1
          Left            =   240
          TabIndex        =   17
          Tag             =   "TTFF*/"
          Top             =   1110
-         Width           =   1035
+         Width           =   855
       End
       Begin MSForms.ComboBox cbo 
          Height          =   315
@@ -279,14 +279,14 @@ Begin VB.Form frmProdResultInquiry
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Factory Code"
+         Caption         =   "Process Code"
          Height          =   195
          Index           =   0
          Left            =   240
          TabIndex        =   15
          Tag             =   "TTFF*/"
          Top             =   705
-         Width           =   1140
+         Width           =   1170
       End
       Begin VB.Line Line8 
          Index           =   0
@@ -316,7 +316,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   121241603
+      Format          =   129236995
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -339,7 +339,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   121241603
+      Format          =   129236995
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -875,8 +875,8 @@ Sub Kosong()
     lblNm(0) = ""
     cbo(1) = ""
     lblNm(1) = ""
-    cboCompany(2).Text = ""
-    lblCompany(2).Caption = ""
+    cboFactory(2).Text = ""
+    lblFactory(2).Caption = ""
     
     dtAwal = Format(Year(Now) & "-" & Format(Month(Now), "#0") & "-01", "dd MMM yyyy")
     dtAkhir = Format(Now, "dd MMM yyyy")
@@ -886,7 +886,7 @@ Sub Kosong()
 End Sub
 
 Sub adcboCompany()
-    FillCompanyCombo cboCompany(2)
+    FillCompanyCombo cboFactory(2)
 End Sub
 
 '******** Combo Factory Code **********
@@ -902,7 +902,7 @@ With cbo(0)
 '    sql = "select Trade_Code,Trade_Name from Trade_Master " & _
 '        "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
 '        "order by Trade_Code"
-    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany(2).Text & "'"
+    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboFactory(2).Text & "'"
     
     Set RsCust = Db.Execute(sql)
     
@@ -954,9 +954,9 @@ With cbo(1)
 End With
 End Sub
 
-Private Sub CboCompany_Click(Index As Integer)
-    If cboCompany(2).ListIndex <> -1 Then
-        lblCompany(2).Caption = cboCompany(2).Column(1)
+Private Sub cboFactory_Click(Index As Integer)
+    If cboFactory(2).ListIndex <> -1 Then
+        lblFactory(2).Caption = cboFactory(2).Column(1)
         isiCboCust
     End If
 End Sub
@@ -1385,8 +1385,8 @@ Dim rsCek As New ADODB.Recordset
                                 LblErrMsg = DisplayMsg(1113): Exit Sub 'Daily Already Completed
                             End If
                             frmProdResult.is_LoadByItemCode = Trim(.TextMatrix(cek, bteColProdCode))
-                            frmProdResult.cboCompany(2) = cboCompany(2).Text
-                            frmProdResult.lblCompany(2) = lblCompany(2).Caption
+                            frmProdResult.cboFactory(2) = cboFactory(2).Text
+                            frmProdResult.lblFactory(2) = lblFactory(2).Caption
                             frmProdResult.cbo(0) = cbo(0) 'Factory CD
                             frmProdResult.cbo(1) = cbo(1) 'Line Code
                             frmProdResult.cbo(2) = Trim(.TextMatrix(cek, bteColWHCode)) ' WH Code 20090212 - Default WH Code = Factory Code

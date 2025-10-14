@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_SheetDOD 
    BackColor       =   &H00FDDFE3&
@@ -119,7 +119,7 @@ Begin VB.Form Frm_SheetDOD
       TabIndex        =   7
       Top             =   990
       Width           =   13485
-      Begin VB.TextBox TxtCompanyName 
+      Begin VB.TextBox TxtFactoryName 
          BackColor       =   &H00FDDFE3&
          BorderStyle     =   0  'None
          Height          =   255
@@ -127,7 +127,7 @@ Begin VB.Form Frm_SheetDOD
          Locked          =   -1  'True
          TabIndex        =   19
          TabStop         =   0   'False
-         Top             =   225
+         Top             =   250
          Width           =   6615
       End
       Begin MSComCtl2.DTPicker edate 
@@ -149,7 +149,7 @@ Begin VB.Form Frm_SheetDOD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60227587
+         Format          =   129171459
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker sdate 
@@ -171,28 +171,28 @@ Begin VB.Form Frm_SheetDOD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60227587
+         Format          =   129171459
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          Height          =   255
          Left            =   195
          TabIndex        =   20
-         Top             =   285
+         Top             =   300
          Width           =   1635
       End
-      Begin MSForms.ComboBox TxtCc 
-         Height          =   345
-         Left            =   1695
+      Begin MSForms.ComboBox TxtFc 
+         Height          =   315
+         Left            =   1710
          TabIndex        =   0
-         Top             =   225
-         Width           =   1560
+         Top             =   285
+         Width           =   1485
          VariousPropertyBits=   746604571
          MaxLength       =   10
          DisplayStyle    =   3
-         Size            =   "2752;609"
+         Size            =   "2619;556"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
@@ -469,14 +469,14 @@ End Sub
 
 '----------------------update multi company------------------------
 Private Sub CompanyMaster()
-    FillCompanyCombo TxtCc
+    FillCompanyCombo TxtFc
 End Sub
 
-Private Sub TxtCc_Change()
-    If TxtCc.matchFound Then
-        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+Private Sub TxtFc_Change()
+    If TxtFc.matchFound Then
+        TxtFactoryName = TxtFc.List(TxtFc.ListIndex, 1)
     Else
-        TxtCompanyName = ""
+        TxtFactoryName = ""
         lblerror.Caption = DisplayMsg(4069)  '"Record is not found"
     End If
     Call adtocombo
@@ -561,7 +561,7 @@ Private Sub Form_Load()
   If gb_Simulation = True Then Call up_InitSimulation(Me)
 bteHakPrice = hakPrice(Me.Name)
 Header
-FillCompanyCombo TxtCc
+FillCompanyCombo TxtFc
 sdate = Format(Now, "dd mmm yyyy")
 edate = Format(Now, "dd mmm yyyy")
 CtrlMenu1.FormName = Me.Name
@@ -609,8 +609,8 @@ Sub display()
     End If
     
     ' Filter berdasarkan Company
-    If Trim(TxtCc.Text) <> "" Then
-        companyFilter = " AND wh.company_code = '" & TxtCc.Text & "' "
+    If Trim(TxtFc.Text) <> "" Then
+        companyFilter = " AND wh.company_code = '" & TxtFc.Text & "' "
     Else
         companyFilter = ""
     End If
@@ -639,10 +639,10 @@ Sub display()
             
             For i = 1 To rst.RecordCount
                 .Cell(flexcpChecked, i, bteColSelect) = flexUnchecked
-                .TextMatrix(i, bteColCustCode) = Trim(rst!trade_code)
+                .TextMatrix(i, bteColCustCode) = Trim(rst!Trade_Code)
                 .TextMatrix(i, bteColCustName) = Trim(rst!trade_abbr)
                 .TextMatrix(i, bteColSJNo) = rst!do_no
-                .TextMatrix(i, bteColSJDate) = Format(rst!Do_date, "dd mmm yyyy")
+                .TextMatrix(i, bteColSJDate) = Format(rst!do_date, "dd mmm yyyy")
                 .TextMatrix(i, bteColSJAmount) = Format(rst!Amount, gs_formatAmountIDR)
                 
                 If IsNull(rst!fix_cls) Or rst!fix_cls = 0 Then

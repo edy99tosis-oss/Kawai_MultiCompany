@@ -68,7 +68,7 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   121176067
+         Format          =   136904707
          CurrentDate     =   37860
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -90,7 +90,7 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   121176067
+         Format          =   136904707
          CurrentDate     =   37799
       End
       Begin VB.Line Line8 
@@ -103,15 +103,15 @@ Begin VB.Form frmRptProdResult
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          Height          =   195
          Index           =   3
-         Left            =   240
+         Left            =   270
          TabIndex        =   20
          Top             =   420
-         Width           =   1335
+         Width           =   1140
       End
-      Begin VB.Label lblCompany 
+      Begin VB.Label lblFactory 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Description"
@@ -122,10 +122,10 @@ Begin VB.Form frmRptProdResult
          Top             =   420
          Width           =   960
       End
-      Begin MSForms.ComboBox cboCompany 
+      Begin MSForms.ComboBox cboFactory 
          Height          =   330
          Index           =   2
-         Left            =   1830
+         Left            =   1860
          TabIndex        =   0
          Top             =   360
          Width           =   1530
@@ -236,13 +236,13 @@ Begin VB.Form frmRptProdResult
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Factory Code"
+         Caption         =   "Process Code"
          Height          =   195
          Index           =   0
          Left            =   270
          TabIndex        =   14
          Top             =   915
-         Width           =   1140
+         Width           =   1170
       End
       Begin VB.Line Line8 
          Index           =   0
@@ -308,8 +308,8 @@ Begin VB.Form frmRptProdResult
       TabStop         =   0   'False
       Top             =   450
       Width           =   1845
-      _ExtentX        =   3254
-      _ExtentY        =   714
+      _extentx        =   3254
+      _extenty        =   714
    End
    Begin VB.Label lblJudul 
       Alignment       =   2  'Center
@@ -358,7 +358,7 @@ With cbo(0)
 '        "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
 '        "order by Trade_Code"
 
-     sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany(2).Text & "'"
+     sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboFactory(2).Text & "'"
      
     Set RsCust = Db.Execute(sql)
     
@@ -380,7 +380,7 @@ End With
 End Sub
 
 Sub adcboCompany()
-    FillCompanyCombo cboCompany(2)
+    FillCompanyCombo cboFactory(2)
 End Sub
 
 Sub isiCboWH()
@@ -435,9 +435,9 @@ Sub GrandTotal(xl As Excel.application, Row As Long, Col As String, Col2 As Stri
     End With
 End Sub
 
-Private Sub cboCompany_Click(Index As Integer)
-    If cboCompany(2).ListIndex <> -1 Then
-        lblCompany(2).Caption = cboCompany(2).Column(1)
+Private Sub cboFactory_Change(Index As Integer)
+  If cboFactory(2).ListIndex <> -1 Then
+        lblFactory(2).Caption = cboFactory(2).Column(1)
         isiCboCust
         isiCboWH
     End If
@@ -614,8 +614,8 @@ Private Sub Form_Load()
     cbo(0) = ""
     cbo(1) = ""
     
-    cboCompany(2).Text = ""
-    lblCompany(2).Caption = ""
+    cboFactory(2).Text = ""
+    lblFactory(2).Caption = ""
     
     adcboCompany
     

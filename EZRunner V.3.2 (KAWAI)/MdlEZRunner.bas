@@ -909,7 +909,9 @@ SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT, PM.Total_amount, 
 
 SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls " & vbCrLf & _
                   "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
-                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls,Company_Profile as cp,User_Setup UP" & vbCrLf & _
+                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls" & vbCrLf & _
+                  "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
+                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = up.Company_Code" & vbCrLf & _
                   " Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' " & vbCrLf & _
                   "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
 ' --------
@@ -1337,12 +1339,12 @@ Public Sub FillCompanyCombo(cbo As Object)
     Dim i As Integer
 
     ' admin
-    If Trim(UserCompanyCode) = "9999" Then
-        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile ORDER BY Company_Code"
-    Else
-        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile WHERE Company_Code = '" & Replace(UserCompanyCode, "'", "''") & "' ORDER BY Company_Code"
-    End If
-
+'    If Trim(UserCompanyCode) = "9999" Then
+'        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile ORDER BY Company_Code"
+'    Else
+'        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile WHERE Company_Code = '" & Replace(UserCompanyCode, "'", "''") & "' ORDER BY Company_Code"
+'    End If
+    sql = "EXEC dbo.SP_UserSetup_Get_CompanyCode @UserID = '" & userLogin & "', @Type = '2' "
     Set RS = Db.Execute(sql)
 
     With cbo

@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Begin VB.Form F_ManufactureLine 
    BackColor       =   &H00FDDFE3&
    BorderStyle     =   1  'Fixed Single
@@ -17,7 +17,7 @@ Begin VB.Form F_ManufactureLine
    ScaleHeight     =   10350
    ScaleWidth      =   15120
    StartUpPosition =   2  'CenterScreen
-   Begin VB.TextBox TxtCompanyName 
+   Begin VB.TextBox TxtFactoryName 
       BackColor       =   &H00FDDFE3&
       BorderStyle     =   0  'None
       BeginProperty Font 
@@ -332,7 +332,7 @@ Begin VB.Form F_ManufactureLine
       Y1              =   1200
       Y2              =   1200
    End
-   Begin MSForms.ComboBox TxtCc 
+   Begin MSForms.ComboBox TxtFc 
       Height          =   345
       Left            =   2325
       TabIndex        =   0
@@ -351,7 +351,7 @@ Begin VB.Form F_ManufactureLine
    End
    Begin VB.Label Label3 
       BackStyle       =   0  'Transparent
-      Caption         =   "Company Code"
+      Caption         =   "Factory Code"
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -393,7 +393,7 @@ Begin VB.Form F_ManufactureLine
    End
    Begin VB.Label Label2 
       BackStyle       =   0  'Transparent
-      Caption         =   "Manufacture Code"
+      Caption         =   "Process Code"
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -521,26 +521,26 @@ Dim bteColLineName As Byte
 Private Sub CmdManufacture_Click(Index As Integer)
     Select Case Index
     Case 4:
-        If hakUpdate(Me.Name) = 0 Then LblPesan = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+        If hakUpdate(Me.Name) = 0 Then Lblpesan = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
         If DtRec = 1 Then
             Call DtUpdate
             'DtRec = 3
-            txtCode.Text = ""
-            txtDesc.Text = ""
-            txtCode.Enabled = True
+            TxtCode.Text = ""
+            TxtDesc.Text = ""
+            TxtCode.Enabled = True
             DtRec = 3
         ElseIf DtRec = 2 Then
             Call DtDelete
             DtRec = 3
         ElseIf DtRec = 3 Then
             Call DtSave
-            txtCode.Text = ""
-            txtDesc.Text = ""
+            TxtCode.Text = ""
+            TxtDesc.Text = ""
         End If
     Case 2:
         Call Hidden
         Call ClearS
-        LblPesan = ""
+        Lblpesan = ""
     Case 0:
         DoEvents
         frmMainMenu.Show
@@ -555,7 +555,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
     If ErrMsg = "" Then
         Unload Me
     Else
-        LblPesan.Caption = ErrMsg
+        Lblpesan.Caption = ErrMsg
     End If
 End Sub
 
@@ -578,13 +578,13 @@ End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
     Dim TextGrid As String, Data1 As String, rtrec As Integer, i As Integer
     
-    TextGrid = grid.Text
+    TextGrid = Grid.Text
     If TextGrid = "S" Then
         Data1 = "S"
-        txtCode.Enabled = False
-        txtCode = Trim(grid.TextMatrix(Row, bteColLineCode))
-        txtDesc = Trim(grid.TextMatrix(Row, bteColLineName))
-        Isian = Trim(txtCode)
+        TxtCode.Enabled = False
+        TxtCode = Trim(Grid.TextMatrix(Row, bteColLineCode))
+        TxtDesc = Trim(Grid.TextMatrix(Row, bteColLineName))
+        Isian = Trim(TxtCode)
         DtRec = 1
         Call ClearS
     ElseIf TextGrid = "D" Then
@@ -593,16 +593,16 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
         Call ClearS("S")
         'Call Hidden
     Else
-        For i = 1 To grid.Rows - 1
-            If grid.TextMatrix(i, bteColSelect) = "S" Then
+        For i = 1 To Grid.Rows - 1
+            If Grid.TextMatrix(i, bteColSelect) = "S" Then
                 rtrec = 3
                 Call ClearS
                 Call Hidden
                 GoTo Olah
             End If
         Next i
-        For i = 1 To grid.Rows - 1
-            If grid.TextMatrix(i, bteColSelect) = "D" Then
+        For i = 1 To Grid.Rows - 1
+            If Grid.TextMatrix(i, bteColSelect) = "D" Then
                 rtrec = 2
                 GoTo Olah
             End If
@@ -612,17 +612,17 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
     End If
     
 Olah:
-    grid.TextMatrix(Row, Col) = TextGrid
-    grid.Col = Col
-    grid.Row = Row
+    Grid.TextMatrix(Row, Col) = TextGrid
+    Grid.Col = Col
+    Grid.Row = Row
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-    If grid.Col > bteColSelect Then Cancel = True
+    If Grid.Col > bteColSelect Then Cancel = True
 End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
-    If grid.Col = bteColSelect Then
+    If Grid.Col = bteColSelect Then
         KeyAscii = Asc(UCase(Chr(KeyAscii)))
         If KeyAscii <> Asc("D") And KeyAscii <> Asc("S") And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyReturn Then
             KeyAscii = 0
@@ -639,13 +639,13 @@ End Sub
 Private Sub TxtCode_LostFocus()
     Dim sql As String, RsCode As New ADODB.Recordset
     If RsCode.State <> adStateClosed Then RsCode.Close
-    RsCode.Open "select * from manufacture_line where Company_Code='" & Trim(TxtCC) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'", Db, adOpenDynamic, adLockOptimistic, adCmdText
+    RsCode.Open "select * from manufacture_line where Company_Code='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'", Db, adOpenDynamic, adLockOptimistic, adCmdText
     If Not (RsCode.BOF And RsCode.EOF) Then
-        txtDesc = Trim(RsCode("line_name"))
-        LblPesan = DisplayMsg(3004)
-        Test = Trim(txtCode)
+        TxtDesc = Trim(RsCode("line_name"))
+        Lblpesan = DisplayMsg(3004)
+        Test = Trim(TxtCode)
     End If
-    Test = Trim(txtCode)
+    Test = Trim(TxtCode)
 End Sub
 
 Private Sub txtDesc_KeyPress(KeyAscii As Integer)
@@ -653,25 +653,25 @@ Private Sub txtDesc_KeyPress(KeyAscii As Integer)
     If KeyAscii = 39 Then KeyAscii = 0
 End Sub
 
-Private Sub TxtCc_Change()
-    If TxtCC.matchFound Then
-        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
-        DamiUpd = Trim(TxtCC)
+Private Sub TxtFc_Change()
+    If TxtFc.matchFound Then
+        TxtFactoryName = TxtFc.List(TxtFc.ListIndex, 1)
+        DamiUpd = Trim(TxtFc)
     Else
-        TxtCompanyName = ""
-        LblPesan = DisplayMsg(4069)  '"Record is not found"
-        DamiUpd = Trim(TxtCC)
+        TxtFactoryName = ""
+        Lblpesan = DisplayMsg(4069)  '"Record is not found"
+        DamiUpd = Trim(TxtFc)
     End If
     Call TradeMaster
 End Sub
 
 Private Sub TxtMc_Change()
     If TxtMc.matchFound Then
-        txtName = TxtMc.List(TxtMc.ListIndex, 1)
+        TxtName = TxtMc.List(TxtMc.ListIndex, 1)
         DamiUpd = Trim(TxtMc)
     Else
-        txtName = ""
-        LblPesan = DisplayMsg(4069)  '"Record is not found"
+        TxtName = ""
+        Lblpesan = DisplayMsg(4069)  '"Record is not found"
         DamiUpd = Trim(TxtMc)
     End If
     Call Browse
@@ -694,23 +694,23 @@ Private Sub Header()
     bteColLineCode = 2
     bteColLineName = 3
     
-    grid.ColS = 4
-    grid.Rows = 1
+    Grid.ColS = 4
+    Grid.Rows = 1
     
-    grid.TextMatrix(0, bteColSelect) = " "
-    grid.TextMatrix(0, bteColLineCode) = "Line CD"
-    grid.TextMatrix(0, bteColLineName) = "Line Name"
+    Grid.TextMatrix(0, bteColSelect) = " "
+    Grid.TextMatrix(0, bteColLineCode) = "Line CD"
+    Grid.TextMatrix(0, bteColLineName) = "Line Name"
     
-    grid.ColWidth(bteColId) = 0
-    grid.ColWidth(bteColSelect) = 300
-    grid.ColWidth(bteColLineCode) = 1000
-    grid.ColWidth(bteColLineName) = 6600
+    Grid.ColWidth(bteColId) = 0
+    Grid.ColWidth(bteColSelect) = 300
+    Grid.ColWidth(bteColLineCode) = 1000
+    Grid.ColWidth(bteColLineName) = 6600
     
-    grid.ColAlignment(bteColSelect) = flexAlignCenterCenter
-    grid.ColAlignment(bteColLineCode) = flexAlignLeftCenter
-    grid.ColAlignment(bteColLineName) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColSelect) = flexAlignCenterCenter
+    Grid.ColAlignment(bteColLineCode) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColLineName) = flexAlignLeftCenter
     
-    grid.EditMaxLength = 1
+    Grid.EditMaxLength = 1
 
 End Sub
 
@@ -719,31 +719,31 @@ Private Sub DtSave()
     Dim rsCek As New ADODB.Recordset
     
     Call OlahDt
-    If txtCode <> "" And txtDesc <> "" And TxtMc <> "" Then
+    If TxtCode <> "" And TxtDesc <> "" And TxtMc <> "" Then
         sql = "select * from trade_master where trade_code='" & Trim(TxtMc) & "'"
         If rsCek.State <> adStateClosed Then rsCek.Close
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         If (rsCek.BOF And rsCek.EOF) Then
-            LblPesan = DisplayMsg(1052)
+            Lblpesan = DisplayMsg(1052)
             Exit Sub
         End If
-        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtCC) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'"
+        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
         If RsSave.State <> adStateClosed Then RsSave.Close
         RsSave.Open sql, Db, adOpenDynamic, adLockOptimistic
         If Not (RsSave.BOF And RsSave.EOF) Then
             LblInput = MsgBox("Do you really to update line code ?", vbYesNo + vbQuestion, "Confirmation")
             If LblInput = vbYes Then
-                sql = "update manufacture_line set line_name='" & Trim(txtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                    "where Company_Code ='" & Trim(TxtCC) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'"
+                sql = "update manufacture_line set line_name='" & Trim(TxtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
+                    "where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
                 Db.Execute (sql)
-                LblPesan = DisplayMsg(1101)
+                Lblpesan = DisplayMsg(1101)
             Else
-                LblPesan = ""
+                Lblpesan = ""
             End If
         Else
-            sql = "insert manufacture_line(Company_Code, Manufacture_Code, Line_Code, Line_Name, Last_Update, Last_User) values('" & Trim(TxtCC) & "', '" & Trim(TxtMc) & "','" & Trim(txtCode) & "', '" & Trim(txtDesc) & "', getdate(), '" & userLogin & "')"
+            sql = "insert manufacture_line(Company_Code, Manufacture_Code, Line_Code, Line_Name, Last_Update, Last_User) values('" & Trim(TxtFc) & "', '" & Trim(TxtMc) & "','" & Trim(TxtCode) & "', '" & Trim(TxtDesc) & "', getdate(), '" & userLogin & "')"
             Db.Execute (sql)
-            LblPesan = DisplayMsg(1000)
+            Lblpesan = DisplayMsg(1000)
         End If
     End If
     Call Browse
@@ -753,13 +753,13 @@ Private Sub Browse()
     Dim sql As String, RsBros As New ADODB.Recordset
     Call Header
     If RsBros.State <> adStateClosed Then RsBros.Close
-    RsBros.Open "select * from manufacture_line where Company_Code ='" & Trim(TxtCC) & "' and manufacture_code='" & Trim(TxtMc) & "'", Db, adOpenDynamic, adLockOptimistic, adCmdText
+    RsBros.Open "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "'", Db, adOpenDynamic, adLockOptimistic, adCmdText
     Do While Not RsBros.EOF
-        grid.AddItem ""
-        grid.TextMatrix(grid.Rows - 1, bteColSelect) = ""
-        grid.TextMatrix(grid.Rows - 1, bteColLineCode) = Trim(RsBros("line_code"))
-        grid.TextMatrix(grid.Rows - 1, bteColLineName) = Trim(RsBros("line_name"))
-        grid.Cell(flexcpBackColor, grid.Rows - 1, bteColSelect) = &HFFFFFF
+        Grid.AddItem ""
+        Grid.TextMatrix(Grid.Rows - 1, bteColSelect) = ""
+        Grid.TextMatrix(Grid.Rows - 1, bteColLineCode) = Trim(RsBros("line_code"))
+        Grid.TextMatrix(Grid.Rows - 1, bteColLineName) = Trim(RsBros("line_name"))
+        Grid.Cell(flexcpBackColor, Grid.Rows - 1, bteColSelect) = &HFFFFFF
         RsBros.MoveNext
     Loop
     Call Clearin
@@ -768,43 +768,43 @@ End Sub
 
 Private Sub HeaderText()
     Dim i As Integer
-    For i = 1 To grid.Rows - 1
-        If Trim(grid.TextMatrix(i, bteColLineCode)) = Trim(Test) Then
-            grid.Row = i
-            grid.SetFocus
-            grid.TopRow = i - 1
+    For i = 1 To Grid.Rows - 1
+        If Trim(Grid.TextMatrix(i, bteColLineCode)) = Trim(Test) Then
+            Grid.Row = i
+            Grid.SetFocus
+            Grid.TopRow = i - 1
         End If
     Next i
 End Sub
 
 Private Sub Clearin()
-    txtCode = ""
-    txtDesc = ""
-    txtCode.Enabled = True
+    TxtCode = ""
+    TxtDesc = ""
+    TxtCode.Enabled = True
 End Sub
 
 Private Sub DtUpdate()
     Dim sql As String, RsUd As New ADODB.Recordset
-    sql = "update manufacture_line set line_name='" & Trim(txtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-        "where Company_Code ='" & Trim(TxtCC) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'"
+    sql = "update manufacture_line set line_name='" & Trim(TxtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
+        "where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
     Db.Execute (sql)
-    LblPesan = DisplayMsg(1101)
-    Test = Trim(txtCode)
+    Lblpesan = DisplayMsg(1101)
+    Test = Trim(TxtCode)
     Call Browse
 End Sub
 
 Private Sub ClearS(Optional C As String)
     Dim i As Integer
-    grid.Col = bteColSelect
+    Grid.Col = bteColSelect
     If C <> "" Then
-        For i = 1 To grid.Rows - 1
-            grid.Row = i
-            If grid.Text = C Then grid.Text = ""
+        For i = 1 To Grid.Rows - 1
+            Grid.Row = i
+            If Grid.Text = C Then Grid.Text = ""
         Next i
     Else
-        For i = 1 To grid.Rows - 1
-            grid.Row = i
-            grid.Text = ""
+        For i = 1 To Grid.Rows - 1
+            Grid.Row = i
+            Grid.Text = ""
         Next i
     End If
 End Sub
@@ -818,24 +818,24 @@ Private Sub DtDelete()
     
     LblInput = MsgBox("Do you really to delete line code ?", vbYesNo + vbQuestion, "Confirmation")
     If LblInput = vbYes Then
-        For i = 1 To grid.Rows - 1
-            If grid.TextMatrix(i, bteColSelect) = "D" Then
-                sql = "select * from item_master where manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(grid.TextMatrix(i, bteColLineCode)) & "'"
+        For i = 1 To Grid.Rows - 1
+            If Grid.TextMatrix(i, bteColSelect) = "D" Then
+                sql = "select * from item_master where manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(Grid.TextMatrix(i, bteColLineCode)) & "'"
                 If RsDel.State <> adStateClosed Then RsDel.Close
                 RsDel.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If Not (RsDel.BOF And RsDel.EOF) Then
                     IMCodeAda = IMCodeAda & " " & RsDel("manufacture_code") & ","
                     IMLineAda = IMLineAda & " " & RsDel("line_code") & ","
                 Else
-                    sql = "delete manufacture_line where Company_Code ='" & Trim(TxtCC) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(grid.TextMatrix(i, bteColLineCode)) & "'"
+                    sql = "delete manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(Grid.TextMatrix(i, bteColLineCode)) & "'"
                     Db.Execute (sql)
                 End If
             End If
         Next i
         If IMCodeAda <> "" Then
-            LblPesan = "Update Failed!. This record is used in table 'Item Master'"
+            Lblpesan = "Update Failed!. This record is used in table 'Item Master'"
         Else
-            LblPesan = DisplayMsg(1201)
+            Lblpesan = DisplayMsg(1201)
         End If
         Call Browse
         Call Isi(IMLineAda)
@@ -850,7 +850,7 @@ Private Sub Isi(DtLine$)
     
     LmNo = ""
     Panjang = 0
-    For i = 1 To grid.Rows - 1
+    For i = 1 To Grid.Rows - 1
         TLine = ""
         For X = 1 To Len(Trim(DtLine)) - Panjang
             DLine = Mid(Trim(DtLine), X, 1)
@@ -863,31 +863,31 @@ Private Sub Isi(DtLine$)
         Next X
     
 Masuk:
-        If grid.TextMatrix(i, bteColLineCode) = TLine Then
-            grid.TextMatrix(i, bteColSelect) = "D"
+        If Grid.TextMatrix(i, bteColLineCode) = TLine Then
+            Grid.TextMatrix(i, bteColSelect) = "D"
         End If
     Next i
 End Sub
 
 Private Sub OlahDt()
-    If TxtCC = "" Then
-        LblPesan = DisplayMsg(1052)  '"Please input Company code!"
-        TxtCC.SetFocus
+    If TxtFc = "" Then
+        Lblpesan = DisplayMsg(1052)  '"Please input Company code!"
+        TxtFc.SetFocus
         Dami = 1
         Exit Sub
     ElseIf TxtMc = "" Then
-        LblPesan = DisplayMsg(1052)  '"Please input manufacture code!"
+        Lblpesan = DisplayMsg(1052)  '"Please input manufacture code!"
         TxtMc.SetFocus
         Dami = 1
         Exit Sub
-    ElseIf txtCode = "" Then
-        LblPesan = DisplayMsg(1041)  '"Please input line code!"
-        txtCode.SetFocus
+    ElseIf TxtCode = "" Then
+        Lblpesan = DisplayMsg(1041)  '"Please input line code!"
+        TxtCode.SetFocus
         Dami = 1
         Exit Sub
-    ElseIf txtDesc = "" Then
-        LblPesan = DisplayMsg(1053)  '"Please input line name!"
-        txtDesc.SetFocus
+    ElseIf TxtDesc = "" Then
+        Lblpesan = DisplayMsg(1053)  '"Please input line name!"
+        TxtDesc.SetFocus
         Dami = 1
         Exit Sub
     End If
@@ -899,35 +899,35 @@ Private Sub Find()
     
     LblInput = InputBox("Input manufacture code or line code", "Search")
     If InStr(1, LblInput, "'") > 0 Then
-        LblPesan = DisplayMsg(4073)   '"Record is not found"
+        Lblpesan = DisplayMsg(4073)   '"Record is not found"
         Exit Sub
     End If
     If vbOK Then
         Call Header
-        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtCC) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code like '" & Trim(LblInput) & "%'"
+        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code like '" & Trim(LblInput) & "%'"
         If RsFind.State <> adStateClosed Then RsFind.Close
         RsFind.Open sql, Db, adOpenDynamic, adLockOptimistic, adCmdText
         If Not (RsFind.BOF And RsFind.EOF) Then
             Do While Not RsFind.EOF
-                grid.AddItem ""
-                grid.TextMatrix(grid.Rows - 1, bteColSelect) = ""
-                grid.TextMatrix(grid.Rows - 1, bteColLineCode) = Trim(RsFind("line_code"))
-                grid.TextMatrix(grid.Rows - 1, bteColLineName) = Trim(RsFind("line_name"))
-                grid.Cell(flexcpBackColor, grid.Rows - 1, bteColSelect) = &HFFFFFF
+                Grid.AddItem ""
+                Grid.TextMatrix(Grid.Rows - 1, bteColSelect) = ""
+                Grid.TextMatrix(Grid.Rows - 1, bteColLineCode) = Trim(RsFind("line_code"))
+                Grid.TextMatrix(Grid.Rows - 1, bteColLineName) = Trim(RsFind("line_name"))
+                Grid.Cell(flexcpBackColor, Grid.Rows - 1, bteColSelect) = &HFFFFFF
                 RsFind.MoveNext
             Loop
-            LblPesan = ""
+            Lblpesan = ""
         Else
-            LblPesan = DisplayMsg(4073) '"Record is not found!"
+            Lblpesan = DisplayMsg(4073) '"Record is not found!"
         End If
     Else
         Call Browse
-        LblPesan = ""
+        Lblpesan = ""
     End If
 End Sub
 
 Private Sub CompanyMaster()
-FillCompanyCombo TxtCC
+FillCompanyCombo TxtFc
 End Sub
 
 Private Sub TradeMaster()
@@ -955,14 +955,14 @@ End Sub
 
 Private Sub SiPutih()
     Dim i As Integer
-    For i = 1 To grid.Rows - 1
-        grid.Cell(flexcpBackColor, i, bteColSelect) = &HFFFFFF
+    For i = 1 To Grid.Rows - 1
+        Grid.Cell(flexcpBackColor, i, bteColSelect) = &HFFFFFF
     Next
 End Sub
 
 Private Sub Hidden()
-    txtCode = ""
-    txtDesc = ""
-    txtCode.Enabled = True
-    txtCode.SetFocus
+    TxtCode = ""
+    TxtDesc = ""
+    TxtCode.Enabled = True
+    TxtCode.SetFocus
 End Sub

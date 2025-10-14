@@ -33,7 +33,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       BackColor       =   &H00FDDFE3&
       Height          =   555
       Left            =   300
-      TabIndex        =   19
+      TabIndex        =   20
       Top             =   9375
       Width           =   14715
       Begin VB.Label LblErrMsg 
@@ -52,7 +52,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          ForeColor       =   &H00FF00FF&
          Height          =   240
          Left            =   60
-         TabIndex        =   20
+         TabIndex        =   21
          Top             =   210
          Width           =   14550
       End
@@ -64,7 +64,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Index           =   1
       Left            =   13125
       Style           =   1  'Graphical
-      TabIndex        =   7
+      TabIndex        =   8
       Top             =   10050
       Width           =   1860
    End
@@ -74,7 +74,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   405
       Left            =   8760
       Style           =   1  'Graphical
-      TabIndex        =   6
+      TabIndex        =   7
       Top             =   2520
       Width           =   1065
    End
@@ -84,7 +84,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   375
       Left            =   300
       Style           =   1  'Graphical
-      TabIndex        =   8
+      TabIndex        =   9
       Top             =   10050
       Width           =   1140
    End
@@ -94,36 +94,82 @@ Begin VB.Form frm_ProdResultAutoRequest
       Left            =   7140
       List            =   "frm_ProdResultAutoRequest.frx":0E4C
       Style           =   2  'Dropdown List
-      TabIndex        =   5
+      TabIndex        =   6
       Top             =   2565
       Width           =   885
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   1215
-      Left            =   300
-      TabIndex        =   11
-      Top             =   1170
+      Height          =   1575
+      Left            =   360
+      TabIndex        =   12
+      Top             =   840
       Width           =   14715
+      Begin VB.Line Line8 
+         Index           =   4
+         X1              =   3285
+         X2              =   6315
+         Y1              =   600
+         Y2              =   600
+      End
+      Begin VB.Label lblFactoryName 
+         BackStyle       =   0  'Transparent
+         Height          =   195
+         Index           =   3
+         Left            =   3285
+         TabIndex        =   29
+         Top             =   360
+         Width           =   3045
+      End
+      Begin VB.Label Label1 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Factory Code"
+         Height          =   195
+         Index           =   7
+         Left            =   225
+         TabIndex        =   28
+         Top             =   330
+         Width           =   1140
+      End
+      Begin MSForms.ComboBox cboFactory 
+         Height          =   315
+         Index           =   3
+         Left            =   1680
+         TabIndex        =   0
+         Top             =   270
+         Width           =   1530
+         VariousPropertyBits=   746604571
+         MaxLength       =   6
+         DisplayStyle    =   3
+         Size            =   "2699;556"
+         ListRows        =   15
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
       Begin VB.Label lblItemCode 
          BackStyle       =   0  'Transparent
          Caption         =   "Description"
          Height          =   195
-         Left            =   10065
-         TabIndex        =   25
-         Top             =   855
+         Left            =   9705
+         TabIndex        =   26
+         Top             =   735
          Width           =   3525
       End
       Begin MSForms.ComboBox cboitemcode 
          Height          =   315
          Left            =   8085
-         TabIndex        =   24
-         Top             =   795
-         Width           =   1890
+         TabIndex        =   25
+         Top             =   660
+         Width           =   1530
          VariousPropertyBits=   746604571
          MaxLength       =   15
          DisplayStyle    =   3
-         Size            =   "3334;556"
+         Size            =   "2699;556"
          ListRows        =   15
          MatchEntry      =   1
          ShowDropButtonWhen=   2
@@ -140,16 +186,16 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   195
          Index           =   6
          Left            =   6465
-         TabIndex        =   23
-         Top             =   855
+         TabIndex        =   24
+         Top             =   690
          Width           =   1155
       End
       Begin VB.Line Line8 
          Index           =   3
-         X1              =   10065
-         X2              =   13575
-         Y1              =   1095
-         Y2              =   1095
+         X1              =   9705
+         X2              =   13215
+         Y1              =   975
+         Y2              =   975
       End
       Begin VB.Line Line8 
          Index           =   2
@@ -165,7 +211,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   195
          Index           =   5
          Left            =   6465
-         TabIndex        =   22
+         TabIndex        =   23
          Top             =   330
          Width           =   1470
       End
@@ -173,7 +219,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   315
          Index           =   2
          Left            =   8085
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   270
          Width           =   1530
          VariousPropertyBits=   746604571
@@ -195,7 +241,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   195
          Index           =   2
          Left            =   9705
-         TabIndex        =   21
+         TabIndex        =   22
          Top             =   330
          Width           =   3525
       End
@@ -205,27 +251,27 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   195
          Index           =   0
          Left            =   3285
-         TabIndex        =   15
-         Top             =   330
+         TabIndex        =   16
+         Top             =   690
          Width           =   3045
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Machine No"
+         Caption         =   "Line Code"
          Height          =   195
          Index           =   1
-         Left            =   225
-         TabIndex        =   14
-         Top             =   780
-         Width           =   975
+         Left            =   240
+         TabIndex        =   15
+         Top             =   1080
+         Width           =   855
       End
       Begin MSForms.ComboBox cbo 
          Height          =   315
          Index           =   0
          Left            =   1665
-         TabIndex        =   0
-         Top             =   270
+         TabIndex        =   1
+         Top             =   660
          Width           =   1530
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -244,8 +290,8 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   315
          Index           =   1
          Left            =   1650
-         TabIndex        =   1
-         Top             =   720
+         TabIndex        =   2
+         Top             =   1080
          Width           =   1530
          VariousPropertyBits=   746604571
          MaxLength       =   3
@@ -265,61 +311,39 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   195
          Index           =   1
          Left            =   3270
-         TabIndex        =   13
-         Top             =   780
+         TabIndex        =   14
+         Top             =   1140
          Width           =   1515
       End
       Begin VB.Line Line8 
          Index           =   1
          X1              =   3270
          X2              =   4770
-         Y1              =   1020
-         Y2              =   1020
+         Y1              =   1380
+         Y2              =   1380
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Factory Code"
+         Caption         =   "Process Code"
          Height          =   195
          Index           =   0
          Left            =   225
-         TabIndex        =   12
-         Top             =   330
-         Width           =   1140
+         TabIndex        =   13
+         Top             =   690
+         Width           =   1170
       End
       Begin VB.Line Line8 
          Index           =   0
          X1              =   3285
          X2              =   6315
-         Y1              =   570
-         Y2              =   570
+         Y1              =   930
+         Y2              =   930
       End
    End
    Begin MSComCtl2.DTPicker dtAwal 
       Height          =   330
       Left            =   1950
-      TabIndex        =   3
-      Top             =   2550
-      Width           =   1530
-      _ExtentX        =   2699
-      _ExtentY        =   582
-      _Version        =   393216
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      CustomFormat    =   "dd MMM yyyy"
-      Format          =   128909315
-      CurrentDate     =   37860
-   End
-   Begin MSComCtl2.DTPicker dtAkhir 
-      Height          =   330
-      Left            =   3840
       TabIndex        =   4
       Top             =   2550
       Width           =   1530
@@ -336,13 +360,35 @@ Begin VB.Form frm_ProdResultAutoRequest
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128909315
+      Format          =   136642563
+      CurrentDate     =   37860
+   End
+   Begin MSComCtl2.DTPicker dtAkhir 
+      Height          =   330
+      Left            =   3840
+      TabIndex        =   5
+      Top             =   2550
+      Width           =   1530
+      _ExtentX        =   2699
+      _ExtentY        =   582
+      _Version        =   393216
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      CustomFormat    =   "dd MMM yyyy"
+      Format          =   136642563
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   6255
       Left            =   300
-      TabIndex        =   9
+      TabIndex        =   10
       Top             =   3045
       Width           =   14715
       _cx             =   25956
@@ -439,7 +485,7 @@ Begin VB.Form frm_ProdResultAutoRequest
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
       Left            =   12960
-      TabIndex        =   26
+      TabIndex        =   27
       TabStop         =   0   'False
       Tag             =   "FTTF*/"
       Top             =   240
@@ -454,7 +500,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   195
       Index           =   4
       Left            =   5565
-      TabIndex        =   18
+      TabIndex        =   19
       Top             =   2625
       Width           =   1230
    End
@@ -465,7 +511,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   195
       Index           =   3
       Left            =   3585
-      TabIndex        =   17
+      TabIndex        =   18
       Top             =   2625
       Width           =   165
    End
@@ -476,7 +522,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   195
       Index           =   2
       Left            =   465
-      TabIndex        =   16
+      TabIndex        =   17
       Top             =   2625
       Width           =   1380
    End
@@ -496,7 +542,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       ForeColor       =   &H00800000&
       Height          =   390
       Left            =   300
-      TabIndex        =   10
+      TabIndex        =   11
       Top             =   330
       Width           =   14715
    End
@@ -576,7 +622,7 @@ Private Sub headerGrid()
     bteColSupplyCls = 21
     bteColWominNo = 22
     
-    With grid
+    With Grid
         .clear
         .ColS = 23
         .Rows = 1
@@ -941,7 +987,7 @@ Sub Kosong()
     cbo(0) = ""
     cbo(1) = ""
     cbo(2) = ""
-    CboItemCode = "ALL"
+    cboitemcode = "ALL"
     lblNm(0) = ""
     lblNm(1) = ""
     lblNm(2) = ""
@@ -1062,7 +1108,7 @@ Sub addToCboItemCode()
             
     Set RsLine = Db.Execute(sqlLine)
         
-    With CboItemCode
+    With cboitemcode
         .clear
         .columnCount = 3
         .ColumnWidths = "80pt;80pt;165pt"
@@ -1087,13 +1133,22 @@ Sub addToCboItemCode()
      Me.MousePointer = vbDefault
 End Sub
 
+Private Sub cboFactory_Change(Index As Integer)
+    If cboFactory(3).matchFound Then
+        lblFactoryName(3).Caption = cboFactory(3).List(cboFactory(3).ListIndex, 1)
+    Else
+        lblFactoryName(3).Caption = ""
+        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
+End Sub
+
 Private Sub CboItemCode_Change()
     LblErrMsg = ""
-    If CboItemCode.MatchFound Then
-        If CboItemCode.Column(0) = CboItemCode.Column(1) Then
-            lblItemCode.Caption = CboItemCode.Column(2)
+    If cboitemcode.matchFound Then
+        If cboitemcode.Column(0) = cboitemcode.Column(1) Then
+            lblItemCode.Caption = cboitemcode.Column(2)
         Else
-            lblItemCode.Caption = CboItemCode.Column(1) & " " & CboItemCode.Column(2)
+            lblItemCode.Caption = cboitemcode.Column(1) & " " & cboitemcode.Column(2)
         End If
     Else
         lblItemCode.Caption = ""
@@ -1122,7 +1177,8 @@ Private Sub Form_Load()
     nilKosong = True
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & frmcode("frm_part_supplyAuto") & ")"
-
+    
+    Call FactoryMaster
     Call isiCboCust
     Call Kosong
     nilKosong = False
@@ -1146,13 +1202,13 @@ With Me
          .il_selectedRecord = 0
     'End If
 
-For i = 0 To .grid.Rows - 1
+For i = 0 To .Grid.Rows - 1
 
-    If .grid.Cell(flexcpChecked, i, 0) = flexChecked Then
+    If .Grid.Cell(flexcpChecked, i, 0) = flexChecked Then
 
         '#Init Grid For The FirstTime
-        If Trim(.is_request) = "" Then .is_request = Trim(.grid.TextMatrix(i, bteColReqCls))
-        If Trim(.is_groupRequest) = "" Then .is_groupRequest = Trim(.grid.TextMatrix(i, bteColGroupCls))
+        If Trim(.is_request) = "" Then .is_request = Trim(.Grid.TextMatrix(i, bteColReqCls))
+        If Trim(.is_groupRequest) = "" Then .is_groupRequest = Trim(.Grid.TextMatrix(i, bteColGroupCls))
 
         '#Init Selected rows
         .il_selectedRecord = .il_selectedRecord + 1
@@ -1189,7 +1245,7 @@ If nilKosong = True Then Exit Sub
 
 If cbo(Index) <> "" Then
     cbo(Index) = cbo(Index)
-    If cbo(Index).MatchFound = True Then
+    If cbo(Index).matchFound = True Then
         lblNm(Index) = cbo(Index).Column(1)
         If Index = 0 Then 'panggil Manufacture Line
             Call isiCboLine(cbo(0)): lblNm(1) = ""
@@ -1220,10 +1276,10 @@ Public Sub cmdSearch_Click()
     If cbo(0) = "" Then
         LblErrMsg = DisplayMsg(1040)
         cbo(0).SetFocus
-    ElseIf cbo(0).MatchFound = False Then
+    ElseIf cbo(0).matchFound = False Then
         LblErrMsg = DisplayMsg(4016)
         cbo(0).SetFocus
-    ElseIf cbo(1).MatchFound = False And cbo(1) <> "" Then
+    ElseIf cbo(1).matchFound = False And cbo(1) <> "" Then
         LblErrMsg = DisplayMsg(4017)
         cbo(1).SetFocus
     Else
@@ -1239,7 +1295,7 @@ Dim rsProd As New ADODB.Recordset
 Dim sqlResult As String, UWom As String
 
 If nilKosong = True Then Exit Sub
-With grid
+With Grid
     Call headerGrid
 
 '    Sql = "select isnull(a.Request_cls,0)Request_cls,Seq_No,Schedule_Date,a.Item_Code, im.Makeritem_Code, " & _
@@ -1266,8 +1322,8 @@ With grid
         "' and Factory_Code = '" & cbo(0) & _
         "' And a.line_Code = '" & cbo(1) & "' "
 
-    If CboItemCode <> strAll Then
-        sql = sql & " and a.item_code  = '" & CboItemCode & "'"
+    If cboitemcode <> strAll Then
+        sql = sql & " and a.item_code  = '" & cboitemcode & "'"
     End If
 
     If cboRemaining = "Yes" Then
@@ -1339,7 +1395,7 @@ End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim InRowPos As Integer, InRow As Integer
 
-With grid
+With Grid
     If Row <> 0 And Col = bteColSelect Then
         If .Cell(flexcpChecked, Row, bteColSelect) = flexChecked Then
             InRowPos = Row
@@ -1389,11 +1445,11 @@ End Sub
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
     LblErrMsg = ""
     If Col <> bteColSelect Then Cancel = 1
-    If grid.TextMatrix(Row, bteColControlCls) <> "01" Then
+    If Grid.TextMatrix(Row, bteColControlCls) <> "01" Then
         LblErrMsg = DisplayMsg(8091) ' "This item's Control Cls is not 'MRP' !"
         Cancel = 1 'Cek Control Cls (Continue If Control_Cls = 'MRP')
     End If
-    If grid.TextMatrix(Row, bteColSupplyCls) = "01" Then
+    If Grid.TextMatrix(Row, bteColSupplyCls) = "01" Then
         LblErrMsg = "You cannot select this item ! Supply Cls must be set to 'NO' ": Cancel = 1  'Cek Supply Cls (Continue If Supply_Cls = 'No')"
         Cancel = 1
     End If
@@ -1423,7 +1479,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
     On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
     
-    With grid
+    With Grid
         
         ls_dailySeqNo = ""
         ll_cek = 0
@@ -1433,7 +1489,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         For i = 1 To .Rows - 1
             If .Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
                 blncex = True
-                ls_dailySeqNo = ls_dailySeqNo + Trim(grid.TextMatrix(i, bteColSeqNo)) + ","
+                ls_dailySeqNo = ls_dailySeqNo + Trim(Grid.TextMatrix(i, bteColSeqNo)) + ","
                 
                 ls_FG = .TextMatrix(i, bteColDesc)
                 
@@ -1487,12 +1543,12 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         '#Check Valid Header Combo
         cbo(0) = cbo(0)
         cbo(1) = cbo(1)
-        If cbo(0).MatchFound = False Then
+        If cbo(0).matchFound = False Then
             LblErrMsg = DisplayMsg(4016)
             cbo(0).SetFocus
             Me.MousePointer = vbDefault
             Exit Sub
-        ElseIf cbo(1) <> "" And cbo(1).MatchFound = False Then
+        ElseIf cbo(1) <> "" And cbo(1).matchFound = False Then
             LblErrMsg = DisplayMsg(4017)
             cbo(1).SetFocus
             Me.MousePointer = vbDefault
@@ -1500,7 +1556,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         End If
         
         If Not gb_WarehouseReferToItem_MaterialSupplyRequestAutomatic Then
-            If cbo(2).MatchFound = False Then
+            If cbo(2).matchFound = False Then
                 LblErrMsg = DisplayMsg("0031")
                 cbo(2).SetFocus
                 Me.MousePointer = vbDefault
@@ -1602,8 +1658,8 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         
         SaveRequestMaterial_New StrParent, StrSeqNo, strLotNo
         
-        For i = 1 To grid.Rows - 1
-            If grid.Cell(flexcpChecked, i, bteColSelect) = flexChecked Then grid.TextMatrix(i, bteColGroupCls) = Trim(ls_group)
+        For i = 1 To Grid.Rows - 1
+            If Grid.Cell(flexcpChecked, i, bteColSelect) = flexChecked Then Grid.TextMatrix(i, bteColGroupCls) = Trim(ls_group)
         Next
         
     
@@ -1646,7 +1702,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         .cbo_location(0) = Trim(cbo(0))
         .cbo_MachineNo(0) = Trim(cbo(1))
         
-        If cmdsubmenu.Caption <> "&Back" Then .cmd_sub_menu.Caption = "&Back"
+        If cmdSubMenu.Caption <> "&Back" Then .cmd_sub_menu.Caption = "&Back"
         .ib_fromProd = True
         
         Call .cmd_update_Click(0)
@@ -1680,7 +1736,7 @@ End Sub
 
 '#Unload
 Private Sub CmdSubMenu_Click()
-    If cmdsubmenu.Caption = "&Back" Then
+    If cmdSubMenu.Caption = "&Back" Then
         Call Command1_Click(1)
     Else
         Unload frmProdResult
@@ -1798,4 +1854,11 @@ ErrHandler:
 
 End Sub
 
+'----------------------update multi company------------------------
+Private Sub FactoryMaster()
+    FillCompanyCombo cboFactory(3)
+End Sub
+
+
+'------------------------------------------------------------------
 

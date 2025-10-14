@@ -8,11 +8,11 @@ Begin VB.Form frmDOCreate
    ClientHeight    =   10785
    ClientLeft      =   120
    ClientTop       =   345
-   ClientWidth     =   17265
+   ClientWidth     =   17145
    Icon            =   "frmDOCreate.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   10785
-   ScaleWidth      =   17265
+   ScaleWidth      =   17145
    StartUpPosition =   2  'CenterScreen
    WindowState     =   2  'Maximized
    Begin VB.TextBox txtRegisterNo 
@@ -28,7 +28,7 @@ Begin VB.Form frmDOCreate
       Height          =   315
       Left            =   14880
       MaxLength       =   25
-      TabIndex        =   65
+      TabIndex        =   66
       Tag             =   "TTFF*/"
       Top             =   9090
       Width           =   1725
@@ -36,7 +36,7 @@ Begin VB.Form frmDOCreate
    Begin MSComCtl2.DTPicker DTPbcdate 
       Height          =   315
       Left            =   4380
-      TabIndex        =   12
+      TabIndex        =   13
       Top             =   9090
       Width           =   1545
       _ExtentX        =   2725
@@ -51,7 +51,7 @@ Begin VB.Form frmDOCreate
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Format          =   67174401
+      Format          =   127926273
       CurrentDate     =   41092
    End
    Begin VB.TextBox txtbcno 
@@ -67,7 +67,7 @@ Begin VB.Form frmDOCreate
       Height          =   285
       Left            =   2340
       MaxLength       =   30
-      TabIndex        =   11
+      TabIndex        =   12
       Top             =   9090
       Width           =   1965
    End
@@ -95,7 +95,7 @@ Begin VB.Form frmDOCreate
       Height          =   285
       Left            =   9960
       MaxLength       =   35
-      TabIndex        =   14
+      TabIndex        =   15
       Top             =   9090
       Width           =   3045
    End
@@ -103,8 +103,8 @@ Begin VB.Form frmDOCreate
       BackColor       =   &H00FDDFE3&
       Height          =   645
       Left            =   480
-      TabIndex        =   46
-      Top             =   1830
+      TabIndex        =   47
+      Top             =   2280
       Width           =   15195
       Begin VB.ComboBox cboStatus 
          BeginProperty Font 
@@ -121,7 +121,7 @@ Begin VB.Form frmDOCreate
          Left            =   150
          List            =   "frmDOCreate.frx":0E4C
          Style           =   2  'Dropdown List
-         TabIndex        =   5
+         TabIndex        =   6
          Top             =   195
          Width           =   1335
       End
@@ -140,14 +140,14 @@ Begin VB.Form frmDOCreate
          Height          =   375
          Left            =   12720
          Style           =   1  'Graphical
-         TabIndex        =   9
+         TabIndex        =   10
          Top             =   150
          Width           =   1140
       End
       Begin MSComCtl2.DTPicker dtDO 
          Height          =   330
          Left            =   5100
-         TabIndex        =   7
+         TabIndex        =   8
          Top             =   180
          Width           =   1530
          _ExtentX        =   2699
@@ -163,13 +163,13 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   67174403
+         Format          =   127926275
          CurrentDate     =   37799
       End
       Begin MSForms.ComboBox cboDeliveryCls 
          Height          =   330
          Left            =   8160
-         TabIndex        =   64
+         TabIndex        =   65
          Top             =   180
          Width           =   900
          VariousPropertyBits=   612386843
@@ -200,7 +200,7 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   14
          Left            =   6960
-         TabIndex        =   63
+         TabIndex        =   64
          Top             =   240
          Width           =   1050
       End
@@ -220,7 +220,7 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   4
          Left            =   4230
-         TabIndex        =   49
+         TabIndex        =   50
          Top             =   255
          Width           =   720
       End
@@ -228,7 +228,7 @@ Begin VB.Form frmDOCreate
          Height          =   330
          Index           =   1
          Left            =   2400
-         TabIndex        =   6
+         TabIndex        =   7
          Top             =   180
          Width           =   1695
          VariousPropertyBits=   746604571
@@ -260,7 +260,7 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   3
          Left            =   1710
-         TabIndex        =   48
+         TabIndex        =   49
          Top             =   255
          Width           =   540
       End
@@ -280,7 +280,7 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   7
          Left            =   9480
-         TabIndex        =   47
+         TabIndex        =   48
          Top             =   240
          Width           =   1035
       End
@@ -288,7 +288,7 @@ Begin VB.Form frmDOCreate
          Height          =   330
          Index           =   2
          Left            =   10560
-         TabIndex        =   8
+         TabIndex        =   9
          Top             =   180
          Width           =   2085
          VariousPropertyBits=   746604571
@@ -322,7 +322,7 @@ Begin VB.Form frmDOCreate
       Index           =   1
       Left            =   11520
       Style           =   1  'Graphical
-      TabIndex        =   18
+      TabIndex        =   19
       Top             =   10260
       Width           =   1380
    End
@@ -351,7 +351,7 @@ Begin VB.Form frmDOCreate
       Height          =   285
       Left            =   13050
       Locked          =   -1  'True
-      TabIndex        =   37
+      TabIndex        =   38
       Top             =   9090
       Width           =   1695
    End
@@ -380,7 +380,7 @@ Begin VB.Form frmDOCreate
       Height          =   285
       Left            =   5970
       Locked          =   -1  'True
-      TabIndex        =   36
+      TabIndex        =   37
       Text            =   "YY9999/YYYY"
       Top             =   9090
       Width           =   1695
@@ -401,7 +401,7 @@ Begin VB.Form frmDOCreate
       Index           =   1
       Left            =   14400
       Style           =   1  'Graphical
-      TabIndex        =   16
+      TabIndex        =   17
       Top             =   10260
       Width           =   1140
    End
@@ -421,7 +421,7 @@ Begin VB.Form frmDOCreate
       Index           =   0
       Left            =   15600
       Style           =   1  'Graphical
-      TabIndex        =   15
+      TabIndex        =   16
       Top             =   10260
       Width           =   1140
    End
@@ -441,7 +441,7 @@ Begin VB.Form frmDOCreate
       Index           =   0
       Left            =   2685
       Style           =   1  'Graphical
-      TabIndex        =   22
+      TabIndex        =   23
       Top             =   10260
       Visible         =   0   'False
       Width           =   1140
@@ -462,7 +462,7 @@ Begin VB.Form frmDOCreate
       Index           =   1
       Left            =   3945
       Style           =   1  'Graphical
-      TabIndex        =   21
+      TabIndex        =   22
       Top             =   10260
       Visible         =   0   'False
       Width           =   1140
@@ -483,7 +483,7 @@ Begin VB.Form frmDOCreate
       Index           =   2
       Left            =   5175
       Style           =   1  'Graphical
-      TabIndex        =   20
+      TabIndex        =   21
       Top             =   10260
       Visible         =   0   'False
       Width           =   1140
@@ -504,7 +504,7 @@ Begin VB.Form frmDOCreate
       Index           =   3
       Left            =   6405
       Style           =   1  'Graphical
-      TabIndex        =   19
+      TabIndex        =   20
       Top             =   10260
       Visible         =   0   'False
       Width           =   1140
@@ -526,7 +526,7 @@ Begin VB.Form frmDOCreate
       Index           =   0
       Left            =   12960
       Style           =   1  'Graphical
-      TabIndex        =   17
+      TabIndex        =   18
       Top             =   10260
       Width           =   1380
    End
@@ -534,7 +534,7 @@ Begin VB.Form frmDOCreate
       BackColor       =   &H00FDDFE3&
       Height          =   555
       Left            =   450
-      TabIndex        =   28
+      TabIndex        =   29
       Top             =   9600
       Width           =   16365
       Begin VB.Label LblErrMsg 
@@ -553,7 +553,7 @@ Begin VB.Form frmDOCreate
          ForeColor       =   &H00FF00FF&
          Height          =   240
          Left            =   120
-         TabIndex        =   29
+         TabIndex        =   30
          Top             =   210
          Width           =   16125
       End
@@ -573,17 +573,45 @@ Begin VB.Form frmDOCreate
       Height          =   375
       Left            =   480
       Style           =   1  'Graphical
-      TabIndex        =   23
+      TabIndex        =   24
       Top             =   10260
       Width           =   1140
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   1095
+      Height          =   1575
       Left            =   480
-      TabIndex        =   26
+      TabIndex        =   27
       Top             =   720
       Width           =   16365
+      Begin VB.TextBox txtFactoryName 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00E0E0E0&
+         BeginProperty DataFormat 
+            Type            =   0
+            Format          =   "#,###"
+            HaveTrueFalseNull=   0
+            FirstDayOfWeek  =   0
+            FirstWeekOfYear =   0
+            LCID            =   1033
+            SubFormatType   =   0
+         EndProperty
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   3075
+         Locked          =   -1  'True
+         TabIndex        =   69
+         Top             =   260
+         Width           =   5340
+      End
       Begin VB.TextBox TxtForwarder 
          Appearance      =   0  'Flat
          BackColor       =   &H00FFFFFF&
@@ -609,7 +637,7 @@ Begin VB.Form frmDOCreate
          Height          =   225
          Left            =   9660
          MaxLength       =   10
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   300
          Width           =   1035
       End
@@ -637,15 +665,15 @@ Begin VB.Form frmDOCreate
          Height          =   285
          Left            =   11040
          Locked          =   -1  'True
-         TabIndex        =   24
-         Top             =   240
+         TabIndex        =   25
+         Top             =   260
          Width           =   3075
       End
       Begin MSComCtl2.DTPicker dtAwal 
          Height          =   330
          Left            =   1470
-         TabIndex        =   1
-         Top             =   645
+         TabIndex        =   2
+         Top             =   1080
          Width           =   1500
          _ExtentX        =   2646
          _ExtentY        =   582
@@ -660,14 +688,14 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   67174403
+         Format          =   127926275
          CurrentDate     =   37799
       End
       Begin MSComCtl2.DTPicker dtAkhir 
          Height          =   330
          Left            =   3360
-         TabIndex        =   2
-         Top             =   645
+         TabIndex        =   3
+         Top             =   1080
          Width           =   1500
          _ExtentX        =   2646
          _ExtentY        =   582
@@ -682,14 +710,48 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   67174403
+         Format          =   127926275
          CurrentDate     =   37860
       End
-      Begin VB.Line Line3 
-         X1              =   11040
-         X2              =   14145
-         Y1              =   555
-         Y2              =   555
+      Begin VB.Label Label 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Factory CD"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Index           =   16
+         Left            =   120
+         TabIndex        =   68
+         Top             =   280
+         Width           =   960
+      End
+      Begin MSForms.ComboBox cboFactory 
+         Height          =   330
+         Index           =   4
+         Left            =   1470
+         TabIndex        =   0
+         Top             =   240
+         Width           =   1500
+         VariousPropertyBits=   746604571
+         MaxLength       =   6
+         DisplayStyle    =   3
+         Size            =   "2646;582"
+         ColumnCount     =   2
+         ListRows        =   15
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
       End
       Begin VB.Label Label 
          AutoSize        =   -1  'True
@@ -707,7 +769,7 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   8
          Left            =   8580
-         TabIndex        =   56
+         TabIndex        =   57
          Top             =   315
          Width           =   870
       End
@@ -715,7 +777,7 @@ Begin VB.Form frmDOCreate
          Height          =   330
          Index           =   3
          Left            =   9600
-         TabIndex        =   25
+         TabIndex        =   26
          Top             =   240
          Width           =   1380
          VariousPropertyBits=   746604571
@@ -735,7 +797,7 @@ Begin VB.Form frmDOCreate
       Begin MSForms.ComboBox cboWH 
          Height          =   330
          Left            =   9600
-         TabIndex        =   4
+         TabIndex        =   5
          Top             =   630
          Width           =   1380
          VariousPropertyBits=   612386843
@@ -765,7 +827,7 @@ Begin VB.Form frmDOCreate
          EndProperty
          Height          =   195
          Left            =   8580
-         TabIndex        =   45
+         TabIndex        =   46
          Top             =   705
          Width           =   960
       End
@@ -782,7 +844,7 @@ Begin VB.Form frmDOCreate
          EndProperty
          Height          =   195
          Left            =   11055
-         TabIndex        =   44
+         TabIndex        =   45
          Top             =   705
          Width           =   3105
       End
@@ -808,8 +870,8 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   2
          Left            =   3075
-         TabIndex        =   40
-         Top             =   720
+         TabIndex        =   41
+         Top             =   1140
          Width           =   165
       End
       Begin VB.Label Label 
@@ -828,8 +890,8 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   1
          Left            =   120
-         TabIndex        =   39
-         Top             =   720
+         TabIndex        =   40
+         Top             =   1140
          Width           =   1185
       End
       Begin VB.Label lblNm 
@@ -847,16 +909,16 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   0
          Left            =   3075
-         TabIndex        =   35
-         Top             =   285
+         TabIndex        =   36
+         Top             =   705
          Width           =   5355
       End
       Begin MSForms.ComboBox cbo 
          Height          =   330
          Index           =   0
          Left            =   1470
-         TabIndex        =   0
-         Top             =   225
+         TabIndex        =   1
+         Top             =   630
          Width           =   1500
          VariousPropertyBits=   746604571
          MaxLength       =   6
@@ -888,25 +950,25 @@ Begin VB.Form frmDOCreate
          Height          =   195
          Index           =   0
          Left            =   120
-         TabIndex        =   34
-         Top             =   285
+         TabIndex        =   35
+         Top             =   705
          Width           =   1170
       End
       Begin VB.Line Line1 
          X1              =   3075
          X2              =   8400
-         Y1              =   525
-         Y2              =   525
+         Y1              =   945
+         Y2              =   945
       End
    End
    Begin VSFlex8Ctl.VSFlexGrid gridAtas 
-      Height          =   2475
+      Height          =   2295
       Left            =   480
-      TabIndex        =   41
-      Top             =   2910
+      TabIndex        =   42
+      Top             =   3360
       Width           =   16365
       _cx             =   28866
-      _cy             =   4366
+      _cy             =   4048
       Appearance      =   1
       BorderStyle     =   1
       Enabled         =   -1  'True
@@ -997,13 +1059,13 @@ Begin VB.Form frmDOCreate
       AccessibleRole  =   24
    End
    Begin VSFlex8Ctl.VSFlexGrid gridBawah 
-      Height          =   2745
+      Height          =   2505
       Left            =   480
-      TabIndex        =   42
-      Top             =   5820
+      TabIndex        =   43
+      Top             =   6060
       Width           =   16365
       _cx             =   28866
-      _cy             =   4842
+      _cy             =   4419
       Appearance      =   1
       BorderStyle     =   1
       Enabled         =   -1  'True
@@ -1096,7 +1158,7 @@ Begin VB.Form frmDOCreate
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   420
       Left            =   15000
-      TabIndex        =   43
+      TabIndex        =   44
       Top             =   60
       Width           =   1860
       _extentx        =   3281
@@ -1118,14 +1180,14 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   15
       Left            =   14880
-      TabIndex        =   66
+      TabIndex        =   67
       Top             =   8760
       Width           =   1050
    End
    Begin MSForms.ComboBox cbobctype 
       Height          =   315
       Left            =   540
-      TabIndex        =   10
+      TabIndex        =   11
       Top             =   9090
       Width           =   1725
       VariousPropertyBits=   746604571
@@ -1154,7 +1216,7 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   13
       Left            =   4470
-      TabIndex        =   62
+      TabIndex        =   63
       Top             =   8760
       Width           =   720
    End
@@ -1174,7 +1236,7 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   12
       Left            =   2370
-      TabIndex        =   61
+      TabIndex        =   62
       Top             =   8760
       Width           =   600
    End
@@ -1194,7 +1256,7 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   11
       Left            =   570
-      TabIndex        =   60
+      TabIndex        =   61
       Top             =   8760
       Width           =   735
    End
@@ -1217,14 +1279,14 @@ Begin VB.Form frmDOCreate
       EndProperty
       Height          =   195
       Left            =   8610
-      TabIndex        =   59
+      TabIndex        =   60
       Top             =   9090
       Width           =   1305
    End
    Begin MSForms.ComboBox CboRemarks 
       Height          =   315
       Left            =   7740
-      TabIndex        =   13
+      TabIndex        =   14
       Top             =   9090
       Width           =   765
       VariousPropertyBits=   612386843
@@ -1255,7 +1317,7 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   10
       Left            =   9990
-      TabIndex        =   58
+      TabIndex        =   59
       Top             =   8760
       Width           =   1665
    End
@@ -1275,7 +1337,7 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   9
       Left            =   7710
-      TabIndex        =   57
+      TabIndex        =   58
       Top             =   8760
       Width           =   1095
    End
@@ -1283,7 +1345,7 @@ Begin VB.Form frmDOCreate
       BackStyle       =   0  'Transparent
       Height          =   225
       Left            =   0
-      TabIndex        =   55
+      TabIndex        =   56
       Top             =   0
       Visible         =   0   'False
       Width           =   1275
@@ -1292,7 +1354,7 @@ Begin VB.Form frmDOCreate
       BackStyle       =   0  'Transparent
       Height          =   225
       Left            =   0
-      TabIndex        =   54
+      TabIndex        =   55
       Top             =   0
       Visible         =   0   'False
       Width           =   1275
@@ -1301,7 +1363,7 @@ Begin VB.Form frmDOCreate
       BackStyle       =   0  'Transparent
       Height          =   225
       Left            =   -30
-      TabIndex        =   53
+      TabIndex        =   54
       Top             =   240
       Visible         =   0   'False
       Width           =   1275
@@ -1310,7 +1372,7 @@ Begin VB.Form frmDOCreate
       BackStyle       =   0  'Transparent
       Height          =   255
       Left            =   3480
-      TabIndex        =   52
+      TabIndex        =   53
       Top             =   60
       Visible         =   0   'False
       Width           =   1305
@@ -1319,7 +1381,7 @@ Begin VB.Form frmDOCreate
       BackStyle       =   0  'Transparent
       Height          =   225
       Left            =   1500
-      TabIndex        =   51
+      TabIndex        =   52
       Top             =   390
       Visible         =   0   'False
       Width           =   1725
@@ -1328,7 +1390,7 @@ Begin VB.Form frmDOCreate
       BackStyle       =   0  'Transparent
       Height          =   225
       Left            =   0
-      TabIndex        =   50
+      TabIndex        =   51
       Top             =   0
       Visible         =   0   'False
       Width           =   1275
@@ -1349,8 +1411,8 @@ Begin VB.Form frmDOCreate
       ForeColor       =   &H00FF00FF&
       Height          =   255
       Left            =   15600
-      TabIndex        =   38
-      Top             =   2040
+      TabIndex        =   39
+      Top             =   2520
       Visible         =   0   'False
       Width           =   1185
    End
@@ -1370,7 +1432,7 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   6
       Left            =   5970
-      TabIndex        =   33
+      TabIndex        =   34
       Top             =   8760
       Width           =   540
    End
@@ -1398,7 +1460,7 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   5
       Left            =   13080
-      TabIndex        =   32
+      TabIndex        =   33
       Top             =   8760
       Width           =   1455
    End
@@ -1421,8 +1483,8 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   1
       Left            =   480
-      TabIndex        =   30
-      Top             =   2595
+      TabIndex        =   31
+      Top             =   3000
       Width           =   16365
    End
    Begin VB.Label lblJudul 
@@ -1441,9 +1503,9 @@ Begin VB.Form frmDOCreate
       ForeColor       =   &H00800000&
       Height          =   390
       Index           =   0
-      Left            =   510
-      TabIndex        =   27
-      Top             =   210
+      Left            =   480
+      TabIndex        =   28
+      Top             =   240
       Width           =   16365
    End
    Begin VB.Shape Shape3 
@@ -1451,7 +1513,7 @@ Begin VB.Form frmDOCreate
       Height          =   255
       Index           =   0
       Left            =   480
-      Top             =   2580
+      Top             =   3000
       Width           =   16365
    End
    Begin VB.Label Label1 
@@ -1473,8 +1535,8 @@ Begin VB.Form frmDOCreate
       Height          =   195
       Index           =   0
       Left            =   480
-      TabIndex        =   31
-      Top             =   5505
+      TabIndex        =   32
+      Top             =   5770
       Width           =   16365
    End
    Begin VB.Shape Shape3 
@@ -1482,7 +1544,7 @@ Begin VB.Form frmDOCreate
       Height          =   255
       Index           =   1
       Left            =   480
-      Top             =   5490
+      Top             =   5760
       Width           =   16365
    End
    Begin VB.Shape Shape1 
@@ -1737,7 +1799,7 @@ Sub kosongBwh(Optional semua As Integer)
 nilKosong = True
     If semua = 0 Then cbo(1) = "": cbo(1).Enabled = True
     txtDO = 0
-    txtDoNO = ""
+    txtDONo = ""
     txtRegisterNo.Text = ""
     Call headerGrid(gridBawah) 'Kosong Grid Atas
 nilKosong = False
@@ -1869,9 +1931,13 @@ With cbo(2)
 End With
 End Sub
 
+Sub adcboFactory()
+    FillCompanyCombo cboFactory(4)
+End Sub
+
 Private Sub cbobctype_Change()
-If cboBCType.MatchFound = False Then
-    LblErrMsg.Caption = "Please Input Valid BC Type !"
+If cboBCType.matchFound = False Then
+    lblErrMsg.Caption = "Please Input Valid BC Type !"
     cboBCType.SetFocus
 End If
 End Sub
@@ -1883,8 +1949,17 @@ End If
 End Sub
 
 
+Private Sub cboFactory_Change(Index As Integer)
+lblErrMsg.Caption = ""
+
+    If cboFactory(4).ListIndex <> -1 Then
+        TxtFactoryName.Text = cboFactory(4).Column(1)
+    End If
+    
+End Sub
+
 Private Sub CboRemarks_Change()
-    If CboRemarks.MatchFound Then
+    If CboRemarks.matchFound Then
         LblRemarks.Caption = CboRemarks.Column(1)
     Else
         LblRemarks.Caption = ""
@@ -1893,7 +1968,7 @@ Private Sub CboRemarks_Change()
 End Sub
 
 Private Sub cboWH_Change()
-    If cboWH.MatchFound Then
+    If cboWH.matchFound Then
         lblWH.Caption = cboWH.Column(1)
     Else
         lblWH.Caption = ""
@@ -1910,6 +1985,7 @@ Private Sub Form_Load()
     dtAwal = Date
     dtAkhir = DateAdd("d", 1, Date)
     dtDO.Value = Date
+    Call adcboFactory
     Call IsiComboWH
     Call isiCboCust
     Call IsiCboRemarks
@@ -1927,11 +2003,11 @@ Private Sub cbo_Change(Index As Integer)
 Dim rsDataDo As New ADODB.Recordset
     
     If nilKosong Then Exit Sub
-    LblErrMsg = ""
+    lblErrMsg = ""
     If Index = 0 Then
         lblNm(0) = "": gantiDealer = True
         cbo(0) = cbo(0)
-        If cbo(0).MatchFound Then
+        If cbo(0).matchFound Then
             Call cbo_Click(0)
         Else
             Call headerGrid(gridAtas, 1)
@@ -1941,9 +2017,9 @@ Dim rsDataDo As New ADODB.Recordset
             Call cbo(2).clear
         End If
     ElseIf Index = 1 Then
-        txtDoNO = Trim(cbo(1)): gantiDO = True
+        txtDONo = Trim(cbo(1)): gantiDO = True
         cbo(1) = cbo(1)
-        If cbo(Index).MatchFound Then
+        If cbo(Index).matchFound Then
             sql = "select Fix_Cls, Amount, Do_Date, WHCode, Forwarder_Code, List_PO, Remarks_Cls, Remarks, BC_Type, BC40_No, BC40_date, ISNULL(Delivery_Cls,'')Delivery_Cls," & _
                 "(select max(delivery_date) from delivery_order where do_no = DO_Master.do_no) delivery_date, " & _
                 "(select max(delivery_time) from delivery_order where do_no = DO_Master.do_no) delivery_time , ISNULL(No_Register,'')No_Register " & _
@@ -1983,7 +2059,7 @@ Dim rsDataDo As New ADODB.Recordset
         Text1 = ""
         TxtForwarder = cbo(3)
         cbo(3) = cbo(3)
-        If cbo(3).MatchFound Then
+        If cbo(3).matchFound Then
             Call cbo_Click(3)
         End If
             
@@ -2001,7 +2077,7 @@ Public Sub cbo_Click(Index As Integer)
     If Index = 0 Then 'Jika Combo Dealer
         If gantiDealer Then Call tampilCust: gantiDealer = False 'tampil Order Entry (Grid Atas)
     ElseIf Index = 3 Then 'Jika Combo Forwarder
-        If cbo(3).MatchFound = True Then
+        If cbo(3).matchFound = True Then
             Text1 = cbo(3).Column(1)
             TxtForwarder = cbo(3)
         Else
@@ -2022,7 +2098,7 @@ Me.MousePointer = vbHourglass
 If cbo(0) <> "" Then
     cbo(0) = cbo(0)
     
-    If cbo(0).MatchFound = False Then 'Jika Customer Tidak ketemu
+    If cbo(0).matchFound = False Then 'Jika Customer Tidak ketemu
         cbo(1).clear
         cbo(2).clear
         cmdreport(0).Enabled = False
@@ -2032,7 +2108,7 @@ If cbo(0) <> "" Then
             Call headerGrid(gridAtas, 1)
         End If
         Call kosongBwh
-        LblErrMsg = DisplayMsg(4011)
+        lblErrMsg = DisplayMsg(4011)
     
     Else 'Jika ketemu
         lblNm(0) = cbo(0).Column(1)
@@ -2046,7 +2122,7 @@ If cbo(0) <> "" Then
         End If
         
         If cboStatus = "Create" Then Call buatDoBaru Else Call isiCboDO
-        LblErrMsg = ""
+        lblErrMsg = ""
     End If
 End If
 Me.MousePointer = vbDefault
@@ -2061,7 +2137,7 @@ Sub buatDoBaru()
     Set rsBuatNo = Db.Execute(sql)
     cbo(1) = Format(dtDO, "YY") & Format(rsBuatNo(0), "0000") & "/" & Format(dtDO, "YYYY")
     cbo(1).Enabled = False
-    txtDoNO = Trim(cbo(1))
+    txtDONo = Trim(cbo(1))
     Set rsBuatNo = Nothing
     
     uf_GetNoRegister
@@ -2094,17 +2170,17 @@ Private Sub dtDO_Change()
 End Sub
 
 Private Sub dtAwal_Change()
-    LblErrMsg = ""
+    lblErrMsg = ""
     gantiDtAwal = True
-    If dtAwal > dtAkhir Then LblErrMsg = DisplayMsg("4076") & " " & Format(dtAkhir, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
+    If dtAwal > dtAkhir Then lblErrMsg = DisplayMsg("4076") & " " & Format(dtAkhir, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
     Call filterCboPO
     If cboStatus = "Update" Then Call filterCboDO
 End Sub
 
 Private Sub dtAkhir_Change()
-    LblErrMsg = ""
+    lblErrMsg = ""
     gantiDtAkhir = True
-    If dtAkhir < dtAwal Then LblErrMsg = DisplayMsg("4077") & " " & Format(dtAwal, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
+    If dtAkhir < dtAwal Then lblErrMsg = DisplayMsg("4077") & " " & Format(dtAwal, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
     Call filterCboPO
     If cboStatus = "Update" Then Call filterCboDO
 End Sub
@@ -2117,7 +2193,7 @@ Dim tampungPO As String
     Call isiCboPO
     cbo(2) = tampungPO
     cbo(2) = cbo(2)
-    If Not (cbo(2).MatchFound) Then cbo(2) = ""
+    If Not (cbo(2).matchFound) Then cbo(2) = ""
     nilKosong = False
 End Sub
 
@@ -2129,7 +2205,7 @@ Dim tampungDO As String
     Call isiCboDO
     cbo(1) = tampungDO
     cbo(1) = cbo(1)
-    If Not (cbo(1).MatchFound) Then cbo(1) = ""
+    If Not (cbo(1).matchFound) Then cbo(1) = ""
     nilKosong = False
 End Sub
 
@@ -2500,16 +2576,16 @@ With gridAtas
     If Col = bteColSelect Then
         If cbo(1) = "" Then 'Belon isi DO
             Cancel = True
-            LblErrMsg = DisplayMsg(1035)
+            lblErrMsg = DisplayMsg(1035)
         ElseIf cmdUpdate.Caption = "Create" Then 'Blm klik Create
             Cancel = True
             cmdUpdate.SetFocus
-            LblErrMsg = DisplayMsg(1038)
+            lblErrMsg = DisplayMsg(1038)
         ElseIf .TextMatrix(Row, bteColFixOrder) = "1" Then 'Fix
             Cancel = True
-            LblErrMsg = DisplayMsg(1104)
+            lblErrMsg = DisplayMsg(1104)
         ElseIf (Trim(.TextMatrix(Row, bteColCurr)) <> defaultCurr) And defaultCurr <> "" Then
-            LblErrMsg = DisplayMsg("0040") & " " & defaultCurr
+            lblErrMsg = DisplayMsg("0040") & " " & defaultCurr
             Cancel = True
             prosesSimpan = False
 '        ElseIf Not CheckPONo(Row) Then
@@ -2529,7 +2605,7 @@ With gridBawah
     Select Case Col
     Case bteColSelect, bteColLotNo, bteColQty, bteColCtn, bteColNet, bteColGross, bteColPrice, bteColService, bteColSerialNoFrom, bteColSerialNoTo
         If .TextMatrix(Row, bteColFixOrder) = "1" And prosesSimpan = False Then
-            LblErrMsg = DisplayMsg(1104)
+            lblErrMsg = DisplayMsg(1104)
             Cancel = True
             prosesSimpan = False
         Else
@@ -2570,7 +2646,7 @@ Dim Qty As String, Price As String, tampungQty As String
 Dim service As String
 Dim TempSF As String, TempST As String
 
-LblErrMsg = ""
+lblErrMsg = ""
 With gridAtas
 
 If Row <> 0 Then
@@ -2588,7 +2664,7 @@ If Row <> 0 Then
         
         If .Cell(flexcpChecked, Row, bteColSelect) = 1 Then  'jika cek
             'Jika DP udah abis
-            If Qty = 0 Then LblErrMsg = DisplayMsg("0041"): Exit Sub
+            If Qty = 0 Then lblErrMsg = DisplayMsg("0041"): Exit Sub
             If defaultCurr = "" Then defaultCurr = .TextMatrix(Row, bteColCurr)
             
             For i = 1 To gridBawah.Rows - 1 'Utk mengecek apakah udah ada data di DO
@@ -2734,7 +2810,7 @@ Dim dblQtyCtn As Double
 Dim dblNet As Double
 Dim dblGross As Double
 
-LblErrMsg = ""
+lblErrMsg = ""
 With gridBawah
 If Row <> 0 And Col <> bteColSelect Then
     If IsNumeric(.TextMatrix(Row, Col)) = False And Col <> bteColLotNo And Col <> bteColSerialNoFrom _
@@ -2772,7 +2848,7 @@ If Row <> 0 And Col <> bteColSelect Then
         If CDbl(Qty) > batasDO Then
             'Jika tdk ada di Invoice cek Batas DO saja
             .TextMatrix(Row, bteColQty) = Format(batasDO, gs_formatQty)
-            LblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
+            lblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
         End If
         
         batasDO = batasDO - .TextMatrix(Row, bteColQty)
@@ -2789,7 +2865,7 @@ If Row <> 0 And Col <> bteColSelect Then
     Select Case Col
     Case bteColQty
         If CDbl(.TextMatrix(Row, bteColQty)) > gd_MaxQty Then
-            LblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
+            lblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
             .TextMatrix(Row, Col) = dblTempValue
             If gridAtas.TextMatrix(.TextMatrix(Row, bteColSeqNo), bteColSerialNoFrom) = "" Then
                 .TextMatrix(.TextMatrix(Row, bteColSeqNo), bteColSerialNoFrom) = ""
@@ -2830,28 +2906,28 @@ If Row <> 0 And Col <> bteColSelect Then
         
     Case bteColCtn
         If CDbl(.TextMatrix(Row, bteColCtn)) > gd_MaxBox Then
-            LblErrMsg = DisplayMsg(4037) & " " & gd_MaxBox & " !"
+            lblErrMsg = DisplayMsg(4037) & " " & gd_MaxBox & " !"
             .TextMatrix(Row, Col) = dblTempValue
             .SetFocus
         End If
         .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatBox)
     Case bteColNet
         If CDbl(.TextMatrix(Row, bteColNet)) > gd_MaxWeight Then
-            LblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
+            lblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
             .TextMatrix(Row, Col) = dblTempValue
             .SetFocus
         End If
         .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatWeight)
     Case bteColGross
         If CDbl(.TextMatrix(Row, bteColGross)) > gd_MaxWeight Then
-            LblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
+            lblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
             .TextMatrix(Row, Col) = dblTempValue
             .SetFocus
         End If
         .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatWeight)
     Case bteColPrice
         If CDbl(.TextMatrix(Row, bteColPrice)) > gd_MaxPrice Then
-            LblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
+            lblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
             .TextMatrix(Row, Col) = dblTempValue
             Price = dblTempValue
             .SetFocus
@@ -2864,7 +2940,7 @@ If Row <> 0 And Col <> bteColSelect Then
     
     Case bteColService
         If CDbl(.TextMatrix(Row, bteColService)) > gd_MaxPrice Then
-            LblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
+            lblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
             .TextMatrix(Row, Col) = dblTempValue
             service = dblTempValue
             .SetFocus
@@ -3038,7 +3114,7 @@ If lblFix.Visible = False Then
         frmDODetail.Show
     End If
 Else
-    LblErrMsg = DisplayMsg(4046)
+    lblErrMsg = DisplayMsg(4046)
 End If
 End Sub
 
@@ -3112,36 +3188,36 @@ Dim pesanError As String
     
     
     If hakUpdate(Me.Name) = 0 Then _
-        LblErrMsg = DisplayMsg(3008): dataError = True: Exit Function
+        lblErrMsg = DisplayMsg(3008): dataError = True: Exit Function
     If cbo(2) = "" Then
         'cbo(2).ListIndex = 0
-        LblErrMsg = DisplayMsg(1048)
+        lblErrMsg = DisplayMsg(1048)
         cbo(2).SetFocus
         dataError = True
         Exit Function
     End If
     If cbo(0) = "" Then
-        LblErrMsg = DisplayMsg(1033)
+        lblErrMsg = DisplayMsg(1033)
         cbo(0).SetFocus
         dataError = True
     Else
         cbo(0) = cbo(0)
-        If cbo(0).MatchFound = False Then
-            LblErrMsg = DisplayMsg(4011)
+        If cbo(0).matchFound = False Then
+            lblErrMsg = DisplayMsg(4011)
             cbo(0).SetFocus
             dataError = True
         ElseIf cbo(1) = "" Then
-            LblErrMsg = DisplayMsg(1035)
+            lblErrMsg = DisplayMsg(1035)
             If cbo(1).Enabled Then cbo(1).SetFocus
             dataError = True
         ElseIf cbo(1).Enabled Then
             cbo(1) = cbo(1)
-            If cbo(1).MatchFound = False Then
-                LblErrMsg = DisplayMsg(8129)
+            If cbo(1).matchFound = False Then
+                lblErrMsg = DisplayMsg(8129)
                 cbo(1).SetFocus
                 dataError = True
             ElseIf FixCls = 1 Then
-                LblErrMsg = DisplayMsg(4046)
+                lblErrMsg = DisplayMsg(4046)
                  Command1(0).Enabled = False
                 cbo(1).SetFocus
                 dataError = True
@@ -3150,12 +3226,12 @@ Dim pesanError As String
                 If gantiPO Or gantiDtAwal Or gantiDtAkhir Or ubahAtas Or gridAtas.Rows = 1 Then Call isiGridAtas: gantiPO = False: gantiDtAwal = False: gantiDtAkhir = False: ubahAtas = False
             Else
                 cbo(2) = cbo(2)
-                If cbo(2) <> "" And cbo(2).MatchFound = False Then
-                    LblErrMsg = DisplayMsg(4015)
+                If cbo(2) <> "" And cbo(2).matchFound = False Then
+                    lblErrMsg = DisplayMsg(4015)
                     cbo(2).SetFocus
                     dataError = True
                 ElseIf cmdUpdate.Caption = "Create" Then 'Blm klik Create
-                    LblErrMsg = DisplayMsg(1038)
+                    lblErrMsg = DisplayMsg(1038)
                     cmdUpdate.SetFocus
                     dataError = True
                 End If
@@ -3164,11 +3240,11 @@ Dim pesanError As String
     End If
     'mengecek keberadaan warehouse. update by dudi januari 08
     If cboWH = "" Then
-       LblErrMsg = DisplayMsg(31)
+       lblErrMsg = DisplayMsg(31)
        cboWH.SetFocus
        dataError = True
-    ElseIf cboWH.MatchFound = False Then
-        LblErrMsg = DisplayMsg(4018)
+    ElseIf cboWH.matchFound = False Then
+        lblErrMsg = DisplayMsg(4018)
         cboWH.SetFocus
         dataError = True
     End If
@@ -3176,14 +3252,14 @@ Dim pesanError As String
     ' Cek Forwarder
     If Text1.locked = False Then
         If Text1 = "" Then
-            LblErrMsg = "Please Type Forwarder Name ! "
+            lblErrMsg = "Please Type Forwarder Name ! "
             Text1.SetFocus
             dataError = True
         End If
     End If
         
     If TxtForwarder = "" Then
-       LblErrMsg = "Please Select Forwarder ! "
+       lblErrMsg = "Please Select Forwarder ! "
        cbo(3).SetFocus
        dataError = True
 '    ElseIf cbo(3).MatchFound = False Then
@@ -3206,7 +3282,7 @@ Dim RsFor As New ADODB.Recordset
 
 'On Error Resume Next
 Me.MousePointer = vbHourglass
-    LblErrMsg = ""
+    lblErrMsg = ""
 '    If cbo(2) = "" Then
 '        'cbo(2).ListIndex = 0
 '        LblErrMsg = DisplayMsg(9001)
@@ -3217,7 +3293,7 @@ Me.MousePointer = vbHourglass
     If CekInvoice Then
         Call isiGridAtas
         Call isiGridBawah
-        LblErrMsg = DisplayMsg(4110)
+        lblErrMsg = DisplayMsg(4110)
         Me.MousePointer = vbDefault
         Exit Sub
     End If
@@ -3237,10 +3313,10 @@ Me.MousePointer = vbHourglass
     If cboStatus = "Create" Then
         
         Call simpanMaster
-        LblErrMsg = DisplayMsg(1000)
+        lblErrMsg = DisplayMsg(1000)
     Else
         Call simpanMaster
-        LblErrMsg = DisplayMsg(1101)
+        lblErrMsg = DisplayMsg(1101)
     End If
     Call SetDeliveryRange
     Call isiGridAtas
@@ -3280,13 +3356,13 @@ Private Sub Command1_Click(Index As Integer)
     Case 0: 'Submit
         If dataError Then Me.MousePointer = vbDefault: Exit Sub
         If CekInvoice Then
-            LblErrMsg = DisplayMsg(4110)
+            lblErrMsg = DisplayMsg(4110)
             Me.MousePointer = vbDefault
             Exit Sub
         End If
         '#20071004 Yudha, check data surat jalan yang item nya beda dengan order entry
         If uf_check_SuratJalan_OrderDifferent = False Then
-            LblErrMsg = DisplayMsg("0079")
+            lblErrMsg = DisplayMsg("0079")
             Me.MousePointer = vbDefault
             Exit Sub
         End If
@@ -3297,11 +3373,11 @@ Private Sub Command1_Click(Index As Integer)
             If RSCekRemark.State <> adStateClosed Then RSCekRemark.Close
             RSCekRemark.Open "Select *from Message Where MsgId ='0079'", Db, adOpenDynamic, adLockOptimistic
             If RSCekRemark.EOF = True Then
-                LblErrMsg = "[0079] Please select remarks Id!"
+                lblErrMsg = "[0079] Please select remarks Id!"
                 Me.MousePointer = vbDefault
                 Exit Sub
             Else
-                LblErrMsg = DisplayMsg("0079") 'Please select remarks Id!
+                lblErrMsg = DisplayMsg("0079") 'Please select remarks Id!
                 Me.MousePointer = vbDefault
                 Exit Sub
             End If
@@ -3313,7 +3389,7 @@ Private Sub Command1_Click(Index As Integer)
         Call simpanDetail
         Call simpanMaster
     Case 1: 'Clear
-        LblErrMsg = ""
+        lblErrMsg = ""
         Call isiGridAtas
         If gridAtas.Rows > 1 Then
             Call isiGridBawah
@@ -3382,7 +3458,7 @@ nilKosong = True
         tampung = cbo(1)
         Call isiCboDO
         cbo(1) = tampung
-        txtDoNO = cbo(1)
+        txtDONo = cbo(1)
     Else
         sql = "Update DO_Master " & _
             "set DO_Date ='" & Format(dtDO, "yyyy-MM-dd") & "', " & _
@@ -3463,7 +3539,7 @@ Dim service As Double
             'Jika ada di Invoice cek Batas DO dan Invoice
             If CDbl(Qty) > batasDO Then
                 'Jika tdk ada di Invoice cek Batas DO saja
-                LblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
+                lblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
                 .Row = i: .Col = bteColQty
                 .TopRow = i: .SetFocus
                 prosesSimpan = False: Exit Sub
@@ -3556,7 +3632,7 @@ Dim service As Double
         Else
             nilPesan = "1101" 'Ubah
         End If
-        LblErrMsg = DisplayMsg(nilPesan)
+        lblErrMsg = DisplayMsg(nilPesan)
     End With
     prosesSimpan = False
 End Sub
@@ -3566,10 +3642,10 @@ Private Sub cmdReport_Click(Index As Integer)
     Me.MousePointer = vbHourglass
     cbo(1) = cbo(1)
     If cbo(1) = "" Then
-        LblErrMsg = DisplayMsg(1035)
+        lblErrMsg = DisplayMsg(1035)
         If cbo(1).Enabled Then cbo(1).SetFocus
-    ElseIf cbo(1).MatchFound = False Then
-        LblErrMsg = DisplayMsg(8129)
+    ElseIf cbo(1).matchFound = False Then
+        lblErrMsg = DisplayMsg(8129)
         If cbo(1).Enabled Then cbo(1).SetFocus
     Else
         Select Case Index
@@ -3640,7 +3716,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 

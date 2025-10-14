@@ -196,10 +196,10 @@ Begin VB.Form frmProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   54198275
+         Format          =   129236995
          CurrentDate     =   37799
       End
-      Begin VB.Label lblCompany 
+      Begin VB.Label lblFactory 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Description"
@@ -230,7 +230,7 @@ Begin VB.Form frmProdResult
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -246,9 +246,9 @@ Begin VB.Form frmProdResult
          TabIndex        =   45
          Tag             =   "TTFF*/"
          Top             =   300
-         Width           =   1335
+         Width           =   1140
       End
-      Begin MSForms.ComboBox cboCompany 
+      Begin MSForms.ComboBox cboFactory 
          Height          =   315
          Index           =   2
          Left            =   2160
@@ -291,7 +291,7 @@ Begin VB.Form frmProdResult
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "From Factory CD"
+         Caption         =   "From Process CD"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -307,7 +307,7 @@ Begin VB.Form frmProdResult
          TabIndex        =   31
          Tag             =   "TTFF*/"
          Top             =   750
-         Width           =   1455
+         Width           =   1485
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True

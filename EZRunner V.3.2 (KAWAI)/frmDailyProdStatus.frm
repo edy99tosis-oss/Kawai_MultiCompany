@@ -149,7 +149,7 @@ Begin VB.Form frmDailyProdStatus
          Y1              =   600
          Y2              =   600
       End
-      Begin VB.Label lblCompany 
+      Begin VB.Label lblFactory 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Description"
@@ -164,16 +164,16 @@ Begin VB.Form frmDailyProdStatus
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          Height          =   195
          Index           =   5
          Left            =   240
          TabIndex        =   25
          Tag             =   "TTFF*/"
          Top             =   360
-         Width           =   1335
+         Width           =   1140
       End
-      Begin MSForms.ComboBox cboCompany 
+      Begin MSForms.ComboBox cboFactory 
          Height          =   315
          Index           =   2
          Left            =   1860
@@ -209,14 +209,14 @@ Begin VB.Form frmDailyProdStatus
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Machine No "
+         Caption         =   "Line Code"
          Height          =   195
          Index           =   1
          Left            =   240
          TabIndex        =   18
          Tag             =   "TTFF*/"
          Top             =   1230
-         Width           =   1035
+         Width           =   855
       End
       Begin MSForms.ComboBox cbo 
          Height          =   315
@@ -281,14 +281,14 @@ Begin VB.Form frmDailyProdStatus
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Factory Code"
+         Caption         =   "Process Code"
          Height          =   195
          Index           =   0
          Left            =   240
          TabIndex        =   16
          Tag             =   "TTFF*/"
          Top             =   780
-         Width           =   1140
+         Width           =   1170
       End
       Begin VB.Line Line8 
          Index           =   0
@@ -318,7 +318,7 @@ Begin VB.Form frmDailyProdStatus
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   121044995
+      Format          =   128843779
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -341,7 +341,7 @@ Begin VB.Form frmDailyProdStatus
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   121044995
+      Format          =   128843779
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -646,8 +646,8 @@ Sub Kosong()
     cbo(1) = ""
     lblNm(1) = ""
     
-    cboCompany(2).Text = ""
-    lblCompany(2).Caption = ""
+    cboFactory(2).Text = ""
+    lblFactory(2).Caption = ""
     
     dtAwal = Format(Year(Now) & "-" & Format(Month(Now), "#0") & "-01", "dd MMM yyyy")
     dtAkhir = Format(Now, "dd MMM yyyy")
@@ -657,7 +657,7 @@ Sub Kosong()
 End Sub
 
 Sub adcboCompany()
-    FillCompanyCombo cboCompany(2)
+    FillCompanyCombo cboFactory(2)
 End Sub
 
 '******** Combo Factory Code **********
@@ -673,7 +673,7 @@ With cbo(0)
 '    sql = "select Trade_Code,Trade_Name from Trade_Master " & _
 '        "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
 '        "order by Trade_Code"
-    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboCompany(2).Text & "'"
+    sql = "EXEC dbo.sp_GetCompanyCode @CompanyCode = '" & cboFactory(2).Text & "'"
     
     Set RsCust = Db.Execute(sql)
     
@@ -725,9 +725,9 @@ With cbo(1)
 End With
 End Sub
 
-Private Sub cboCompany_Click(Index As Integer)
-    If cboCompany(2).ListIndex <> -1 Then
-        lblCompany(2).Caption = cboCompany(2).Column(1)
+Private Sub cboFactory_Click(Index As Integer)
+    If cboFactory(2).ListIndex <> -1 Then
+        lblFactory(2).Caption = cboFactory(2).Column(1)
         isiCboCust
     End If
 '    If cboCompany.Text <> "" And cboCust.Text <> "" Then
@@ -1048,8 +1048,8 @@ dbw.ConnectionString = Db.ConnectionString
     ElseIf Index = 1 Then
         cbo(0) = ""
         cbo(1) = ""
-        cboCompany(2).Text = ""
-        lblCompany(2).Caption = ""
+        cboFactory(2).Text = ""
+        lblFactory(2).Caption = ""
         
         dtAwal = Date
         dtAkhir = Date
