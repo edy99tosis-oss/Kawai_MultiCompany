@@ -68,7 +68,7 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136904707
+         Format          =   7864323
          CurrentDate     =   37860
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -90,7 +90,7 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136904707
+         Format          =   7864323
          CurrentDate     =   37799
       End
       Begin VB.Line Line8 
@@ -308,8 +308,8 @@ Begin VB.Form frmRptProdResult
       TabStop         =   0   'False
       Top             =   450
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VB.Label lblJudul 
       Alignment       =   2  'Center
@@ -391,9 +391,9 @@ With cbo(1)
     .columnCount = 2
     .TextColumn = 1
     
-    sql = "select * from (select wh_code,wh_name,stockControl_cls from warehouse_master " & _
+    sql = "select * from (select wh_code,wh_name,stockControl_cls from warehouse_master WHERE Company_Code = '" & cboFactory(2).Text & "' " & _
         "union all " & _
-        "select distinct(manufacture_line.manufacture_code)wh_code, trade_name wh_name, stockControl_Cls = '01'from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code"
+        "select distinct(manufacture_line.manufacture_code)wh_code, trade_name wh_name, stockControl_Cls = '01'from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code WHERE Company_Code = '" & cboFactory(2).Text & "')tbJ order by wh_code"
     Set rscbo = Db.Execute(sql)
     
     .AddItem ""
@@ -411,7 +411,7 @@ With cbo(1)
     .Text = ""
     .ListWidth = 250
     .ColumnWidths = "50 pt;200 pt"
-    .ListIndex = 0
+    .ListIndex = -1
     
     Set rscbo = Nothing
 End With
@@ -484,7 +484,7 @@ Private Sub CmdExcel_Click()
     rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
     
     If rsCek.EOF Then
-        LblErrMsg.Caption = DisplayMsg(4006)
+        lblErrMsg.Caption = DisplayMsg(4006)
     Else
             
         With xlapp
@@ -631,23 +631,23 @@ Public Sub cbo_Click(Index As Integer)
     cbo(Index) = cbo(Index)
     If cbo(Index).matchFound Then
         lblNm(Index) = cbo(Index).Column(1)
-        LblErrMsg = ""
+        lblErrMsg = ""
     Else
         lblNm(Index) = ""
-        LblErrMsg = DisplayMsg(4016)
+        lblErrMsg = DisplayMsg(4016)
     End If
 End Sub
 
 Private Sub cbo_Change(Index As Integer)
     lblNm(Index) = ""
-    LblErrMsg = ""
+    lblErrMsg = ""
 End Sub
 
 Private Sub dtAwal_Change()
-    LblErrMsg = ""
+    lblErrMsg = ""
     If Format(dtAwal, "yyyy-MM-dd") > _
         Format(CDate(dtAkhir), "yyyy-MM-dd") Then _
-    LblErrMsg = DisplayMsg(4068): Exit Sub
+    lblErrMsg = DisplayMsg(4068): Exit Sub
 End Sub
 
 Private Sub dtAwal_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -655,10 +655,10 @@ Private Sub dtAwal_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub dtAkhir_Change()
-    LblErrMsg = ""
+    lblErrMsg = ""
     If Format(dtAwal, "yyyy-MM-dd") > _
         Format(CDate(dtAkhir), "yyyy-MM-dd") Then _
-        LblErrMsg = DisplayMsg(4066): Exit Sub
+        lblErrMsg = DisplayMsg(4066): Exit Sub
 End Sub
 
 Private Sub dtAkhir_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -674,15 +674,15 @@ Dim Rpt As New FrmRpt3
     Me.MousePointer = vbHourglass
     
     If cbo(0) = "" Then
-        LblErrMsg = DisplayMsg(1040)
+        lblErrMsg = DisplayMsg(1040)
         cbo(0).SetFocus
     Else
         cbo(0) = cbo(0)
         If cbo(0).matchFound = False Then
-            LblErrMsg = DisplayMsg(4016)
+            lblErrMsg = DisplayMsg(4016)
             cbo(0).SetFocus
         Else
-            LblErrMsg = ""
+            lblErrMsg = ""
             
             sql = "select * from " & _
                     vbLf & " (select rtrim(a.supplier_code) supplier_code,rtrim(a.warehouse_code) wh_code,rtrim(c.Trade_Name) Trade_Name, rtrim(po_no)po_no,rtrim(a.item_code) item_code, rtrim(b.makeritem_code) makeritem_code, rtrim(b.Item_Name) Item_Name, receipt_Date, " & _
@@ -713,7 +713,7 @@ Dim Rpt As New FrmRpt3
             Set rsRpt = Db.Execute(sql)
             
             If rsRpt.EOF Then
-                LblErrMsg.Caption = DisplayMsg(4006)
+                lblErrMsg.Caption = DisplayMsg(4006)
             Else
                 sqlprint = sql
                 reportcode = "ProdResultByFactory"
@@ -764,7 +764,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 '**************

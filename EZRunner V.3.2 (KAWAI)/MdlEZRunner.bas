@@ -1345,7 +1345,7 @@ Public Sub FillCompanyCombo(cbo As Object)
 '    Else
 '        sql = "SELECT Company_Code, Company_Name FROM dbo.Company_Profile WHERE Company_Code = '" & Replace(UserCompanyCode, "'", "''") & "' ORDER BY Company_Code"
 '    End If
-    sql = "EXEC dbo.SP_UserSetup_Get_CompanyCode @UserID = '" & userLogin & "', @Type = '2' "
+    sql = "EXEC dbo.SP_UserSetup_Get_CompanyCode @UserID = '" & userLogin & "', @Type = '1' "
     Set RS = Db.Execute(sql)
 
     With cbo
