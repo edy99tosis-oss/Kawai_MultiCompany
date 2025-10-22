@@ -51,7 +51,7 @@ Begin VB.Form frmDOCreate
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Format          =   127926273
+      Format          =   66256897
       CurrentDate     =   41092
    End
    Begin VB.TextBox txtbcno 
@@ -163,7 +163,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   127926275
+         Format          =   66256899
          CurrentDate     =   37799
       End
       Begin MSForms.ComboBox cboDeliveryCls 
@@ -688,7 +688,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   127926275
+         Format          =   66256899
          CurrentDate     =   37799
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -710,7 +710,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   127926275
+         Format          =   66256899
          CurrentDate     =   37860
       End
       Begin VB.Label Label 
@@ -1954,6 +1954,7 @@ lblErrMsg.Caption = ""
 
     If cboFactory(4).ListIndex <> -1 Then
         TxtFactoryName.Text = cboFactory(4).Column(1)
+        IsiComboWH
     End If
     
 End Sub
@@ -3733,7 +3734,7 @@ Private Sub IsiComboWH()
     
     Dim adoRs As New ADODB.Recordset
     
-    sql = "select wh_code, wh_name from warehouse_master"
+    sql = "select wh_code, wh_name from warehouse_master WHERE Company_Code = '" & cboFactory(4).Text & "' "
     adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     
     With cboWH

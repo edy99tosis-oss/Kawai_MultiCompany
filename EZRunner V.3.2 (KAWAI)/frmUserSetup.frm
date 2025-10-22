@@ -1278,7 +1278,7 @@ Dim bteColPrice As Byte
 
 Dim bteColFactoryNo As Byte
 Dim bteColFactoryCode As Byte
-Dim bteColFactoryName As Byte
+Dim btecolfactoryname As Byte
 Dim btecolFactoryShow As Byte
 
 
@@ -1329,11 +1329,11 @@ Private Sub headerGrid()
 End Sub
 
 Private Sub headerGridFactory()
-Dim c As Integer   ' deklarasi variabel loop
+Dim C As Integer   ' deklarasi variabel loop
     
     bteColFactoryNo = 0
     bteColFactoryCode = 1
-    bteColFactoryName = 2
+    btecolfactoryname = 2
     btecolFactoryShow = 3
     
     With gridFactory
@@ -1344,30 +1344,30 @@ Dim c As Integer   ' deklarasi variabel loop
         ' ?? Header Text
         .TextMatrix(0, bteColFactoryNo) = "No"
         .TextMatrix(0, bteColFactoryCode) = "Factory Code"
-        .TextMatrix(0, bteColFactoryName) = "Factory Name"
+        .TextMatrix(0, btecolfactoryname) = "Factory Name"
         .TextMatrix(0, btecolFactoryShow) = "Show"
 
         ' ?? Lebar kolom
         .ColWidth(bteColFactoryNo) = 500
         .ColWidth(bteColFactoryCode) = 2000
-        .ColWidth(bteColFactoryName) = 4000
+        .ColWidth(btecolfactoryname) = 4000
         .ColWidth(btecolFactoryShow) = 1000
         
         ' ?? Header rata tengah semua
-        For c = 0 To .ColS - 1
+        For C = 0 To .ColS - 1
             .Row = 0
-            .Col = c
+            .Col = C
             .CellAlignment = flexAlignCenterCenter
-        Next c
+        Next C
 
         ' ?? Detail rata kiri semua, kecuali kolom No
-        For c = 0 To .ColS - 1
-            If c = bteColFactoryNo Then
-                .ColAlignment(c) = flexAlignCenterCenter
+        For C = 0 To .ColS - 1
+            If C = bteColFactoryNo Then
+                .ColAlignment(C) = flexAlignCenterCenter
             Else
-                .ColAlignment(c) = flexAlignLeftCenter
+                .ColAlignment(C) = flexAlignLeftCenter
             End If
-        Next c
+        Next C
 
         ' ?? Checkbox header default unchecked
         .Cell(flexcpChecked, 0, btecolFactoryShow) = flexUnchecked
@@ -1382,6 +1382,7 @@ End Sub
 Private Sub cboFactory_Change()
     If cboFactory.matchFound Then
         lblFactory = cboFactory.List(cboFactory.ListIndex, 1)
+        isiList
     Else
         lblFactory = ""
         LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
@@ -1447,22 +1448,54 @@ Sub isiCbo() 'Isi Combo User Group (spy privilege nya sama dgn user yg dipilih)
 End Sub
 
 Private Sub isiList() 'Isi List View
+'Dim aItem As ListItem
+'Dim kdIsiList As String
+'Dim nmUser As String
+'
+'    lvw1.ListItems.clear
+'    rsUser.filter = ""
+'    rsUser.Requery
+'    If Not rsUser.EOF Then
+'        Do While Not rsUser.EOF
+'            nmUser = Trim(rsUser("username"))
+'            kdIsiList = "n" & nmUser
+'            Set aItem = lvw1.ListItems.Add(, kdIsiList, nmUser)
+'            aItem.SubItems(1) = Trim(rsUser("name"))
+'            rsUser.MoveNext
+'        Loop
+'    End If
 Dim aItem As ListItem
-Dim kdIsiList As String
-Dim nmUser As String
+    Dim kdIsiList As String
+    Dim nmUser As String
+    Dim vFactory As String
 
     lvw1.ListItems.clear
+
+    ' Ambil nilai factory
+    vFactory = Trim(cboFactory.Text)
+
+    ' Reset filter dulu
     rsUser.filter = ""
     rsUser.Requery
+
+    ' Terapkan filter jika combo factory tidak kosong
+    If vFactory <> "" Then
+        rsUser.filter = "Company_Code = '" & vFactory & "'"
+    End If
+
+    ' Isi data ke ListView
     If Not rsUser.EOF Then
         Do While Not rsUser.EOF
-            nmUser = Trim(rsUser("username"))
+            nmUser = Trim(rsUser("userName"))
             kdIsiList = "n" & nmUser
             Set aItem = lvw1.ListItems.Add(, kdIsiList, nmUser)
             aItem.SubItems(1) = Trim(rsUser("name"))
             rsUser.MoveNext
         Loop
     End If
+
+    ' Hapus filter setelah selesai (optional)
+    rsUser.filter = ""
 End Sub
 
 Sub IsiGrid(Optional lama As Integer, Optional teks As String)
@@ -1561,7 +1594,7 @@ Sub IsiGridFactory(Optional lama As Integer, Optional teks As String)
     
                 .TextMatrix(i, bteColFactoryNo) = " " & i
                 .TextMatrix(i, bteColFactoryCode) = Trim(rsPriv("Factory_Code"))
-                .TextMatrix(i, bteColFactoryName) = Trim(rsPriv("Factory_Name"))
+                .TextMatrix(i, btecolfactoryname) = Trim(rsPriv("Factory_Name"))
     
                 ' ? Checkbox logic
                 Dim isChecked As Boolean
@@ -1906,7 +1939,7 @@ End Sub
 Private Sub lvw1_ItemClick(ByVal Item As MSComctlLib.ListItem)
     ubah = True
     LblErrMsg = ""
-    Call up_ListView
+'    Call up_ListView
     Call tampil   'utk menampilkan data yg diklik
 End Sub
 
@@ -2064,7 +2097,7 @@ Private Sub up_ListView()
     End If
 
 CleanExit:
-    If rsUser.State <> adStateClosed Then rsUser.Close
+'    If rsUser.State <> adStateClosed Then rsUser.Close
     Exit Sub
 
 ErrHandler:
@@ -2072,3 +2105,5 @@ ErrHandler:
     Resume CleanExit
     
 End Sub
+
+
