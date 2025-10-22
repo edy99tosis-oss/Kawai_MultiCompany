@@ -413,12 +413,12 @@ Begin VB.Form FrmWarehouse
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60620803
+      Format          =   60030979
       CurrentDate     =   37818
    End
    Begin VB.Label Label3 
       BackStyle       =   0  'Transparent
-      Caption         =   "Company Code"
+      Caption         =   "Factory Code"
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25

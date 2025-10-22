@@ -884,7 +884,8 @@ Public Sub POLocal(strPONo As String, bteHakPrice As Byte, PoCls As Byte, tcode 
     
 End Sub
 
-Public Sub POImport(strPONo As String, bteHakPrice As Byte, PoCls As Byte, tcode As String, DelDate As Date)
+'multi company
+Public Sub POImport(strPONo As String, bteHakPrice As Byte, PoCls As Byte, tcode As String, DelDate As Date, CompanyCode As String)
     
     Dim application As New CRAXDDRT.application
     Dim report As New CRAXDDRT.report
@@ -911,7 +912,7 @@ SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls
                   "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
                   "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls" & vbCrLf & _
                   "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
-                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = up.Company_Code" & vbCrLf & _
+                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = ' " + CompanyCode + " ' --up.Company_Code" & vbCrLf & _
                   " Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' " & vbCrLf & _
                   "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
 ' --------

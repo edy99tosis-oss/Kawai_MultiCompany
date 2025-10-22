@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmPOParts 
    BackColor       =   &H00FDDFE3&
@@ -276,7 +276,7 @@ Begin VB.Form frmPOParts
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   129171459
+         Format          =   60620803
          UpDown          =   -1  'True
          CurrentDate     =   37798
       End
@@ -1108,7 +1108,7 @@ Begin VB.Form frmPOParts
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129171459
+      Format          =   60620803
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker dtpDeliveryDate 
@@ -1130,7 +1130,7 @@ Begin VB.Form frmPOParts
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129171459
+      Format          =   60620803
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -2100,7 +2100,7 @@ Sub Header()
     bteColPriceContractClsDetail = 24
     TotCol = 25
     
-    With Grid
+    With grid
         .clear
         
         .Rows = 2
@@ -2230,7 +2230,7 @@ Dim a As Double
 
     lblErrMsg = ""
 
-    sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
+    sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
     If RS.State <> adStateClosed Then RS.Close
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
 
@@ -2241,12 +2241,12 @@ Dim a As Double
         tempperiod2 = IIf(IsNull(RS("period")), " ", Left(Trim(RS("period")), 4) & "-" & Right(Trim(RS("period")), 2) & "-01")
         tempdeldate = IIf(IsNull(RS("delivery_date")), " ", Trim(RS("delivery_date")))
         
-        txtRemarks.Text = IIf(IsNull(RS("remarks")), " ", Trim(RS("remarks")))
+        txtremarks.Text = IIf(IsNull(RS("remarks")), " ", Trim(RS("remarks")))
         statusfix = IIf(IsNull(RS("fix_cls")), 0, RS("fix_cls"))
         
         cboPriceCondition.Text = RS.Fields("PriceCondition_Cls") & ""
         cboPaymentTerm.Text = RS.Fields("PaymentTerm_Cls") & ""
-        cboPacking.Text = RS.Fields("POPacking_Cls") & ""
+        CboPacking.Text = RS.Fields("POPacking_Cls") & ""
         cboInsuranceCls.Text = RS.Fields("Insurance_Cls") & ""
         cboTransport.Text = RS.Fields("Transportation_Cls") & ""
         
@@ -2267,18 +2267,18 @@ Dim a As Double
         BrowseGrid
         formatprice
         
-        For i = 2 To Grid.Rows - 1
-            If Grid.Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
-                a = a + Grid.TextMatrix(i, bteColAmount)
+        For i = 2 To grid.Rows - 1
+            If grid.Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
+                a = a + grid.TextMatrix(i, bteColAmount)
             End If
         Next i
-        txtAmount.Text = Format(a, gs_formatAmount)
+        txtamount.Text = Format(a, gs_formatAmount)
         If isippn = 0 Then
-            txtPPn.Text = Format(0, gs_formatAmount)
+            txtPPN.Text = Format(0, gs_formatAmount)
         Else
-            txtPPn.Text = Format(CDbl(isippn / 100) * CDbl(txtAmount.Text), gs_formatAmount)
+            txtPPN.Text = Format(CDbl(isippn / 100) * CDbl(txtamount.Text), gs_formatAmount)
         End If
-        txtGrandTotal = Format(CDbl(txtPPn.Text) + CDbl(txtAmount.Text), gs_formatAmount)
+        txtGrandTotal = Format(CDbl(txtPPN.Text) + CDbl(txtamount.Text), gs_formatAmount)
 
         If statusfix = 1 Then
             kunci (True)
@@ -2294,13 +2294,13 @@ End Sub
 
 Sub BrowseGrid()
     Dim R As Double, g As Double, Pos As Double
-    sqlGrid = "select * from purchaseorder_detail where po_no='" & txtPONo.Text & "' order by item_code"
+    sqlGrid = "select * from purchaseorder_detail where po_no='" & txtPoNo.Text & "' order by item_code"
     If rsGrid.State <> adStateClosed Then rsGrid.Close
     rsGrid.Open sqlGrid, Db, adOpenKeyset, adLockOptimistic
 
     R = 1
     Pos = 1
-    With Grid
+    With grid
     Do While Not rsGrid.EOF
         
         For g = 2 To .Rows - 1
@@ -2359,8 +2359,8 @@ Sub browseitem()
     
     Header
     If ubah = False Then
-        txtAmount.Text = Format(0, gs_formatAmount)
-        txtPPn.Text = Format(0, gs_formatAmount)
+        txtamount.Text = Format(0, gs_formatAmount)
+        txtPPN.Text = Format(0, gs_formatAmount)
         txtGrandTotal.Text = Format(0, gs_formatAmount)
     End If
     kodeitem = ""
@@ -2376,8 +2376,8 @@ Sub browseitem()
     adaim = True
     'Call Item(cboSupplier.Text)
     
-    jmlpage = Int((Grid.Rows - 2) / 16) + 1
-    If Grid.Rows > 2 Then
+    jmlpage = Int((grid.Rows - 2) / 16) + 1
+    If grid.Rows > 2 Then
         intpage = 1
     Else
         intpage = 0
@@ -2395,14 +2395,14 @@ Dim rs2 As New Recordset
 '           Format(dtpDeliveryDate.Value, "yyyymmdd") & "' order by trade_code desc, priority_cls desc"
     
     sql2 = "select trade_code, priority_cls, currency_code, price, unit_cls from price_master where " & _
-           "item_code='" & Grid.TextMatrix(actrow, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
+           "item_code='" & grid.TextMatrix(actrow, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
            "' or trade_code='000000') and month(start_date)='" & Month(dtpPeriod) & "' and Year(start_date)='" & _
            Year(dtpPeriod) & "' order by trade_code desc, priority_cls desc"
     
     Set rs2 = Db.Execute(sql2)
 
 
-    With cboPrice
+    With cboprice
         .clear
         .columnCount = 4
         .ColumnWidths = "70pt;70pt;0pt;0pt"
@@ -2617,7 +2617,7 @@ End If
 
         sqlitem = " EXEC dbo.SP_POParts_BrowseItem @SupplierCode = '" & cboSupplier.Text & "'," & vbCrLf & _
                     "@Period = '" & dtpPeriod.Value & "', @TempPeriod = '" & tempperiod2 & "' ," & vbCrLf & _
-                    "@ClosingMonth = '" & closingmonth & "' , @PONo = '" & Trim(txtPONo.Text) & "' ," & vbCrLf & _
+                    "@ClosingMonth = '" & closingmonth & "' , @PONo = '" & Trim(txtPoNo.Text) & "' ," & vbCrLf & _
                     "@MaterialCls    = '" & CboMat.Text & "', @AlarmCls = '" & cboAlarm.Text & "' "
 
     Else
@@ -2642,7 +2642,7 @@ End If
     
             
             If (Format(tempperiod2, "MMM yyyy") <> Format(dtpPeriod.Value, "MMM yyyy")) Or (Format(tempdeldate, "01 MMM yyyy") <> Format(dtpDeliveryDate.Value, "01 MMM yyyy")) Then _
-                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPONo.Text) & "' "
+                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPoNo.Text) & "' "
                       
             sqlitem = sqlitem & "                             ) tbE group by item_code " & _
                      vbLf & "                           )tbF where tbF.item_code=item_master.item_code) " & _
@@ -2728,7 +2728,7 @@ End If
                       vbLf & "          --and pod.delivery_date <'" & Format(tempdtpPeriod, "yyyy-mm-dd") & "' " & vbLf ' Line hanya PO setelah closing yg dihitung sisanya
                       
             If (Format(tempperiod2, "MMM yyyy") <> Format(dtpPeriod.Value, "MMM yyyy")) Or (Format(tempdeldate, "01 MMM yyyy") <> Format(dtpDeliveryDate.Value, "01 MMM yyyy")) Then _
-                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPONo.Text) & "' "
+                sqlitem = sqlitem & " and pom.po_no<>'" & Trim(txtPoNo.Text) & "' "
                       
             sqlitem = sqlitem & ") tbA group by item_code " & _
                       vbLf & "     )tbB where tbB.item_code=item_master.item_code " & _
@@ -2782,7 +2782,7 @@ End If
     Set RsItem = Db.Execute(sqlitem)
     
     If Not (RsItem.BOF And RsItem.EOF) Then
-    With Grid
+    With grid
     Do While Not RsItem.EOF
         
         .Rows = .Rows + 1
@@ -2922,18 +2922,18 @@ Sub Kosong()
     cboWHTo.Text = ""
     CboMat = strAll
     cboDeliverTo.Text = ""
-    txtSupplier.Text = ""
+    txtsupplier.Text = ""
     txtAddress.Text = ""
     cboSupplier.Text = ""
     dtpPeriod.Value = Format(Now, "MMM yyyy")
     temptgl = dtpPeriod.Month
-    txtPONo.Text = ""
+    txtPoNo.Text = ""
     txtPONo2.Text = ""
     dtpPODate.Value = Format(Now, "dd MMM yyyy")
     isipodate = Format(dtpPODate, "yyyy-mm-dd")
     dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
     Call ppn(dtpDeliveryDate.Value)
-    Grid.FocusRect = flexFocusNone
+    grid.FocusRect = flexFocusNone
     cboAlarm.ListIndex = 1
     txtSearch = ""
     
@@ -2953,9 +2953,9 @@ Sub Kosong()
 End Sub
 
 Sub kosongBwh()
-    txtRemarks.Text = ""
-    txtAmount.Text = Format(0, gs_formatAmount)
-    txtPPn.Text = Format(0, gs_formatAmount)
+    txtremarks.Text = ""
+    txtamount.Text = Format(0, gs_formatAmount)
+    txtPPN.Text = Format(0, gs_formatAmount)
     txtGrandTotal.Text = Format(0, gs_formatAmount)
     TxtPOLOT.Text = ""
     txtSearch = ""
@@ -3088,7 +3088,7 @@ Private Sub GetDefaultValue()
     RsCust.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     If Not RsCust.EOF Then
         
-        cboPacking.Text = ""
+        CboPacking.Text = ""
         cboPriceCondition.Text = Trim(RsCust.Fields("Price_Condition") & "")
         cboPaymentTerm.Text = Trim(RsCust.Fields("POPayment_Terms") & "")
         cboInsuranceCls.Text = Trim(RsCust.Fields("Insurance_Cls") & "")
@@ -3102,7 +3102,7 @@ Private Sub GetDefaultValue()
     
     Else
     
-        cboPacking.Text = ""
+        CboPacking.Text = ""
         cboPriceCondition.Text = ""
         cboPaymentTerm.Text = ""
         cboInsuranceCls.Text = ""
@@ -3156,8 +3156,8 @@ Sub kunci(l As Boolean)
     dtpPODate.Enabled = Not l
     dtpDeliveryDate.Enabled = Not l
     dtpPeriod.Enabled = Not l
-    Grid.Editable = Not l
-    command1(0).Enabled = Not l
+    grid.Editable = Not l
+    Command1(0).Enabled = Not l
     lblFix.Visible = l
     statuskunci = l
 End Sub
@@ -3188,7 +3188,7 @@ statusprice = False
 '           Format(dtpDeliveryDate.Value, "yyyymmdd") & "' "
            
     sqlcp = "select price from price_master where " & _
-           "item_code='" & Grid.TextMatrix(Baris, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
+           "item_code='" & grid.TextMatrix(Baris, bteColProdCode) & "' and price_cls='01' and (trade_code='" & cboSupplier.Text & _
            "' or trade_code='000000') and month(start_date)='" & Month(dtpPeriod) & "' and year(Start_date)='" & _
            Year(dtpPeriod) & "' "
            
@@ -3208,7 +3208,7 @@ Dim p1 As Byte, p2 As String, p0 As String
 Dim jmldigit As Byte, jmldigit0 As Byte, j As Integer
 
 jmldigit = 0
-    With Grid
+    With grid
         For i = 1 To .Rows - 1
             If InStr(1, .TextMatrix(i, bteColPrice), ".") > 0 Then _
                 jmldigit0 = Len(Trim(.TextMatrix(i, bteColPrice))) - InStr(1, Trim(.TextMatrix(i, bteColPrice)), ".")
@@ -3248,7 +3248,7 @@ Dim kodeno As String
 
     If (Format(tempperiod2, "MMM yyyy") <> Format(dtpPeriod.Value, "MMM yyyy")) Or (Format(tempdeldate, "01 MMM yyyy") <> Format(dtpDeliveryDate.Value, "01 MMM yyyy")) Then
         sqlpo = "select po_no from purchaseorder_master where year(delivery_date)=" & _
-                Year(p) & " and month(delivery_date)=" & Month(p) & " and po_no<>'" & Trim(txtPONo.Text) & "' "
+                Year(p) & " and month(delivery_date)=" & Month(p) & " and po_no<>'" & Trim(txtPoNo.Text) & "' "
     Else
         sqlpo = "select po_no from purchaseorder_master where year(delivery_date)=" & _
                 Year(p) & " and month(delivery_date)=" & Month(p)   '& " and po_no<>'" & Trim(txtpono.Text) & "' "
@@ -3319,7 +3319,7 @@ End Sub
 
 Private Sub cboPacking_Change()
     
-    If cboPacking.matchFound Then txtPacking.Text = cboPacking.Column(1) Else txtPacking.Text = ""
+    If CboPacking.matchFound Then TxtPacking.Text = CboPacking.Column(1) Else TxtPacking.Text = ""
     
 End Sub
 
@@ -3343,7 +3343,7 @@ End Sub
 
 Private Sub cboTransport_Change()
     
-    If cboTransport.matchFound Then txtTransport.Text = cboTransport.Column(1) Else txtTransport.Text = ""
+    If cboTransport.matchFound Then TxtTransport.Text = cboTransport.Column(1) Else TxtTransport.Text = ""
     
 End Sub
 
@@ -3363,7 +3363,7 @@ Private Sub cmdReport_Click()
 '    If cboSupplier.Column(3) = "0" Then
 '        POLocal txtPONo.Text, bteHakPrice
 '    Else
-        POImport txtPONo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value
+        POImport txtPoNo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value, Trim(TxtCC)
 '    End If
     Me.MousePointer = vbDefault
 
@@ -3375,24 +3375,24 @@ Private Sub cmdSearch_Click()
     
     lblErrMsg = ""
     
-    If txtSearch = "" Or Grid.Rows = 2 Then txtSearch.SetFocus: Exit Sub
-    If Grid.Row = Grid.Rows - 1 Then i = 2 Else i = Grid.Row + 1
+    If txtSearch = "" Or grid.Rows = 2 Then txtSearch.SetFocus: Exit Sub
+    If grid.Row = grid.Rows - 1 Then i = 2 Else i = grid.Row + 1
     
     Do
         Select Case cboSearch.ListIndex
         Case 0
-            Grid.Col = bteColProdCode
-            If UCase(Mid(Grid.TextMatrix(i, bteColProdCode), 1, Len(txtSearch))) = UCase(txtSearch) Then
+            grid.Col = bteColProdCode
+            If UCase(Mid(grid.TextMatrix(i, bteColProdCode), 1, Len(txtSearch))) = UCase(txtSearch) Then
                 Exit Do
             End If
         Case 1
-            Grid.Col = bteColDesc
-            If InStr(UCase(Grid.TextMatrix(i, bteColDesc)), UCase(txtSearch)) <> 0 Then
+            grid.Col = bteColDesc
+            If InStr(UCase(grid.TextMatrix(i, bteColDesc)), UCase(txtSearch)) <> 0 Then
                 Exit Do
             End If
         End Select
         i = i + 1
-        If i = Grid.Rows - 1 Then
+        If i = grid.Rows - 1 Then
             txtSearch = ""
             i = 2
             lblErrMsg = DisplayMsg(8012)
@@ -3400,9 +3400,9 @@ Private Sub cmdSearch_Click()
         End If
     Loop
     
-    Grid.Row = i
-    Grid.TopRow = i
-    Grid.SetFocus
+    grid.Row = i
+    grid.TopRow = i
+    grid.SetFocus
     
 End Sub
 
@@ -3447,8 +3447,8 @@ Private Sub Form_Load()
     lblCaption(11).Visible = (bteHakPrice = 1)
     lblCaption(12).Visible = (bteHakPrice = 1)
     
-    txtAmount.Visible = (bteHakPrice = 1)
-    txtPPn.Visible = (bteHakPrice = 1)
+    txtamount.Visible = (bteHakPrice = 1)
+    txtPPN.Visible = (bteHakPrice = 1)
     txtGrandTotal.Visible = (bteHakPrice = 1)
     
     AddToComboSupplier
@@ -3466,9 +3466,9 @@ Private Sub Form_Load()
     cboPaymentTerm.ListWidth = 225
     cboPaymentTerm.ColumnWidths = "50pt;175"
     
-    up_FillCombo cboPacking, "POPacking_Cls"
-    cboPacking.ListWidth = 225
-    cboPacking.ColumnWidths = "50pt;175"
+    up_FillCombo CboPacking, "POPacking_Cls"
+    CboPacking.ListWidth = 225
+    CboPacking.ColumnWidths = "50pt;175"
     
     up_FillCombo cboInsuranceCls, "Insurance_Cls"
     cboInsuranceCls.ListWidth = 225
@@ -3481,8 +3481,8 @@ Private Sub Form_Load()
     cboAlarm.AddItem "Yes"
     cboAlarm.AddItem "No"
     
-    Call up_FillCombo(cboCurr, "curr_cls")
-    cboCurr.TextColumn = 2
+    Call up_FillCombo(cbocurr, "curr_cls")
+    cbocurr.TextColumn = 2
     
     CompanyMaster
     'SetComboWHTo
@@ -3511,11 +3511,11 @@ Dim t As String
     Header
 
     If cboStatus.ListIndex = 0 Then
-        command1(2).Caption = "Create"
+        Command1(2).Caption = "Create"
         ClearPO
         ubah = False
         cboPONo.locked = True
-        txtPONo.Text = "KI3-"
+        txtPoNo.Text = "KI3-"
         dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
         If cboSupplier.Text <> "" Then
             t = Format(Month(dtpPODate), "0#") & "/" & Year(dtpPODate)
@@ -3527,26 +3527,26 @@ Dim t As String
     Else
         If cboSupplier.Text = "" Then
             cboPONo.clear
-            txtPONo.Text = ""
+            txtPoNo.Text = ""
         Else
             sql = " and supplier_Code='" & cboSupplier.Text & "' "
             AddToComboPONo (sql)
         End If
 
         ubah = True
-        command1(2).Caption = "Update"
+        Command1(2).Caption = "Update"
         cboPONo.locked = False
         'txtPONo.locked = False
 
         For i = 0 To cboPONo.ListCount - 1
-            If txtPONo.Text = cboPONo.List(i) Then
+            If txtPoNo.Text = cboPONo.List(i) Then
                 ketemu = True
                 cboPONo.ListIndex = i
                 Exit For
             End If
         Next
         If ketemu = False Then
-            txtPONo.Text = ""
+            txtPoNo.Text = ""
             dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
         End If
         cboWHTo.locked = cboPONo.matchFound
@@ -3560,14 +3560,14 @@ End Sub
 
 Private Sub cbopono_Click()
     lblErrMsg = ""
-    txtPONo.Text = cboPONo.Text
+    txtPoNo.Text = cboPONo.Text
     Header
     GetDefaultValue
     kosongBwh
     
     Dim p As String
     
-    sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
+    sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
     If RS.State <> adStateClosed Then RS.Close
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
 
@@ -3594,7 +3594,7 @@ Private Sub cbopono_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
 End Sub
 
 Private Sub lblCaption_DblClick(Index As Integer)
-    If txtPONo.locked Then txtPONo.locked = False Else txtPONo.locked = True
+    If txtPoNo.locked Then txtPoNo.locked = False Else txtPoNo.locked = True
 End Sub
 'If KeyAscii = Asc("'") Then KeyAscii = 0
 'End Sub
@@ -3604,10 +3604,10 @@ Private Sub txtpono_Change()
     
     Dim ketemu As Boolean
     
-    txtPONo2.Text = txtPONo.Text
+    txtPONo2.Text = txtPoNo.Text
     If cboStatus.ListIndex = 1 Then
         For i = 0 To cboPONo.ListCount - 1
-            If txtPONo.Text = cboPONo.List(i) Then
+            If txtPoNo.Text = cboPONo.List(i) Then
                 ketemu = True
                 cboPONo.ListIndex = i
                 Exit For
@@ -3633,7 +3633,7 @@ Private Sub txtpono_KeyPress(KeyAscii As Integer)
         kosongBwh
         Dim p As String
         lblErrMsg = ""
-        sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
+        sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
         If RS.State <> adStateClosed Then RS.Close
         RS.Open sql, Db, adOpenKeyset, adLockOptimistic
     
@@ -3665,7 +3665,7 @@ ClearPO
     If cboSupplier.ListIndex <> -1 Then
         cboWHTo.Text = ""
         cboDeliverTo.Text = ""
-        txtSupplier.Text = cboSupplier.Column(1)
+        txtsupplier.Text = cboSupplier.Column(1)
         txtAddress.Text = cboSupplier.Column(2)
         countrycls = cboSupplier.Column(3)
         GetDefaultValue
@@ -3674,7 +3674,7 @@ ClearPO
             AddToComboPONo (sql)
 
             For i = 0 To cboPONo.ListCount - 1
-                If txtPONo.Text = cboPONo.List(i) Then
+                If txtPoNo.Text = cboPONo.List(i) Then
                     ketemu = True
                     cboPONo.ListIndex = i
 '                    Browse
@@ -3682,7 +3682,7 @@ ClearPO
                 End If
             Next
             If ketemu = False Then
-                txtPONo.Text = ""
+                txtPoNo.Text = ""
                 dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
             End If
             GetDefaultValue
@@ -3696,18 +3696,18 @@ ClearPO
     Else
         cboWHTo.Text = ""
         cboDeliverTo.Text = ""
-        txtSupplier.Text = ""
+        txtsupplier.Text = ""
         txtAddress.Text = ""
         countrycls = 0
         cboPONo.clear
         If cboStatus.ListIndex = 1 Then
-            txtPONo.Text = ""
+            txtPoNo.Text = ""
             dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
             GetDefaultValue
             kosongBwh
             Header
         Else
-            txtPONo.Text = ""
+            txtPoNo.Text = ""
         End If
         lblErrMsg.Caption = DisplayMsg(4050) '"Record with this Supplier Code not Exist"
         cboSupplier.SetFocus
@@ -3749,21 +3749,21 @@ If DateDiff("m", isipodate, isidtpPO2) <> 0 Then
     If cboStatus.ListIndex = 1 Then
         If cboSupplier.Text = "" Then
             cboPONo.clear
-            txtPONo.Text = ""
+            txtPoNo.Text = ""
         Else
             sql = " and supplier_Code='" & cboSupplier.Text & "' "
             AddToComboPONo (sql)
         End If
 
         For i = 0 To cboPONo.ListCount - 1
-            If txtPONo.Text = cboPONo.List(i) Then
+            If txtPoNo.Text = cboPONo.List(i) Then
                 ketemu = True
                 cboPONo.ListIndex = i
                 Exit For
             End If
         Next
         If ketemu = False Then
-            txtPONo.Text = ""
+            txtPoNo.Text = ""
             dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
             GetDefaultValue
             kosongBwh
@@ -3811,9 +3811,9 @@ Private Sub dtpDeliveryDate_Change()
 End Sub
 
 Private Sub cbocurr_Click()
-    If cboCurr.ListIndex <> -1 Then
-        Grid.TextMatrix(actrow, bteColCurrCode) = cboCurr.Column(0)
-        Grid.TextMatrix(actrow, bteColCurr) = cboCurr.Column(1)
+    If cbocurr.ListIndex <> -1 Then
+        grid.TextMatrix(actrow, bteColCurrCode) = cbocurr.Column(0)
+        grid.TextMatrix(actrow, bteColCurr) = cbocurr.Column(1)
     End If
 End Sub
 
@@ -3822,25 +3822,25 @@ Private Sub cbocurr_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
 End Sub
 
 Private Sub cbocurr_LostFocus()
-    cboCurr.Visible = False
+    cbocurr.Visible = False
 End Sub
 
 Private Sub cboprice_Change()
-If InStr(1, cboPrice.Text, ",") = 1 Then cboPrice.Text = Right(cboPrice, Len(cboPrice) - 1)
+If InStr(1, cboprice.Text, ",") = 1 Then cboprice.Text = Right(cboprice, Len(cboprice) - 1)
 End Sub
 
 Private Sub cboprice_Click()
-    If cboPrice.ListIndex <> -1 Then
-        Grid.TextMatrix(actrow, bteColCurrCode) = cboPrice.Column(2)
-        For i = 0 To cboCurr.ListCount - 1
-            If Trim(Grid.TextMatrix(actrow, bteColCurrCode)) = Trim(cboCurr.List(i)) Then
-                cboCurr.ListIndex = i
+    If cboprice.ListIndex <> -1 Then
+        grid.TextMatrix(actrow, bteColCurrCode) = cboprice.Column(2)
+        For i = 0 To cbocurr.ListCount - 1
+            If Trim(grid.TextMatrix(actrow, bteColCurrCode)) = Trim(cbocurr.List(i)) Then
+                cbocurr.ListIndex = i
                 Exit For
             End If
         Next i
-        Grid.TextMatrix(actrow, bteColCurr) = uf_GetCurrencyDescription(Trim(cboPrice.Column(2)))
-        Grid.TextMatrix(actrow, bteColUnitCls) = cboPrice.Column(3)
-        Grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(cboPrice.Column(3)))
+        grid.TextMatrix(actrow, bteColCurr) = uf_GetCurrencyDescription(Trim(cboprice.Column(2)))
+        grid.TextMatrix(actrow, bteColUnitCls) = cboprice.Column(3)
+        grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(cboprice.Column(3)))
     End If
 End Sub
 
@@ -3852,9 +3852,9 @@ Private Sub CboPrice_KeyPress(KeyAscii As MSForms.ReturnInteger)
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
           KeyAscii = 0
     End If
-    If InStr(1, cboPrice.Text, ".") > 1 Then If KeyAscii = Asc(".") Then KeyAscii = 0
-    If Trim(cboPrice.Text) = "" Then cboPrice.Text = Format(0, gs_formatPrice)
-    If CDbl(cboPrice.Text & Chr(KeyAscii)) > gd_MaxPrice Then KeyAscii = 0
+    If InStr(1, cboprice.Text, ".") > 1 Then If KeyAscii = Asc(".") Then KeyAscii = 0
+    If Trim(cboprice.Text) = "" Then cboprice.Text = Format(0, gs_formatPrice)
+    If CDbl(cboprice.Text & Chr(KeyAscii)) > gd_MaxPrice Then KeyAscii = 0
 End Sub
 
 Private Sub cboPrice_LostFocus()
@@ -3862,37 +3862,37 @@ Dim sql3 As String
 Dim rs3 As New Recordset
 Dim ketemu As Boolean
     
-    If cboPrice.Text = "" Then cboPrice.Text = Format(0, gs_formatPrice)
+    If cboprice.Text = "" Then cboprice.Text = Format(0, gs_formatPrice)
     
     Dim z As Double
-    z = CDbl(cboPrice.Text)
+    z = CDbl(cboprice.Text)
     If z > gd_MaxPrice Then
-        cboPrice.Text = Left(z, 10)
+        cboprice.Text = Left(z, 10)
     End If
         
-    Grid.TextMatrix(actrow, bteColPrice) = Format(cboPrice.Text, gs_formatPrice)
+    grid.TextMatrix(actrow, bteColPrice) = Format(cboprice.Text, gs_formatPrice)
     Call Grid_AfterEdit(actrow, bteColPrice)
     
-    cboPrice.Text = Format(cboPrice.Text, gd_MaxPrice)    'If cboprice.Text <> 0 Then
+    cboprice.Text = Format(cboprice.Text, gd_MaxPrice)    'If cboprice.Text <> 0 Then
     
-    For i = 0 To cboPrice.ListCount - 1
-        If Trim(cboPrice.Text) = Trim(cboPrice.List(i)) Then
+    For i = 0 To cboprice.ListCount - 1
+        If Trim(cboprice.Text) = Trim(cboprice.List(i)) Then
             ketemu = True
-            cboPrice.ListIndex = i
+            cboprice.ListIndex = i
             Exit For
         End If
     Next i
     
     If ketemu = False Then
-        sql3 = "select unit_cls from item_master where item_code='" & Grid.TextMatrix(actrow, bteColProdCode) & "' "
+        sql3 = "select unit_cls from item_master where item_code='" & grid.TextMatrix(actrow, bteColProdCode) & "' "
         Set rs3 = Db.Execute(sql3)
         
         If Not (rs3.BOF And rs3.EOF) Then
-            Grid.TextMatrix(actrow, bteColUnitCls) = rs3(0)
-            Grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(rs3(0)))
+            grid.TextMatrix(actrow, bteColUnitCls) = rs3(0)
+            grid.TextMatrix(actrow, bteColUnit) = uf_GetUnitDescription(Trim(rs3(0)))
         End If
     End If
-    cboPrice.Visible = False
+    cboprice.Visible = False
 End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
@@ -3903,9 +3903,9 @@ Dim RS As New Recordset
 
 a = 0
 
-command1(0).Enabled = True
+Command1(0).Enabled = True
 
-With Grid
+With grid
     If .Col = bteColOrder Then
         txtSearch = ""
         If .TextMatrix(Row, bteColOrder) = "" Then .TextMatrix(Row, bteColOrder) = Format(0, gs_formatQty)
@@ -3943,14 +3943,14 @@ With Grid
                 lblErrMsg.Caption = "Invalid Qty, Qty Contract Remaining " & TempQtyBefore & " !"
                 .SetFocus
                 
-                command1(0).Enabled = False
+                Command1(0).Enabled = False
                 
                 .TextMatrix(Row, bteColRemainQtyContract) = TempQtyBefore
                 
                 Exit Sub
             Else
                 .TextMatrix(Row, bteColRemainQtyContract) = TempQtyBefore
-                command1(0).Enabled = True
+                Command1(0).Enabled = True
             End If
         End If
        
@@ -3980,16 +3980,16 @@ With Grid
                 End If
             Next i
             
-            txtAmount.Text = Format(a, gs_formatAmount)
+            txtamount.Text = Format(a, gs_formatAmount)
             
             If isippn = 0 Then
-                txtPPn.Text = Format(0, gs_formatAmount)
+                txtPPN.Text = Format(0, gs_formatAmount)
             Else
-                txtPPn.Text = Format(CDbl(isippn / 100) * CDbl(txtAmount.Text), gs_formatAmount)
+                txtPPN.Text = Format(CDbl(isippn / 100) * CDbl(txtamount.Text), gs_formatAmount)
             End If
             
-            txtPPn.Text = Format(txtPPn.Text, gs_formatAmount)
-            txtGrandTotal = Format(CDbl(txtPPn.Text) + CDbl(txtAmount.Text), gs_formatAmount)
+            txtPPN.Text = Format(txtPPN.Text, gs_formatAmount)
+            txtGrandTotal = Format(CDbl(txtPPN.Text) + CDbl(txtamount.Text), gs_formatAmount)
             
             If CDec(.TextMatrix(Row, bteColQtyContract)) <> CDec(9999999) Then
                 .TextMatrix(Row, bteColPriceContractClsDetail) = 1
@@ -4009,7 +4009,7 @@ With Grid
     
     'Validas edit Qty Order dan Price
         If .TextMatrix(actrow, bteColProdCode) = "" Then
-            sql = "select * from part_receipt where po_no='" & txtPONo.Text & "' and item_code='" & .TextMatrix(actrow, bteColProdCode) & "' "
+            sql = "select * from part_receipt where po_no='" & txtPoNo.Text & "' and item_code='" & .TextMatrix(actrow, bteColProdCode) & "' "
             
             Set RS = Db.Execute(sql)
                 If Not (RS.BOF And RS.EOF) Then
@@ -4036,31 +4036,31 @@ Dim RS As New Recordset
 
 If statusfix = 1 Then
   
-    If Grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
+    If grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
        Cancel = True
     Else
-      If Grid.Col <> bteColOrder And Grid.Col <> bteColPrice Then   'And Grid.Col <> bteColCurr And Grid.Col <> bteColPrice Then
+      If grid.Col <> bteColOrder And grid.Col <> bteColPrice Then   'And Grid.Col <> bteColCurr And Grid.Col <> bteColPrice Then
           Cancel = True
       End If
-      If Grid.Col = bteColOrder Then orderawal = CDbl(Grid.TextMatrix(Row, bteColOrder))
+      If grid.Col = bteColOrder Then orderawal = CDbl(grid.TextMatrix(Row, bteColOrder))
     End If
 Else
-    If Grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
-      If Grid.Col <> bteColSelect Then
+    If grid.Cell(flexcpChecked, Row, bteColSelect) <> flexChecked Then
+      If grid.Col <> bteColSelect Then
           Cancel = True
       End If
     Else
-      If Grid.Col <> bteColSelect And Grid.Col <> bteColOrder Then
+      If grid.Col <> bteColSelect And grid.Col <> bteColOrder Then
           Cancel = True
       End If
-      If Grid.Col = bteColOrder Then orderawal = CDbl(Grid.TextMatrix(Row, bteColOrder))
+      If grid.Col = bteColOrder Then orderawal = CDbl(grid.TextMatrix(Row, bteColOrder))
     End If
 End If
 End Sub
 
 Private Sub Grid_CellChanged(ByVal Row As Long, ByVal Col As Long)
-If Grid.Col = bteColOrder Then _
-If InStr(1, Grid.TextMatrix(Row, Col), ",") = 1 Then Grid.TextMatrix(Row, Col) = Right(Grid.TextMatrix(Row, Col), Len(Grid.TextMatrix(Row, Col)) - 1)
+If grid.Col = bteColOrder Then _
+If InStr(1, grid.TextMatrix(Row, Col), ",") = 1 Then grid.TextMatrix(Row, Col) = Right(grid.TextMatrix(Row, Col), Len(grid.TextMatrix(Row, Col)) - 1)
   
 
 End Sub
@@ -4083,9 +4083,9 @@ End Sub
 
 Private Sub grid_Click()
   If statuskunci = False Then
-  If Grid.Row > 1 Then
-  If Grid.Cell(flexcpChecked, Grid.Row, bteColSelect) = flexChecked Then
-    With Grid
+  If grid.Row > 1 Then
+  If grid.Cell(flexcpChecked, grid.Row, bteColSelect) = flexChecked Then
+    With grid
         If .Col = bteColCurr Then
 '            cboCurr.top = .Cell(flexcpTop, .Row, bteColCurr)
 '            cboCurr.Left = .Cell(flexcpLeft, .Row, bteColCurr)
@@ -4140,12 +4140,12 @@ End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
 lblErrMsg = ""
-  If Grid.Col = bteColOrder Then
+  If grid.Col = bteColOrder Then
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
       KeyAscii = 0
     End If
   End If
-  If Grid.Col = bteColPrice Then
+  If grid.Col = bteColPrice Then
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
       KeyAscii = 0
     End If
@@ -4153,8 +4153,8 @@ lblErrMsg = ""
 End Sub
 
 Private Sub Grid_AfterScroll(ByVal OldTopRow As Long, ByVal OldLeftCol As Long, ByVal NewTopRow As Long, ByVal NewLeftCol As Long)
-    cboCurr.Visible = False
-    cboPrice.Visible = False
+    cbocurr.Visible = False
+    cboprice.Visible = False
 End Sub
 
 Private Sub Grid_DblClick()
@@ -4163,19 +4163,19 @@ Dim diff As Integer
 Dim startm As Date
 Dim endm As Date
 
-If Grid.Rows > 2 Then
+If grid.Rows > 2 Then
     If hakAkses("frm_ReceiptSupplyScheculeInquiry") = 0 Then lblErrMsg = DisplayMsg(3007):   Exit Sub
     date1 = DateAdd("m", 1, dtpPeriod.Value)
     diff = DateDiff("d", Format(dtpPeriod, "yyyy-mm-01"), Format(date1, "yyyy-mm-01"))
     startm = CDate(Year(dtpPeriod) & "-" & Month(dtpPeriod) & "-01")
     endm = CDate(Year(dtpPeriod) & "-" & Month(dtpPeriod) & "-" & diff)
-    With Grid
+    With grid
         popanggil = "poparts"
         frm_ReceiptSupplyScheculeInquiry.CboItemCD = .TextMatrix(.Row, bteColProdCode)
         frm_ReceiptSupplyScheculeInquiry.DMonth(0) = Format(startm, "dd MMM yyyy")
         frm_ReceiptSupplyScheculeInquiry.DMonth(1) = Format(endm, "dd MMM yyyy")
         frm_ReceiptSupplyScheculeInquiry.ClickSearch
-        frm_ReceiptSupplyScheculeInquiry.Grid.LeftCol = 12
+        frm_ReceiptSupplyScheculeInquiry.grid.LeftCol = 12
         frm_ReceiptSupplyScheculeInquiry.Show
         frm_ReceiptSupplyScheculeInquiry.Cmd_save(8).Caption = "&Back"
     End With
@@ -4200,8 +4200,8 @@ Case 0
 
     If hakUpdate(Me.Name) = 0 Then lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
     
-    If txtPONo.Text = "" Then
-        txtPONo.SetFocus
+    If txtPoNo.Text = "" Then
+        txtPoNo.SetFocus
         lblErrMsg = DisplayMsg(1048) '"Please Select PO No"
         Me.MousePointer = vbDefault
         Exit Sub
@@ -4215,14 +4215,14 @@ Case 0
     
     'Sql = "select * from purchaseorder_master where left(po_no, 16) ='" & Mid(txtPONo.Text, 1, 16) & "' and sheetcoil_cls=0"
     
-    sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPONo.Text) & "'"
+    sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPoNo.Text) & "'"
     
     If RS.State <> adStateClosed Then RS.Close
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
 
     If RS.BOF And RS.EOF Then
       lblErrMsg.Caption = DisplayMsg(4015)
-      txtPONo.SetFocus
+      txtPoNo.SetFocus
       Me.MousePointer = vbDefault
       Exit Sub
     End If
@@ -4237,7 +4237,7 @@ Case 0
         RS("Revise_No") = txtRevisi.Text
         RS("PriceCondition_Cls") = cboPriceCondition.Text
         RS("PaymentTerm_Cls") = cboPaymentTerm.Text
-        RS("POPacking_Cls") = cboPacking.Text
+        RS("POPacking_Cls") = CboPacking.Text
         RS("Insurance_Cls") = cboInsuranceCls.Text
         RS("Transportation_Cls") = cboTransport.Text
         
@@ -4249,11 +4249,11 @@ Case 0
         RS("POMarking4") = txtMarking(3).Text
         RS("POMarking5") = txtMarking(4).Text
         RS("POMarking6") = txtMarking(5).Text
-        RS("remarks") = txtRemarks.Text
-        RS("amount") = txtAmount.Text
-        RS("ppn") = txtPPn.Text
+        RS("remarks") = txtremarks.Text
+        RS("amount") = txtamount.Text
+        RS("ppn") = txtPPN.Text
         RS("total_amount") = txtGrandTotal.Text
-        RS("remarks") = txtRemarks.Text
+        RS("remarks") = txtremarks.Text
         'RS("PriceContract_Cls") = txtPriceContract.Text
         RS("Last_Update") = Now
         RS("Last_User") = userLogin
@@ -4261,7 +4261,7 @@ Case 0
                 
         strTempCurr = ""
         
-        With Grid
+        With grid
             For i = 2 To .Rows - 1
                 If .Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
                     If strTempCurr = "" Then strTempCurr = .TextMatrix(i, bteColCurrCode)
@@ -4317,7 +4317,7 @@ Case 0
                  
                 Else
                     
-                    sql4 = "select * from part_receipt where po_no='" & txtPONo.Text & "' and item_code='" & .TextMatrix(i, bteColProdCode) & "' "
+                    sql4 = "select * from part_receipt where po_no='" & txtPoNo.Text & "' and item_code='" & .TextMatrix(i, bteColProdCode) & "' "
                     
                     Set rs4 = Db.Execute(sql4)
                     If Not (rs4.BOF And rs4.EOF) Then
@@ -4353,7 +4353,7 @@ Case 0
                                             
                 Set rsUpd = cmd.Execute
                         
-                sql3 = "delete from purchaseorder_detail where po_no='" & txtPONo.Text & "' "
+                sql3 = "delete from purchaseorder_detail where po_no='" & txtPoNo.Text & "' "
                 Db.Execute sql3
                 R = 1
                         
@@ -4390,7 +4390,7 @@ Case 0
                         rsGrid.AddNew
                         VSeq = SeqN
                         rsGrid("Seq_no") = VSeq
-                        rsGrid("po_no") = txtPONo.Text
+                        rsGrid("po_no") = txtPoNo.Text
                         rsGrid("item_Code") = .TextMatrix(i, bteColProdCode)
                         rsGrid("price") = .TextMatrix(i, bteColPrice)
                         rsGrid("currency_code") = .TextMatrix(i, bteColCurrCode)
@@ -4443,7 +4443,7 @@ Case 0
                 cmd.ActiveConnection = Db
                 cmd.CommandText = "sp_POMasterPriceContract_Upd"
                 
-                cmd.Parameters.append cmd.CreateParameter("PONo", adVarChar, adParamInput, 25, txtPONo.Text)
+                cmd.Parameters.append cmd.CreateParameter("PONo", adVarChar, adParamInput, 25, txtPoNo.Text)
                 cmd.Parameters.append cmd.CreateParameter("User", adVarChar, adParamInput, 15, userLogin)
                                         
                 Set rsUpdContractCls = cmd.Execute
@@ -4490,8 +4490,8 @@ Case 2
                 cboSupplier.MatchEntry = 2
             End If
                 
-            If txtPONo.Text = "" Then
-                txtPONo.SetFocus
+            If txtPoNo.Text = "" Then
+                txtPoNo.SetFocus
                 lblErrMsg = DisplayMsg(1046) '"Please Input PO No"
                 Me.MousePointer = vbDefault
                 Exit Sub
@@ -4502,7 +4502,7 @@ Case 2
                 
                 'Sql = "select * from purchaseorder_master where left(po_no, 16) ='" & Mid(txtPONo.Text, 1, 16) & "' and sheetcoil_cls=0"
                 
-                sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPONo.Text) & "'"
+                sql = "select * from purchaseorder_master where po_no ='" & Trim(txtPoNo.Text) & "'"
                 
                 
                 If RS.State <> adStateClosed Then RS.Close
@@ -4510,12 +4510,12 @@ Case 2
                   
                 If Not (RS.BOF And RS.EOF) Then
                     lblErrMsg.Caption = DisplayMsg(1023)
-                    txtPONo.SetFocus
+                    txtPoNo.SetFocus
                     Me.MousePointer = vbDefault
                     Exit Sub
                 Else
                     RS.AddNew
-                    RS("po_no") = txtPONo.Text
+                    RS("po_no") = txtPoNo.Text
                     RS("supplier_code") = cboSupplier.Text
                 End If
 
@@ -4527,10 +4527,10 @@ Case 2
             RS("Deliver_To") = cboDeliverTo.Text
             RS("Revise_No") = txtRevisi.Text
             RS("delivery_date") = Format(dtpDeliveryDate.Value, "YYYY-MM-DD")
-            RS("amount") = txtAmount.Text
-            RS("ppn") = txtPPn.Text
+            RS("amount") = txtamount.Text
+            RS("ppn") = txtPPN.Text
             RS("total_amount") = txtGrandTotal.Text
-            RS("remarks") = txtRemarks.Text
+            RS("remarks") = txtremarks.Text
             RS("sheetcoil_cls") = 0
             RS("Last_Update") = Now
             RS("Last_User") = userLogin
@@ -4539,8 +4539,8 @@ Case 2
             If InStr(1, err.Description, "Violation of PRIMARY KEY constraint") > 0 Then
                 t = Format(Month(dtpPODate), "0#") & "/" & Year(dtpPODate)
                 Call PONO(t, cboSupplier.Text)
-                txtPONo2.Text = txtPONo.Text
-                RS("po_No") = txtPONo.Text
+                txtPONo2.Text = txtPoNo.Text
+                RS("po_No") = txtPoNo.Text
                 RS("Last_Update") = Now
                 RS("Last_User") = userLogin
                 RS.update
@@ -4554,8 +4554,8 @@ Case 2
     
     Else
     
-        If txtPONo.Text = "" Then
-            txtPONo.SetFocus
+        If txtPoNo.Text = "" Then
+            txtPoNo.SetFocus
             lblErrMsg = DisplayMsg(1048) '"Please Select PO No"
             Me.MousePointer = vbDefault
             Exit Sub
@@ -4563,13 +4563,13 @@ Case 2
             Browse
             If ada = False Then
                 dtpDeliveryDate.Value = Format(Now + 1, "dd MMM yyyy")
-                txtAmount.Text = Format(0, gs_formatAmount)
-                txtPPn.Text = Format(0, gs_formatAmount)
+                txtamount.Text = Format(0, gs_formatAmount)
+                txtPPN.Text = Format(0, gs_formatAmount)
                 txtGrandTotal.Text = Format(0, gs_formatAmount)
-                txtRemarks.Text = ""
+                txtremarks.Text = ""
     
                 lblErrMsg.Caption = DisplayMsg(4015)
-                txtPONo.SetFocus
+                txtPoNo.SetFocus
                 Me.MousePointer = vbDefault
                 Exit Sub
             End If
@@ -4579,11 +4579,11 @@ Case 2
     
 Case 3
 
-    If txtPONo.Text <> "" And cboSupplier.Text <> "" Then
+    If txtPoNo.Text <> "" And cboSupplier.Text <> "" Then
         
         Dim p As String
         
-        sql = "select * from purchaseorder_master where po_no='" & txtPONo.Text & "' and sheetcoil_cls=0"
+        sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
         If RS.State <> adStateClosed Then RS.Close
         RS.Open sql, Db, adOpenKeyset, adLockOptimistic
             
@@ -4620,7 +4620,7 @@ Select Case Index
             End If
 
             On Error Resume Next
-            Grid.TopRow = 1
+            grid.TopRow = 1
 
     Case 2:
             If intpage = 1 Then
@@ -4631,10 +4631,10 @@ Select Case Index
                lblErrMsg = ""
             End If
             On Error Resume Next
-            Atas = Grid.TopRow
+            Atas = grid.TopRow
 
-            Grid.TopRow = Grid.TopRow - 16
-            If Atas = Grid.TopRow Then Grid.TopRow = 1
+            grid.TopRow = grid.TopRow - 16
+            If Atas = grid.TopRow Then grid.TopRow = 1
 
     Case 3:
             If intpage < jmlpage Then
@@ -4646,7 +4646,7 @@ Select Case Index
             End If
 
             On Error Resume Next
-            Grid.TopRow = Grid.TopRow + 16
+            grid.TopRow = grid.TopRow + 16
 
     Case 4:
             If intpage = jmlpage Then
@@ -4657,7 +4657,7 @@ Select Case Index
             End If
 
             On Error Resume Next
-            Grid.TopRow = Grid.Rows
+            grid.TopRow = grid.Rows
 
 End Select
 End Sub
@@ -4728,7 +4728,7 @@ End Sub
 
 Private Sub ClearPO()
     
-    sql = "delete from purchaseorder_master where not exists(select po_no from purchaseorder_detail where po_no = purchaseorder_master.po_no) and po_no = '" & txtPONo & "'"
+    sql = "delete from purchaseorder_master where not exists(select po_no from purchaseorder_detail where po_no = purchaseorder_master.po_no) and po_no = '" & txtPoNo & "'"
     Db.Execute sql
     
 End Sub

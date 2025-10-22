@@ -328,7 +328,7 @@ Begin VB.Form frmPOPartsSet
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   154730499
+         Format          =   60162051
          UpDown          =   -1  'True
          CurrentDate     =   37798
       End
@@ -1160,7 +1160,7 @@ Begin VB.Form frmPOPartsSet
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   154730499
+      Format          =   60162051
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker dtpDeliveryDate 
@@ -1182,7 +1182,7 @@ Begin VB.Form frmPOPartsSet
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   154730499
+      Format          =   60162051
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -3410,7 +3410,7 @@ Private Sub cmdReport_Click()
 '    If cboSupplier.Column(3) = "0" Then
 '        POLocal txtPONo.Text, bteHakPrice
 '    Else
-        POImport txtPoNo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value
+        POImport txtPoNo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value, Trim(TxtCC)
 '    End If
     Me.MousePointer = vbDefault
 
