@@ -328,7 +328,7 @@ Begin VB.Form frmPOPartsSet
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   60162051
+         Format          =   60489731
          UpDown          =   -1  'True
          CurrentDate     =   37798
       End
@@ -357,7 +357,7 @@ Begin VB.Form frmPOPartsSet
       End
       Begin VB.Label Label3 
          BackStyle       =   0  'Transparent
-         Caption         =   "Company Code"
+         Caption         =   "Factory Code"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -1160,7 +1160,7 @@ Begin VB.Form frmPOPartsSet
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60162051
+      Format          =   60489731
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker dtpDeliveryDate 
@@ -1182,7 +1182,7 @@ Begin VB.Form frmPOPartsSet
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60162051
+      Format          =   60489731
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 

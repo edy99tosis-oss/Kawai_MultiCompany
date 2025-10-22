@@ -912,8 +912,8 @@ SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls
                   "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
                   "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls" & vbCrLf & _
                   "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
-                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = ' " + CompanyCode + " ' --up.Company_Code" & vbCrLf & _
-                  " Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' " & vbCrLf & _
+                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = '" & CompanyCode & "'" & vbCrLf & _
+                  " Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' AND WM.Company_Code = '" & CompanyCode & "' " & vbCrLf & _
                   "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
 ' --------
 

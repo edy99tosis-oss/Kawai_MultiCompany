@@ -3363,7 +3363,7 @@ Private Sub cmdReport_Click()
 '    If cboSupplier.Column(3) = "0" Then
 '        POLocal txtPONo.Text, bteHakPrice
 '    Else
-        POImport txtPoNo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value, Trim(TxtCC)
+        POImport txtPoNo.Text, bteHakPrice, 1, "", dtpDeliveryDate.Value, Trim(TxtFc)
 '    End If
     Me.MousePointer = vbDefault
 
