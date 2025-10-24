@@ -293,12 +293,17 @@ Public strUserID     As String
 Public strPassword   As String
 Dim DbTimeout        As String
 Dim CommandTimeout   As String
+Public pCompanyCode As String
+Public pCompanyName As String
+Public gCompanyList As ADODB.Recordset
+Public NeedFactorySelection As Boolean
+
 
 Sub Kosong()
     txtUser.Text = ""
     txtPass.Text = ""
-    txtmenu.Text = ""
-    lblErrMsg = ""
+    txtMenu.Text = ""
+    LblErrMsg = ""
 End Sub
 
 Private Sub Form_Load()
@@ -397,10 +402,10 @@ Dim passLogin As String
     Me.MousePointer = vbHourglass
     If txtUser = "" Then
         txtUser.SetFocus
-        lblErrMsg = DisplayMsg(1002)
+        LblErrMsg = DisplayMsg(1002)
     ElseIf txtPass = "" Then
         txtPass.SetFocus
-        lblErrMsg = DisplayMsg(1004)
+        LblErrMsg = DisplayMsg(1004)
     Else
         sql = "select * from user_Setup where userName = '" & txtUser & "'"
         If rsUser.State <> adStateClosed Then rsUser.Close
@@ -408,7 +413,7 @@ Dim passLogin As String
         
         If (rsUser.EOF And rsUser.BOF) Then 'jika salah user
             txtUser.SetFocus
-            lblErrMsg = DisplayMsg(3000)
+            LblErrMsg = DisplayMsg(3000)
             
         Else 'jika usernya sesuai
         
@@ -428,9 +433,9 @@ Dim passLogin As String
             gs_DBName = fc_Decrypt(Rct)
             
             If lockOut = 1 Then 'cek dulu udah dilockout atau belum
-                lblErrMsg = DisplayMsg(3002)
+                LblErrMsg = DisplayMsg(3002)
             ElseIf txtPass <> passLogin Then 'jika salah pass
-                lblErrMsg = DisplayMsg(3001)
+                LblErrMsg = DisplayMsg(3001)
                 
                 sql = "update User_Setup set InvalidLogin=" & InvalidLogin + 1 & ", Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
                     "where UserName ='" & txtUser & "'"  ' 'tambah jml invalidlogin
@@ -459,23 +464,40 @@ Dim passLogin As String
                 
                 
                 rsUser.Requery
-                
+                   
                 DoEvents
                 On Error GoTo ErrHandler
                 
-                If txtmenu = "" Then
-                    DoEvents
-                    frmMainMenu.loadtree
-                    frmMainMenu.Show
-                    DoEvents
+                'Remark 20251024 penambahan factory privilege
+'                If txtmenu = "" Then
+'                    DoEvents
+'                    FrmFactoryAccess.Show
+'                    frmMainMenu.loadtree
+'                    frmMainMenu.Show
+'                    DoEvents
+'                    Me.Hide
+'                Else
+'                    If panggilForm(txtmenu) = 0 Then
+'                        DoEvents: Me.Hide
+'                    Else
+'                        LblErrMsg = DisplayMsg(3006)
+'                    End If
+'                End If
+            If txtMenu = "" Then
+                DoEvents
+            
+                If CheckFactoryPrivilege() Then
                     Me.Hide
-                Else
-                    If panggilForm(txtmenu) = 0 Then
-                        DoEvents: Me.Hide
-                    Else
-                        lblErrMsg = DisplayMsg(3006)
-                    End If
                 End If
+            
+            Else
+                If panggilForm(txtMenu) = 0 Then
+                    DoEvents: Me.Hide
+                Else
+                    LblErrMsg = DisplayMsg(3006)
+                End If
+            End If
+
             End If
         End If
     End If
@@ -515,19 +537,19 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub TxtMenu_KeyPress(KeyAscii As Integer)
-    lblErrMsg = ""
+    LblErrMsg = ""
     If KeyAscii = Asc("'") Then KeyAscii = 0
     KeyAscii = Asc(UCase(Chr(KeyAscii)))
 End Sub
 
 Private Sub txtPass_KeyPress(KeyAscii As Integer)
-    lblErrMsg = ""
+    LblErrMsg = ""
     If KeyAscii = Asc("'") Then KeyAscii = 0
     If KeyAscii = 13 Then SendKeys vbTab
 End Sub
 
 Private Sub txtUser_KeyPress(KeyAscii As Integer)
-    lblErrMsg = ""
+    LblErrMsg = ""
     If KeyAscii = Asc("'") Then KeyAscii = 0
     If KeyAscii = 13 Then SendKeys vbTab
 End Sub
@@ -591,3 +613,71 @@ Private Sub CloseReg()
    End If
    SaveSetting "NIC", "Setting", "Shutdown", "1"
 End Sub
+
+Public Function CheckFactoryPrivilege() As Boolean
+    On Error GoTo ErrHandler
+
+    Dim rs As ADODB.Recordset
+    Dim sql As String
+    Dim companyCount As Integer
+    Dim hasPrivilege As Boolean
+
+    ' === Ambil daftar privilege factory user ===
+    sql = "SELECT A.Company_Code, B.Show, A.Company_Name " & _
+          "FROM dbo.Company_Profile A " & _
+          "LEFT JOIN dbo.App_FactoryPrivilege B ON A.Company_Code = B.Factory_Code " & _
+          "WHERE B.UserID = '" & txtUser & "' AND B.Show = '1'"
+
+    Set rs = Db.Execute(sql)
+    hasPrivilege = Not (rs.EOF And rs.BOF)
+
+    ' === Jika user punya privilege ===
+    If hasPrivilege Then
+        companyCount = 0
+        Do While Not rs.EOF
+            companyCount = companyCount + 1
+            rs.MoveNext
+        Loop
+        rs.MoveFirst
+
+        ' === Cek apakah user harus pilih factory lagi ===
+        If NeedFactorySelection Then
+            ' Reset flag biar nggak terus-terusan looping
+            NeedFactorySelection = False
+
+            Set gCompanyList = rs
+            FrmFactoryAccess.Show
+            CheckFactoryPrivilege = True
+            Exit Function
+        End If
+
+        ' === Kalau lebih dari 1 company privilege ===
+        If companyCount > 1 Then
+            Set gCompanyList = rs  ' Simpan untuk form FrmFactoryAccess
+            FrmFactoryAccess.Show
+            CheckFactoryPrivilege = True   ' True = form FactoryAccess ditampilkan
+        Else
+            ' === Hanya 1 company ===
+            pCompanyCode = rs!Company_Code
+            pCompanyName = rs!Company_Name
+
+            frmMainMenu.loadtree
+            frmMainMenu.Show
+            DoEvents
+            CheckFactoryPrivilege = True   ' True = lanjut ke main menu
+        End If
+
+    Else
+        MsgBox "Anda tidak memiliki hak akses ke company manapun.", vbExclamation, "Akses Ditolak"
+        CheckFactoryPrivilege = False
+    End If
+
+CleanExit:
+    Exit Function
+
+ErrHandler:
+    MsgBox "Terjadi kesalahan saat memeriksa privilege: " & err.Description, vbCritical
+    CheckFactoryPrivilege = False
+    Resume CleanExit
+End Function
+

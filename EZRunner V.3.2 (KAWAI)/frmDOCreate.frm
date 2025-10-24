@@ -51,7 +51,7 @@ Begin VB.Form frmDOCreate
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Format          =   66256897
+      Format          =   128843777
       CurrentDate     =   41092
    End
    Begin VB.TextBox txtbcno 
@@ -163,7 +163,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66256899
+         Format          =   128843779
          CurrentDate     =   37799
       End
       Begin MSForms.ComboBox cboDeliveryCls 
@@ -688,7 +688,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66256899
+         Format          =   128843779
          CurrentDate     =   37799
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -710,7 +710,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66256899
+         Format          =   128843779
          CurrentDate     =   37860
       End
       Begin VB.Label Label 
@@ -1876,6 +1876,7 @@ With cbo(1)
         "where cust_code = '" & cbo(0) & _
         "' and Do_Date >='" & Format(dtAwal, "yyyy-MM-dd") & _
         "' and Do_Date <='" & Format(dtAkhir, "yyyy-MM-dd") & _
+        "' and Company_Code = '" & cboFactory(4).Text & _
         "' order by right(rtrim(do_no),4) + subString(rtrim(do_no),12,2) + left(rtrim(do_no),3) desc"
     Set rscbo = Db.Execute(sql)
 
@@ -1911,7 +1912,7 @@ With cbo(2)
         "' and delivery_Date >='" & Format(dtAwal, "yyyy-MM-dd") & _
         "' and delivery_Date <= '" & Format(dtAkhir, "yyyy-MM-dd") & _
         "' and (Fix_Cls = 0 or Fix_Cls is null) "
-    If cboStatus = "Create" Then sql = sql & " And a.Po_no Not In (Select List_Po From DO_Master) "
+    If cboStatus = "Create" Then sql = sql & " And a.Po_no Not In (Select List_Po From DO_Master DO_Master WHERE Company_Code = '" & cboFactory(4).Text & "' ) "
 
     sql = sql & " order by a.PO_NO"
     Set rscbo = Db.Execute(sql)
@@ -1937,7 +1938,7 @@ End Sub
 
 Private Sub cbobctype_Change()
 If cboBCType.matchFound = False Then
-    lblErrMsg.Caption = "Please Input Valid BC Type !"
+    LblErrMsg.Caption = "Please Input Valid BC Type !"
     cboBCType.SetFocus
 End If
 End Sub
@@ -1950,7 +1951,7 @@ End Sub
 
 
 Private Sub cboFactory_Change(Index As Integer)
-lblErrMsg.Caption = ""
+LblErrMsg.Caption = ""
 
     If cboFactory(4).ListIndex <> -1 Then
         TxtFactoryName.Text = cboFactory(4).Column(1)
@@ -2004,7 +2005,7 @@ Private Sub cbo_Change(Index As Integer)
 Dim rsDataDo As New ADODB.Recordset
     
     If nilKosong Then Exit Sub
-    lblErrMsg = ""
+    LblErrMsg = ""
     If Index = 0 Then
         lblNm(0) = "": gantiDealer = True
         cbo(0) = cbo(0)
@@ -2109,7 +2110,7 @@ If cbo(0) <> "" Then
             Call headerGrid(gridAtas, 1)
         End If
         Call kosongBwh
-        lblErrMsg = DisplayMsg(4011)
+        LblErrMsg = DisplayMsg(4011)
     
     Else 'Jika ketemu
         lblNm(0) = cbo(0).Column(1)
@@ -2123,7 +2124,7 @@ If cbo(0) <> "" Then
         End If
         
         If cboStatus = "Create" Then Call buatDoBaru Else Call isiCboDO
-        lblErrMsg = ""
+        LblErrMsg = ""
     End If
 End If
 Me.MousePointer = vbDefault
@@ -2171,17 +2172,17 @@ Private Sub dtDO_Change()
 End Sub
 
 Private Sub dtAwal_Change()
-    lblErrMsg = ""
+    LblErrMsg = ""
     gantiDtAwal = True
-    If dtAwal > dtAkhir Then lblErrMsg = DisplayMsg("4076") & " " & Format(dtAkhir, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
+    If dtAwal > dtAkhir Then LblErrMsg = DisplayMsg("4076") & " " & Format(dtAkhir, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
     Call filterCboPO
     If cboStatus = "Update" Then Call filterCboDO
 End Sub
 
 Private Sub dtAkhir_Change()
-    lblErrMsg = ""
+    LblErrMsg = ""
     gantiDtAkhir = True
-    If dtAkhir < dtAwal Then lblErrMsg = DisplayMsg("4077") & " " & Format(dtAwal, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
+    If dtAkhir < dtAwal Then LblErrMsg = DisplayMsg("4077") & " " & Format(dtAwal, "dd MMM yyyy"): cbo(1).clear: cbo(2).clear: Exit Sub
     Call filterCboPO
     If cboStatus = "Update" Then Call filterCboDO
 End Sub
@@ -2577,16 +2578,16 @@ With gridAtas
     If Col = bteColSelect Then
         If cbo(1) = "" Then 'Belon isi DO
             Cancel = True
-            lblErrMsg = DisplayMsg(1035)
+            LblErrMsg = DisplayMsg(1035)
         ElseIf cmdUpdate.Caption = "Create" Then 'Blm klik Create
             Cancel = True
             cmdUpdate.SetFocus
-            lblErrMsg = DisplayMsg(1038)
+            LblErrMsg = DisplayMsg(1038)
         ElseIf .TextMatrix(Row, bteColFixOrder) = "1" Then 'Fix
             Cancel = True
-            lblErrMsg = DisplayMsg(1104)
+            LblErrMsg = DisplayMsg(1104)
         ElseIf (Trim(.TextMatrix(Row, bteColCurr)) <> defaultCurr) And defaultCurr <> "" Then
-            lblErrMsg = DisplayMsg("0040") & " " & defaultCurr
+            LblErrMsg = DisplayMsg("0040") & " " & defaultCurr
             Cancel = True
             prosesSimpan = False
 '        ElseIf Not CheckPONo(Row) Then
@@ -2606,7 +2607,7 @@ With gridBawah
     Select Case Col
     Case bteColSelect, bteColLotNo, bteColQty, bteColCtn, bteColNet, bteColGross, bteColPrice, bteColService, bteColSerialNoFrom, bteColSerialNoTo
         If .TextMatrix(Row, bteColFixOrder) = "1" And prosesSimpan = False Then
-            lblErrMsg = DisplayMsg(1104)
+            LblErrMsg = DisplayMsg(1104)
             Cancel = True
             prosesSimpan = False
         Else
@@ -2647,7 +2648,7 @@ Dim Qty As String, Price As String, tampungQty As String
 Dim service As String
 Dim TempSF As String, TempST As String
 
-lblErrMsg = ""
+LblErrMsg = ""
 With gridAtas
 
 If Row <> 0 Then
@@ -2665,7 +2666,7 @@ If Row <> 0 Then
         
         If .Cell(flexcpChecked, Row, bteColSelect) = 1 Then  'jika cek
             'Jika DP udah abis
-            If Qty = 0 Then lblErrMsg = DisplayMsg("0041"): Exit Sub
+            If Qty = 0 Then LblErrMsg = DisplayMsg("0041"): Exit Sub
             If defaultCurr = "" Then defaultCurr = .TextMatrix(Row, bteColCurr)
             
             For i = 1 To gridBawah.Rows - 1 'Utk mengecek apakah udah ada data di DO
@@ -2811,7 +2812,7 @@ Dim dblQtyCtn As Double
 Dim dblNet As Double
 Dim dblGross As Double
 
-lblErrMsg = ""
+LblErrMsg = ""
 With gridBawah
 If Row <> 0 And Col <> bteColSelect Then
     If IsNumeric(.TextMatrix(Row, Col)) = False And Col <> bteColLotNo And Col <> bteColSerialNoFrom _
@@ -2849,7 +2850,7 @@ If Row <> 0 And Col <> bteColSelect Then
         If CDbl(Qty) > batasDO Then
             'Jika tdk ada di Invoice cek Batas DO saja
             .TextMatrix(Row, bteColQty) = Format(batasDO, gs_formatQty)
-            lblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
+            LblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
         End If
         
         batasDO = batasDO - .TextMatrix(Row, bteColQty)
@@ -2866,7 +2867,7 @@ If Row <> 0 And Col <> bteColSelect Then
     Select Case Col
     Case bteColQty
         If CDbl(.TextMatrix(Row, bteColQty)) > gd_MaxQty Then
-            lblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
+            LblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
             .TextMatrix(Row, Col) = dblTempValue
             If gridAtas.TextMatrix(.TextMatrix(Row, bteColSeqNo), bteColSerialNoFrom) = "" Then
                 .TextMatrix(.TextMatrix(Row, bteColSeqNo), bteColSerialNoFrom) = ""
@@ -2907,28 +2908,28 @@ If Row <> 0 And Col <> bteColSelect Then
         
     Case bteColCtn
         If CDbl(.TextMatrix(Row, bteColCtn)) > gd_MaxBox Then
-            lblErrMsg = DisplayMsg(4037) & " " & gd_MaxBox & " !"
+            LblErrMsg = DisplayMsg(4037) & " " & gd_MaxBox & " !"
             .TextMatrix(Row, Col) = dblTempValue
             .SetFocus
         End If
         .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatBox)
     Case bteColNet
         If CDbl(.TextMatrix(Row, bteColNet)) > gd_MaxWeight Then
-            lblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
+            LblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
             .TextMatrix(Row, Col) = dblTempValue
             .SetFocus
         End If
         .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatWeight)
     Case bteColGross
         If CDbl(.TextMatrix(Row, bteColGross)) > gd_MaxWeight Then
-            lblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
+            LblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
             .TextMatrix(Row, Col) = dblTempValue
             .SetFocus
         End If
         .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatWeight)
     Case bteColPrice
         If CDbl(.TextMatrix(Row, bteColPrice)) > gd_MaxPrice Then
-            lblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
+            LblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
             .TextMatrix(Row, Col) = dblTempValue
             Price = dblTempValue
             .SetFocus
@@ -2941,7 +2942,7 @@ If Row <> 0 And Col <> bteColSelect Then
     
     Case bteColService
         If CDbl(.TextMatrix(Row, bteColService)) > gd_MaxPrice Then
-            lblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
+            LblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice & " !"
             .TextMatrix(Row, Col) = dblTempValue
             service = dblTempValue
             .SetFocus
@@ -3115,7 +3116,7 @@ If lblFix.Visible = False Then
         frmDODetail.Show
     End If
 Else
-    lblErrMsg = DisplayMsg(4046)
+    LblErrMsg = DisplayMsg(4046)
 End If
 End Sub
 
@@ -3189,36 +3190,36 @@ Dim pesanError As String
     
     
     If hakUpdate(Me.Name) = 0 Then _
-        lblErrMsg = DisplayMsg(3008): dataError = True: Exit Function
+        LblErrMsg = DisplayMsg(3008): dataError = True: Exit Function
     If cbo(2) = "" Then
         'cbo(2).ListIndex = 0
-        lblErrMsg = DisplayMsg(1048)
+        LblErrMsg = DisplayMsg(1048)
         cbo(2).SetFocus
         dataError = True
         Exit Function
     End If
     If cbo(0) = "" Then
-        lblErrMsg = DisplayMsg(1033)
+        LblErrMsg = DisplayMsg(1033)
         cbo(0).SetFocus
         dataError = True
     Else
         cbo(0) = cbo(0)
         If cbo(0).matchFound = False Then
-            lblErrMsg = DisplayMsg(4011)
+            LblErrMsg = DisplayMsg(4011)
             cbo(0).SetFocus
             dataError = True
         ElseIf cbo(1) = "" Then
-            lblErrMsg = DisplayMsg(1035)
+            LblErrMsg = DisplayMsg(1035)
             If cbo(1).Enabled Then cbo(1).SetFocus
             dataError = True
         ElseIf cbo(1).Enabled Then
             cbo(1) = cbo(1)
             If cbo(1).matchFound = False Then
-                lblErrMsg = DisplayMsg(8129)
+                LblErrMsg = DisplayMsg(8129)
                 cbo(1).SetFocus
                 dataError = True
             ElseIf FixCls = 1 Then
-                lblErrMsg = DisplayMsg(4046)
+                LblErrMsg = DisplayMsg(4046)
                  Command1(0).Enabled = False
                 cbo(1).SetFocus
                 dataError = True
@@ -3228,11 +3229,11 @@ Dim pesanError As String
             Else
                 cbo(2) = cbo(2)
                 If cbo(2) <> "" And cbo(2).matchFound = False Then
-                    lblErrMsg = DisplayMsg(4015)
+                    LblErrMsg = DisplayMsg(4015)
                     cbo(2).SetFocus
                     dataError = True
                 ElseIf cmdUpdate.Caption = "Create" Then 'Blm klik Create
-                    lblErrMsg = DisplayMsg(1038)
+                    LblErrMsg = DisplayMsg(1038)
                     cmdUpdate.SetFocus
                     dataError = True
                 End If
@@ -3241,11 +3242,11 @@ Dim pesanError As String
     End If
     'mengecek keberadaan warehouse. update by dudi januari 08
     If cboWH = "" Then
-       lblErrMsg = DisplayMsg(31)
+       LblErrMsg = DisplayMsg(31)
        cboWH.SetFocus
        dataError = True
     ElseIf cboWH.matchFound = False Then
-        lblErrMsg = DisplayMsg(4018)
+        LblErrMsg = DisplayMsg(4018)
         cboWH.SetFocus
         dataError = True
     End If
@@ -3253,14 +3254,14 @@ Dim pesanError As String
     ' Cek Forwarder
     If Text1.locked = False Then
         If Text1 = "" Then
-            lblErrMsg = "Please Type Forwarder Name ! "
+            LblErrMsg = "Please Type Forwarder Name ! "
             Text1.SetFocus
             dataError = True
         End If
     End If
         
     If TxtForwarder = "" Then
-       lblErrMsg = "Please Select Forwarder ! "
+       LblErrMsg = "Please Select Forwarder ! "
        cbo(3).SetFocus
        dataError = True
 '    ElseIf cbo(3).MatchFound = False Then
@@ -3283,7 +3284,7 @@ Dim RsFor As New ADODB.Recordset
 
 'On Error Resume Next
 Me.MousePointer = vbHourglass
-    lblErrMsg = ""
+    LblErrMsg = ""
 '    If cbo(2) = "" Then
 '        'cbo(2).ListIndex = 0
 '        LblErrMsg = DisplayMsg(9001)
@@ -3294,7 +3295,7 @@ Me.MousePointer = vbHourglass
     If CekInvoice Then
         Call isiGridAtas
         Call isiGridBawah
-        lblErrMsg = DisplayMsg(4110)
+        LblErrMsg = DisplayMsg(4110)
         Me.MousePointer = vbDefault
         Exit Sub
     End If
@@ -3314,10 +3315,10 @@ Me.MousePointer = vbHourglass
     If cboStatus = "Create" Then
         
         Call simpanMaster
-        lblErrMsg = DisplayMsg(1000)
+        LblErrMsg = DisplayMsg(1000)
     Else
         Call simpanMaster
-        lblErrMsg = DisplayMsg(1101)
+        LblErrMsg = DisplayMsg(1101)
     End If
     Call SetDeliveryRange
     Call isiGridAtas
@@ -3357,13 +3358,13 @@ Private Sub Command1_Click(Index As Integer)
     Case 0: 'Submit
         If dataError Then Me.MousePointer = vbDefault: Exit Sub
         If CekInvoice Then
-            lblErrMsg = DisplayMsg(4110)
+            LblErrMsg = DisplayMsg(4110)
             Me.MousePointer = vbDefault
             Exit Sub
         End If
         '#20071004 Yudha, check data surat jalan yang item nya beda dengan order entry
         If uf_check_SuratJalan_OrderDifferent = False Then
-            lblErrMsg = DisplayMsg("0079")
+            LblErrMsg = DisplayMsg("0079")
             Me.MousePointer = vbDefault
             Exit Sub
         End If
@@ -3374,11 +3375,11 @@ Private Sub Command1_Click(Index As Integer)
             If RSCekRemark.State <> adStateClosed Then RSCekRemark.Close
             RSCekRemark.Open "Select *from Message Where MsgId ='0079'", Db, adOpenDynamic, adLockOptimistic
             If RSCekRemark.EOF = True Then
-                lblErrMsg = "[0079] Please select remarks Id!"
+                LblErrMsg = "[0079] Please select remarks Id!"
                 Me.MousePointer = vbDefault
                 Exit Sub
             Else
-                lblErrMsg = DisplayMsg("0079") 'Please select remarks Id!
+                LblErrMsg = DisplayMsg("0079") 'Please select remarks Id!
                 Me.MousePointer = vbDefault
                 Exit Sub
             End If
@@ -3390,7 +3391,7 @@ Private Sub Command1_Click(Index As Integer)
         Call simpanDetail
         Call simpanMaster
     Case 1: 'Clear
-        lblErrMsg = ""
+        LblErrMsg = ""
         Call isiGridAtas
         If gridAtas.Rows > 1 Then
             Call isiGridBawah
@@ -3440,9 +3441,9 @@ Dim rsDOMaster As New ADODB.Recordset
 nilKosong = True
     If cboStatus = "Create" Then
         sql = "Insert into DO_Master (Cust_Code, DO_NO, DO_Date, Amount, List_PO, Reissue_Cls, Revised_Cls, Fix_Cls, WHCode, forwarder_Code,Last_Update, Last_User," & vbCrLf & _
-                "   Remarks_cls, Remarks, BC_type, BC40_No, BC40_Date, Delivery_Cls, No_Register) " & vbCrLf & _
+                "   Remarks_cls, Remarks, BC_type, BC40_No, BC40_Date, Delivery_Cls, No_Register, Company_Code) " & vbCrLf & _
                 "       values ('" & cbo(0) & "', '" & cbo(1) & "', '" & Format(dtDO, "yyyy-MM-dd") & "', " & totAmountDo & ", '" & listPO & "', 0, 0, 0, '" & Trim(cboWH) & "','" & Trim(cbo(3)) & "', getdate(), '" & userLogin & "'," & vbCrLf & _
-                "           '" & Trim(CboRemarks) & "','" & Trim(txtremarks) & "','" & Trim(cboBCType) & "','" & Trim(txtBCNo) & "','" & Format(dtpBCDate, "yyyy-MM-dd") & "','" & Trim(cboDeliveryCls.Text) & "', '" & Trim(txtRegisterNo.Text) & "')"
+                "           '" & Trim(CboRemarks) & "','" & Trim(txtremarks) & "','" & Trim(cboBCType) & "','" & Trim(txtBCNo) & "','" & Format(dtpBCDate, "yyyy-MM-dd") & "','" & Trim(cboDeliveryCls.Text) & "', '" & Trim(txtRegisterNo.Text) & "', '" & Trim(cboFactory(4).Text) & "')"
         Db.Execute sql
         
         '**** Handle No yg Sama saat yg Sama
@@ -3474,7 +3475,7 @@ nilKosong = True
             "No_Register ='" & Trim(txtRegisterNo.Text) & "', " & _
             "Last_Update = getdate(), Last_User = '" & userLogin & "',Remarks_Cls ='" & Trim(CboRemarks) & "', " & _
             "Remarks = '" & Trim(txtremarks) & "' " & _
-            "where DO_NO = '" & cbo(1) & "' and Cust_Code = '" & cbo(0) & "'"
+            "where DO_NO = '" & cbo(1) & "' and Cust_Code = '" & cbo(0) & "' and Company_Code = '" & cboFactory(4).Text & "' "
         Db.Execute sql
         
     End If
@@ -3540,7 +3541,7 @@ Dim service As Double
             'Jika ada di Invoice cek Batas DO dan Invoice
             If CDbl(Qty) > batasDO Then
                 'Jika tdk ada di Invoice cek Batas DO saja
-                lblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
+                LblErrMsg = DisplayMsg(4045) & " " & Format(batasDO, gs_formatQty)
                 .Row = i: .Col = bteColQty
                 .TopRow = i: .SetFocus
                 prosesSimpan = False: Exit Sub
@@ -3633,7 +3634,7 @@ Dim service As Double
         Else
             nilPesan = "1101" 'Ubah
         End If
-        lblErrMsg = DisplayMsg(nilPesan)
+        LblErrMsg = DisplayMsg(nilPesan)
     End With
     prosesSimpan = False
 End Sub
@@ -3643,10 +3644,10 @@ Private Sub cmdReport_Click(Index As Integer)
     Me.MousePointer = vbHourglass
     cbo(1) = cbo(1)
     If cbo(1) = "" Then
-        lblErrMsg = DisplayMsg(1035)
+        LblErrMsg = DisplayMsg(1035)
         If cbo(1).Enabled Then cbo(1).SetFocus
     ElseIf cbo(1).matchFound = False Then
-        lblErrMsg = DisplayMsg(8129)
+        LblErrMsg = DisplayMsg(8129)
         If cbo(1).Enabled Then cbo(1).SetFocus
     Else
         Select Case Index
@@ -3701,7 +3702,7 @@ Sub HapusDOMaster()
     Db.Execute sql
 End Sub
 
-Private Sub CmdSubMenu_Click()
+Private Sub cmdSubMenu_Click()
     Call HapusDOMaster
     DoEvents
     frmMainMenu.Show
@@ -3717,7 +3718,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    lblErrMsg.Caption = ErrMsg
+    LblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
@@ -3786,7 +3787,7 @@ Private Function uf_check_SuratJalan_OrderDifferent() As Boolean
     Dim Pos As Integer
     Dim ls_sql As String
     Dim found As Boolean
-    Dim RS As New ADODB.Recordset
+    Dim rs As New ADODB.Recordset
      
     found = False
     If gridBawah.Rows > 1 Then
@@ -3795,10 +3796,10 @@ Private Function uf_check_SuratJalan_OrderDifferent() As Boolean
                 " where po_no='" & Trim(gridBawah.TextMatrix(Pos, bteColPONo)) & "' " & _
                 " and item_code='" & Trim(gridBawah.TextMatrix(Pos, bteColProdCode)) & "' " & _
                 " and Seq_no='" & Trim(gridBawah.TextMatrix(Pos, bteColSeqNo)) & "' "
-            If RS.State <> adStateClosed Then RS.Close
-            RS.CursorLocation = adUseClient
-            RS.Open ls_sql, Db, adOpenKeyset, adLockOptimistic
-            If RS.EOF = True Then
+            If rs.State <> adStateClosed Then rs.Close
+            rs.CursorLocation = adUseClient
+            rs.Open ls_sql, Db, adOpenKeyset, adLockOptimistic
+            If rs.EOF = True Then
                 found = True
                 Exit For
             End If
@@ -3811,7 +3812,7 @@ Private Function uf_check_SuratJalan_OrderDifferent() As Boolean
     Else
         uf_check_SuratJalan_OrderDifferent = True
     End If
-    If RS.State <> adStateClosed Then RS.Close
+    If rs.State <> adStateClosed Then rs.Close
 End Function
 
 Private Function GetMinSerial(a As String, b As String, C As Double, d As String) As String

@@ -295,11 +295,11 @@ Dim ParentCode As Node
 Dim bolshow As Boolean
 
 Sub NoAkses()
-    lblErrMsg = DisplayMsg(3007)
+    LblErrMsg = DisplayMsg(3007)
 End Sub
 
 Private Sub Form_Load()
-    lblErrMsg = ""
+    LblErrMsg = ""
     bolshow = True
     lblSim.Visible = gb_Simulation
 End Sub
@@ -309,9 +309,14 @@ Private Sub cmdLogout_Click()
     frmLogin.Show
     frmLogin.txtPass = ""
     frmLogin.txtPass = "nec"
+    
+    FrmFactoryAccess.OBFactory1 = False
+    FrmFactoryAccess.OBFactory2 = False
+    FrmFactoryAccess.LblErrMsg.Caption = ""
+    
     DoEvents
     Me.Hide
-    lblErrMsg = ""
+    LblErrMsg = ""
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -366,7 +371,7 @@ End Sub
 Private Sub Tree_DblClick()
     Dim X As Integer
     
-    lblErrMsg = ""
+    LblErrMsg = ""
     If bolshow = False Then bolshow = True: Exit Sub
     
     DoEvents
@@ -459,7 +464,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nPrice Master":
             If hakAkses("frmPriceMaster") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("frmPriceMaster") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("frmPriceMaster") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -791,7 +796,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nAR List":
             If hakAkses("frmARList") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("frmARList") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("frmARList") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -800,7 +805,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nAR Progress Control":
             If hakAkses("frmAR_progress") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("frmAR_progress") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("frmAR_progress") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -1088,7 +1093,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nPayment Amount Entry":
             If hakAkses("FrmApList") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("FrmApList") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("FrmApList") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -1097,7 +1102,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nAccount Payable Progress":
             If hakAkses("FrmAPProgress") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("FrmAPProgress") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("FrmAPProgress") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -1788,7 +1793,7 @@ Private Sub Tree_DblClick()
             Me.Hide
               
         Case Else
-            lblErrMsg.Caption = "[0000] Function is not available !"
+            LblErrMsg.Caption = "[0000] Function is not available !"
     End Select
     DoEvents
 End Sub
