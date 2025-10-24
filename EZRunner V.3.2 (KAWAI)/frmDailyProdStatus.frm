@@ -318,7 +318,7 @@ Begin VB.Form frmDailyProdStatus
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128843779
+      Format          =   128778243
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -341,7 +341,7 @@ Begin VB.Form frmDailyProdStatus
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128843779
+      Format          =   128778243
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -451,8 +451,8 @@ Begin VB.Form frmDailyProdStatus
       Tag             =   "FTTF*/"
       Top             =   330
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin EZRunnerv3.Anchor Anchor1 
       Left            =   0
@@ -574,7 +574,7 @@ Private Sub headerGrid()
     bteColComplete = 17
     bteColCheck = 18
     
-    With Grid
+    With grid
         .clear
         
         .Rows = 1
@@ -646,8 +646,8 @@ Sub Kosong()
     cbo(1) = ""
     lblNm(1) = ""
     
-    cboFactory(2).Text = ""
-    lblFactory(2).Caption = ""
+'    cboFactory(2).Text = ""
+'    lblFactory(2).Caption = ""
     
     dtAwal = Format(Year(Now) & "-" & Format(Month(Now), "#0") & "-01", "dd MMM yyyy")
     dtAkhir = Format(Now, "dd MMM yyyy")
@@ -857,7 +857,7 @@ Call headerGrid
     
     i = 1
     If Not (rsGrid.BOF And rsGrid.EOF) Then
-    With Grid
+    With grid
     Do While Not rsGrid.EOF
         .Rows = .Rows + 1
         .TextMatrix(i, bteColDate) = Format(Trim(rsGrid("schedule_date")), "dd MMM yyyy")
@@ -914,7 +914,7 @@ End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim tampung As Long
-With Grid
+With grid
     If Row <> 0 And Col = bteColComplete Then
         If .Cell(flexcpChecked, Row, bteColCheck) = flexUnchecked Then
             .Cell(flexcpChecked, Row, bteColCheck) = flexChecked
@@ -939,91 +939,91 @@ dbw.ConnectionString = Db.ConnectionString
     If Index = 0 Then
         dbw.Open
         dbw.BeginTrans
-        For i = 1 To Grid.Rows - 1
-            If Grid.Cell(flexcpChecked, i, bteColCheck) = flexChecked Then
-                If Grid.Cell(flexcpChecked, i, bteColComplete) = flexChecked Then
+        For i = 1 To grid.Rows - 1
+            If grid.Cell(flexcpChecked, i, bteColCheck) = flexChecked Then
+                If grid.Cell(flexcpChecked, i, bteColComplete) = flexChecked Then
                     updateValue = 1
                     
                     'JIKA REMAINING > 0
-                    If Grid.TextMatrix(i, bteColRemain) > 0 Then
+                    If grid.TextMatrix(i, bteColRemain) > 0 Then
                         'UPDATE OFF_QTY DAN CHILD_OFF_QTY PADA REQUIREMENT
                         sqlUpdate = "UPDATE requirement " & _
-                                    "SET Off_Qty = Off_Qty + " & CDbl(Grid.TextMatrix(i, bteColRemain)) & ", " & _
+                                    "SET Off_Qty = Off_Qty + " & CDbl(grid.TextMatrix(i, bteColRemain)) & ", " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
+                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
                         dbw.Execute sqlUpdate
                         sqlUpdate = "UPDATE requirement " & _
                                     "SET OffChildRequirement_Qty = ChildRequirement_Qty * (Off_Qty / Qty), " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
+                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
                         dbw.Execute sqlUpdate
                         'AUTO COMPLETE PADA REQUIREMENT JIKA QTY = OFF_QTY
                         sqlUpdate = "UPDATE requirement " & _
                                     "SET Complete_Cls = 1, " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
+                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
                                     "AND Qty = Off_Qty"
                         dbw.Execute sqlUpdate
                     End If
                 Else
                     updateValue = 0
-                    If Grid.TextMatrix(i, bteColRemain) > 0 Then
+                    If grid.TextMatrix(i, bteColRemain) > 0 Then
                         'UPDATE OFF_QTY DAN CHILD_OFF_QTY PADA REQUIREMENT
                         sqlUpdate = "UPDATE requirement " & _
-                                    "SET Off_Qty = Off_Qty - " & CDbl(Grid.TextMatrix(i, bteColRemain)) & ", " & _
+                                    "SET Off_Qty = Off_Qty - " & CDbl(grid.TextMatrix(i, bteColRemain)) & ", " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
+                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'"
                         dbw.Execute sqlUpdate
                         sqlUpdate = "UPDATE requirement " & _
                                     "SET OffChildRequirement_Qty = ChildRequirement_Qty * (Off_Qty / Qty), " & _
                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                    "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' " & _
-                                    "AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' " & _
-                                    "AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
+                                    "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' " & _
+                                    "AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' " & _
+                                    "AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
                         dbw.Execute sqlUpdate
                     End If
                 End If
                 ''''''
                 strTemp = "SELECT * FROM requirement " & _
-                          "WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "' AND " & _
-                                "Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "' AND " & _
-                                "Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
+                          "WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "' AND " & _
+                                "Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "' AND " & _
+                                "Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' "
                 If rsTemp.State = adStateOpen Then rsTemp.Close
                 rsTemp.Open strTemp, dbw, adOpenKeyset, adLockOptimistic
                 Do While Not rsTemp.EOF
-                    clsMRP.UpdateRequirementResult dbw, Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd"), "'" & Grid.TextMatrix(i, bteColProdCode) & "'", Grid.TextMatrix(i, bteColLotNo), "'" & rsTemp("ChildItem_Code") & "'"
+                    clsMRP.UpdateRequirementResult dbw, Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd"), "'" & grid.TextMatrix(i, bteColProdCode) & "'", grid.TextMatrix(i, bteColLotNo), "'" & rsTemp("ChildItem_Code") & "'"
                     rsTemp.MoveNext
                 Loop
                 ''''''
                 sqlUpdate = "UPDATE daily_production " & _
                                 "SET complete_cls = " & updateValue & ", Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                "WHERE Seq_no = " & Grid.TextMatrix(i, bteColSeqNo)
+                                "WHERE Seq_no = " & grid.TextMatrix(i, bteColSeqNo)
                 dbw.Execute sqlUpdate
                 
                 'AUTO COMPLETE PADA MRP JIKA SEMUA RENCANA PADA DAILY SUDAH COMPLETE
                 sqlUpdate = " UPDATE requirement SET complete_cls = 1, " & _
                             " Last_Update = getdate(), Last_User = '" & userLogin & "'" & _
-                            " WHERE ParentItem_Code = '" & Grid.TextMatrix(i, bteColProdCode) & "'  " & _
-                            "   AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "'  " & _
-                            "   AND Production_Date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
+                            " WHERE ParentItem_Code = '" & grid.TextMatrix(i, bteColProdCode) & "'  " & _
+                            "   AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "'  " & _
+                            "   AND Production_Date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "' " & _
                             "   AND NOT EXISTS  ( " & _
                             "           SELECT * FROM daily_production  " & _
-                            "           WHERE   item_code = '" & Grid.TextMatrix(i, bteColProdCode) & "'  " & _
-                            "               AND Lot_No = '" & Grid.TextMatrix(i, bteColLotNo) & "'  " & _
-                            "               AND schedule_date = '" & Format(Grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'  " & _
+                            "           WHERE   item_code = '" & grid.TextMatrix(i, bteColProdCode) & "'  " & _
+                            "               AND Lot_No = '" & grid.TextMatrix(i, bteColLotNo) & "'  " & _
+                            "               AND schedule_date = '" & Format(grid.TextMatrix(i, bteColDate), "yyyy-MM-dd") & "'  " & _
                             "               AND (complete_cls = NULL OR complete_cls = 0) " & _
                             "           )  "
                 dbw.Execute sqlUpdate
                 
-                Grid.Cell(flexcpChecked, i, bteColCheck) = flexUnchecked
+                grid.Cell(flexcpChecked, i, bteColCheck) = flexUnchecked
             End If
         Next i
         
@@ -1048,8 +1048,8 @@ dbw.ConnectionString = Db.ConnectionString
     ElseIf Index = 1 Then
         cbo(0) = ""
         cbo(1) = ""
-        cboFactory(2).Text = ""
-        lblFactory(2).Caption = ""
+'        cboFactory(2).Text = ""
+'        lblFactory(2).Caption = ""
         
         dtAwal = Date
         dtAkhir = Date
@@ -1057,7 +1057,7 @@ dbw.ConnectionString = Db.ConnectionString
         Call headerGrid
     'RESET
     ElseIf Index = 2 Then
-        With Grid
+        With grid
             For i = 1 To .Rows - 1
                 If .Cell(flexcpChecked, i, bteColCheck) = flexChecked Then
                     If .Cell(flexcpChecked, i, bteColComplete) = flexUnchecked Then
@@ -1185,7 +1185,7 @@ End Sub
 
 '************ Unload **********
 Private Sub CmdSubMenu_Click()
-    If cmdSubMenu.Caption = "&Back" Then
+    If CmdSubMenu.Caption = "&Back" Then
         Call Command1_Click(1)
     Else
         Unload frmProdResult

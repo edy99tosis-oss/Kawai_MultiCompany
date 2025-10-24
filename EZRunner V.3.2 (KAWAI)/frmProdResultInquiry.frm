@@ -316,7 +316,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129236995
+      Format          =   128778243
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -339,7 +339,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129236995
+      Format          =   128778243
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -577,7 +577,7 @@ Private Sub headerGrid()
     bteColCustName = 18 + 2
     bteColPONo = 19 + 2
     
-    With Grid
+    With grid
         .clear
         .ColS = 20 + 2
         .Rows = 1
@@ -691,13 +691,13 @@ Dim booCheck As Boolean
         Else
         
             strCheck = "": booCheck = False
-            For lngCount = 1 To Grid.Rows - 1
-                If Grid.Cell(flexcpChecked, lngCount, 0) = flexChecked Then
+            For lngCount = 1 To grid.Rows - 1
+                If grid.Cell(flexcpChecked, lngCount, 0) = flexChecked Then
                     If Not booCheck Then booCheck = True
                     If strCheck <> "" Then
                         strCheck = strCheck & ", "
                     End If
-                    strCheck = strCheck & Grid.TextMatrix(lngCount, bteColSeqNo)
+                    strCheck = strCheck & grid.TextMatrix(lngCount, bteColSeqNo)
                 End If
             Next
             
@@ -875,8 +875,8 @@ Sub Kosong()
     lblNm(0) = ""
     cbo(1) = ""
     lblNm(1) = ""
-    cboFactory(2).Text = ""
-    lblFactory(2).Caption = ""
+'    cboFactory(2).Text = ""
+'    lblFactory(2).Caption = ""
     
     dtAwal = Format(Year(Now) & "-" & Format(Month(Now), "#0") & "-01", "dd MMM yyyy")
     dtAkhir = Format(Now, "dd MMM yyyy")
@@ -1242,7 +1242,7 @@ Dim sqlResult As String
 Me.MousePointer = vbHourglass
 
 If nilKosong = True Then Exit Sub
-With Grid
+With grid
     Call headerGrid
     
     sql = "select a.Seq_No,Schedule_Date,a.Item_Code,a.SerialNoFrom,a.SerialNoTo, " & _
@@ -1329,7 +1329,7 @@ End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim tampung As Long
-With Grid
+With grid
     If Row <> 0 And Col = bteColSelect Then
         If .Cell(flexcpChecked, Row, bteColSelect) = flexChecked Then
             tampung = Row
@@ -1362,7 +1362,7 @@ Dim rsCek As New ADODB.Recordset
             'WORKSHEET
             viewWorksheet
         Else
-            With Grid
+            With grid
                 cek = 0
                 For i = 1 To .Rows - 1
                     If .Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
@@ -1395,7 +1395,7 @@ Dim rsCek As New ADODB.Recordset
                             frmProdResult.cbo(3) = Trim(.TextMatrix(cek, bteColProdCode)) 'Item Code
                             frmProdResult.txtLot = Trim(.TextMatrix(cek, bteColLotNo)) 'Lot NO
                             frmProdResult.txtQty = Format(0, gs_formatQty)
-                            frmProdResult.txtRemarks = ""
+                            frmProdResult.txtremarks = ""
                             frmProdResult.dailyseqno = .TextMatrix(cek, bteColSeqNo) 'Daily Seq No
                             frmProdResult.qtyDaily = .TextMatrix(cek, bteColPlan) 'Daily Qty
                             frmProdResult.txtUnit = uf_GetUnitDescription(Trim(.TextMatrix(cek, bteColUnitCls)))
@@ -1408,7 +1408,7 @@ Dim rsCek As New ADODB.Recordset
                             
                             frmProdResult.cbo(0).locked = True
                             frmProdResult.cbo(1).locked = True
-                            frmProdResult.cmdSubMenu.Caption = "&Back"
+                            frmProdResult.CmdSubMenu.Caption = "&Back"
                             frmProdResult.Show
                             Me.Hide
                     End Select
@@ -1426,7 +1426,7 @@ End Sub
 
 '************ Unload **********
 Private Sub CmdSubMenu_Click()
-    If cmdSubMenu.Caption = "&Back" Then
+    If CmdSubMenu.Caption = "&Back" Then
         Call Command1_Click(1)
     Else
         Unload frmProdResult

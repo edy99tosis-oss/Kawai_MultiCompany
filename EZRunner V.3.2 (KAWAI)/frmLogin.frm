@@ -302,7 +302,7 @@ Public NeedFactorySelection As Boolean
 Sub Kosong()
     txtUser.Text = ""
     txtPass.Text = ""
-    txtMenu.Text = ""
+    txtmenu.Text = ""
     LblErrMsg = ""
 End Sub
 
@@ -483,7 +483,7 @@ Dim passLogin As String
 '                        LblErrMsg = DisplayMsg(3006)
 '                    End If
 '                End If
-            If txtMenu = "" Then
+            If txtmenu = "" Then
                 DoEvents
             
                 If CheckFactoryPrivilege() Then
@@ -491,7 +491,7 @@ Dim passLogin As String
                 End If
             
             Else
-                If panggilForm(txtMenu) = 0 Then
+                If panggilForm(txtmenu) = 0 Then
                     DoEvents: Me.Hide
                 Else
                     LblErrMsg = DisplayMsg(3006)
@@ -617,7 +617,7 @@ End Sub
 Public Function CheckFactoryPrivilege() As Boolean
     On Error GoTo ErrHandler
 
-    Dim rs As ADODB.Recordset
+    Dim RS As ADODB.Recordset
     Dim sql As String
     Dim companyCount As Integer
     Dim hasPrivilege As Boolean
@@ -628,24 +628,24 @@ Public Function CheckFactoryPrivilege() As Boolean
           "LEFT JOIN dbo.App_FactoryPrivilege B ON A.Company_Code = B.Factory_Code " & _
           "WHERE B.UserID = '" & txtUser & "' AND B.Show = '1'"
 
-    Set rs = Db.Execute(sql)
-    hasPrivilege = Not (rs.EOF And rs.BOF)
+    Set RS = Db.Execute(sql)
+    hasPrivilege = Not (RS.EOF And RS.BOF)
 
     ' === Jika user punya privilege ===
     If hasPrivilege Then
         companyCount = 0
-        Do While Not rs.EOF
+        Do While Not RS.EOF
             companyCount = companyCount + 1
-            rs.MoveNext
+            RS.MoveNext
         Loop
-        rs.MoveFirst
+        RS.MoveFirst
 
         ' === Cek apakah user harus pilih factory lagi ===
         If NeedFactorySelection Then
             ' Reset flag biar nggak terus-terusan looping
             NeedFactorySelection = False
 
-            Set gCompanyList = rs
+            Set gCompanyList = RS
             FrmFactoryAccess.Show
             CheckFactoryPrivilege = True
             Exit Function
@@ -653,13 +653,13 @@ Public Function CheckFactoryPrivilege() As Boolean
 
         ' === Kalau lebih dari 1 company privilege ===
         If companyCount > 1 Then
-            Set gCompanyList = rs  ' Simpan untuk form FrmFactoryAccess
+            Set gCompanyList = RS  ' Simpan untuk form FrmFactoryAccess
             FrmFactoryAccess.Show
             CheckFactoryPrivilege = True   ' True = form FactoryAccess ditampilkan
         Else
             ' === Hanya 1 company ===
-            pCompanyCode = rs!Company_Code
-            pCompanyName = rs!Company_Name
+            pCompanyCode = RS!Company_Code
+            pCompanyName = RS!company_name
 
             frmMainMenu.loadtree
             frmMainMenu.Show

@@ -305,7 +305,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   130940931
+         Format          =   128188419
          CurrentDate     =   37868
       End
       Begin MSComCtl2.DTPicker Tgl2 
@@ -327,7 +327,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   130940931
+         Format          =   128188419
          CurrentDate     =   37868
       End
       Begin VB.Label LblPart 
@@ -979,7 +979,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   130940931
+      Format          =   128188419
       CurrentDate     =   37868
    End
    Begin VB.CheckBox ChkComplete 
@@ -1020,7 +1020,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   130940931
+      Format          =   128188419
       CurrentDate     =   37868
    End
    Begin VB.Label Label17 
@@ -2021,7 +2021,7 @@ Private Sub cbocurr_Change()
     cbocurr_Click
     If cbocurr.ListCount > 0 Then
         cbocurr = Trim(cbocurr)
-        If cbocurr.MatchFound Then
+        If cbocurr.matchFound Then
             xcurr = cbocurr.List(, 0)
             blnshow = False
             'Call browseprice(CboItem, TglReceipt, CboPart(0), xcurr)
@@ -2107,7 +2107,7 @@ If RS.State = 1 Then RS.Close
 End Function
 
 Private Sub cboPackage_Change()
-    If cboPackage.MatchFound Then
+    If cboPackage.matchFound Then
         lblPackage = cboPackage.Column(1)
     Else
         lblPackage = ""
@@ -2122,7 +2122,7 @@ Private Sub CboPart_Change(Index As Integer)
         Header
         GetSubConWarehouseCode
         GetBCType
-        If CboPart(0).MatchFound = True Then lblSupp = CboPart(0).List(CboPart(0).ListIndex, 1)
+        If CboPart(0).matchFound = True Then lblSupp = CboPart(0).List(CboPart(0).ListIndex, 1)
         Tgl2_Click
     End If
     If Index = 1 Then
@@ -2194,7 +2194,7 @@ End Sub
 
 Private Sub CboRecCls_Click()
     CboRecCls = CboRecCls
-    If CboRecCls.MatchFound Then LblRec = CboRecCls.List(CboRecCls.ListIndex, 1)
+    If CboRecCls.matchFound Then LblRec = CboRecCls.List(CboRecCls.ListIndex, 1)
 End Sub
 
 Private Sub CboRecCls_KeyPress(KeyAscii As MSForms.ReturnInteger)
@@ -2202,7 +2202,7 @@ Private Sub CboRecCls_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub cboTransport_Change()
-    If cboTransport.MatchFound Then
+    If cboTransport.matchFound Then
         lblTransport = cboTransport.Column(1)
     Else
         lblTransport = ""
@@ -2274,7 +2274,7 @@ Private Sub CboWHCode_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub cmbbox_warehouse_Change()
-    If cmbbox_warehouse.MatchFound Then
+    If cmbbox_warehouse.matchFound Then
         txtWHSubcon = cmbbox_warehouse.Column(1, cmbbox_warehouse.ListIndex)
     Else
         txtWHSubcon = ""
@@ -2316,7 +2316,7 @@ Private Sub cmdCancel_Click()
 End Sub
 
 Private Sub CmdCari_Click()
-    If CboPart(1).MatchFound = True Then display
+    If CboPart(1).matchFound = True Then display
 End Sub
 
 Private Sub cmdClear_Click()
@@ -2967,7 +2967,9 @@ CboPart(0).ListWidth = 360
 CboPart(0).ListRows = 15
 
 '##Tampilkan Warehouse code dari warehouse_master
-SqlW = "Select rtrim(wh_code) as WC,wh_name as WN from warehouse_master order by wh_code"
+'SqlW = "Select rtrim(wh_code) as WC,wh_name as WN from warehouse_master order by wh_code"
+
+ SqlW = "EXEC dbo.sp_PartReceiptWH_Sel @UserID = '" & userLogin & "' "
 
 Set RsW = New Recordset
 RsW.Open SqlW, Db, adOpenKeyset, adLockOptimistic
@@ -3865,26 +3867,26 @@ Function cek() As Boolean
 cek = True
 If Trim$(CboPart(0)) = "" Then LblErr = DisplayMsg(1054):  CboPart(0).SetFocus: cek = False: Exit Function
 CboPart(0) = CboPart(0)
-If CboPart(0).MatchFound = False Then LblErr = DisplayMsg("0032"): CboPart(0).SetFocus: cek = False: Exit Function
+If CboPart(0).matchFound = False Then LblErr = DisplayMsg("0032"): CboPart(0).SetFocus: cek = False: Exit Function
 
 If Trim$(CboPart(1)) = "" Then LblErr = DisplayMsg(1046):  CboPart(1).SetFocus: cek = False: Exit Function
 CboPart(1) = CboPart(1)
-If CboPart(1).MatchFound = False Then LblErr = DisplayMsg(4015): CboPart(1).SetFocus: cek = False: Exit Function
+If CboPart(1).matchFound = False Then LblErr = DisplayMsg(4015): CboPart(1).SetFocus: cek = False: Exit Function
 
 If Trim(TxtSj) = "" Then LblErr = DisplayMsg(1036): TxtSj.SetFocus:  cek = False: Exit Function
 If Trim(CboRecCls) = "" Then LblErr = DisplayMsg(8088): CboRecCls.SetFocus: cek = False: Exit Function
 CboRecCls = CboRecCls
-If CboRecCls.MatchFound = False Then LblErr = DisplayMsg(8088): CboRecCls.SetFocus: cek = False: Exit Function
+If CboRecCls.matchFound = False Then LblErr = DisplayMsg(8088): CboRecCls.SetFocus: cek = False: Exit Function
 
 If Trim$(cboitem) = "" Then LblErr = DisplayMsg(1009): cboitem.SetFocus: cek = False: Exit Function
 
 If Trim$(cboWhCode) = "" Then LblErr = DisplayMsg(1042): cboWhCode.SetFocus: cek = False: Exit Function
 cboWhCode = cboWhCode
-If cboWhCode.MatchFound = False Then LblErr = DisplayMsg(4023): cboWhCode.SetFocus:  cek = False: Exit Function
+If cboWhCode.matchFound = False Then LblErr = DisplayMsg(4023): cboWhCode.SetFocus:  cek = False: Exit Function
 If CDbl(txtQty) = 0 Then LblErr = DisplayMsg(1012): txtQty.SetFocus: cek = False: Exit Function
 If Trim$(cbounit) = "" Then LblErr = DisplayMsg(1030): cek = False: Exit Function 'Cbounit.SetFocus
 cbounit = cbounit
-If cbounit.MatchFound = False Then LblErr = DisplayMsg(1030):  cek = False: Exit Function 'Cbounit.SetFocus
+If cbounit.matchFound = False Then LblErr = DisplayMsg(1030):  cek = False: Exit Function 'Cbounit.SetFocus
 
 If txtNoSeri.Text = "" Then LblErr = DisplayMsg("0001") & " No Seri ! ":  txtNoSeri.SetFocus: cek = False: Exit Function
 
@@ -3899,7 +3901,7 @@ If Trim$(cbocurr) = "" Then
     End If
 End If
 cbocurr = cbocurr
-If cbocurr.MatchFound = False Then LblErr = DisplayMsg(1028): cbocurr.SetFocus: cek = False: Exit Function
+If cbocurr.matchFound = False Then LblErr = DisplayMsg(1028): cbocurr.SetFocus: cek = False: Exit Function
 
 If CboPart(0).Text <> "S0028" Then 'Request Pak toha jika ada khusus untuk supplier s0028 tidak perlu validasi price 0
 If CDbl(cboprice) = 0 Then
@@ -3952,7 +3954,7 @@ Dim rsPO As New Recordset
 Dim ls_sql As String
 
 CboPart(0) = CboPart(0)
-If CboPart(0).MatchFound = True Then
+If CboPart(0).matchFound = True Then
     CboPart(1).clear
     ' PO Nomber showed bas on Delivery Date
     'ls_sql = "select Po_no from purchaseorder_master where Supplier_code='" & CboPart(0) & "' and (delivery_date >='" & Format(Tgl1, "YYYY-MM-DD") & "' and delivery_date <='" & Format(Tgl2, "YYYY-MM-DD") & "')"
@@ -4703,7 +4705,7 @@ Public Sub up_cdoSendEmail(ByVal ls_smtpserver As String, ByVal li_smtpport As D
     Dim Flds
     Dim attachment
    
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     Set Flds = cdoConf.Fields
        
@@ -4754,7 +4756,7 @@ ErrExit:
     
     Exit Sub
 
-errHandler:
+ErrHandler:
 LblErr.Caption = err.Description
 'Call SaveToTxt("SendEmail_ErrorLog", "SEND MAIL - " & err.number & " : " & err.Description, CurrDate)
 GoTo ErrExit
