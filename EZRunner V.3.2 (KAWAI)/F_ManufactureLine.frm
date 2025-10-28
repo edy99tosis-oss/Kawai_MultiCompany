@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Begin VB.Form F_ManufactureLine 
    BackColor       =   &H00FDDFE3&
    BorderStyle     =   1  'Fixed Single
@@ -714,7 +714,7 @@ Private Sub Header()
 
 End Sub
 
-Private Sub DtSave()
+Private Sub Old_DtSave()
     Dim sql As String, RsSave As New ADODB.Recordset, LblInput As String
     Dim rsCek As New ADODB.Recordset
     
@@ -747,6 +747,99 @@ Private Sub DtSave()
         End If
     End If
     Call Browse
+End Sub
+
+Private Sub DtSave()
+    Dim sql As String, rsCek As New ADODB.Recordset
+    Dim cmd As New ADODB.Command
+    Dim messageID As Integer
+    Dim LblInput As String
+    
+    Call OlahDt
+    
+    If TxtCode <> "" And TxtDesc <> "" And TxtMc <> "" Then
+        On Error GoTo ErrHandler
+        
+        ' 1. Cek apakah Manufacture_Code valid di trade_master
+        sql = "select * from trade_master where trade_code='" & Trim(TxtMc) & "'"
+        If rsCek.State <> adStateClosed Then rsCek.Close
+        rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
+        If (rsCek.BOF And rsCek.EOF) Then
+            Lblpesan = DisplayMsg(1052)
+            GoTo CleanUp
+        End If
+        
+        ' 2. Cek keberadaan data di manufacture_line
+        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
+        If rsCek.State <> adStateClosed Then rsCek.Close
+        rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
+        
+        ' 3. Jika data ditemukan, lakukan UPDATE
+        If Not (rsCek.BOF And rsCek.EOF) Then
+            LblInput = MsgBox("Do you really to update line code ?", vbYesNo + vbQuestion, "Confirmation")
+            If LblInput = vbYes Then
+                Set cmd = New ADODB.Command
+                cmd.ActiveConnection = Db
+                cmd.CommandType = adCmdStoredProc
+                cmd.CommandText = "sp_ManufactureLine_Upd"
+                
+                cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
+                cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
+                cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(TxtCode))
+                cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(TxtDesc))
+                cmd.Parameters.append cmd.CreateParameter("@Last_User", adVarChar, adParamInput, 20, userLogin)
+                cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
+                
+                cmd.Execute
+                messageID = cmd.Parameters("@MessageID").Value
+            Else
+                Lblpesan = ""
+                GoTo CleanUp
+            End If
+        ' 4. Jika data tidak ditemukan, lakukan INSERT
+        Else
+            Set cmd = New ADODB.Command
+            cmd.ActiveConnection = Db
+            cmd.CommandType = adCmdStoredProc
+            cmd.CommandText = "sp_ManufactureLine_Ins"
+            
+            cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
+            cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
+            cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(TxtCode))
+            cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(TxtDesc))
+            cmd.Parameters.append cmd.CreateParameter("@Last_User", adVarChar, adParamInput, 20, userLogin)
+            cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
+            
+            cmd.Execute
+            messageID = cmd.Parameters("@MessageID").Value
+        End If
+        
+        ' 5. Tampilkan pesan berdasarkan MessageID
+        Select Case messageID
+            Case 1000: Lblpesan = DisplayMsg(1000) ' Sukses Insert
+            Case 1101: Lblpesan = DisplayMsg(1101) ' Sukses Update
+            Case 8012: Lblpesan = DisplayMsg(8012) ' Trade Code tidak ditemukan
+            Case 57: Lblpesan = "Terjadi kesalahan pada database."
+            Case 3004: Lblpesan = DisplayMsg(3004) ' Data sudah ada
+            Case Else: Lblpesan = "Terjadi kesalahan tidak diketahui (ID: " & messageID & ")"
+        End Select
+        
+    End If
+    
+CleanUp:
+    If Not rsCek Is Nothing Then
+        If rsCek.State <> adStateClosed Then rsCek.Close
+        Set rsCek = Nothing
+    End If
+    If Not cmd Is Nothing Then Set cmd = Nothing
+    
+    Call Browse
+    
+    Exit Sub
+
+ErrHandler:
+    Lblpesan = "Error: " & err.Description
+    Resume CleanUp
 End Sub
 
 Private Sub Browse()
@@ -783,7 +876,7 @@ Private Sub Clearin()
     TxtCode.Enabled = True
 End Sub
 
-Private Sub DtUpdate()
+Private Sub Old_DtUpdate()
     Dim sql As String, RsUd As New ADODB.Recordset
     sql = "update manufacture_line set line_name='" & Trim(TxtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
         "where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
@@ -791,6 +884,43 @@ Private Sub DtUpdate()
     Lblpesan = DisplayMsg(1101)
     Test = Trim(TxtCode)
     Call Browse
+End Sub
+
+Private Sub DtUpdate()
+    Dim cmd As New ADODB.Command
+    Dim messageID As Integer
+    
+    On Error GoTo ErrHandler
+    
+    Set cmd = New ADODB.Command
+    cmd.ActiveConnection = Db
+    cmd.CommandType = adCmdStoredProc
+    cmd.CommandText = "sp_ManufactureLine_Upd"
+    
+    cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
+    cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
+    cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(TxtCode))
+    cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(TxtDesc))
+    cmd.Parameters.append cmd.CreateParameter("@Last_User", adVarChar, adParamInput, 20, userLogin)
+    cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
+    
+    cmd.Execute
+    messageID = cmd.Parameters("@MessageID").Value
+    
+    If messageID = 1101 Then
+        Lblpesan = DisplayMsg(1101)
+    Else
+        Lblpesan = DisplayMsg(messageID)
+    End If
+    
+    Test = Trim(TxtCode)
+    Call Browse
+    
+    Exit Sub
+
+ErrHandler:
+    Lblpesan = "Error: " & err.Description
+    If Not cmd Is Nothing Then Set cmd = Nothing
 End Sub
 
 Private Sub ClearS(Optional C As String)
@@ -809,7 +939,7 @@ Private Sub ClearS(Optional C As String)
     End If
 End Sub
 
-Private Sub DtDelete()
+Private Sub Old_DtDelete()
     Dim sql As String, RsDel As New ADODB.Recordset
     Dim i As Integer, IMCodeAda, IMLineAda As String, LblInput As String
     
@@ -842,6 +972,75 @@ Private Sub DtDelete()
     Else
         Call ClearS
         Call Hidden
+    End If
+End Sub
+
+Private Sub DtDelete()
+    Dim sql As String, RsDel As New ADODB.Recordset
+    Dim i As Integer, IMCodeAda As String, IMLineAda As String, LblInput As String
+    Dim cmd As ADODB.Command
+    
+    IMCodeAda = ""
+    IMLineAda = ""
+    
+    LblInput = MsgBox("Do you really to delete line code ?", vbYesNo + vbQuestion, "Confirmation")
+    If LblInput = vbYes Then
+        On Error GoTo ErrHandler
+        
+        For i = 1 To Grid.Rows - 1
+            If Grid.TextMatrix(i, bteColSelect) = "D" Then
+                ' Pengecekan ke item_master TIDAK DIUBAH
+                sql = "select * from item_master where manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(Grid.TextMatrix(i, bteColLineCode)) & "'"
+                If RsDel.State <> adStateClosed Then RsDel.Close
+                RsDel.Open sql, Db, adOpenDynamic, adLockOptimistic
+                
+                If Not (RsDel.BOF And RsDel.EOF) Then
+                    IMCodeAda = IMCodeAda & " " & RsDel("manufacture_code") & ","
+                    IMLineAda = IMLineAda & " " & RsDel("line_code") & ","
+                Else
+                    ' Ganti Db.Execute dengan panggilan Stored Procedure
+                    Set cmd = New ADODB.Command
+                    cmd.ActiveConnection = Db
+                    cmd.CommandType = adCmdStoredProc
+                    cmd.CommandText = "sp_ManufactureLine_Del"
+                    
+                    cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
+                    cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
+                    cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(Grid.TextMatrix(i, bteColLineCode)))
+                    cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
+                    
+                    cmd.Execute
+                    Set cmd = Nothing ' Bersihkan untuk iterasi selanjutnya
+                End If
+            End If
+        Next i
+        
+        ' Bagian akhir TIDAK DIUBAH
+        If IMCodeAda <> "" Then
+            Lblpesan = "Update Failed!. This record is used in table 'Item Master'"
+        Else
+            Lblpesan = DisplayMsg(1201)
+        End If
+        Call Browse
+        Call Isi(IMLineAda)
+    Else
+        Call ClearS
+        Call Hidden
+    End If
+    
+    ' Pastikan recordset ditutup
+    If Not RsDel Is Nothing Then
+        If RsDel.State <> adStateClosed Then RsDel.Close
+        Set RsDel = Nothing
+    End If
+    Exit Sub
+
+ErrHandler:
+    Lblpesan = "Error: " & err.Description
+    If Not cmd Is Nothing Then Set cmd = Nothing
+    If Not RsDel Is Nothing Then
+        If RsDel.State <> adStateClosed Then RsDel.Close
+        Set RsDel = Nothing
     End If
 End Sub
 

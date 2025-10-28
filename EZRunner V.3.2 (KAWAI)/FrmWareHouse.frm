@@ -291,8 +291,8 @@ Begin VB.Form FrmWarehouse
       TabStop         =   0   'False
       Top             =   525
       Width           =   1845
-      _ExtentX        =   3254
-      _ExtentY        =   714
+      _extentx        =   3254
+      _extenty        =   714
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   5445
@@ -413,7 +413,7 @@ Begin VB.Form FrmWarehouse
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60030979
+      Format          =   60424195
       CurrentDate     =   37818
    End
    Begin VB.Label Label3 
@@ -755,7 +755,7 @@ Sub Header()
     bteColLastUpdate = 8
     bteColNGCls = 6
     
-    With grid
+    With Grid
         .ColS = 9
         .Rows = 1
         
@@ -823,8 +823,8 @@ Private Sub cmdClear_Click()
     LblErr = ""
     baru = True
     Dim IK As Long
-    For IK = 1 To grid.Rows - 1
-        grid.TextMatrix(IK, bteColSelect) = ""
+    For IK = 1 To Grid.Rows - 1
+        Grid.TextMatrix(IK, bteColSelect) = ""
     Next
     TxtWh(0).SetFocus
     End Sub
@@ -863,34 +863,34 @@ End Sub
 
 Private Sub CmdData_Click(Index As Integer)
 Dim IC As Integer
-For IC = 0 To grid.Rows - 1
-    grid.TextMatrix(IC, bteColSelect) = ""
+For IC = 0 To Grid.Rows - 1
+    Grid.TextMatrix(IC, bteColSelect) = ""
 Next
 Select Case Index
     Case 0
-        grid.TopRow = 1
-        grid.Row = 1
+        Grid.TopRow = 1
+        Grid.Row = 1
     Case 1
-        If grid.Row > 1 Then
-            grid.Row = grid.Row - 1
-            grid.TopRow = grid.Row
+        If Grid.Row > 1 Then
+            Grid.Row = Grid.Row - 1
+            Grid.TopRow = Grid.Row
         Else
-            grid.TopRow = 1
+            Grid.TopRow = 1
         End If
     Case 2
-        If grid.Row < grid.Rows - 1 Then
-            grid.Row = grid.Row + 1
-            grid.TopRow = grid.Row
+        If Grid.Row < Grid.Rows - 1 Then
+            Grid.Row = Grid.Row + 1
+            Grid.TopRow = Grid.Row
         Else
-            grid.TopRow = grid.Rows - 1
+            Grid.TopRow = Grid.Rows - 1
         End If
     Case 3
-        grid.Row = grid.Rows - 1
-        grid.TopRow = grid.Rows - 1
+        Grid.Row = Grid.Rows - 1
+        Grid.TopRow = Grid.Rows - 1
         
 End Select
-Pos = grid.Row
-jml = grid.Rows - 1
+Pos = Grid.Row
+jml = Grid.Rows - 1
 If Pos = jml Then
     LblErr = DisplayMsg("4021")
 ElseIf Pos = 1 Then
@@ -898,10 +898,10 @@ ElseIf Pos = 1 Then
 Else
     LblErr = ""
 End If
-grid.SetFocus
+Grid.SetFocus
 End Sub
 
-Private Sub CmdSubmit_Click()
+Private Sub Old_CmdSubmit_Click()
     Dim strS As Integer, Jawab As Integer, CekS As Boolean, CekD As Boolean
     Dim strD As Integer, ie As Integer
     
@@ -915,8 +915,8 @@ Private Sub CmdSubmit_Click()
     strD = 0
     
     If baru = False Then
-        strS = grid.FindRow("S", 0, bteColSelect, False)
-        strD = grid.FindRow("D", 0, bteColSelect, False, False)
+        strS = Grid.FindRow("S", 0, bteColSelect, False)
+        strD = Grid.FindRow("D", 0, bteColSelect, False, False)
         If strD > 0 Then CekD = True: Jawab = MsgBox("Do you really want to Delete this Record", vbInformation + vbYesNo + vbDefaultButton2, "Confirmation")
         If Jawab = vbYes Then DataGrid
         If strS > 0 And cek Then
@@ -928,8 +928,8 @@ Private Sub CmdSubmit_Click()
                 Browse
                 Kosong
                 Dim IK As Long
-                For IK = 1 To grid.Rows - 1
-                    grid.TextMatrix(IK, bteColSelect) = ""
+                For IK = 1 To Grid.Rows - 1
+                    Grid.TextMatrix(IK, bteColSelect) = ""
                 Next
                 TxtWh(0).SetFocus
             Else
@@ -948,8 +948,8 @@ Private Sub CmdSubmit_Click()
                     LblErr = DisplayMsg(1000)
                     If Trim$(StrWDel) <> "" Then
                         For ie = 0 To nErr - 1
-                            PRec = grid.FindRow(Trim$(Split(StrWDel, ",")(ie)), 0, 1, False)
-                            grid.TextMatrix(PRec, bteColSelect) = "D"
+                            PRec = Grid.FindRow(Trim$(Split(StrWDel, ",")(ie)), 0, 1, False)
+                            Grid.TextMatrix(PRec, bteColSelect) = "D"
                         Next ie
                     End If
                 End If
@@ -958,8 +958,8 @@ Private Sub CmdSubmit_Click()
                 baru = True
                 Kosong
                 Dim Ikd As Long
-                For Ikd = 1 To grid.Rows - 1
-                    grid.TextMatrix(Ikd, bteColSelect) = ""
+                For Ikd = 1 To Grid.Rows - 1
+                    Grid.TextMatrix(Ikd, bteColSelect) = ""
                 Next
             End If
         End If
@@ -1006,7 +1006,7 @@ Private Sub CmdSubmit_Click()
                    "          '" & cboNG.List(cboNG.ListIndex, 0) & "', " & vbLf & _
                    "          '" & Trim(TxtCC) & "' " & vbLf & _
                    "        )"
-            PosRec = grid.FindRow(Trim$(TxtWh(0)), 0, bteColWHCode, False)
+            PosRec = Grid.FindRow(Trim$(TxtWh(0)), 0, bteColWHCode, False)
             If PosRec < 0 Then
                 Db.Execute SqlU
                 LblErr = DisplayMsg(1000)
@@ -1023,6 +1023,146 @@ Private Sub CmdSubmit_Click()
     End If
 End Sub
 
+Private Sub CmdSubmit_Click()
+    Dim strS As Integer, Jawab As Integer, CekS As Boolean, CekD As Boolean
+    Dim strD As Integer, ie As Integer
+    
+    CekS = False
+    CekD = False
+    StaErr = False
+    
+    If HakU = 0 Then LblErr = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+    
+    strS = 0
+    strD = 0
+    
+    If baru = False Then
+        ' --- Bagian untuk update/delete tidak berubah ---
+        strS = Grid.FindRow("S", 0, bteColSelect, False)
+        strD = Grid.FindRow("D", 0, bteColSelect, False, False)
+        If strD > 0 Then CekD = True: Jawab = MsgBox("Do you really want to Delete this Record", vbInformation + vbYesNo + vbDefaultButton2, "Confirmation")
+        If Jawab = vbYes Then DataGrid
+        If strS > 0 And cek Then
+            DataGrid
+            If StaErr = False Then
+                LblErr = DisplayMsg(1101)
+                baru = True
+                Pakai True
+                Browse
+                Kosong
+                Dim IK As Long
+                For IK = 1 To Grid.Rows - 1
+                    Grid.TextMatrix(IK, bteColSelect) = ""
+                Next
+                TxtWh(0).SetFocus
+            Else
+                LblErr = DisplayMsg(1102)
+            End If
+        End If
+    
+        Dim PRec As Integer
+        If CekD Then
+            If Jawab = vbYes Then
+                If StaErr = False Then
+                    LblErr = DisplayMsg(1201)
+                    baru = True
+                    TxtWh(0).SetFocus
+                Else
+                    LblErr = DisplayMsg(1000)
+                    If Trim$(StrWDel) <> "" Then
+                        For ie = 0 To nErr - 1
+                            PRec = Grid.FindRow(Trim$(Split(StrWDel, ",")(ie)), 0, 1, False)
+                            Grid.TextMatrix(PRec, bteColSelect) = "D"
+                        Next ie
+                    End If
+                End If
+            ElseIf Jawab = vbNo Then
+                LblErr = ""
+                baru = True
+                Kosong
+                Dim Ikd As Long
+                For Ikd = 1 To Grid.Rows - 1
+                    Grid.TextMatrix(Ikd, bteColSelect) = ""
+                Next
+            End If
+        End If
+        strS = 0
+    Else
+        ' --- AWAL PERUBAHAN: Bagian INSERT menggunakan Stored Procedure ---
+        If cek Then
+            On Error GoTo ErrHandler
+            
+            Dim cmd As New ADODB.Command
+            Dim messageID As Integer
+            
+            ' Format tanggal untuk parameter Use_EndDay
+            Dim UseEnd As String
+            If Tgl1 = "99/99/9999" Then
+                UseEnd = "99999999"
+            Else
+                UseEnd = Format(Tgl1, "YYYYMMDD")
+            End If
+            
+            ' Setup objek Command untuk menjalankan stored procedure
+            Set cmd = New ADODB.Command
+            cmd.ActiveConnection = Db
+            cmd.CommandType = adCmdStoredProc
+            cmd.CommandText = "sp_Warehouse_Ins"
+            
+            ' Tambahkan parameter input
+            cmd.Parameters.append cmd.CreateParameter("@WH_Code", adVarChar, adParamInput, 15, Trim(TxtWh(0)))
+            cmd.Parameters.append cmd.CreateParameter("@WH_Name", adVarChar, adParamInput, 50, Trim(TxtWh(1)))
+            cmd.Parameters.append cmd.CreateParameter("@Adm_Group", adVarChar, adParamInput, 15, cbotrade.List(cbotrade.ListIndex, 0))
+            cmd.Parameters.append cmd.CreateParameter("@StockControl_Cls", adVarChar, adParamInput, 2, CboStock.List(CboStock.ListIndex, 0))
+            cmd.Parameters.append cmd.CreateParameter("@Use_EndDay", adVarChar, adParamInput, 8, UseEnd)
+            cmd.Parameters.append cmd.CreateParameter("@Last_User", adVarChar, adParamInput, 15, userLogin)
+            cmd.Parameters.append cmd.CreateParameter("@NG_Cls", adVarChar, adParamInput, 2, cboNG.List(cboNG.ListIndex, 0))
+            cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 5, Trim(TxtCC))
+            
+            ' Tambahkan parameter output untuk mendapatkan status
+            cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
+            
+            ' Eksekusi stored procedure
+            cmd.Execute
+            
+            ' Ambil nilai dari parameter output
+            messageID = cmd.Parameters("@MessageID").Value
+            
+            ' Handle pesan berdasarkan MessageID yang dikembalikan SP
+            Select Case messageID
+                Case 1000 ' Sukses Insert
+                    LblErr = DisplayMsg(1000)
+                    Kosong
+                    TxtWh(0).SetFocus
+                Case 3004 ' Kode Warehouse sudah ada
+                    LblErr = "Warehouse " & DisplayMsg(3004)
+                    TxtWh(0).SetFocus
+                Case 8012 ' Trade Code (Adm_Group) tidak ditemukan
+                    LblErr = "Trade Code tidak valid." ' Sesuaikan pesan jika perlu
+                    TxtWh(0).SetFocus
+                Case 57   ' Error database
+                    LblErr = "Terjadi kesalahan pada database."
+                Case Else ' Error tidak diketahui
+                    LblErr = "Terjadi kesalahan tidak diketahui (ID: " & messageID & ")"
+            End Select
+            
+            ' Bersihkan objek command
+            Set cmd = Nothing
+        End If
+        
+        ' Kode di bawah ini tetap dipertahankan
+        baru = True
+        Browse
+    End If
+    
+    Exit Sub ' Keluar dari sub normalnya
+
+ErrHandler:
+    ' Jika terjadi error koneksi atau eksekusi lainnya
+    LblErr = "Error: " & err.Description
+    If Not cmd Is Nothing Then Set cmd = Nothing
+    Me.MousePointer = vbDefault
+End Sub
 '----------------------update multi company------------------------
 Private Sub CompanyMaster()
     FillCompanyCombo TxtCC
@@ -1123,30 +1263,30 @@ i = 0
 Header
 While Not rswh.EOF
         i = i + 1
-        grid.AddItem ""
-        grid.TextMatrix(i, bteColWHCode) = Trim$(rswh!wh_code)
-        grid.TextMatrix(i, bteColWHName) = Trim$(rswh!WH_Name)
-        grid.TextMatrix(i, bteColAdmGroup) = Trim$(rswh!adm_group)
+        Grid.AddItem ""
+        Grid.TextMatrix(i, bteColWHCode) = Trim$(rswh!wh_code)
+        Grid.TextMatrix(i, bteColWHName) = Trim$(rswh!WH_Name)
+        Grid.TextMatrix(i, bteColAdmGroup) = Trim$(rswh!adm_group)
         If IsNull(rswh!trade_name) Then
-            grid.TextMatrix(i, bteColAdmName) = ""
+            Grid.TextMatrix(i, bteColAdmName) = ""
         Else
-            grid.TextMatrix(i, bteColAdmName) = Trim$(rswh!trade_name)
+            Grid.TextMatrix(i, bteColAdmName) = Trim$(rswh!trade_name)
         End If
-        grid.TextMatrix(i, bteColStockCls) = Trim$(rswh!SC)
-        grid.TextMatrix(i, bteColNGCls) = Trim$(rswh!NGCls)
+        Grid.TextMatrix(i, bteColStockCls) = Trim$(rswh!SC)
+        Grid.TextMatrix(i, bteColNGCls) = Trim$(rswh!NGCls)
         If rswh!Use_EndDay = "99999999" Then
-            grid.TextMatrix(i, bteColUseEndDate) = "99/99/9999"
+            Grid.TextMatrix(i, bteColUseEndDate) = "99/99/9999"
         Else
-            grid.TextMatrix(i, bteColUseEndDate) = Format(Mid(Trim$(rswh!Use_EndDay), 1, 4) + "/" + Mid(Trim$(rswh!Use_EndDay), 5, 2) + "/" + Mid(Trim$(rswh!Use_EndDay), 7, 2), "dd mmm yyyy")
+            Grid.TextMatrix(i, bteColUseEndDate) = Format(Mid(Trim$(rswh!Use_EndDay), 1, 4) + "/" + Mid(Trim$(rswh!Use_EndDay), 5, 2) + "/" + Mid(Trim$(rswh!Use_EndDay), 7, 2), "dd mmm yyyy")
         End If
         'Grid.TextMatrix(i, bteColLastUpdate) = Format(Trim$(rswh!Last_Update), "dd mmm yyyy hh:mm:ss AM/PM")
         If Not IsNull(rswh!Last_Update) Then
-            grid.TextMatrix(i, bteColLastUpdate) = Format(Trim$(rswh!Last_Update), "dd mmm yyyy hh:mm:ss AM/PM")
+            Grid.TextMatrix(i, bteColLastUpdate) = Format(Trim$(rswh!Last_Update), "dd mmm yyyy hh:mm:ss AM/PM")
         Else
-            grid.TextMatrix(i, bteColLastUpdate) = ""  ' atau nilai default lain jika Last_Update Null
+            Grid.TextMatrix(i, bteColLastUpdate) = ""  ' atau nilai default lain jika Last_Update Null
         End If
-        grid.Cell(flexcpBackColor, i, bteColWHCode, i, bteColUseEndDate) = &HDFFFFF
-        grid.Cell(flexcpBackColor, i, bteColSelect) = vbWhite
+        Grid.Cell(flexcpBackColor, i, bteColWHCode, i, bteColUseEndDate) = &HDFFFFF
+        Grid.Cell(flexcpBackColor, i, bteColSelect) = vbWhite
         
         
         
@@ -1158,24 +1298,24 @@ End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim StrGrid As String
 Dim AdaS As Boolean, brs As Integer, id As Integer
-StrGrid = grid.Text
+StrGrid = Grid.Text
 AdaS = False
 Pakai False
 brs = 0
 If StrGrid = "S" Then
-    For id = 1 To grid.Rows - 1
-        If id <> Row Then grid.TextMatrix(id, bteColSelect) = ""
+    For id = 1 To Grid.Rows - 1
+        If id <> Row Then Grid.TextMatrix(id, bteColSelect) = ""
     Next id
-    TxtWh(0) = grid.TextMatrix(grid.Row, bteColWHCode)
-    TxtWh(1) = grid.TextMatrix(grid.Row, bteColWHName)
-    cbotrade = grid.TextMatrix(grid.Row, bteColAdmGroup)
-    CboStock = Left(grid.TextMatrix(grid.Row, bteColStockCls), 2)
-    cboNG.Text = Left(grid.TextMatrix(grid.Row, bteColNGCls), 2)
-    LblAdm = grid.TextMatrix(grid.Row, bteColAdmName)
-    If grid.TextMatrix(grid.Row, bteColUseEndDate) = "99/99/9999" Then
+    TxtWh(0) = Grid.TextMatrix(Grid.Row, bteColWHCode)
+    TxtWh(1) = Grid.TextMatrix(Grid.Row, bteColWHName)
+    cbotrade = Grid.TextMatrix(Grid.Row, bteColAdmGroup)
+    CboStock = Left(Grid.TextMatrix(Grid.Row, bteColStockCls), 2)
+    cboNG.Text = Left(Grid.TextMatrix(Grid.Row, bteColNGCls), 2)
+    LblAdm = Grid.TextMatrix(Grid.Row, bteColAdmName)
+    If Grid.TextMatrix(Grid.Row, bteColUseEndDate) = "99/99/9999" Then
         Tgl1.Text = "99/99/9999"
     Else
-        Tgl1.Text = Format(Month(Format(grid.TextMatrix(grid.Row, bteColUseEndDate), "mmm-dd-yyyy")), "00") & "/" & Format(Day(Format(grid.TextMatrix(grid.Row, bteColUseEndDate), "mmm-dd-yyyy")), "00") & "/" & Year(Format(grid.TextMatrix(grid.Row, bteColUseEndDate), "mmm-dd-yyyy"))
+        Tgl1.Text = Format(Month(Format(Grid.TextMatrix(Grid.Row, bteColUseEndDate), "mmm-dd-yyyy")), "00") & "/" & Format(Day(Format(Grid.TextMatrix(Grid.Row, bteColUseEndDate), "mmm-dd-yyyy")), "00") & "/" & Year(Format(Grid.TextMatrix(Grid.Row, bteColUseEndDate), "mmm-dd-yyyy"))
     End If
     TxtWh(0).Enabled = False
     TxtWh(1).Enabled = True
@@ -1187,9 +1327,9 @@ If StrGrid = "S" Then
     LblErr = ""
 ElseIf StrGrid = "D" Then
     Pakai True
-    For id = 1 To grid.Rows - 1
+    For id = 1 To Grid.Rows - 1
         'Jika ada S maka , hapus yg S
-        If grid.TextMatrix(id, bteColSelect) = "S" Then grid.TextMatrix(id, bteColSelect) = "": Exit For
+        If Grid.TextMatrix(id, bteColSelect) = "S" Then Grid.TextMatrix(id, bteColSelect) = "": Exit For
     Next id
     baru = False
     LblErr = ""
@@ -1201,12 +1341,12 @@ End If
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-If grid.Col > bteColSelect Then Cancel = True
+If Grid.Col > bteColSelect Then Cancel = True
 End Sub
 
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
-If grid.Col = bteColSelect Then
+If Grid.Col = bteColSelect Then
     KeyAscii = Asc(UCase(Chr(KeyAscii)))
     If KeyAscii <> Asc("D") And KeyAscii <> Asc("S") And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyReturn Then
         KeyAscii = 0
@@ -1271,16 +1411,16 @@ LblStock = ""
 Tgl1 = "99/99/9999"
 cboNG = ""
 End Sub
-Sub DataGrid()
+Sub Old_DataGrid()
 Dim kode As String, Sta As String
 Dim strSQL As String
 Dim ix As Integer
 
 On Error Resume Next
 Dim PosS As Integer
-PosS = grid.FindRow("S", 0, bteColSelect, False)
+PosS = Grid.FindRow("S", 0, bteColSelect, False)
 If PosS > 0 Then
-    kode = Trim$(grid.TextMatrix(PosS, bteColWHCode))
+    kode = Trim$(Grid.TextMatrix(PosS, bteColWHCode))
             Dim UseEnd As String
             
             If Tgl1 = "99/99/9999" Then
@@ -1310,9 +1450,9 @@ End If
 nErr = 0
 nOK = 0
 StrWDel = ""
-For ix = 1 To grid.Rows - 1
-kode = Trim$(grid.TextMatrix(ix, bteColWHCode))
-Sta = Trim$(grid.TextMatrix(ix, bteColSelect))
+For ix = 1 To Grid.Rows - 1
+kode = Trim$(Grid.TextMatrix(ix, bteColWHCode))
+Sta = Trim$(Grid.TextMatrix(ix, bteColSelect))
     If Sta = "D" Then
         strSQL = "DELETE FROM WareHouse_master " & vbLf & _
          "WHERE WH_Code = '" & Trim(kode) & "' " & vbLf & _
@@ -1353,6 +1493,127 @@ strSQL = ""
 Browse
 End Sub
 
+Sub DataGrid()
+    Dim kode As String, Sta As String
+    Dim ix As Integer
+    Dim messageID As Integer ' Untuk menampung nilai dari parameter output SP
+
+    On Error GoTo ErrHandler ' Gunakan error handler yang lebih baik
+
+    Dim PosS As Integer
+    PosS = Grid.FindRow("S", 0, bteColSelect, False)
+    If PosS > 0 Then
+        kode = Trim$(Grid.TextMatrix(PosS, bteColWHCode))
+        
+        Dim UseEnd As String
+        If Tgl1 = "99/99/9999" Then
+            UseEnd = "99999999"
+        Else
+            UseEnd = Format(Tgl1, "YYYYMMDD")
+        End If
+        
+        Dim cmdUpdate As New ADODB.Command
+        With cmdUpdate
+            .ActiveConnection = Db
+            .CommandType = adCmdStoredProc
+            .CommandText = "sp_Warehouse_Upd"
+            
+            ' Parameter Input
+            .Parameters.append .CreateParameter("@WH_Code", adVarChar, adParamInput, 15, kode)
+            .Parameters.append .CreateParameter("@WH_Name", adVarChar, adParamInput, 50, Trim(TxtWh(1)))
+            .Parameters.append .CreateParameter("@Adm_Group", adVarChar, adParamInput, 15, cbotrade.List(cbotrade.ListIndex, 0))
+            .Parameters.append .CreateParameter("@StockControl_Cls", adVarChar, adParamInput, 2, CboStock.List(CboStock.ListIndex, 0))
+            .Parameters.append .CreateParameter("@Use_EndDay", adVarChar, adParamInput, 8, UseEnd)
+            .Parameters.append .CreateParameter("@Last_User", adVarChar, adParamInput, 15, userLogin)
+            .Parameters.append .CreateParameter("@NG_Cls", adVarChar, adParamInput, 2, cboNG.List(cboNG.ListIndex, 0))
+            .Parameters.append .CreateParameter("@Company_Code", adVarChar, adParamInput, 5, Trim(TxtCC))
+            
+            ' Parameter Output
+            .Parameters.append .CreateParameter("@MessageID", adInteger, adParamOutput)
+            
+            .Execute
+  
+            messageID = .Parameters("@MessageID").Value
+        End With
+        Set cmdUpdate = Nothing
+        
+        ' Tentukan status error berdasarkan MessageID
+        If messageID = 1201 Then
+            StaErr = False
+        Else ' Jika 3005 (tidak ditemukan) atau 5003 (error DB)
+            StaErr = True
+        End If
+        
+        Exit Sub ' Keluar karena hanya satu update yang diproses per klik
+    End If
+
+    nErr = 0
+    nOK = 0
+    StrWDel = ""
+    
+    For ix = 1 To Grid.Rows - 1
+        kode = Trim$(Grid.TextMatrix(ix, bteColWHCode))
+        Sta = Trim$(Grid.TextMatrix(ix, bteColSelect))
+        
+        If Sta = "D" Then
+            Dim cmdDelete As New ADODB.Command
+            With cmdDelete
+                .ActiveConnection = Db
+                .CommandType = adCmdStoredProc
+                .CommandText = "sp_Warehouse_Del"
+                
+                ' Parameter Input
+                .Parameters.append .CreateParameter("@WH_Code", adVarChar, adParamInput, 15, kode)
+                .Parameters.append .CreateParameter("@Company_Code", adVarChar, adParamInput, 5, Trim(TxtCC))
+                
+                ' Parameter Output
+                .Parameters.append .CreateParameter("@MessageID", adInteger, adParamOutput)
+                
+                .Execute
+                
+                ' Ambil hasil dari parameter output
+                messageID = .Parameters("@MessageID").Value
+            End With
+            Set cmdDelete = Nothing
+            
+            Select Case messageID
+                Case 1201 ' Sukses Delete
+                    nOK = nOK + 1
+                Case 1202 ' Gagal: Ada referensi di trade_master
+                    StrWDel = StrWDel & kode & ","
+                    nErr = nErr + 1
+                Case 3005 ' Gagal: Data tidak ditemukan
+                    StrWDel = StrWDel & kode & ","
+                    nErr = nErr + 1
+                Case 57     ' Gagal: Error database umum
+                    StrWDel = StrWDel & kode & ","
+                    nErr = nErr + 1
+                Case Else ' Gagal: Error tidak diketahui
+                    StrWDel = StrWDel & kode & ","
+                    nErr = nErr + 1
+            End Select
+        End If
+    Next ix
+    
+    If Len(StrWDel) > 1 Then StrWDel = Mid(StrWDel, 1, Len(StrWDel) - 1)
+
+    If nErr > 0 Then
+        StaErr = True
+    End If
+
+    ' Refresh grid setelah operasi selesai
+    Browse
+    
+    Exit Sub ' Keluar dari sub normalnya
+
+ErrHandler:
+    ' Jika terjadi error koneksi atau eksekusi lainnya
+    LblErr = "Error: " & err.Description
+    StaErr = True
+    ' Pastikan objek command dibersihkan jika error terjadi
+    If Not cmdUpdate Is Nothing Then Set cmdUpdate = Nothing
+    If Not cmdDelete Is Nothing Then Set cmdDelete = Nothing
+End Sub
 Function NamaTrade(AdmGroup As String) As String
 Dim rst As Recordset
 Set rst = Db.Execute("Select Trade_Name as TN from Trade_master where trade_code='" & Trim$(AdmGroup) & "'")

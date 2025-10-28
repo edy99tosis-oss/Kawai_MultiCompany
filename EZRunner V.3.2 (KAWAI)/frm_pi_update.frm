@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_pi_update 
    BackColor       =   &H00FDDFE3&
@@ -309,7 +309,7 @@ Begin VB.Form frm_pi_update
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   141230083
+      Format          =   61014019
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -626,68 +626,68 @@ Private Sub Header()
     bteColReason = 12
     bteColReason2 = 13
     
-    grid.clear
-    grid.Rows = 1
-    grid.ColS = 14
+    Grid.clear
+    Grid.Rows = 1
+    Grid.ColS = 14
     
-    grid.TextMatrix(0, bteColProdCod) = "Product Code"
-    grid.TextMatrix(0, bteColDesc) = "Description"
-    grid.TextMatrix(0, bteColAddress) = "Address"
-    grid.TextMatrix(0, bteColPreMonth) = "Pre Month Stock"
-    grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
-    grid.TextMatrix(0, bteColSupply) = "Supply Total"
-    grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
-    grid.TextMatrix(0, bteColEnd) = "End of Month Stock"
-    grid.TextMatrix(0, bteColUnit) = "Unit"
-    grid.TextMatrix(0, bteColDiff) = "Differences"
-    grid.TextMatrix(0, bteColInventory) = "Inventory"
-    grid.TextMatrix(0, bteColInv2) = "Inv2"
-    grid.TextMatrix(0, bteColReason) = "Reason"
-    grid.TextMatrix(0, bteColReason2) = "Reason2"
+    Grid.TextMatrix(0, bteColProdCod) = "Product Code"
+    Grid.TextMatrix(0, bteColDesc) = "Description"
+    Grid.TextMatrix(0, bteColAddress) = "Address"
+    Grid.TextMatrix(0, bteColPreMonth) = "Pre Month Stock"
+    Grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
+    Grid.TextMatrix(0, bteColSupply) = "Supply Total"
+    Grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
+    Grid.TextMatrix(0, bteColEnd) = "End of Month Stock"
+    Grid.TextMatrix(0, bteColUnit) = "Unit"
+    Grid.TextMatrix(0, bteColDiff) = "Differences"
+    Grid.TextMatrix(0, bteColInventory) = "Inventory"
+    Grid.TextMatrix(0, bteColInv2) = "Inv2"
+    Grid.TextMatrix(0, bteColReason) = "Reason"
+    Grid.TextMatrix(0, bteColReason2) = "Reason2"
     
-    grid.ColWidth(bteColProdCod) = 2000
-    grid.ColWidth(bteColDesc) = 2700
-    grid.ColWidth(bteColAddress) = 800
-    grid.ColWidth(bteColPreMonth) = 1500
-    grid.ColWidth(bteColReceipt) = 1500
-    grid.ColWidth(bteColSupply) = 1500
-    grid.ColWidth(bteColLossReject) = 1400
-    grid.ColWidth(bteColEnd) = 1900
-    grid.ColWidth(bteColDiff) = 1300
-    grid.ColWidth(bteColUnit) = 700
-    grid.ColWidth(bteColInventory) = 1300
-    grid.ColWidth(bteColInv2) = 1300
-    grid.ColWidth(bteColReason) = 3500
-    grid.ColWidth(bteColReason2) = 3500
+    Grid.ColWidth(bteColProdCod) = 2000
+    Grid.ColWidth(bteColDesc) = 2700
+    Grid.ColWidth(bteColAddress) = 800
+    Grid.ColWidth(bteColPreMonth) = 1500
+    Grid.ColWidth(bteColReceipt) = 1500
+    Grid.ColWidth(bteColSupply) = 1500
+    Grid.ColWidth(bteColLossReject) = 1400
+    Grid.ColWidth(bteColEnd) = 1900
+    Grid.ColWidth(bteColDiff) = 1300
+    Grid.ColWidth(bteColUnit) = 700
+    Grid.ColWidth(bteColInventory) = 1300
+    Grid.ColWidth(bteColInv2) = 1300
+    Grid.ColWidth(bteColReason) = 3500
+    Grid.ColWidth(bteColReason2) = 3500
     
-    grid.ColAlignment(bteColProdCod) = flexAlignLeftCenter
-    grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
-    grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
-    grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
-    grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
-    grid.ColAlignment(bteColSupply) = flexAlignRightCenter
-    grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
-    grid.ColAlignment(bteColEnd) = flexAlignRightCenter
-    grid.ColAlignment(bteColDiff) = flexAlignRightCenter
-    grid.ColAlignment(bteColUnit) = flexAlignLeftCenter
-    grid.ColAlignment(bteColInventory) = flexAlignRightCenter
-    grid.ColAlignment(bteColInv2) = flexAlignRightCenter
-    grid.ColAlignment(bteColReason) = flexAlignLeftCenter
-    grid.ColAlignment(bteColReason2) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColProdCod) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
+    Grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
+    Grid.ColAlignment(bteColSupply) = flexAlignRightCenter
+    Grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
+    Grid.ColAlignment(bteColEnd) = flexAlignRightCenter
+    Grid.ColAlignment(bteColDiff) = flexAlignRightCenter
+    Grid.ColAlignment(bteColUnit) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColInventory) = flexAlignRightCenter
+    Grid.ColAlignment(bteColInv2) = flexAlignRightCenter
+    Grid.ColAlignment(bteColReason) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColReason2) = flexAlignLeftCenter
     
-    grid.Cell(flexcpAlignment, 0, 0, 0, bteColReason2) = flexAlignCenterCenter
+    Grid.Cell(flexcpAlignment, 0, 0, 0, bteColReason2) = flexAlignCenterCenter
     
-    grid.ColHidden(bteColInv2) = True
-    grid.ColHidden(bteColReason2) = True
-    grid.ColFormat(bteColInventory) = gs_formatQty
-    grid.ColFormat(bteColInv2) = gs_formatQty
+    Grid.ColHidden(bteColInv2) = True
+    Grid.ColHidden(bteColReason2) = True
+    Grid.ColFormat(bteColInventory) = gs_formatQty
+    Grid.ColFormat(bteColInv2) = gs_formatQty
     
-    grid.FrozenCols = bteColPreMonth
+    Grid.FrozenCols = bteColPreMonth
 End Sub
 
 Private Sub CboLocationCD_Change()
 Call clearGrid
-If CboLocationCD.MatchFound Then
+If CboLocationCD.matchFound Then
    LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
    LblErrMsg = ""
    'Call Browse
@@ -727,17 +727,17 @@ Private Sub Cmd_Save_Click(Index As Integer)
 Dim i As Integer, j As Integer, Vdif As Double
 Select Case Index
       Case 1:
-            For i = 1 To grid.Rows - 1
-                 If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Then
-                   grid.TextMatrix(i, bteColInventory) = Trim(grid.TextMatrix(i, bteColInv2))
-                 ElseIf Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
-                   grid.TextMatrix(i, bteColReason) = Trim(grid.TextMatrix(i, bteColReason2))
+            For i = 1 To Grid.Rows - 1
+                 If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Then
+                   Grid.TextMatrix(i, bteColInventory) = Trim(Grid.TextMatrix(i, bteColInv2))
+                 ElseIf Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
+                   Grid.TextMatrix(i, bteColReason) = Trim(Grid.TextMatrix(i, bteColReason2))
                  End If
-                 If grid.TextMatrix(i, bteColInventory) <> "" Then
-                    Vdif = CDbl(grid.TextMatrix(i, bteColEnd)) - CDbl(IIf(grid.TextMatrix(i, bteColInventory) = "", 0, grid.TextMatrix(i, bteColInventory)))
-                    grid.TextMatrix(i, bteColDiff) = Format(Vdif, gs_formatQty)
+                 If Grid.TextMatrix(i, bteColInventory) <> "" Then
+                    Vdif = CDbl(Grid.TextMatrix(i, bteColEnd)) - CDbl(IIf(Grid.TextMatrix(i, bteColInventory) = "", 0, Grid.TextMatrix(i, bteColInventory)))
+                    Grid.TextMatrix(i, bteColDiff) = Format(Vdif, gs_formatQty)
                 Else
-                    grid.TextMatrix(i, bteColDiff) = ""
+                    Grid.TextMatrix(i, bteColDiff) = ""
                 End If
             Next
             LblErrMsg = ""
@@ -751,7 +751,7 @@ Select Case Index
                     Me.MousePointer = vbHourglass
                         LblErrMsg = ""
                        Call Header
-                       grid.Rows = 1
+                       Grid.Rows = 1
                        Call qBrowse
     
                     Me.MousePointer = vbDefault
@@ -782,38 +782,38 @@ Select Case Index
                 Select Case up_GetDateRange(DMonth.Value)
                     Case 0:
                         If hakUpdate(Me.Name) = 0 Then
-                           For i = 1 To grid.Rows - 1
-                                 If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Then
-                                   grid.TextMatrix(i, bteColInventory) = Trim(grid.TextMatrix(i, bteColInv2))
-                                 ElseIf Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
-                                   grid.TextMatrix(i, bteColReason) = Trim(grid.TextMatrix(i, bteColReason2))
+                           For i = 1 To Grid.Rows - 1
+                                 If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Then
+                                   Grid.TextMatrix(i, bteColInventory) = Trim(Grid.TextMatrix(i, bteColInv2))
+                                 ElseIf Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
+                                   Grid.TextMatrix(i, bteColReason) = Trim(Grid.TextMatrix(i, bteColReason2))
                                  End If
                             Next
                             LblErrMsg = DisplayMsg(4046) '"Can't update fixed data !"
                         Else
                            Db.BeginTrans
-                            For i = 1 To grid.Rows - 1
-                                   If IsNumeric(grid.TextMatrix(i, bteColInventory)) = True And Trim(grid.TextMatrix(i, bteColInventory)) <> "" Then
-                                        l_upd = CDbl(grid.TextMatrix(i, bteColInventory))
+                            For i = 1 To Grid.Rows - 1
+                                   If IsNumeric(Grid.TextMatrix(i, bteColInventory)) = True And Trim(Grid.TextMatrix(i, bteColInventory)) <> "" Then
+                                        l_upd = CDbl(Grid.TextMatrix(i, bteColInventory))
                                    Else
                                       
-                                         If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Or Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
+                                         If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Or Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
                                                 Db.Execute "update stock_master with (updlock) " & _
                                                     "set lm_inventory = 0, " & _
                                                     "tm_premonth = 0, " & _
                                                     "tm_current = tm_receipt - tm_supply - tm_lossreject, " & _
                                                     "nm_premonth = tm_receipt -tm_supply - tm_lossreject, " & _
                                                     "nm_current = tm_receipt - tm_supply - tm_lossreject + nm_receipt - nm_supply - nm_lossreject, " & _
-                                                    "lm_reason = '" & Trim(grid.TextMatrix(i, bteColReason)) & "', " & _
+                                                    "lm_reason = '" & Trim(Grid.TextMatrix(i, bteColReason)) & "', " & _
                                                     "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                                    "where warehouse_code = '" & Trim(CboLocationCD) & "' and item_code = '" & Trim(grid.TextMatrix(i, bteColProdCod)) & "'"
-                                                grid.TextMatrix(i, bteColInv2) = Trim(grid.TextMatrix(i, bteColInventory))
-                                                grid.TextMatrix(i, bteColReason2) = Trim(grid.TextMatrix(i, bteColReason))
+                                                    "where warehouse_code = '" & Trim(CboLocationCD) & "' and item_code = '" & Trim(Grid.TextMatrix(i, bteColProdCod)) & "'"
+                                                Grid.TextMatrix(i, bteColInv2) = Trim(Grid.TextMatrix(i, bteColInventory))
+                                                Grid.TextMatrix(i, bteColReason2) = Trim(Grid.TextMatrix(i, bteColReason))
                                         End If
                                         GoTo next0:
                                     End If
                                     
-                                If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Or Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
+                                If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Or Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
                                 
                                     Db.Execute "update stock_master with (updlock) " & _
                                         "set lm_inventory =" & l_upd & ", " & _
@@ -821,12 +821,12 @@ Select Case Index
                                         "tm_current =  tm_receipt - tm_supply - tm_lossreject  + " & l_upd & ", " & _
                                         "nm_premonth = tm_receipt - tm_supply - tm_lossreject  + " & l_upd & ", " & _
                                         "nm_current = tm_receipt - tm_supply - tm_lossreject + nm_receipt - nm_supply - nm_lossreject + " & l_upd & ", " & _
-                                        "lm_reason = '" & Trim(grid.TextMatrix(i, bteColReason)) & "', " & _
+                                        "lm_reason = '" & Trim(Grid.TextMatrix(i, bteColReason)) & "', " & _
                                         "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                        "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(grid.TextMatrix(i, bteColProdCod)) & "'"
+                                        "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(Grid.TextMatrix(i, bteColProdCod)) & "'"
                                                 
-                                   grid.TextMatrix(i, bteColInv2) = Trim(grid.TextMatrix(i, bteColInventory))
-                                   grid.TextMatrix(i, bteColReason2) = Trim(grid.TextMatrix(i, bteColReason))
+                                   Grid.TextMatrix(i, bteColInv2) = Trim(Grid.TextMatrix(i, bteColInventory))
+                                   Grid.TextMatrix(i, bteColReason2) = Trim(Grid.TextMatrix(i, bteColReason))
                                 End If
 next0:
                             Next
@@ -839,35 +839,35 @@ next0:
                     Case 1:
                         Db.BeginTrans
                         
-                            For i = 1 To grid.Rows - 1
-                                   If IsNumeric(grid.TextMatrix(i, bteColInventory)) = True And Trim(grid.TextMatrix(i, bteColInventory)) <> "" Then
-                                        l_upd = CDbl(grid.TextMatrix(i, bteColInventory))
+                            For i = 1 To Grid.Rows - 1
+                                   If IsNumeric(Grid.TextMatrix(i, bteColInventory)) = True And Trim(Grid.TextMatrix(i, bteColInventory)) <> "" Then
+                                        l_upd = CDbl(Grid.TextMatrix(i, bteColInventory))
                                     Else
                                       
-                                         If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Or Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
+                                         If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Or Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
                                             Db.Execute "update stock_master with (updlock) " & _
                                                 "set tm_inventory = null, " & _
-                                                "tm_reason = '" & Trim(grid.TextMatrix(i, bteColReason)) & "', " & _
+                                                "tm_reason = '" & Trim(Grid.TextMatrix(i, bteColReason)) & "', " & _
                                                 "nm_premonth = tm_premonth + tm_receipt -tm_supply - tm_lossreject, " & _
                                                 "nm_current = tm_premonth + tm_receipt - tm_supply - tm_lossreject + nm_receipt - nm_supply - nm_lossreject, " & _
                                                 "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                                "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(grid.TextMatrix(i, bteColProdCod)) & "'"
-                                            grid.TextMatrix(i, bteColInv2) = Trim(grid.TextMatrix(i, bteColInventory))
-                                            grid.TextMatrix(i, bteColReason2) = Trim(grid.TextMatrix(i, bteColReason))
+                                                "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(Grid.TextMatrix(i, bteColProdCod)) & "'"
+                                            Grid.TextMatrix(i, bteColInv2) = Trim(Grid.TextMatrix(i, bteColInventory))
+                                            Grid.TextMatrix(i, bteColReason2) = Trim(Grid.TextMatrix(i, bteColReason))
                                         End If
                                         GoTo next1:
                                     End If
                                     
-                                If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Or Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
+                                If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Or Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
                                     Db.Execute "update stock_master with (updlock) " & _
                                         "set tm_inventory =" & l_upd & ", " & _
-                                        "tm_reason = '" & Trim(grid.TextMatrix(i, bteColReason)) & "', " & _
+                                        "tm_reason = '" & Trim(Grid.TextMatrix(i, bteColReason)) & "', " & _
                                         "nm_premonth = " & l_upd & " , " & _
                                         "nm_current = " & l_upd & " + nm_receipt - nm_supply - nm_lossreject, " & _
                                         "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                        "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(grid.TextMatrix(i, bteColProdCod)) & "'"
-                                    grid.TextMatrix(i, bteColInv2) = Trim(grid.TextMatrix(i, bteColInventory))
-                                    grid.TextMatrix(i, bteColReason2) = Trim(grid.TextMatrix(i, bteColReason))
+                                        "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(Grid.TextMatrix(i, bteColProdCod)) & "'"
+                                    Grid.TextMatrix(i, bteColInv2) = Trim(Grid.TextMatrix(i, bteColInventory))
+                                    Grid.TextMatrix(i, bteColReason2) = Trim(Grid.TextMatrix(i, bteColReason))
                                 End If
 next1:
                             Next
@@ -879,31 +879,31 @@ next1:
                     Case 2:
                          Db.BeginTrans
                          
-                            For i = 1 To grid.Rows - 1
-                                    If IsNumeric(grid.TextMatrix(i, bteColInventory)) = True And Trim(grid.TextMatrix(i, bteColInventory)) <> "" Then
-                                        l_upd = CDbl(grid.TextMatrix(i, bteColInventory))
+                            For i = 1 To Grid.Rows - 1
+                                    If IsNumeric(Grid.TextMatrix(i, bteColInventory)) = True And Trim(Grid.TextMatrix(i, bteColInventory)) <> "" Then
+                                        l_upd = CDbl(Grid.TextMatrix(i, bteColInventory))
                                     Else
                                    
-                                        If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Or Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
+                                        If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Or Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
                                             Db.Execute "update stock_master  with (updlock) " & _
                                                 "set  nm_inventory = null, " & _
-                                                "nm_reason = '" & Trim(grid.TextMatrix(i, bteColReason)) & "', " & _
+                                                "nm_reason = '" & Trim(Grid.TextMatrix(i, bteColReason)) & "', " & _
                                                 "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                                "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(grid.TextMatrix(i, bteColProdCod)) & "'"
-                                            grid.TextMatrix(i, bteColInv2) = Trim(grid.TextMatrix(i, bteColInventory))
-                                            grid.TextMatrix(i, bteColReason2) = Trim(grid.TextMatrix(i, bteColReason))
+                                                "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(Grid.TextMatrix(i, bteColProdCod)) & "'"
+                                            Grid.TextMatrix(i, bteColInv2) = Trim(Grid.TextMatrix(i, bteColInventory))
+                                            Grid.TextMatrix(i, bteColReason2) = Trim(Grid.TextMatrix(i, bteColReason))
                                         End If
                                         GoTo next2:
                                     End If
                                     
-                                If Trim(grid.TextMatrix(i, bteColInventory)) <> Trim(grid.TextMatrix(i, bteColInv2)) Or Trim(grid.TextMatrix(i, bteColReason)) <> Trim(grid.TextMatrix(i, bteColReason2)) Then
+                                If Trim(Grid.TextMatrix(i, bteColInventory)) <> Trim(Grid.TextMatrix(i, bteColInv2)) Or Trim(Grid.TextMatrix(i, bteColReason)) <> Trim(Grid.TextMatrix(i, bteColReason2)) Then
                                     Db.Execute "update stock_master with (updlock) " & _
                                         "set nm_inventory=" & l_upd & ", " & _
-                                        "nm_reason = '" & Trim(grid.TextMatrix(i, bteColReason)) & "', " & _
+                                        "nm_reason = '" & Trim(Grid.TextMatrix(i, bteColReason)) & "', " & _
                                         "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                                        "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(grid.TextMatrix(i, bteColProdCod)) & "'"
-                                    grid.TextMatrix(i, bteColInv2) = Trim(grid.TextMatrix(i, bteColInventory))
-                                    grid.TextMatrix(i, bteColReason2) = Trim(grid.TextMatrix(i, bteColReason))
+                                        "where warehouse_code='" & Trim(CboLocationCD) & "' and item_code='" & Trim(Grid.TextMatrix(i, bteColProdCod)) & "'"
+                                    Grid.TextMatrix(i, bteColInv2) = Trim(Grid.TextMatrix(i, bteColInventory))
+                                    Grid.TextMatrix(i, bteColReason2) = Trim(Grid.TextMatrix(i, bteColReason))
                                 End If
 next2:
                             Next
@@ -928,24 +928,24 @@ Private Sub cmdSearch_Click()
     
     LblErrMsg = ""
     
-    If txtSearch = "" Or grid.Rows = 2 Then txtSearch.SetFocus: Exit Sub
-    If grid.Row = grid.Rows - 1 Then i = 2 Else i = grid.Row + 1
+    If txtSearch = "" Or Grid.Rows = 2 Then txtSearch.SetFocus: Exit Sub
+    If Grid.Row = Grid.Rows - 1 Then i = 2 Else i = Grid.Row + 1
     
     Do
         Select Case cboSearch.ListIndex
         Case 0
-            grid.Col = bteColProdCod
-            If UCase(Mid(grid.TextMatrix(i, bteColProdCod), 1, Len(txtSearch))) = UCase(txtSearch) Then
+            Grid.Col = bteColProdCod
+            If UCase(Mid(Grid.TextMatrix(i, bteColProdCod), 1, Len(txtSearch))) = UCase(txtSearch) Then
                 Exit Do
             End If
         Case 1
-            grid.Col = bteColDesc
-            If InStr(UCase(grid.TextMatrix(i, bteColDesc)), UCase(txtSearch)) <> 0 Then
+            Grid.Col = bteColDesc
+            If InStr(UCase(Grid.TextMatrix(i, bteColDesc)), UCase(txtSearch)) <> 0 Then
                 Exit Do
             End If
         End Select
         i = i + 1
-        If i = grid.Rows - 1 Then
+        If i = Grid.Rows - 1 Then
             txtSearch = ""
             i = 2
             LblErrMsg = DisplayMsg(8012)
@@ -953,10 +953,10 @@ Private Sub cmdSearch_Click()
         End If
     Loop
     
-    grid.Row = i
-    grid.TopRow = i
-    grid.Col = bteColInventory
-    grid.SetFocus
+    Grid.Row = i
+    Grid.TopRow = i
+    Grid.Col = bteColInventory
+    Grid.SetFocus
     SendKeys "{left}"
     SendKeys "{right}"
 
@@ -1015,12 +1015,12 @@ Call Header
 End Sub
 
 Sub clearGrid()
-grid.clear
-grid.Rows = 1
+Grid.clear
+Grid.Rows = 1
 Call Header
 End Sub
 
-Private Sub StockLocation()
+Private Sub Old_StockLocation()
 Dim sql As String, ls_sql As String
 Dim RsStock As New ADODB.Recordset
 Dim i As Long
@@ -1047,13 +1047,63 @@ CboLocationCD.ListWidth = 200
 CboLocationCD.ListRows = 15
 End Sub
 
+Private Sub StockLocation()
+    Dim cmd As New ADODB.Command
+    Dim RsStock As ADODB.Recordset
+    Dim i As Long
+    
+    On Error GoTo ErrHandler ' Tambahkan error handling
+    
+    ' Setup objek Command untuk menjalankan stored procedure
+    Set cmd = New ADODB.Command
+    cmd.ActiveConnection = Db
+    cmd.CommandType = adCmdStoredProc
+    cmd.CommandText = "dbo.sp_PhysicalInventory_WH_Sel"
+    
+    cmd.Parameters.append cmd.CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
+    
+    ' Eksekusi stored procedure dan simpan hasilnya di Recordset
+    Set RsStock = cmd.Execute()
+    
+    ' --- Kode untuk mengisi ComboBox tetap sama ---
+    CboLocationCD.columnCount = 2
+    CboLocationCD.clear
+    
+    i = 0
+    Do While Not RsStock.EOF
+       CboLocationCD.AddItem ""
+       CboLocationCD.List(i, 0) = Trim(RsStock("wh_code"))
+       CboLocationCD.List(i, 1) = Trim(RsStock("wh_name"))
+       i = i + 1
+       RsStock.MoveNext
+    Loop
+    
+    CboLocationCD.ColumnWidths = "50 pt; 150 pt"
+    CboLocationCD.ListWidth = 200
+    CboLocationCD.ListRows = 15
+
+' --- Tambahkan blok cleanup untuk memastikan objek dibebaskan ---
+CleanUp:
+    If Not RsStock Is Nothing Then
+        If RsStock.State <> adStateClosed Then RsStock.Close
+        Set RsStock = Nothing
+    End If
+    If Not cmd Is Nothing Then Set cmd = Nothing
+    Exit Sub
+
+ErrHandler:
+    ' Tampilkan pesan error jika terjadi masalah
+    MsgBox "Error saat memuat lokasi stock: " & err.Description, vbCritical, "Error"
+    Resume CleanUp ' Lanjut ke blok cleanup untuk membersihkan objek
+End Sub
+
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 If UnloadMode = 0 Then Cancel = 1
 End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim Vdif As Double
-With grid
+With Grid
   If Col = bteColInventory Then
     If IsNumeric(.TextMatrix(Row, Col)) = True Then _
         If CDbl(.TextMatrix(Row, Col)) > gd_MaxQty Then .TextMatrix(Row, Col) = gd_MaxQty: LblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty: Exit Sub
@@ -1064,13 +1114,13 @@ With grid
         .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatQty)
         LblErrMsg = ""
     End If
-    If grid.TextMatrix(Row, Col) <> "" Then
+    If Grid.TextMatrix(Row, Col) <> "" Then
         'Vdif = CDbl(Grid.TextMatrix(Row, bteColEnd)) - CDbl(IIf(Grid.TextMatrix(Row, Col) = "", 0, Grid.TextMatrix(Row, Col)))
         'revision after BSRE meeting
-        Vdif = CDbl(IIf(grid.TextMatrix(Row, Col) = "", 0, grid.TextMatrix(Row, Col))) - CDbl(grid.TextMatrix(Row, bteColEnd))
-        grid.TextMatrix(Row, bteColDiff) = Format(Vdif, gs_formatQty)
+        Vdif = CDbl(IIf(Grid.TextMatrix(Row, Col) = "", 0, Grid.TextMatrix(Row, Col))) - CDbl(Grid.TextMatrix(Row, bteColEnd))
+        Grid.TextMatrix(Row, bteColDiff) = Format(Vdif, gs_formatQty)
     Else
-        grid.TextMatrix(Row, bteColDiff) = ""
+        Grid.TextMatrix(Row, bteColDiff) = ""
     End If
     
 '    .TextMatrix(Row, bteColDiff) = Format(.TextMatrix(Row, bteColEnd) - .TextMatrix(Row, Col), gs_formatQty)
@@ -1081,13 +1131,13 @@ End With
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-If grid.Col <> bteColInventory And grid.Col <> bteColReason Then
+If Grid.Col <> bteColInventory And Grid.Col <> bteColReason Then
    Cancel = True
 End If
-If grid.Col = bteColReason Then
- grid.EditMaxLength = 255
+If Grid.Col = bteColReason Then
+ Grid.EditMaxLength = 255
 Else
- grid.EditMaxLength = 0 'Unlimited
+ Grid.EditMaxLength = 0 'Unlimited
 End If
 End Sub
 
@@ -1128,7 +1178,7 @@ Case 0:
     While RsStock.EOF = False
         l_item_name = uf_GetItemDescription(Trim(RsStock!Item_Code))
         l_inv = IIf(RsStock!lm_inventory = Null, "", Format(RsStock!lm_inventory, gs_formatQty))
-        With grid
+        With Grid
             .AddItem ""
             .TextMatrix(.Rows - 1, bteColProdCod) = Trim(RsStock!Item_Code)
             .TextMatrix(.Rows - 1, bteColDesc) = l_item_name
@@ -1158,7 +1208,7 @@ Case 1:
     While RsStock.EOF = False
         l_item_name = uf_GetItemDescription(Trim(RsStock!Item_Code))
         l_inv = IIf(RsStock!tm_inventory = Null, "", Format(RsStock!tm_inventory, gs_formatQty))
-        With grid
+        With Grid
             .AddItem ""
             .TextMatrix(.Rows - 1, bteColProdCod) = Trim(RsStock!Item_Code)
             .TextMatrix(.Rows - 1, bteColDesc) = l_item_name
@@ -1188,7 +1238,7 @@ Case 2:
     While RsStock.EOF = False
         l_inv = IIf(RsStock!nm_inventory = Null, "", Format(RsStock!nm_inventory, gs_formatQty))
         l_item_name = uf_GetItemDescription(Trim(RsStock!Item_Code))
-        With grid
+        With Grid
             .AddItem ""
             .TextMatrix(.Rows - 1, bteColProdCod) = Trim(RsStock!Item_Code)
             .TextMatrix(.Rows - 1, bteColDesc) = l_item_name
@@ -1215,7 +1265,7 @@ Case 2:
                
 End Select
 
-    With grid
+    With Grid
         For i = 1 To .Rows - 1
             .Cell(flexcpBackColor, i, bteColInventory) = vbWhite
             .Cell(flexcpBackColor, i, bteColReason) = vbWhite
@@ -1239,7 +1289,7 @@ sql = "select"
 End Sub
 
 Private Sub grid_Click()
-With grid
+With Grid
 If .Row <> 0 Then
     If .Col = bteColInventory Or .Col = bteColReason Then .FocusRect = flexFocusInset Else .FocusRect = flexFocusNone
 Else
@@ -1248,12 +1298,12 @@ End With
 End Sub
 
 Private Sub Grid_DblClick()
-    If grid.Row = 1 Then
+    If Grid.Row = 1 Then
         If bytSort = 0 Then
-            grid.Sort = flexSortGenericDescending
+            Grid.Sort = flexSortGenericDescending
             bytSort = 1
         Else
-            grid.Sort = flexSortGenericAscending
+            Grid.Sort = flexSortGenericAscending
             bytSort = 0
         End If
     End If
@@ -1261,21 +1311,21 @@ End Sub
 
 
 Private Sub grid_KeyPress(KeyAscii As Integer)
- If KeyAscii = 13 And grid.Row + 1 <> grid.Rows Then grid.Row = grid.Row + 1
+ If KeyAscii = 13 And Grid.Row + 1 <> Grid.Rows Then Grid.Row = Grid.Row + 1
  'If Chr(KeyAscii) < 0 Or Chr(KeyAscii) > 9 And KeyAscii <> bteColInventory And KeyAscii <> Asc(".") Then
  '    KeyAscii = 0
  'End If
  'If KeyAscii = Asc(".") And InStr(1, Trim(Grid.TextMatrix(Grid.Row, bteColInventory)), ".") > 0 Then _
  '    KeyAscii = 0
- If grid.Col = bteColInventory Then
+ If Grid.Col = bteColInventory Then
   If IsNumeric(Chr(KeyAscii)) = False And KeyAscii <> 46 And KeyAscii <> 8 Then KeyAscii = 0
- ElseIf grid.Col = bteColReason Then
+ ElseIf Grid.Col = bteColReason Then
   'Free Text
  End If
 End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
- If KeyAscii = 13 And grid.Row + 1 <> grid.Rows Then grid.Row = grid.Row + 1
+ If KeyAscii = 13 And Grid.Row + 1 <> Grid.Rows Then Grid.Row = Grid.Row + 1
  'If Chr(KeyAscii) < 0 Or Chr(KeyAscii) > 9 And KeyAscii <> 8 And KeyAscii <> Asc(".") Then
  '    KeyAscii = 0
  'End If
@@ -1293,15 +1343,15 @@ Dim cr As Integer
 Dim PosRow As Integer
 
 PosRow = 1
-For cr = 1 To grid.Rows - 1
-    If Trim(grid.TextMatrix(cr, bteColProdCod)) = Trim(txtItemCode) Then
+For cr = 1 To Grid.Rows - 1
+    If Trim(Grid.TextMatrix(cr, bteColProdCod)) = Trim(txtitemcode) Then
         PosRow = cr
     End If
 Next
 
-grid.Row = PosRow
-grid.Col = bteColInventory
-grid.SetFocus
+Grid.Row = PosRow
+Grid.Col = bteColInventory
+Grid.SetFocus
 'Grid.FocusRect = flexFocusInset
 SendKeys "{right}"
 SendKeys "{left}"

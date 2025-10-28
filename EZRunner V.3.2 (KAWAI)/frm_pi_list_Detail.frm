@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_pi_list_Detail 
    BackColor       =   &H00FDDFE3&
@@ -109,7 +109,7 @@ Begin VB.Form frm_pi_list_Detail
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   149684227
+      Format          =   60751875
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -272,8 +272,8 @@ Option Explicit
 Dim dateUp As Date
 
 Private Sub CboLocationCD_Change()
-If CboLocationCD.MatchFound Then
-   LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
+If cbolocationcd.matchFound Then
+   LblLocationName = cbolocationcd.List(cbolocationcd.ListIndex, 1)
    LblErrMsg = ""
 Else
    LblLocationName = ""
@@ -285,10 +285,10 @@ Private Sub CboLocationCD_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Int
 Dim j As Integer
 If KeyCode = 13 Then
   j = 0
-For i = 0 To CboLocationCD.ListCount - 1
-    If UCase(Trim(CboLocationCD)) = UCase(Trim(CboLocationCD.List(i, 0))) Then
-        CboLocationCD = Trim(CboLocationCD.List(i, 0))
-        LblLocationName = Trim(CboLocationCD.List(i, 1))
+For i = 0 To cbolocationcd.ListCount - 1
+    If UCase(Trim(cbolocationcd)) = UCase(Trim(cbolocationcd.List(i, 0))) Then
+        cbolocationcd = Trim(cbolocationcd.List(i, 0))
+        LblLocationName = Trim(cbolocationcd.List(i, 1))
         j = 1: Exit For
     End If
 Next
@@ -327,10 +327,10 @@ Select Case Index
 
 
                  j = 0
-                For i = 0 To CboLocationCD.ListCount - 1
-                    If UCase(Trim(CboLocationCD)) = UCase(Trim(CboLocationCD.List(i, 0))) Then
-                        CboLocationCD = Trim(CboLocationCD.List(i, 0))
-                        LblLocationName = Trim(CboLocationCD.List(i, 1))
+                For i = 0 To cbolocationcd.ListCount - 1
+                    If UCase(Trim(cbolocationcd)) = UCase(Trim(cbolocationcd.List(i, 0))) Then
+                        cbolocationcd = Trim(cbolocationcd.List(i, 0))
+                        LblLocationName = Trim(cbolocationcd.List(i, 1))
                         j = 1: Exit For
                     End If
                 Next
@@ -375,7 +375,7 @@ If Trim(LblErrMsg) <> "" Then Exit Sub
                     vbLf & "from item_master) a left join packingStyle_Cls b on a.ps_cls=b.packingstyle_cls) pc " & _
                     vbLf & "on im.item_code=pc.item_code "
                     
-                sql = sql & vbLf & "where warehouse_code='" & Trim(CboLocationCD) & "' "
+                sql = sql & vbLf & "where warehouse_code='" & Trim(cbolocationcd) & "' "
                     
                     If CboItem.ListIndex <> 0 Then sql = sql & vbLf & "And makeritem_code='" & Trim(CboItem) & "' "
 
@@ -471,7 +471,7 @@ DMonth = Format(Now, "mmmm yyyy")
 End Sub
 
 
-Private Sub StockLocation()
+Private Sub Old_StockLocation()
 Dim sql As String, ls_sql As String, RsStock As New ADODB.Recordset
 Dim lrs_ss As New ADODB.Recordset
 Dim i As Integer
@@ -483,21 +483,21 @@ ls_sql = " select * from (select wh_code, wh_name  from warehouse_master where s
 
 RsStock.Open ls_sql, Db, adOpenDynamic, adLockOptimistic
 
-CboLocationCD.columnCount = 2
-CboLocationCD.clear
+cbolocationcd.columnCount = 2
+cbolocationcd.clear
 
 i = 0
 Do While Not RsStock.EOF
-   CboLocationCD.AddItem ""
-   CboLocationCD.List(i, 0) = Trim(RsStock("wh_code"))
-   CboLocationCD.List(i, 1) = Trim(RsStock("wh_name"))
+   cbolocationcd.AddItem ""
+   cbolocationcd.List(i, 0) = Trim(RsStock("wh_code"))
+   cbolocationcd.List(i, 1) = Trim(RsStock("wh_name"))
    i = i + 1
    RsStock.MoveNext
 Loop
 
-CboLocationCD.ColumnWidths = "50 pt; 150 pt"
-CboLocationCD.ListWidth = 200
-CboLocationCD.ListRows = 15
+cbolocationcd.ColumnWidths = "50 pt; 150 pt"
+cbolocationcd.ListWidth = 200
+cbolocationcd.ListRows = 15
 
 
 If lrs_ss.State <> adStateClosed Then lrs_ss.Close
@@ -532,6 +532,99 @@ If lrs_ss.State <> adStateClosed Then lrs_ss.Close
 CboItem.ListIndex = 0
 End Sub
 
+Private Sub StockLocation()
+    Dim RsStock As ADODB.Recordset
+    Dim i As Long
+    
+    On Error GoTo ErrHandler
+
+'====================================================================
+' BAGIAN 1: ISI COMBOBOX LOKASI (CboLocationCD)
+'====================================================================
+    Dim cmdLoc As New ADODB.Command
+    With cmdLoc
+        .ActiveConnection = Db
+        .CommandType = adCmdStoredProc
+        .CommandText = "dbo.sp_PhysicalInventory_WH_Sel"
+        .Parameters.append .CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
+    End With
+    
+    ' Eksekusi dan isi ComboBox Lokasi
+    Set RsStock = cmdLoc.Execute()
+    
+    cbolocationcd.columnCount = 2
+    cbolocationcd.clear
+    
+    i = 0
+    Do While Not RsStock.EOF
+       cbolocationcd.AddItem ""
+       cbolocationcd.List(i, 0) = Trim(RsStock("wh_code"))
+       cbolocationcd.List(i, 1) = Trim(RsStock("wh_name"))
+       i = i + 1
+       RsStock.MoveNext
+    Loop
+    
+    cbolocationcd.ColumnWidths = "50 pt; 150 pt"
+    cbolocationcd.ListWidth = 200
+    cbolocationcd.ListRows = 15
+    
+    ' Tutup recordset untuk lokasi
+    If Not RsStock Is Nothing Then
+        If RsStock.State <> adStateClosed Then RsStock.Close
+    End If
+    Set cmdLoc = Nothing ' Hancurkan objek command pertama
+
+'====================================================================
+' BAGIAN 2: ISI COMBOBOX ITEM (cboitem)
+'====================================================================
+    Dim cmdItem As New ADODB.Command
+    With cmdItem
+        .ActiveConnection = Db
+        .CommandType = adCmdStoredProc
+        .CommandText = "dbo.sp_Item_Sel_ByUser"
+        .Parameters.append .CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
+    End With
+    
+    ' Eksekusi dan isi ComboBox Item
+    Set RsStock = cmdItem.Execute()
+    
+    CboItem.columnCount = 2
+    CboItem.clear
+    
+    ' Tambahkan opsi "ALL"
+    CboItem.AddItem ""
+    CboItem.List(0, 0) = "ALL"
+    CboItem.List(0, 1) = ""
+    
+    i = 1
+    Do While Not RsStock.EOF
+        CboItem.AddItem ""
+        CboItem.List(i, 0) = Trim(RsStock("item_code"))
+        CboItem.List(i, 1) = Trim(RsStock("item_name"))
+        i = i + 1
+        RsStock.MoveNext
+    Loop
+    
+    CboItem.ColumnWidths = "100 pt; 0 pt"
+    CboItem.ListWidth = 150
+    CboItem.ListRows = 15
+    CboItem.ListIndex = 0
+
+'====================================================================
+' BAGIAN 3: BERSIHKAN OBJEK
+'====================================================================
+CleanUp:
+    If Not RsStock Is Nothing Then
+        If RsStock.State <> adStateClosed Then RsStock.Close
+        Set RsStock = Nothing
+    End If
+    ' Objek command sudah dibersihkan di atas
+    Exit Sub
+
+ErrHandler:
+    MsgBox "Error saat memuat data: " & err.Description & " (Error #" & err.number & ")", vbCritical, "Error"
+    Resume CleanUp
+End Sub
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 If UnloadMode = 0 Then Cancel = 1
 End Sub
