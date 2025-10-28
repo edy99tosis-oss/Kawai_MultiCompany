@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_pi_report 
    BackColor       =   &H00FDDFE3&
@@ -292,7 +292,7 @@ Begin VB.Form frm_pi_report
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   141230083
+      Format          =   59506691
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -592,87 +592,87 @@ Private Sub Header()
     bteColGrandTotal = 18
     bteColGrandTotal2 = 19
     
-    grid.Rows = 1
-    grid.ColS = 20
+    Grid.Rows = 1
+    Grid.ColS = 20
     
-    grid.TextMatrix(0, bteColProdCod) = "Product Code"
-    grid.TextMatrix(0, bteColPartNo) = "Part Number"
-    grid.TextMatrix(0, bteColDesc) = "Description"
-    grid.TextMatrix(0, bteColAddress) = "Address"
-    grid.TextMatrix(0, bteColPreMonth) = "Pre Month Stock"
-    grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
-    grid.TextMatrix(0, bteColSupply) = "Supply Total"
-    grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
-    grid.TextMatrix(0, bteColEnd) = "End of Month Stock"
-    grid.TextMatrix(0, bteColInventory) = "Inventory"
-    grid.TextMatrix(0, bteColGroupDesc) = "Group Desc"
-    grid.TextMatrix(0, bteColUnit) = "Unit"
-    grid.TextMatrix(0, bteColReason) = "Reason"
-    grid.TextMatrix(0, bteColStockStatus) = "Stock Status"
-    grid.TextMatrix(0, bteColPO) = "Purchase Order"
-    grid.TextMatrix(0, bteColBeginTotal) = "Premonth Total"
-    grid.TextMatrix(0, bteColIncoming) = "Incoming Total"
-    grid.TextMatrix(0, bteColReq) = "Requirement"
-    grid.TextMatrix(0, bteColGrandTotal) = "Grand Total(Incoming)"
-    grid.TextMatrix(0, bteColGrandTotal2) = "Grand Total(PO)"
-    
-    
-    grid.ColWidth(bteColProdCod) = 1400
-    grid.ColWidth(bteColPartNo) = 2400
-    grid.ColWidth(bteColDesc) = 3500
-    grid.ColWidth(bteColAddress) = 800
-    grid.ColWidth(bteColPreMonth) = 1500
-    grid.ColWidth(bteColReceipt) = 1250
-    grid.ColWidth(bteColSupply) = 1250
-    grid.ColWidth(bteColLossReject) = 1200
-    grid.ColWidth(bteColEnd) = 1800
-    grid.ColWidth(bteColInventory) = 1500
-    grid.ColWidth(bteColGroupDesc) = 1200
-    grid.ColWidth(bteColUnit) = 600
-    grid.ColWidth(bteColReason) = 3500
-    grid.ColWidth(bteColStockStatus) = 1500
-    grid.ColWidth(bteColReq) = 1200
-    grid.ColWidth(bteColPO) = 1200
-    grid.ColWidth(bteColGrandTotal) = 1200
-    grid.ColWidth(bteColGrandTotal2) = 1200
-    
-    grid.ColAlignment(bteColProdCod) = flexAlignLeftCenter
-    grid.ColAlignment(bteColPartNo) = flexAlignLeftCenter
-    grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
-    grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
-    grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
-    grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
-    grid.ColAlignment(bteColSupply) = flexAlignRightCenter
-    grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
-    grid.ColAlignment(bteColEnd) = flexAlignRightCenter
-    grid.ColAlignment(bteColInventory) = flexAlignRightCenter
-    grid.ColAlignment(bteColGroupDesc) = flexAlignLeftCenter
-    grid.ColAlignment(bteColUnit) = flexAlignLeftCenter
-    grid.ColAlignment(bteColReason) = flexAlignLeftCenter
-    grid.ColAlignment(bteColStockStatus) = flexAlignLeftCenter
-    
-    grid.ColHidden(bteColPartNo) = True
-    grid.ColHidden(bteColGroupDesc) = True
-    
-    grid.ColHidden(bteColUnit) = True
-    grid.ColHidden(bteColReason) = True
-    grid.ColHidden(bteColStockStatus) = True
-    grid.ColHidden(bteColPO) = True
-    grid.ColHidden(bteColBeginTotal) = True
-    grid.ColHidden(bteColIncoming) = True
-    grid.ColHidden(bteColReq) = True
-    grid.ColHidden(bteColGrandTotal) = True
-    grid.ColHidden(bteColGrandTotal2) = True
+    Grid.TextMatrix(0, bteColProdCod) = "Product Code"
+    Grid.TextMatrix(0, bteColPartNo) = "Part Number"
+    Grid.TextMatrix(0, bteColDesc) = "Description"
+    Grid.TextMatrix(0, bteColAddress) = "Address"
+    Grid.TextMatrix(0, bteColPreMonth) = "Pre Month Stock"
+    Grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
+    Grid.TextMatrix(0, bteColSupply) = "Supply Total"
+    Grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
+    Grid.TextMatrix(0, bteColEnd) = "End of Month Stock"
+    Grid.TextMatrix(0, bteColInventory) = "Inventory"
+    Grid.TextMatrix(0, bteColGroupDesc) = "Group Desc"
+    Grid.TextMatrix(0, bteColUnit) = "Unit"
+    Grid.TextMatrix(0, bteColReason) = "Reason"
+    Grid.TextMatrix(0, bteColStockStatus) = "Stock Status"
+    Grid.TextMatrix(0, bteColPO) = "Purchase Order"
+    Grid.TextMatrix(0, bteColBeginTotal) = "Premonth Total"
+    Grid.TextMatrix(0, bteColIncoming) = "Incoming Total"
+    Grid.TextMatrix(0, bteColReq) = "Requirement"
+    Grid.TextMatrix(0, bteColGrandTotal) = "Grand Total(Incoming)"
+    Grid.TextMatrix(0, bteColGrandTotal2) = "Grand Total(PO)"
     
     
-    grid.FrozenCols = bteColPreMonth
+    Grid.ColWidth(bteColProdCod) = 1400
+    Grid.ColWidth(bteColPartNo) = 2400
+    Grid.ColWidth(bteColDesc) = 3500
+    Grid.ColWidth(bteColAddress) = 800
+    Grid.ColWidth(bteColPreMonth) = 1500
+    Grid.ColWidth(bteColReceipt) = 1250
+    Grid.ColWidth(bteColSupply) = 1250
+    Grid.ColWidth(bteColLossReject) = 1200
+    Grid.ColWidth(bteColEnd) = 1800
+    Grid.ColWidth(bteColInventory) = 1500
+    Grid.ColWidth(bteColGroupDesc) = 1200
+    Grid.ColWidth(bteColUnit) = 600
+    Grid.ColWidth(bteColReason) = 3500
+    Grid.ColWidth(bteColStockStatus) = 1500
+    Grid.ColWidth(bteColReq) = 1200
+    Grid.ColWidth(bteColPO) = 1200
+    Grid.ColWidth(bteColGrandTotal) = 1200
+    Grid.ColWidth(bteColGrandTotal2) = 1200
     
-    grid.Cell(flexcpAlignment, 0, 0, 0, bteColStockStatus) = flexAlignCenterCenter
+    Grid.ColAlignment(bteColProdCod) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColPartNo) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
+    Grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
+    Grid.ColAlignment(bteColSupply) = flexAlignRightCenter
+    Grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
+    Grid.ColAlignment(bteColEnd) = flexAlignRightCenter
+    Grid.ColAlignment(bteColInventory) = flexAlignRightCenter
+    Grid.ColAlignment(bteColGroupDesc) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColUnit) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColReason) = flexAlignLeftCenter
+    Grid.ColAlignment(bteColStockStatus) = flexAlignLeftCenter
+    
+    Grid.ColHidden(bteColPartNo) = True
+    Grid.ColHidden(bteColGroupDesc) = True
+    
+    Grid.ColHidden(bteColUnit) = True
+    Grid.ColHidden(bteColReason) = True
+    Grid.ColHidden(bteColStockStatus) = True
+    Grid.ColHidden(bteColPO) = True
+    Grid.ColHidden(bteColBeginTotal) = True
+    Grid.ColHidden(bteColIncoming) = True
+    Grid.ColHidden(bteColReq) = True
+    Grid.ColHidden(bteColGrandTotal) = True
+    Grid.ColHidden(bteColGrandTotal2) = True
+    
+    
+    Grid.FrozenCols = bteColPreMonth
+    
+    Grid.Cell(flexcpAlignment, 0, 0, 0, bteColStockStatus) = flexAlignCenterCenter
 End Sub
 
 Private Sub CboLocationCD_Change()
 Call clearGrid
-If CboLocationCD.MatchFound Then
+If CboLocationCD.matchFound Then
    LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
    LblErrMsg = ""
 Else
@@ -681,8 +681,8 @@ Else
 End If
 End Sub
 Sub clearGrid()
-grid.clear
-grid.Rows = 1
+Grid.clear
+Grid.Rows = 1
 Call Header
 End Sub
 
@@ -717,7 +717,7 @@ LblErrMsg = ""
 If txtItemCode.Text = "" Then
     LblErrMsg = DisplayMsg(1009)
     Exit Sub
-ElseIf grid.Rows <= 1 Then
+ElseIf Grid.Rows <= 1 Then
     LblErrMsg = "Please Search of Data!"
     Exit Sub
 Else
@@ -729,7 +729,7 @@ Dim lngRow As Long
     Dim strText As String
     Dim booFound As Boolean
     
-    With grid
+    With Grid
             
         For lngRow = .Row + 1 To .Rows - 1
             
@@ -782,10 +782,10 @@ Select Case Index
                     LblErrMsg = ""
                     
                        Call Header
-                       grid.Rows = 1
+                       Grid.Rows = 1
                        Call Browse
                        For i = 4 To 7
-                           Cmd_save(i).Enabled = True
+                           Cmd_Save(i).Enabled = True
                        Next i
                     Me.MousePointer = vbDefault
                     
@@ -974,7 +974,7 @@ Call Header
 
 End Sub
 
-Private Sub StockLocation()
+Private Sub Old_StockLocation()
 Dim sql As String, ls_sql As String, RsStock As New ADODB.Recordset
 Dim i As Integer
 
@@ -1001,12 +1001,62 @@ CboLocationCD.ListWidth = 200
 CboLocationCD.ListRows = 15
 End Sub
 
+Private Sub StockLocation()
+    Dim cmd As New ADODB.Command
+    Dim RsStock As ADODB.Recordset
+    Dim i As Long
+    
+    On Error GoTo ErrHandler ' Tambahkan error handling
+    
+    ' Setup objek Command untuk menjalankan stored procedure
+    Set cmd = New ADODB.Command
+    cmd.ActiveConnection = Db
+    cmd.CommandType = adCmdStoredProc
+    cmd.CommandText = "dbo.sp_PhysicalInventory_WH_Sel"
+    
+    cmd.Parameters.append cmd.CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
+    
+    ' Eksekusi stored procedure dan simpan hasilnya di Recordset
+    Set RsStock = cmd.Execute()
+    
+    ' --- Kode untuk mengisi ComboBox tetap sama ---
+    CboLocationCD.columnCount = 2
+    CboLocationCD.clear
+    
+    i = 0
+    Do While Not RsStock.EOF
+       CboLocationCD.AddItem ""
+       CboLocationCD.List(i, 0) = Trim(RsStock("wh_code"))
+       CboLocationCD.List(i, 1) = Trim(RsStock("wh_name"))
+       i = i + 1
+       RsStock.MoveNext
+    Loop
+    
+    CboLocationCD.ColumnWidths = "50 pt; 150 pt"
+    CboLocationCD.ListWidth = 200
+    CboLocationCD.ListRows = 15
+
+' --- Tambahkan blok cleanup untuk memastikan objek dibebaskan ---
+Cleanup:
+    If Not RsStock Is Nothing Then
+        If RsStock.State <> adStateClosed Then RsStock.Close
+        Set RsStock = Nothing
+    End If
+    If Not cmd Is Nothing Then Set cmd = Nothing
+    Exit Sub
+
+ErrHandler:
+    ' Tampilkan pesan error jika terjadi masalah
+    MsgBox "Error saat memuat lokasi stock: " & err.Description, vbCritical, "Error"
+    Resume Cleanup ' Lanjut ke blok cleanup untuk membersihkan objek
+End Sub
+
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 If UnloadMode = 0 Then Cancel = 1
 End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
-With grid
+With Grid
 .TextMatrix(Row, Col) = Format(.TextMatrix(Row, Col), gs_formatQty)
 End With
 End Sub
@@ -1108,28 +1158,28 @@ Select Case up_GetDateRange(DMonth)
             i = 0
             Do While Not RsStock.EOF
                 i = i + 1
-                grid.AddItem i
-                grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
-                grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
+                Grid.AddItem i
+                Grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
+                Grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
                 'Grid.TextMatrix(i, bteColDesc) = uf_GetItemDescription(Trim(RsStock!item_code))
-                grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
-                grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
-                grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
-                grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
-                grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!lm_premonth, gs_formatQty)
-                grid.TextMatrix(i, bteColReceipt) = Format(RsStock!lm_receipt, gs_formatQty)
-                grid.TextMatrix(i, bteColSupply) = Format(RsStock!lm_supply, gs_formatQty)
-                grid.TextMatrix(i, bteColLossReject) = Format(RsStock!lm_lossreject, gs_formatQty)
-                grid.TextMatrix(i, bteColEnd) = Format(RsStock!lm_current, gs_formatQty)
-                grid.TextMatrix(i, bteColInventory) = IIf(RsStock!lm_inventory = Null, "", Format(RsStock!lm_inventory, gs_formatQty))
-                grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!lm_reason), "", Trim(RsStock!lm_reason))
+                Grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
+                Grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
+                Grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
+                Grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
+                Grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!lm_premonth, gs_formatQty)
+                Grid.TextMatrix(i, bteColReceipt) = Format(RsStock!lm_receipt, gs_formatQty)
+                Grid.TextMatrix(i, bteColSupply) = Format(RsStock!lm_supply, gs_formatQty)
+                Grid.TextMatrix(i, bteColLossReject) = Format(RsStock!lm_lossreject, gs_formatQty)
+                Grid.TextMatrix(i, bteColEnd) = Format(RsStock!lm_current, gs_formatQty)
+                Grid.TextMatrix(i, bteColInventory) = IIf(RsStock!lm_inventory = Null, "", Format(RsStock!lm_inventory, gs_formatQty))
+                Grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!lm_reason), "", Trim(RsStock!lm_reason))
                 'Grid.TextMatrix(i, bteColStockStatus) = IIf(IsNull(RsStock!Stock_status), "", Format(Trim(RsStock!Stock_status), gs_formatQty))
-                grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
-                grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
-                grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
-                grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
-                grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
-                grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
+                Grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
+                Grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
+                Grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
+                Grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
                 RsStock.MoveNext
                 
             Loop
@@ -1139,29 +1189,29 @@ Select Case up_GetDateRange(DMonth)
             i = 0
             Do While Not RsStock.EOF
                 i = i + 1
-                grid.AddItem i
-                grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
-                grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
+                Grid.AddItem i
+                Grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
+                Grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
                 'Grid.TextMatrix(i, bteColDesc) = uf_GetItemDescription(Trim(RsStock!item_code))
-                grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
-                grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
-                grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
-                grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
-                grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!tm_premonth, gs_formatQty)
-                grid.TextMatrix(i, bteColReceipt) = Format(RsStock!tm_receipt, gs_formatQty)
-                grid.TextMatrix(i, bteColSupply) = Format(RsStock!tm_supply, gs_formatQty)
-                grid.TextMatrix(i, bteColLossReject) = Format(RsStock!tm_lossreject, gs_formatQty)
-                grid.TextMatrix(i, bteColEnd) = Format(RsStock!tm_current, gs_formatQty)
-                grid.TextMatrix(i, bteColInventory) = Format(RsStock!tm_inventory, gs_formatQty)
-                 grid.TextMatrix(i, bteColInventory) = IIf(RsStock!tm_inventory = Null, "", Format(RsStock!tm_inventory, gs_formatQty))
-                 grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!tm_reason), "", Trim(RsStock!tm_reason))
+                Grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
+                Grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
+                Grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
+                Grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
+                Grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!tm_premonth, gs_formatQty)
+                Grid.TextMatrix(i, bteColReceipt) = Format(RsStock!tm_receipt, gs_formatQty)
+                Grid.TextMatrix(i, bteColSupply) = Format(RsStock!tm_supply, gs_formatQty)
+                Grid.TextMatrix(i, bteColLossReject) = Format(RsStock!tm_lossreject, gs_formatQty)
+                Grid.TextMatrix(i, bteColEnd) = Format(RsStock!tm_current, gs_formatQty)
+                Grid.TextMatrix(i, bteColInventory) = Format(RsStock!tm_inventory, gs_formatQty)
+                 Grid.TextMatrix(i, bteColInventory) = IIf(RsStock!tm_inventory = Null, "", Format(RsStock!tm_inventory, gs_formatQty))
+                 Grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!tm_reason), "", Trim(RsStock!tm_reason))
                 'Grid.TextMatrix(i, bteColStockStatus) = IIf(IsNull(RsStock!Stock_status), "", Trim(RsStock!Stock_status))
-                grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
-                grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
-                grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
-                grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
-                grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
-                grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
+                Grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
+                Grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
+                Grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
+                Grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
                 RsStock.MoveNext
                 
             Loop
@@ -1172,29 +1222,29 @@ Select Case up_GetDateRange(DMonth)
             i = 0
             Do While Not RsStock.EOF
                 i = i + 1
-                grid.AddItem i
-                grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
-                grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
+                Grid.AddItem i
+                Grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
+                Grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
                 'Grid.TextMatrix(i, bteColDesc) = uf_GetItemDescription(Trim(RsStock!item_code))
-                grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
-                grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
-                grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
-                grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
-                grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!nm_premonth, gs_formatQty)
-                grid.TextMatrix(i, bteColReceipt) = Format(RsStock!nm_receipt, gs_formatQty)
-                grid.TextMatrix(i, bteColSupply) = Format(RsStock!nm_supply, gs_formatQty)
-                grid.TextMatrix(i, bteColLossReject) = Format(RsStock!nm_lossreject, gs_formatQty)
-                grid.TextMatrix(i, bteColEnd) = Format(RsStock!nm_current, gs_formatQty)
-                grid.TextMatrix(i, bteColInventory) = Format(RsStock!nm_inventory, gs_formatQty)
-                grid.TextMatrix(i, bteColInventory) = IIf(RsStock!nm_inventory = Null, "", Format(RsStock!nm_inventory, gs_formatQty))
-                grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!nm_reason), "", Trim(RsStock!nm_reason))
+                Grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
+                Grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
+                Grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
+                Grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
+                Grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!nm_premonth, gs_formatQty)
+                Grid.TextMatrix(i, bteColReceipt) = Format(RsStock!nm_receipt, gs_formatQty)
+                Grid.TextMatrix(i, bteColSupply) = Format(RsStock!nm_supply, gs_formatQty)
+                Grid.TextMatrix(i, bteColLossReject) = Format(RsStock!nm_lossreject, gs_formatQty)
+                Grid.TextMatrix(i, bteColEnd) = Format(RsStock!nm_current, gs_formatQty)
+                Grid.TextMatrix(i, bteColInventory) = Format(RsStock!nm_inventory, gs_formatQty)
+                Grid.TextMatrix(i, bteColInventory) = IIf(RsStock!nm_inventory = Null, "", Format(RsStock!nm_inventory, gs_formatQty))
+                Grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!nm_reason), "", Trim(RsStock!nm_reason))
                 'Grid.TextMatrix(i, bteColStockStatus) = IIf(IsNull(RsStock!Stock_status), "", Trim(RsStock!Stock_status))
-                grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
-                grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
-                grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
-                grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
-                grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
-                grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
+                Grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
+                Grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
+                Grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
+                Grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
                 RsStock.MoveNext
                 
             Loop
@@ -1202,27 +1252,27 @@ Select Case up_GetDateRange(DMonth)
             i = 0
             Do While Not RsStock.EOF
                 i = i + 1
-                grid.AddItem i
-                grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
-                grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
-                grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
-                grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
-                grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
-                grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
-                grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!Premonth, gs_formatQty)
-                grid.TextMatrix(i, bteColReceipt) = Format(RsStock!Receipt, gs_formatQty)
-                grid.TextMatrix(i, bteColSupply) = Format(RsStock!supply, gs_formatQty)
-                grid.TextMatrix(i, bteColLossReject) = Format(RsStock!LossReject, gs_formatQty)
-                grid.TextMatrix(i, bteColEnd) = Format(RsStock!current, gs_formatQty)
-                 grid.TextMatrix(i, bteColInventory) = IIf(RsStock!inventory = Null, "", Format(RsStock!inventory, gs_formatQty))
-                 grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!reason) Or Trim(RsStock!reason) = "Null", "", Trim(RsStock!reason))
+                Grid.AddItem i
+                Grid.TextMatrix(i, bteColProdCod) = Trim(RsStock!Item_Code)
+                Grid.TextMatrix(i, bteColPartNo) = Trim(RsStock!MakerItem_Code) & ""
+                Grid.TextMatrix(i, bteColDesc) = Trim(RsStock!Description) & ""
+                Grid.TextMatrix(i, bteColAddress) = Trim(RsStock!Address) & ""
+                Grid.TextMatrix(i, bteColGroupDesc) = Trim(RsStock!groupdesc) & ""
+                Grid.TextMatrix(i, bteColUnit) = Trim(RsStock!Unit_Desc) & ""
+                Grid.TextMatrix(i, bteColPreMonth) = Format(RsStock!Premonth, gs_formatQty)
+                Grid.TextMatrix(i, bteColReceipt) = Format(RsStock!Receipt, gs_formatQty)
+                Grid.TextMatrix(i, bteColSupply) = Format(RsStock!supply, gs_formatQty)
+                Grid.TextMatrix(i, bteColLossReject) = Format(RsStock!LossReject, gs_formatQty)
+                Grid.TextMatrix(i, bteColEnd) = Format(RsStock!current, gs_formatQty)
+                 Grid.TextMatrix(i, bteColInventory) = IIf(RsStock!inventory = Null, "", Format(RsStock!inventory, gs_formatQty))
+                 Grid.TextMatrix(i, bteColReason) = IIf(IsNull(RsStock!reason) Or Trim(RsStock!reason) = "Null", "", Trim(RsStock!reason))
                 'Grid.TextMatrix(i, bteColStockStatus) = IIf(IsNull(RsStock!Stock_status), "", Trim(RsStock!Stock_status))
-                grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
-                grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
-                grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
-                grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
-                grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
-                grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColPO) = IIf(IsNull(RsStock!po), "", Format(Trim(RsStock!po), gs_formatQty))
+                Grid.TextMatrix(i, bteColBeginTotal) = IIf(IsNull(RsStock!StokBegin), "", Format(Trim(RsStock!StokBegin), gs_formatQty))
+                Grid.TextMatrix(i, bteColIncoming) = IIf(IsNull(RsStock!Incoming), "", Format(Trim(RsStock!Incoming), gs_formatQty))
+                Grid.TextMatrix(i, bteColReq) = IIf(IsNull(RsStock!req), "", Format(Trim(RsStock!req), gs_formatQty))
+                Grid.TextMatrix(i, bteColGrandTotal) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!Incoming) - CDbl(RsStock!req), gs_formatQty)
+                Grid.TextMatrix(i, bteColGrandTotal2) = Format(CDbl(RsStock!StokBegin) + CDbl(RsStock!po) - CDbl(RsStock!req), gs_formatQty)
                 RsStock.MoveNext
                 
             Loop
@@ -1232,12 +1282,12 @@ Select Case up_GetDateRange(DMonth)
 End Sub
 
 Private Sub Grid_DblClick()
-    If grid.Row = 1 Then
+    If Grid.Row = 1 Then
         If bytSort = 0 Then
-            grid.Sort = flexSortGenericDescending
+            Grid.Sort = flexSortGenericDescending
             bytSort = 1
         Else
-            grid.Sort = flexSortGenericAscending
+            Grid.Sort = flexSortGenericAscending
             bytSort = 0
         End If
     End If
@@ -1287,7 +1337,7 @@ ls_stock = "M"
 Me.MousePointer = vbHourglass
 
 CboLocationCD = Trim(CboLocationCD)
-If CboLocationCD.MatchFound Then
+If CboLocationCD.matchFound Then
     LblLocationName = Trim(CboLocationCD.Column(1))
 Else
     LblErrMsg = DisplayMsg(4018)
