@@ -32,6 +32,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Left            =   12555
       Style           =   1  'Graphical
       TabIndex        =   31
+      Tag             =   "FFTT*/"
       Top             =   9840
       Visible         =   0   'False
       Width           =   1125
@@ -64,6 +65,7 @@ Begin VB.Form frmPartsRecSupInquiry
       MaxLength       =   15
       TabIndex        =   28
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   2355
       Width           =   1650
    End
@@ -95,6 +97,7 @@ Begin VB.Form frmPartsRecSupInquiry
       MaxLength       =   15
       TabIndex        =   26
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   2355
       Width           =   1650
    End
@@ -126,6 +129,7 @@ Begin VB.Form frmPartsRecSupInquiry
       MaxLength       =   15
       TabIndex        =   24
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   2355
       Width           =   1650
    End
@@ -157,6 +161,7 @@ Begin VB.Form frmPartsRecSupInquiry
       MaxLength       =   15
       TabIndex        =   12
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   2355
       Width           =   1650
    End
@@ -165,6 +170,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   300
       Left            =   4770
       TabIndex        =   1
+      Tag             =   "TTFF*/"
       Top             =   975
       Width           =   315
    End
@@ -194,6 +200,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Left            =   13763
       Style           =   1  'Graphical
       TabIndex        =   6
+      Tag             =   "FFTT*/"
       Top             =   9840
       Width           =   1125
    End
@@ -202,6 +209,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Left            =   13035
       TabIndex        =   8
       TabStop         =   0   'False
+      Tag             =   "FTTF*/"
       Top             =   240
       Width           =   1860
       _extentx        =   3281
@@ -220,9 +228,10 @@ Begin VB.Form frmPartsRecSupInquiry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   12675
+      Left            =   12720
       Style           =   1  'Graphical
       TabIndex        =   4
+      Tag             =   "TTFF*/"
       Top             =   2415
       Width           =   1170
    End
@@ -254,6 +263,7 @@ Begin VB.Form frmPartsRecSupInquiry
       MaxLength       =   15
       TabIndex        =   11
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   2355
       Width           =   1650
    End
@@ -285,6 +295,7 @@ Begin VB.Form frmPartsRecSupInquiry
       MaxLength       =   15
       TabIndex        =   10
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   2355
       Width           =   1650
    End
@@ -316,6 +327,7 @@ Begin VB.Form frmPartsRecSupInquiry
       MaxLength       =   15
       TabIndex        =   9
       TabStop         =   0   'False
+      Tag             =   "TTFF*/"
       Top             =   2355
       Width           =   1650
    End
@@ -324,6 +336,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   533
       Left            =   240
       TabIndex        =   15
+      Tag             =   "TFTT*/"
       Top             =   9150
       Width           =   14655
       Begin VB.Label lblErrMsg 
@@ -342,6 +355,7 @@ Begin VB.Form frmPartsRecSupInquiry
          Height          =   255
          Left            =   120
          TabIndex        =   16
+         Tag             =   "TFTT*/"
          Top             =   180
          Width           =   14400
       End
@@ -362,6 +376,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Left            =   240
       Style           =   1  'Graphical
       TabIndex        =   7
+      Tag             =   "TFFT*/"
       Top             =   9840
       Width           =   1125
    End
@@ -369,6 +384,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   6270
       Left            =   240
       TabIndex        =   5
+      Tag             =   "TTTT*/"
       Top             =   2880
       Width           =   14655
       _cx             =   25850
@@ -466,6 +482,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   315
       Left            =   7755
       TabIndex        =   3
+      Tag             =   "TTFF*/"
       Top             =   1395
       Width           =   1260
       _ExtentX        =   2223
@@ -481,9 +498,15 @@ Begin VB.Form frmPartsRecSupInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   141230083
+      Format          =   96206851
       UpDown          =   -1  'True
       CurrentDate     =   37798
+   End
+   Begin EZRunnerv3.Anchor Anchor1 
+      Left            =   0
+      Top             =   480
+      _extentx        =   847
+      _extenty        =   820
    End
    Begin VB.Line Line2 
       X1              =   3585
@@ -505,6 +528,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   195
       Left            =   3585
       TabIndex        =   30
+      Tag             =   "TTFF*/"
       Top             =   1455
       Width           =   3150
    End
@@ -525,6 +549,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   9
       Left            =   9315
       TabIndex        =   29
+      Tag             =   "TTFF*/"
       Top             =   1950
       Width           =   975
    End
@@ -545,6 +570,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   7
       Left            =   7628
       TabIndex        =   27
+      Tag             =   "TTFF*/"
       Top             =   1950
       Width           =   885
    End
@@ -565,6 +591,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   8
       Left            =   10860
       TabIndex        =   25
+      Tag             =   "TTFF*/"
       Top             =   1950
       Width           =   1320
    End
@@ -585,6 +612,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   6
       Left            =   5850
       TabIndex        =   23
+      Tag             =   "TTFF*/"
       Top             =   1950
       Width           =   990
    End
@@ -605,6 +633,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   5
       Left            =   4088
       TabIndex        =   22
+      Tag             =   "TTFF*/"
       Top             =   1950
       Width           =   1065
    End
@@ -625,6 +654,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   4
       Left            =   2340
       TabIndex        =   21
+      Tag             =   "TTFF*/"
       Top             =   1950
       Width           =   1110
    End
@@ -645,6 +675,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   3
       Left            =   758
       TabIndex        =   20
+      Tag             =   "TTFF*/"
       Top             =   1950
       Width           =   825
    End
@@ -652,6 +683,7 @@ Begin VB.Form frmPartsRecSupInquiry
       BackColor       =   &H00A6D2FF&
       Height          =   555
       Left            =   240
+      Tag             =   "TTFF*/"
       Top             =   2235
       Width           =   12330
    End
@@ -672,6 +704,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   2
       Left            =   6990
       TabIndex        =   19
+      Tag             =   "TTFF*/"
       Top             =   1455
       Width           =   510
    End
@@ -679,6 +712,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   315
       Left            =   1890
       TabIndex        =   2
+      Tag             =   "TTFF*/"
       Top             =   1395
       Width           =   1650
       VariousPropertyBits=   746604571
@@ -706,6 +740,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   195
       Left            =   5145
       TabIndex        =   18
+      Tag             =   "TTFF*/"
       Top             =   1035
       Width           =   3870
    End
@@ -726,6 +761,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   0
       Left            =   240
       TabIndex        =   17
+      Tag             =   "TTFF*/"
       Top             =   1020
       Width           =   915
    End
@@ -739,6 +775,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   315
       Left            =   1890
       TabIndex        =   0
+      Tag             =   "TTFF*/"
       Top             =   960
       Width           =   2850
       VariousPropertyBits=   612386843
@@ -769,6 +806,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Index           =   1
       Left            =   240
       TabIndex        =   14
+      Tag             =   "TTFF*/"
       Top             =   1455
       Width           =   1470
    End
@@ -789,6 +827,7 @@ Begin VB.Form frmPartsRecSupInquiry
       Height          =   390
       Left            =   240
       TabIndex        =   13
+      Tag             =   "TTTF*/"
       Top             =   240
       Width           =   14655
    End
@@ -797,6 +836,7 @@ Begin VB.Form frmPartsRecSupInquiry
       BackStyle       =   1  'Opaque
       Height          =   375
       Left            =   240
+      Tag             =   "TTFF*/"
       Top             =   1875
       Width           =   12330
    End
@@ -863,17 +903,18 @@ Private Sub SetComboWarehouse()
     cboWarehouse.columnCount = 2
     cboWarehouse.clear
         
-    ls_sql = " select wh_code, wh_name, stockcontrol_cls, adm_group  " & vbCrLf & _
-                " from( " & vbCrLf & _
-                "   select wh_code, wh_name, stockcontrol_cls, adm_group, 2 idx  " & vbCrLf & _
-                "   from warehouse_master  " & vbCrLf & _
-                "   where use_endday >= convert(varchar, getdate(), 112) " & vbCrLf & _
-                "   union all " & vbCrLf & _
-                "   select trade_code, trade_name, '01', '' adm_group, 1 idx " & vbCrLf & _
-                "   from trade_master " & vbCrLf & _
-                "   where trade_code in (select manufacture_code from manufacture_line) " & vbCrLf & _
-                " )wh  order by wh_code  "
+'    ls_sql = " select wh_code, wh_name, stockcontrol_cls, adm_group  " & vbCrLf & _
+'                " from( " & vbCrLf & _
+'                "   select wh_code, wh_name, stockcontrol_cls, adm_group, 2 idx  " & vbCrLf & _
+'                "   from warehouse_master  " & vbCrLf & _
+'                "   where use_endday >= convert(varchar, getdate(), 112) " & vbCrLf & _
+'                "   union all " & vbCrLf & _
+'                "   select trade_code, trade_name, '01', '' adm_group, 1 idx " & vbCrLf & _
+'                "   from trade_master " & vbCrLf & _
+'                "   where trade_code in (select manufacture_code from manufacture_line) " & vbCrLf & _
+'                " )wh  order by wh_code  "
                 
+    ls_sql = "EXEC dbo.sp_PartSupplyRecInqLoad_WH @UserID = '" & userLogin & "'"
     RsStock.Open ls_sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     i = 0
     Do While Not RsStock.EOF
@@ -895,7 +936,7 @@ Private Sub SetDataStock()
     Dim adoRs As New ADODB.Recordset
 
     Me.MousePointer = vbHourglass
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     sql = " select item_code, warehouse_code, sum(premonth) premonth, sum(receipt) receipt, sum(supply) supply, sum(lossreject) lossreject, sum([current]) [current], sum(inventory) inventory " & vbCrLf & _
                 " from( " & vbCrLf & _
@@ -956,7 +997,7 @@ ErrExit:
     Set adoRs = Nothing
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
+ErrHandler:
     LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     Resume ErrExit
 End Sub
@@ -1533,7 +1574,7 @@ ErrExit:
     
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
+ErrHandler:
     LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     Resume ErrExit
 End Sub
@@ -1549,7 +1590,7 @@ Private Sub PrintToExcel()
     Dim lngRowXL As Long
     
     Me.MousePointer = vbHourglass
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     LblErrMsg.Caption = ""
     If grid.Rows = 2 Then
@@ -1652,7 +1693,7 @@ ErrExit:
     Set xlBook = Nothing
     Set xlapp = Nothing
     Exit Sub
-errHandler:
+ErrHandler:
     LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -1681,7 +1722,7 @@ End Function
 
 Private Sub CboItem_Change()
     LblErrMsg.Caption = ""
-    If cboitem.MatchFound Then
+    If cboitem.matchFound Then
         lblitem.Caption = cboitem.Column(2)
     Else
         lblitem.Caption = ""
@@ -1700,7 +1741,7 @@ End Sub
 
 Private Sub cbowarehouse_Change()
     LblErrMsg.Caption = ""
-    If cboWarehouse.MatchFound Then
+    If cboWarehouse.matchFound Then
         lblWarehouse.Caption = cboWarehouse.Column(1)
     Else
         lblWarehouse.Caption = ""
@@ -1732,14 +1773,14 @@ End Sub
 
 Private Sub cmdNormalize_Click()
     Me.MousePointer = vbHourglass
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
         
     Db.Execute "exec sp_normalize_receipt_supply"
     
 ErrExit:
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
+ErrHandler:
     LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -1809,4 +1850,9 @@ Private Sub Form_Load()
     txtstock(4).Text = Format(0, gs_formatQty)
     txtstock(5).Text = Format(0, gs_formatQty)
     txtstock(6).Text = Format(0, gs_formatQty)
+    
+    With Anchor1
+      .RegString = "AnchorCtrl,Positions," & Me.Name & "0|0"
+      .DoInit
+    End With
 End Sub

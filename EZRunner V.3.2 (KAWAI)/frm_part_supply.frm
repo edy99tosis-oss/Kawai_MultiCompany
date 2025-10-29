@@ -146,7 +146,7 @@ Begin VB.Form frm_part_supply
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129171459
+      Format          =   128909315
       CurrentDate     =   41080
    End
    Begin VB.TextBox txtbcno 
@@ -383,7 +383,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129171459
+         Format          =   128909315
          CurrentDate     =   37867
       End
       Begin MSForms.ComboBox CboDelivery 
@@ -1364,8 +1364,8 @@ Begin VB.Form frm_part_supply
       TabIndex        =   60
       Top             =   120
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VB.Label Label21 
       AutoSize        =   -1  'True
@@ -2425,7 +2425,7 @@ End Sub
 Private Sub Cmd_Submit_Click()
     Dim s As Integer, d As Integer, j  As Integer
     Dim l_curr As String, sql_del As String, l_amount As String, l_qty As String, L_price As String, l_unit_cls As String, sql_prod As String
-    Dim rs As New ADODB.Recordset, ls_sql As String
+    Dim RS As New ADODB.Recordset, ls_sql As String
    ' On Error GoTo ErrHandler
     
     cmd_submit.Enabled = False
@@ -2526,15 +2526,15 @@ delete:
                 '#Check jika SupplySeq_No nya sesuai dengan Seq_No berdasarkan replacement
                 ls_sql = " SELECT * FROM Part_Supply " & vbCrLf & _
                         " WHERE SupplySeq_No = " & Val(Trim(Grid1.TextMatrix(i, bteColSeqNo))) & " "
-                If rs.State = adStateOpen Then rs.Close
-                Set rs = db2.Execute(ls_sql)
+                If RS.State = adStateOpen Then RS.Close
+                Set RS = db2.Execute(ls_sql)
                 
-                If Not rs.EOF Then
-                    ls_FromWarehouseCode = Trim(rs!FromWarehouse_Code)
-                    ls_ToWarehouseCode = Trim(rs!towarehouse_code)
+                If Not RS.EOF Then
+                    ls_FromWarehouseCode = Trim(RS!FromWarehouse_Code)
+                    ls_ToWarehouseCode = Trim(RS!towarehouse_code)
                 End If
                 
-                rs.Close
+                RS.Close
                 
                 '#Delete data in part Supply berdasarkan SupplySeq_No
                 ls_sql = " DELETE FROM   Part_Supply WITH (updlock) " & vbCrLf & _
@@ -2628,12 +2628,12 @@ update:
         '#Check jika SupplySeq_No nya sesuai dengan Seq_No berdasarkan replacement
         ls_sql = " SELECT * FROM Part_Supply " & vbCrLf & _
                 " WHERE SupplySeq_No = " & l_seqNo & " "
-        If rs.State = adStateOpen Then rs.Close
-        Set rs = db2.Execute(ls_sql)
+        If RS.State = adStateOpen Then RS.Close
+        Set RS = db2.Execute(ls_sql)
         
-        If Not rs.EOF Then
-            ls_FromWarehouseCode = Trim(rs!FromWarehouse_Code)
-            ls_ToWarehouseCode = Trim(rs!towarehouse_code)
+        If Not RS.EOF Then
+            ls_FromWarehouseCode = Trim(RS!FromWarehouse_Code)
+            ls_ToWarehouseCode = Trim(RS!towarehouse_code)
         End If
         
         '#Update data in part Supply
@@ -2785,14 +2785,14 @@ inserto:
                     " AND ToWarehouse_Code = '" & ls_ToWarehouseCode & "' " & vbCrLf & _
                     " AND ChildSupply_Date = '" & ls_SupplyDate & "' AND Supply_Cls = '" & ls_SupplyCls & "' "
                     
-            If rs.State = adStateOpen Then rs.Close
-            Set rs = db2.Execute(ls_sql)
-            If Not rs.EOF Then
-                ls_SupplySeqNo = Trim(rs!Seq_no)
+            If RS.State = adStateOpen Then RS.Close
+            Set RS = db2.Execute(ls_sql)
+            If Not RS.EOF Then
+                ls_SupplySeqNo = Trim(RS!Seq_no)
             End If
             
-            rs.Close
-            Set rs = Nothing
+            RS.Close
+            Set RS = Nothing
             
             cbo_warehouse.Text = ls_ReplacementWarehouseCode
             cbo_location.Text = ls_FromWarehouseCode
@@ -3260,21 +3260,21 @@ End Sub
 Sub delivery()
 
 
-Dim rs As New ADODB.Recordset
+Dim RS As New ADODB.Recordset
 sql = " Select Trade_name, Address1 as A from trade_master where trade_cls in ('2', '3') order by trade_code" & vbCrLf
             
-Set rs = Db.Execute(sql)
+Set RS = Db.Execute(sql)
 
 With CboDelivery
 .clear
 '.ColumnCount = 1
 .AddItem ""
 i = 1
-Do Until rs.EOF
+Do Until RS.EOF
     .AddItem ""
-    .List(i, 0) = Trim(rs!trade_name)
+    .List(i, 0) = Trim(RS!trade_name)
     i = i + 1
-    rs.MoveNext
+    RS.MoveNext
 Loop
 
 '.ColumnWidths = "60 pt; 300 pt"
@@ -3536,9 +3536,11 @@ End Sub
 Private Sub koneksi()
     Dim SqlW As String
     rs_part_supply.Open "select Top 1 * from part_supply", Db, adOpenKeyset, adLockOptimistic
-    SqlW = " select * from (select wh_code,wh_name,stockControl_cls from warehouse_master " & _
-        " union all " & _
-        " select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code "
+'    SqlW = " select * from (select wh_code,wh_name,stockControl_cls from warehouse_master " & _
+'        " union all " & _
+'        " select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code "
+    
+    SqlW = "EXEC dbo.sp_PartSupplyLoad_WH @UserID = '" & userLogin & "'"
     rs_warehouse.Open SqlW, Db, adOpenKeyset, adLockOptimistic
     rs_trade_master.Open "select * from trade_master where trade_cls='1'", Db, adOpenKeyset, adLockOptimistic
 End Sub
@@ -3849,21 +3851,21 @@ End Sub
 Private Function GetContractNo(ByVal Remarks As String) As String
     On Error GoTo ErrHandler
     
-    Dim rs As New ADODB.Recordset
+    Dim RS As New ADODB.Recordset
     Dim sql As String
     
     GetContractNo = "" ' default kalau tidak ada hasil
     
     sql = "EXEC dbo.sp_POContractNo_Get '" & Trim(Remarks) & "'"
     
-    If rs.State <> adStateClosed Then rs.Close
-    rs.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+    If RS.State <> adStateClosed Then RS.Close
+    RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
     
-    If Not rs.EOF Then
-        GetContractNo = rs.Fields("Contract_No").Value
+    If Not RS.EOF Then
+        GetContractNo = RS.Fields("Contract_No").Value
     End If
     
-    rs.Close
+    RS.Close
     Exit Function
     
 ErrHandler:

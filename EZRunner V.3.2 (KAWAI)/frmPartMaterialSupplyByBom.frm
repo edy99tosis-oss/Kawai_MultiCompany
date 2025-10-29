@@ -82,7 +82,7 @@ Begin VB.Form frmPartMaterialSupplyByBom
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141230083
+         Format          =   128909315
          CurrentDate     =   39287
       End
       Begin MSComCtl2.DTPicker dt_from 
@@ -105,7 +105,7 @@ Begin VB.Form frmPartMaterialSupplyByBom
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141230083
+         Format          =   128909315
          CurrentDate     =   39105
       End
       Begin MSComCtl2.DTPicker dt_to 
@@ -128,7 +128,7 @@ Begin VB.Form frmPartMaterialSupplyByBom
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141230083
+         Format          =   128909315
          CurrentDate     =   39289
       End
       Begin VB.Label Label8 
@@ -877,7 +877,7 @@ Load frmPartMaterialSuplyBomDetail
     End If
     '.txt_set = Format(TempSetQTY, gs_formatAmountIDR)
     .txt_set.Enabled = False
-    .cmdsubmenu.Caption = "&Back"
+    .CmdSubMenu.Caption = "&Back"
     .Show 1
     End With
 MousePointer = vbDefault
@@ -921,7 +921,7 @@ lblerror.Caption = ""
  
 MousePointer = vbHourglass
  
-On Error GoTo errHandler
+On Error GoTo ErrHandler
         
         db1.ConnectionString = Db.ConnectionString
         db1.Open
@@ -972,7 +972,7 @@ MousePointer = vbDefault
 
 Exit Sub
     
-errHandler:
+ErrHandler:
     lblerror.Caption = "[ " & err.number & " ] " & err.Description
     db1.RollbackTrans
     Resume ExitError
@@ -1075,7 +1075,9 @@ End With
  Dim rs_warehouse As New ADODB.Recordset
  Dim sql_warehouse As String
  
- sql_warehouse = "select wh_code,wh_name,isnull(stockControl_cls,'02') stockControl_cls from warehouse_master where adm_group in (select Trade_code FROM trade_master where trade_Cls='3') "
+' sql_warehouse = "select wh_code,wh_name,isnull(stockControl_cls,'02') stockControl_cls from warehouse_master where adm_group in (select Trade_code FROM trade_master where trade_Cls='3') "
+ 
+ sql_warehouse = "EXEC dbo.sp_PartSupplyByBOMLoad_WH @UserID = '" & userLogin & "',  @Type = '1'"
  
  Set rs_warehouse = Db_ps.Execute(sql_warehouse)
     
@@ -1103,9 +1105,13 @@ End With
 ' sql_warehouse = "select * from (select wh_code,wh_name,isnull(stockControl_cls,'02') stockControl_cls from warehouse_master where adm_group in (select Trade_code FROM trade_master where trade_Cls='3') " & _
                  "union all " & _
                  "select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code "
- sql_warehouse = "select * from (select wh_code,wh_name,isnull(stockControl_cls,'02') stockControl_cls from warehouse_master where adm_group in (select Trade_code FROM trade_master where trade_Cls<>'3') " & _
-                 "union all " & _
-                 "select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code "
+' sql_warehouse = "select * from (select wh_code,wh_name,isnull(stockControl_cls,'02') stockControl_cls from warehouse_master where adm_group in (select Trade_code FROM trade_master where trade_Cls<>'3') " & _
+'                 "union all " & _
+'                 "select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code "
+  
+
+sql_warehouse = "EXEC dbo.sp_PartSupplyByBOMLoad_WH @UserID = '" & userLogin & "',  @Type = '2'"
+   
  Set rs_warehouse = Db_ps.Execute(sql_warehouse)
  
  
@@ -1161,7 +1167,7 @@ Call cbo_status_Click
 End Sub
 
 Private Sub cbo_warehouse_Click()
-If cbo_warehouse.MatchFound Then
+If cbo_warehouse.matchFound Then
   lbl_warehouse = cbo_warehouse.Column(1)
   lblerror = ""
 Else
@@ -1180,7 +1186,7 @@ If KeyCode = 13 Then Call cbo_warehouse_Click
 End Sub
 
 Private Sub cbo_location_Click()
-If cbo_location.MatchFound Then
+If cbo_location.matchFound Then
   lbl_location = cbo_location.Column(1)
   lblerror = ""
 Else
@@ -1205,7 +1211,7 @@ Private Sub cbo_parent_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Intege
 
 End Sub
 Private Sub cbo_supply_Click()
-If cbo_supply.MatchFound Then
+If cbo_supply.matchFound Then
  Header
  Call IsiDataPartSupply
  lblerror.Caption = ""
@@ -1237,7 +1243,7 @@ Private Sub dt_supply_Change()
 If cbo_status.Text = "Create" Then
     Call GenerateSupplyNo
 Else
- If cbo_supply.MatchFound Then
+ If cbo_supply.matchFound Then
   dt_supply.Month = Month
   dt_supply.Year = Year
   dt_supply.Value = Format(dt_supply.Value, "dd MMM YYYY")

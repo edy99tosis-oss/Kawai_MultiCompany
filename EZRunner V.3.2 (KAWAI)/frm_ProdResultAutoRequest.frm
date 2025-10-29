@@ -360,7 +360,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   7864323
+      Format          =   128516099
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -382,7 +382,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   7864323
+      Format          =   128516099
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -776,7 +776,7 @@ ErrExit:
     Set adoRs = Nothing
     Exit Sub
 ErrHandler:
-    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
+    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
 
@@ -975,7 +975,7 @@ ErrExit:
     Set adoCon = Nothing
     Exit Sub
 ErrHandler:
-    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
+    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
     
@@ -1069,8 +1069,11 @@ Private Sub SetComboWH()
     
     Dim adoRs As New ADODB.Recordset
     
-    sql = "select wh_code, wh_name from warehouse_master " & _
-        "where stockcontrol_cls='01' and Adm_Group = '" & Trim(cbo(0)) & "'"
+'    sql = "select wh_code, wh_name from warehouse_master " & _
+'        "where stockcontrol_cls='01' and Adm_Group = '" & Trim(cbo(0)) & "'"
+
+    sql = "EXEC dbo.sp_PartSupplyReqLoad_WH @AdmGroup = '" & Trim(cbo(0)) & "', @UserID = '" & userLogin & "'"
+    
     adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     
     cbo(2).columnCount = 2
@@ -1139,12 +1142,12 @@ Private Sub cboFactory_Change(Index As Integer)
         isiCboCust
     Else
         lblFactoryName(3).Caption = ""
-        lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
     End If
 End Sub
 
 Private Sub CboItemCode_Change()
-    lblErrMsg = ""
+    LblErrMsg = ""
     If CboItemCode.matchFound Then
         If CboItemCode.Column(0) = CboItemCode.Column(1) Then
             lblItemCode.Caption = CboItemCode.Column(2)
@@ -1253,20 +1256,20 @@ If cbo(Index) <> "" Then
             Call SetComboWH
             addToCboItemCode
         End If
-        lblErrMsg = ""
+        LblErrMsg = ""
     Else
         lblNm(Index) = ""
         If Index = 0 Then 'Hapus Manufacture Line & Desc Line
             cbo(1).clear: lblNm(1) = ""
         End If
-        lblErrMsg = DisplayMsg(4016 + Index) 'Err Msg en Panggil Grid
+        LblErrMsg = DisplayMsg(4016 + Index) 'Err Msg en Panggil Grid
     End If
 Else
     lblNm(Index) = ""
     If Index = 0 Then 'Hapus Manufacture Line * Desc
         cbo(1).clear: lblNm(1) = ""
     End If
-    lblErrMsg = ""
+    LblErrMsg = ""
 End If
 End Sub
 
@@ -1275,16 +1278,16 @@ Public Sub cmdSearch_Click()
     cbo(0) = cbo(0)
     cbo(1) = cbo(1)
     If cbo(0) = "" Then
-        lblErrMsg = DisplayMsg(1040)
+        LblErrMsg = DisplayMsg(1040)
         cbo(0).SetFocus
     ElseIf cbo(0).matchFound = False Then
-        lblErrMsg = DisplayMsg(4016)
+        LblErrMsg = DisplayMsg(4016)
         cbo(0).SetFocus
     ElseIf cbo(1).matchFound = False And cbo(1) <> "" Then
-        lblErrMsg = DisplayMsg(4017)
+        LblErrMsg = DisplayMsg(4017)
         cbo(1).SetFocus
     Else
-        lblErrMsg = ""
+        LblErrMsg = ""
         Call IsiGrid
     End If
 
@@ -1387,7 +1390,7 @@ With grid
             rsProd.MoveNext
         Loop
     Else
-        lblErrMsg = DisplayMsg(4006)
+        LblErrMsg = DisplayMsg(4006)
     End If
     rsProd.Close
 End With
@@ -1417,7 +1420,7 @@ With grid
                 il_selectedRecord = il_selectedRecord + 1
 
                 .Cell(flexcpChecked, Row, bteColSelect) = flexChecked
-                lblErrMsg = ""
+                LblErrMsg = ""
                 InRow = 1
                 Do
                     If InRow > .Rows - 1 Then Exit Do
@@ -1430,7 +1433,7 @@ With grid
 
                 .Cell(flexcpChecked, Row, bteColSelect) = flexUnchecked
 
-                lblErrMsg = DisplayMsg(8090) ' "Record has different Group Request!"
+                LblErrMsg = DisplayMsg(8090) ' "Record has different Group Request!"
 
             End If
             
@@ -1444,14 +1447,14 @@ End With
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-    lblErrMsg = ""
+    LblErrMsg = ""
     If Col <> bteColSelect Then Cancel = 1
     If grid.TextMatrix(Row, bteColControlCls) <> "01" Then
-        lblErrMsg = DisplayMsg(8091) ' "This item's Control Cls is not 'MRP' !"
+        LblErrMsg = DisplayMsg(8091) ' "This item's Control Cls is not 'MRP' !"
         Cancel = 1 'Cek Control Cls (Continue If Control_Cls = 'MRP')
     End If
     If grid.TextMatrix(Row, bteColSupplyCls) = "01" Then
-        lblErrMsg = "You cannot select this item ! Supply Cls must be set to 'NO' ": Cancel = 1  'Cek Supply Cls (Continue If Supply_Cls = 'No')"
+        LblErrMsg = "You cannot select this item ! Supply Cls must be set to 'NO' ": Cancel = 1  'Cek Supply Cls (Continue If Supply_Cls = 'No')"
         Cancel = 1
     End If
 
@@ -1511,7 +1514,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
     End With
 
     If Not blncex Then
-        lblErrMsg = DisplayMsg(8011)  '"Please select data first!"
+        LblErrMsg = DisplayMsg(8011)  '"Please select data first!"
         MousePointer = vbDefault: Exit Sub
     End If
 
@@ -1526,14 +1529,14 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         Me.Hide
         frm_part_supplyAuto.Show
         frm_part_supplyAuto.cmd_sub_menu.Caption = "&Back"
-        lblErrMsg = ""
+        LblErrMsg = ""
         Exit Sub
 
     Else
 
         '#Check Empty Header Combo
         If cbo(0) = "" Then
-            lblErrMsg = DisplayMsg(1040)
+            LblErrMsg = DisplayMsg(1040)
             cbo(0).SetFocus
             Me.MousePointer = vbDefault
             frm_part_supplyAuto.Show
@@ -1545,12 +1548,12 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         cbo(0) = cbo(0)
         cbo(1) = cbo(1)
         If cbo(0).matchFound = False Then
-            lblErrMsg = DisplayMsg(4016)
+            LblErrMsg = DisplayMsg(4016)
             cbo(0).SetFocus
             Me.MousePointer = vbDefault
             Exit Sub
         ElseIf cbo(1) <> "" And cbo(1).matchFound = False Then
-            lblErrMsg = DisplayMsg(4017)
+            LblErrMsg = DisplayMsg(4017)
             cbo(1).SetFocus
             Me.MousePointer = vbDefault
             Exit Sub
@@ -1558,7 +1561,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         
         If Not gb_WarehouseReferToItem_MaterialSupplyRequestAutomatic Then
             If cbo(2).matchFound = False Then
-                lblErrMsg = DisplayMsg("0031")
+                LblErrMsg = DisplayMsg("0031")
                 cbo(2).SetFocus
                 Me.MousePointer = vbDefault
                 Exit Sub
@@ -1569,14 +1572,14 @@ Private Sub Command1_Click(Index As Integer) '#Submit
 
     If hakAkses("frm_part_supplyAuto") = 0 Then
         Me.MousePointer = vbDefault
-        lblErrMsg = DisplayMsg(3007)
+        LblErrMsg = DisplayMsg(3007)
         Me.MousePointer = vbDefault
         Exit Sub
     End If
 
     If hakUpdate("frm_part_supplyAuto") = 0 Then
         Me.MousePointer = vbDefault
-        lblErrMsg = DisplayMsg(3007)
+        LblErrMsg = DisplayMsg(3007)
         Exit Sub
     End If
 
@@ -1648,7 +1651,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly
         
         If adoRs.EOF Then
-            lblErrMsg = DisplayMsg(8092) '"Data BOM for this item is not valid"
+            LblErrMsg = DisplayMsg(8092) '"Data BOM for this item is not valid"
             Me.MousePointer = vbDefault: Exit Sub
         End If
         
@@ -1729,7 +1732,7 @@ ErrExit:
     Me.MousePointer = vbDefault
     Exit Sub
 ErrHandler:
-    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
+    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
     
@@ -1755,7 +1758,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    lblErrMsg.Caption = ErrMsg
+    LblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
@@ -1773,7 +1776,7 @@ Db.Execute (SqlCreate)
 ErrExit:
     Exit Sub
 ErrHandler:
-    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
+    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
 
@@ -1849,7 +1852,7 @@ ErrExit:
     Set rsChild = Nothing
     Exit Sub
 ErrHandler:
-    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
+    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
 
