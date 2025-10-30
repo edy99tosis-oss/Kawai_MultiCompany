@@ -189,7 +189,7 @@ Begin VB.Form frm_part_supplyIn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141230083
+         Format          =   128712707
          CurrentDate     =   37867
       End
       Begin MSComCtl2.DTPicker date1 
@@ -211,7 +211,7 @@ Begin VB.Form frm_part_supplyIn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   141230083
+         Format          =   128712707
          UpDown          =   -1  'True
          CurrentDate     =   37867
       End
@@ -1610,7 +1610,7 @@ Dim ls_ClosingYear As String
 Dim lcls_clsProc As New ClsProc
 Dim IntRedColor As Integer
 
-On Error GoTo errHandler
+On Error GoTo ErrHandler
 
 
 For i = 1 To Grid1.Rows - 1
@@ -1848,7 +1848,7 @@ ErrExit:
     Db.RollbackTrans
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
+ErrHandler:
     lbl_pesan.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -1906,7 +1906,7 @@ cbo_MachineNo.DataChanged = False
 cbo_MachineNo = Trim(rsUpd!Machine_no)
 cbo_MachineNo.DataChanged = True
 'TxtUnitSet = rsUpd!QtySet - rsUpd!QtySupply
-TxtUnitQty = rsUpd!QtySet
+TxtUnitQty = rsUpd!qtySet
 
 Dim rsSup As New ADODB.Recordset
 rsSup.Open "select * from part_Supply where supplyRec_No='" & Trim(cbo_supplyNo) & _
@@ -2233,10 +2233,13 @@ cbo_location.columnCount = 3
 cbo_location.TextColumn = 1
 
 Dim rsFac As New ADODB.Recordset
-SqlW = "select wh_code,wh_name,stockControl_cls from warehouse_master " & _
-         " union all " & _
-         " select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code "
-'rsFac.Open "select distinct(manufacture_line.manufacture_code),trade_name from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code", Db
+'SqlW = "select wh_code,wh_name,stockControl_cls from warehouse_master " & _
+'         " union all " & _
+'         " select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code "
+''rsFac.Open "select distinct(manufacture_line.manufacture_code),trade_name from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code", Db
+
+SqlW = "EXEC dbo.sp_PartMaterialSupplyToWH_Sel @UserID = '" & userLogin & "' "
+
 rsFac.Open SqlW, Db
 
 If rsFac.EOF = False Then
@@ -2326,9 +2329,11 @@ End Sub
 Private Sub koneksi()
 Dim SqlW As String
 rs_part_supply.Open "select top 5 * from part_supply", Db, adOpenKeyset, adLockOptimistic
-SqlW = " select * from (select wh_code,wh_name,stockControl_cls from warehouse_master " & _
-         " union all " & _
-         " select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code "
+'SqlW = " select * from (select wh_code,wh_name,stockControl_cls from warehouse_master " & _
+'         " union all " & _
+'         " select distinct(manufacture_line.manufacture_code)wh_code,trade_name wh_name,stockControl_Cls='01' from manufacture_line join trade_master on manufacture_line.manufacture_code=trade_master.trade_code)tbJ order by wh_code "
+
+SqlW = "EXEC dbo.sp_PartSupplyLoad_WH @UserID = '" & userLogin & "' "
 rs_warehouse.Open SqlW, Db, adOpenKeyset, adLockOptimistic
 rs_trade_master.Open "select * from trade_master where trade_cls='1'", Db, adOpenKeyset, adLockOptimistic
 End Sub
