@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmStockTransfer 
    BackColor       =   &H00FDDFE3&
@@ -157,7 +157,7 @@ Begin VB.Form FrmStockTransfer
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   138543107
+         Format          =   59703299
          CurrentDate     =   37798
       End
       Begin VB.Line Line1 
@@ -1041,7 +1041,7 @@ Private Sub CboLocationCD_Change(Index As Integer)
                 
 
 If CboLocationCD(Index) <> "" Then
-        If CboLocationCD(Index).MatchFound Then
+        If CboLocationCD(Index).matchFound Then
                 If Index = 0 Then
                     CboLocationCD(1) = CboLocationCD(0)
                     CboLocationCD(1).locked = True
@@ -1413,7 +1413,7 @@ GridHeader
 IsiGrid
 End Sub
 
-Private Sub Form_Load()
+Private Sub Old_Form_Load()
         Call GridHeader
         CtrlMenu1.FormName = Me.Name
         Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
@@ -1491,6 +1491,90 @@ Private Sub Form_Load()
         
         Call cmd_clear_Click
 End Sub
+
+Private Sub Form_Load()
+    Call GridHeader
+    CtrlMenu1.FormName = Me.Name
+    Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
+           
+    DMonth = Format(Now, "yyyy-MM-dd")
+    
+    Dim lrs_ss As New ADODB.Recordset
+    Dim ls_sql As String
+    Dim li_pos As Long
+    Dim cmd As New ADODB.Command
+            
+    '## Begin - Fill Combo #################################################################
+    
+    For li_pos = 0 To 1
+            CboLocationCD(li_pos).columnCount = 2
+            CboLocationCD(li_pos).clear
+            CboLocationCD(li_pos).ColumnWidths = "150 pt; 200 pt"
+            CboLocationCD(li_pos).ListWidth = 350
+            CboLocationCD(li_pos).ListRows = 15
+    Next
+    
+
+    If lrs_ss.State <> adStateClosed Then lrs_ss.Close
+    
+    '## Tampilkan Warehouse dari Stored Procedure
+    cmd.ActiveConnection = Db
+    cmd.CommandType = adCmdStoredProc
+    cmd.CommandText = "sp_StockControl_WH_Sel"
+    cmd.Parameters.append cmd.CreateParameter("@UserID", adVarChar, adParamInput, 50, CtrlMenu1.userID)
+
+    Set lrs_ss = cmd.Execute
+            
+    li_pos = 0
+    CboLocationCD(0).ColumnWidths = "80 pt; 200 pt"
+    CboLocationCD(1).ColumnWidths = "80 pt; 200 pt"
+    While lrs_ss.EOF = False
+            CboLocationCD(0).AddItem ""
+            CboLocationCD(0).List(li_pos, 0) = Trim(lrs_ss("WC"))
+            CboLocationCD(0).List(li_pos, 1) = Trim(lrs_ss("WN"))
+            
+            CboLocationCD(1).AddItem ""
+            CboLocationCD(1).List(li_pos, 0) = Trim(lrs_ss("WC"))
+            CboLocationCD(1).List(li_pos, 1) = Trim(lrs_ss("WN"))
+            li_pos = li_pos + 1
+            lrs_ss.MoveNext
+    Wend
+    
+    If lrs_ss.State <> adStateClosed Then lrs_ss.Close
+    
+    '--- Combo Item master (tidak berubah) ---
+    For li_pos = 2 To 3
+            CboLocationCD(li_pos).columnCount = 2
+            CboLocationCD(li_pos).clear
+            CboLocationCD(li_pos).ColumnWidths = "130 pt; 150 pt"
+            CboLocationCD(li_pos).ListWidth = 280
+            CboLocationCD(li_pos).ListRows = 15
+    Next
+    
+    If lrs_ss.State <> adStateClosed Then lrs_ss.Close
+    ls_sql = " select * from item_master"
+    
+    
+    lrs_ss.Open ls_sql, Db, adOpenKeyset, adLockOptimistic
+            
+    li_pos = 0
+    While lrs_ss.EOF = False
+            CboLocationCD(2).AddItem ""
+            CboLocationCD(2).List(li_pos, 0) = Trim(lrs_ss("item_code"))
+            CboLocationCD(2).List(li_pos, 1) = Trim(lrs_ss("item_name"))
+            
+            CboLocationCD(3).AddItem ""
+            CboLocationCD(3).List(li_pos, 0) = Trim(lrs_ss("item_code"))
+            CboLocationCD(3).List(li_pos, 1) = Trim(lrs_ss("item_name"))
+            
+            li_pos = li_pos + 1
+            lrs_ss.MoveNext
+    Wend
+    If lrs_ss.State <> adStateClosed Then lrs_ss.Close
+    
+    Call cmd_clear_Click
+End Sub
+
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
         If UnloadMode = 0 Then Cancel = 1

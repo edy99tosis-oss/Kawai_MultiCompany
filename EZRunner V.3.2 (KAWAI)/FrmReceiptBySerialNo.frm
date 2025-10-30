@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
 Object = "{6BF52A50-394A-11D3-B153-00C04F79FAA6}#1.0#0"; "wmp.dll"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmReceiptBySerialNo 
    BackColor       =   &H00FDDFE3&
@@ -12,6 +12,7 @@ Begin VB.Form FrmReceiptBySerialNo
    ClientWidth     =   15090
    Icon            =   "FrmReceiptBySerialNo.frx":0000
    LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
    ScaleHeight     =   10335
    ScaleWidth      =   15090
    StartUpPosition =   2  'CenterScreen
@@ -202,7 +203,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   134086659
+         Format          =   61210627
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtpTo 
@@ -225,7 +226,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   134086659
+         Format          =   61210627
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpDNDate 
@@ -248,7 +249,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   134086659
+         Format          =   61210627
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpReceiptDate 
@@ -271,7 +272,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   134086659
+         Format          =   61210627
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpBCDate 
@@ -294,7 +295,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   134086659
+         Format          =   61210627
          CurrentDate     =   37798
       End
       Begin VB.Line Line1 
@@ -831,8 +832,8 @@ Begin VB.Form FrmReceiptBySerialNo
       Tag             =   "FTTF*/"
       Top             =   120
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   767
+      _ExtentX        =   3254
+      _ExtentY        =   767
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   4605
@@ -1112,7 +1113,7 @@ End Sub
 
 Private Sub cboFromWH_Click()
 cboFromWH = cboFromWH
-    If cboFromWH.MatchFound Then
+    If cboFromWH.matchFound Then
         lblFromWH(0) = cboFromWH.Column(1)
         lbl_pesan = ""
     Else
@@ -1123,7 +1124,7 @@ End Sub
 
 Private Sub cboToWH_Click()
 cboToWH = cboToWH
-    If cboToWH.MatchFound Then
+    If cboToWH.matchFound Then
         lblToWH(2) = cboToWH.Column(1)
         lbl_pesan = ""
     Else
@@ -1200,7 +1201,7 @@ Dim prm14 As ADODB.Parameter
     '#BEGIN TRANS
     db2.BeginTrans
     
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     Me.MousePointer = vbHourglass
     
@@ -1337,7 +1338,7 @@ ErrExit:
     
     Exit Sub
     
-errHandler:
+ErrHandler:
     cmd_submit.Enabled = True
     db2.RollbackTrans
     lbl_pesan.Caption = "[" & err.number & "] " & err.Description
@@ -1544,7 +1545,7 @@ cboBCType.ListRows = 7
 
 End Sub
 
-Private Sub up_FillComboWH()
+Private Sub Old_up_FillComboWH()
 Dim sql As String
 Dim RS As New Recordset
 Dim cmd As ADODB.Command
@@ -1607,6 +1608,83 @@ Dim cmd As ADODB.Command
         .ListIndex = -1
     End With
     
+End Sub
+
+Private Sub up_FillComboWH()
+    Dim RS As New ADODB.Recordset
+    Dim cmd As ADODB.Command
+    Dim i As Integer
+    
+    On Error GoTo ErrHandler
+
+    Set cmd = New ADODB.Command
+    With cmd
+        .ActiveConnection = Db
+        .CommandType = adCmdStoredProc
+        .CommandTimeout = 0
+        .CommandText = "sp_PhysicalInventory_WH_Sel"
+        .Parameters.append .CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
+    End With
+
+    RS.CursorLocation = adUseClient
+    RS.Open cmd, , adOpenStatic, adLockReadOnly
+
+    ' --- Isi Combo Box Pertama (cboFromWH) ---
+    With cboFromWH
+        .clear
+        .columnCount = 2
+        .ColumnWidths = "50pt;180pt"
+        .ListWidth = 230
+        .ListRows = 15
+        
+        i = 0
+        Do While Not RS.EOF
+            .AddItem
+            .List(i, 0) = Trim(RS("WH_Code") & "")
+            .List(i, 1) = Trim(RS("WH_Name") & "")
+            RS.MoveNext
+            i = i + 1
+        Loop
+        
+        If .ListCount > 0 Then .ListIndex = -1
+    End With
+    
+    ' --- KEMBALI KE AWAL RECORDSET ---
+    If RS.RecordCount > 0 Then
+        RS.MoveFirst
+    End If
+
+    ' --- Isi Combo Box Kedua (cboToWH) ---
+    With cboToWH
+        .clear
+        .columnCount = 2
+        .ColumnWidths = "50pt;180pt"
+        .ListWidth = 230
+        .ListRows = 15
+        
+        i = 0
+        Do While Not RS.EOF
+            .AddItem
+            .List(i, 0) = Trim(RS("WH_Code") & "")
+            .List(i, 1) = Trim(RS("WH_Name") & "")
+            RS.MoveNext
+            i = i + 1
+        Loop
+        
+        If .ListCount > 0 Then .ListIndex = -1
+    End With
+    
+Cleanup:
+    If Not RS Is Nothing Then
+        If RS.State = adStateOpen Then RS.Close
+        Set RS = Nothing
+    End If
+    Set cmd = Nothing
+    Exit Sub
+
+ErrHandler:
+    MsgBox "Terjadi error: " & err.Description, vbCritical, "Error #" & err.number
+    Resume Cleanup
 End Sub
 
 Private Sub up_GridLoad()
