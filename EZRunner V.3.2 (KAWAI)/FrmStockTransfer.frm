@@ -157,7 +157,7 @@ Begin VB.Form FrmStockTransfer
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   59703299
+         Format          =   61210627
          CurrentDate     =   37798
       End
       Begin VB.Line Line1 
@@ -1521,7 +1521,7 @@ Private Sub Form_Load()
     cmd.ActiveConnection = Db
     cmd.CommandType = adCmdStoredProc
     cmd.CommandText = "sp_StockControl_WH_Sel"
-    cmd.Parameters.append cmd.CreateParameter("@UserID", adVarChar, adParamInput, 50, CtrlMenu1.userID)
+    cmd.Parameters.append cmd.CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
 
     Set lrs_ss = cmd.Execute
             
