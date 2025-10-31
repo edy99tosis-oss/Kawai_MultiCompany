@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form F_StockLocation 
    BackColor       =   &H00FDDFE3&
@@ -153,7 +153,7 @@ Begin VB.Form F_StockLocation
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   146538499
+      Format          =   60030979
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -274,7 +274,7 @@ Begin VB.Form F_StockLocation
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   146538499
+      Format          =   60620803
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -417,7 +417,7 @@ Private Sub Header()
 End Sub
 
 Private Sub CboLocationCD_Change()
-    If CboLocationCD.MatchFound Then
+    If CboLocationCD.matchFound Then
        LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
        LblPesan = ""
     Else
@@ -474,7 +474,7 @@ Private Sub Form_Load()
     Call Header
 End Sub
 
-Private Sub setting()
+Private Sub Old_setting()
     Dim sql As String, RsStock As New ADODB.Recordset
     Dim i As Integer
     
@@ -498,6 +498,35 @@ Private Sub setting()
     CboLocationCD.ListRows = 15
 End Sub
 
+Private Sub setting()
+    Dim cmd As New ADODB.Command
+    Dim RsStock As New ADODB.Recordset
+    Dim i As Integer
+    
+    If RsStock.State <> adStateClosed Then RsStock.Close
+    
+    With cmd
+        .ActiveConnection = Db
+        .CommandType = adCmdStoredProc
+        .CommandText = "sp_PhysicalInventory_WH_Sel"
+        .Parameters.append .CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
+        Set RsStock = .Execute()
+    End With
+    
+    CboLocationCD.columnCount = 2
+    CboLocationCD.clear
+    i = 0
+    Do While Not RsStock.EOF
+        CboLocationCD.AddItem ""
+        CboLocationCD.List(i, 0) = Trim(RsStock("wh_code"))
+        CboLocationCD.List(i, 1) = Trim(RsStock("wh_name"))
+        i = i + 1
+        RsStock.MoveNext
+    Loop
+    CboLocationCD.ColumnWidths = "50 pt; 300 pt"
+    CboLocationCD.ListWidth = 350
+    CboLocationCD.ListRows = 15
+End Sub
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     If UnloadMode = 0 Then Cancel = 1
 End Sub
