@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmAlarmList 
    BackColor       =   &H00FDDFE3&
@@ -115,7 +115,7 @@ Begin VB.Form FrmAlarmList
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   150994947
+      Format          =   59899907
       CurrentDate     =   37798
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -584,7 +584,7 @@ Private Sub PrintMRPExcel()
     Const strColFactory As String = "Q"
     Const strColLine As String = "R"
     
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
     
     LblPesan.Caption = ""
@@ -874,7 +874,7 @@ Private Sub PrintMRPExcel()
             .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).Font.Size = 10
             .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).Merge
             .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).Font.Bold = True
-            .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).HorizontalAlignment = xlHAlignCenter
+            .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).horizontalAlignment = xlHAlignCenter
             .Range(strColMatCode & lngRow) = "Parts (Material) Alarm List"
             
             lngRow = lngRow + 2
@@ -915,8 +915,8 @@ Private Sub PrintMRPExcel()
             .Range(strColOrderDate & lngRow) = ": " & strLastCalculate
             
             lngRow = lngRow + 2
-            .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).HorizontalAlignment = xlHAlignCenter
-            .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).VerticalAlignment = xlVAlignCenter
+            .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).horizontalAlignment = xlHAlignCenter
+            .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).verticalAlignment = xlVAlignCenter
             .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).Borders(xlEdgeTop).LineStyle = xlHairline
             .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).Borders(xlEdgeBottom).LineStyle = xlHairline
             .Range(strColMatCode & lngRow & ":" & strColLine & lngRow).WrapText = True
@@ -940,24 +940,24 @@ Private Sub PrintMRPExcel()
             .Range(strColFactory & lngRow) = "Factory"
             .Range(strColLine & lngRow) = "Line"
     
-            .Range(strColMatCode & lngRow).ColumnWidth = 11
-            .Range(strColMatDesc & lngRow).ColumnWidth = 25
-            .Range(strColUnit & lngRow).ColumnWidth = 3
-            .Range(strColOrderLast & lngRow).ColumnWidth = 11
-            .Range(strColOrderCurr & lngRow).ColumnWidth = 11
-            .Range(strColOrderReceipt & lngRow).ColumnWidth = 11
-            .Range(strColProdQty & lngRow).ColumnWidth = 11
-            .Range(strColStock & lngRow).ColumnWidth = 11
-            .Range(strColShortDate & lngRow).ColumnWidth = 8
-            .Range(strColLeadTime & lngRow).ColumnWidth = 8
-            .Range(strColOrderDate & lngRow).ColumnWidth = 8
-            .Range(strColControl & lngRow).ColumnWidth = 6
-            .Range(strColOrderQty & lngRow).ColumnWidth = 8
-            .Range(strColSupplier & lngRow).ColumnWidth = 6
-            .Range(strColProdCode & lngRow).ColumnWidth = 11
-            .Range(strColProdDesc & lngRow).ColumnWidth = 25
-            .Range(strColFactory & lngRow).ColumnWidth = 6
-            .Range(strColLine & lngRow).ColumnWidth = 6
+            .Range(strColMatCode & lngRow).columnWidth = 11
+            .Range(strColMatDesc & lngRow).columnWidth = 25
+            .Range(strColUnit & lngRow).columnWidth = 3
+            .Range(strColOrderLast & lngRow).columnWidth = 11
+            .Range(strColOrderCurr & lngRow).columnWidth = 11
+            .Range(strColOrderReceipt & lngRow).columnWidth = 11
+            .Range(strColProdQty & lngRow).columnWidth = 11
+            .Range(strColStock & lngRow).columnWidth = 11
+            .Range(strColShortDate & lngRow).columnWidth = 8
+            .Range(strColLeadTime & lngRow).columnWidth = 8
+            .Range(strColOrderDate & lngRow).columnWidth = 8
+            .Range(strColControl & lngRow).columnWidth = 6
+            .Range(strColOrderQty & lngRow).columnWidth = 8
+            .Range(strColSupplier & lngRow).columnWidth = 6
+            .Range(strColProdCode & lngRow).columnWidth = 11
+            .Range(strColProdDesc & lngRow).columnWidth = 25
+            .Range(strColFactory & lngRow).columnWidth = 6
+            .Range(strColLine & lngRow).columnWidth = 6
             
             lngRow = lngRow + 1
             While adoRs.EOF = False
@@ -1081,7 +1081,7 @@ ErrExit:
     Set xlBook = Nothing
     Set xlapp = Nothing
     Exit Sub
-errHandler:
+ErrHandler:
     LblPesan.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -1089,21 +1089,21 @@ End Sub
 
 Private Sub cboControl_Change()
     LblPesan.Caption = ""
-    If cboControl.MatchFound Then
+    If cboControl.matchFound Then
         lblControl.Caption = cboControl.Column(1)
     End If
 End Sub
 
 Private Sub cboFactory_Change()
     LblPesan.Caption = ""
-    If cboFactory.MatchFound Then
+    If cboFactory.matchFound Then
         lblFactory.Caption = cboFactory.Column(1)
     End If
 End Sub
 
 Private Sub CboMat_Change()
     LblPesan.Caption = ""
-    If CboMat.MatchFound Then
+    If CboMat.matchFound Then
         LblMat(0).Caption = CboMat.Column(1)
         LblMat(1).Caption = CboMat.Column(2)
     End If
@@ -1111,7 +1111,7 @@ End Sub
 
 Private Sub cboProd_Change()
     LblPesan.Caption = ""
-    If cboProd.MatchFound Then
+    If cboProd.matchFound Then
         lblProd(0).Caption = cboProd.Column(1)
         lblProd(1).Caption = cboProd.Column(2)
     End If
@@ -1119,25 +1119,25 @@ End Sub
 
 Private Sub CboSupplier_Change()
     LblPesan.Caption = ""
-    If cboSupplier.MatchFound Then
+    If cboSupplier.matchFound Then
         lblSupplier.Caption = cboSupplier.Column(1)
     End If
 End Sub
 
 Private Sub cmdPrint_Click()
-    If cboFactory.MatchFound = False Then
+    If cboFactory.matchFound = False Then
         cboFactory.SetFocus
         LblPesan = DisplayMsg(1060)
         Exit Sub
     End If
     
-    If cboProd.MatchFound = False Then
+    If cboProd.matchFound = False Then
         cboProd.SetFocus
         LblPesan = DisplayMsg(1024)
         Exit Sub
     End If
     
-    If CboMat.MatchFound = False Then
+    If CboMat.matchFound = False Then
         CboMat.SetFocus
         LblPesan = DisplayMsg(8019)
         Exit Sub
@@ -1202,9 +1202,13 @@ Private Sub Form_Load()
     Dim adoRs As New ADODB.Recordset
     dteMRP = Date
     adoRs.Open "select min(cast(mrp_year + '-' + mrp_month + '-1' as datetime)) mrp_date from mrp_setting", Db, adOpenForwardOnly, adLockReadOnly, adCmdText
-    If Not adoRs.EOF Then
-        dteMRP = adoRs.Fields("mrp_date")
+    
+    If Not adoRs.EOF Then 'fix invalid use of null
+        If Not IsNull(adoRs.Fields("mrp_date").Value) Then
+            dteMRP = adoRs.Fields("mrp_date").Value
+        End If
     End If
+    
     adoRs.Close
 End Sub
 
