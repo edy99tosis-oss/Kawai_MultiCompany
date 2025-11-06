@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmPart_RecUpload 
    BackColor       =   &H00FDDFE3&
    Caption         =   "Part (Material) Receipt Scheduled Upload"
@@ -985,7 +985,7 @@ Dim objExcel As New Excel.application
     On Error GoTo errCancel
     CDExcel.ShowSave
 
-   On Error GoTo errHandler
+   On Error GoTo ErrHandler
     If Len(CDExcel.filename) = 0 Then Exit Sub
     If Dir(CDExcel.filename) <> "" Then
         If MsgBox("Overwrite existing file?", vbExclamation + vbYesNo, "Overwrite") = vbNo Then Exit Sub
@@ -1090,7 +1090,7 @@ Dim objExcel As New Excel.application
     MousePointer = MousePointerConstants.vbDefault
     Exit Sub
 
-errHandler:
+ErrHandler:
     If err.number <> 0 Then
         MousePointer = MousePointerConstants.vbDefault
         LblErr = err.Description
@@ -1200,13 +1200,15 @@ Me.MousePointer = vbHourglass
                         grid.AddItem ""
                         
                        '1. Cek WH Code
-                       rs_DB.Open "SELECT WH_Code FROM WareHouse_Master WHERE WH_Code='" & Trim(.Cells(i, 1)) & "'", Db, adOpenKeyset, adLockOptimistic
+                       'rs_DB.Open "SELECT WH_Code FROM WareHouse_Master WHERE WH_Code='" & Trim(.Cells(i, 1)) & "'", Db, adOpenKeyset, adLockOptimistic
+                       rs_DB.Open "SELECT WH_Code FROM WareHouse_Master WHERE WH_Code = '" & Trim(.Cells(i, 1)) & "' AND Company_Code IN (SELECT Factory_Code FROM dbo.App_FactoryPrivilege WHERE UserID = '" & userLogin & "' AND Show = '1')", Db, adOpenKeyset, adLockOptimistic
+                       
                        If rs_DB.EOF = True Then
                             IInvalidWHCode = IInvalidWHCode + 1
                             StatusRow = False
                             ls_invalidMsg = "Warehouse Code not register in warehouse master"
                         Else
-                            grid.TextMatrix(iGrdRow, bteColWarehouseCode) = Trim(rs_DB!wh_code)
+                            grid.TextMatrix(iGrdRow, bteColWarehouseCode) = Trim(rs_DB!WH_Code)
                         End If
                         
                        '2. Cek Product Code
@@ -1364,7 +1366,7 @@ Private Sub CboSupplier_Change(Index As Integer)
 Dim RS As New ADODB.Recordset
 Dim rsUnit As New ADODB.Recordset
 
-    If cboSupplier(0).MatchFound Then
+    If cboSupplier(0).matchFound Then
         lblSupp = cboSupplier(0).Column(1)
         LblErr = ""
     Else
@@ -1590,7 +1592,8 @@ OldQty = Format(OldQty, gs_formatQty)
 Dim FlagU As Byte
         
 'Proses Cek nya adalah dari warehouse dulu baru cek item nya
-Set RsWHS = Db.Execute("Select stockcontrol_cls,WH_name from warehouse_master where WH_code='" & Trim$(OldWHCode) & "'")
+'Set RsWHS = Db.Execute("Select stockcontrol_cls,WH_name from warehouse_master where WH_code='" & Trim$(OldWHCode) & "'")
+Set RsWHS = Db.Execute("SELECT StockControl_Cls, wh_name FROM warehouse_master WHERE WH_Code = '" & Trim$(OldWHCode) & "' AND Company_Code IN (SELECT Factory_Code FROM dbo.App_FactoryPrivilege WHERE UserID = '" & userLogin & "' AND Show = '1'")
     If Not RsWHS.EOF Then
         If RsWHS!stockcontrol_cls <> "01" Then
             'Stock tidak boleh di update
@@ -1787,8 +1790,10 @@ Dim itemAnak As String, nilPrice As String, currAnak As String, qtyAnak As Doubl
 Dim stockWH As String, stockItem As String, Sn As Double
 
     '*********Update Supply Anak2nya diambil dr BOM MaSter ***********
+    '"b.WH_Code,b.Address,b.Stockcontrol_Cls as stockItem,(select Stockcontrol_Cls from warehouse_master where wh_code='" & ls_WhCode & "') as stockWH, b.Provision_Cls " & _
+
     sql = "Select c.Manufacture_Code as Factory_Code,a.Item_Code,a.Qty as qtyAnak,a.Unit_Cls," & _
-        "b.WH_Code,b.Address,b.Stockcontrol_Cls as stockItem,(select Stockcontrol_Cls from warehouse_master where wh_code='" & ls_WhCode & "') as stockWH, b.Provision_Cls " & _
+        "b.WH_Code,b.Address,b.Stockcontrol_Cls as stockItem,(SELECT StockControl_Cls FROM warehouse_master WHERE WH_Code = '" & ls_WhCode & "' AND Company_Code IN (SELECT Factory_Code FROM dbo.App_FactoryPrivilege WHERE UserID = '" & userLogin & "' AND Show = '1') as stockWH, b.Provision_Cls " & _
         "from BOM_Master a,Item_Master b, Item_Master c " & _
         "where a.Item_Code = b.Item_Code " & _
         "And a.Parent_ItemCode = c.Item_Code " & _
