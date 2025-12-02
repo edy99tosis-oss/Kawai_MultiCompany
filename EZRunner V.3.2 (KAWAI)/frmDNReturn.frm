@@ -238,7 +238,7 @@ Begin VB.Form frmDNReturn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141230083
+         Format          =   128712707
          CurrentDate     =   37859
       End
    End
@@ -287,7 +287,7 @@ Begin VB.Form frmDNReturn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141230083
+         Format          =   128712707
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtEnd 
@@ -309,7 +309,7 @@ Begin VB.Form frmDNReturn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141230083
+         Format          =   128712707
          CurrentDate     =   37798
       End
       Begin MSForms.ComboBox CboCust 
@@ -528,14 +528,14 @@ Dim tempRow As Double, rowHeader As Double
 Sub Kosong(Optional stAwal As Byte)
 nilKosong = True
     If stAwal = 1 Then
-        cboCust = "": lblcust = ""
+        cboCust = "": lblCust = ""
         DtStart = Format(Now, "dd MMM yyyy")
         DtEnd = Format(Now, "dd MMM yyyy")
         cboDO = ""
 
     End If
     tempRow = 0
-    LblErrMsg = ""
+    lblErrMsg = ""
 nilKosong = False
 End Sub
 
@@ -757,7 +757,7 @@ grid.Rows = 2
 grid.Rows = tmp
 
 If rGrid.EOF Then
-    LblErrMsg = DisplayMsg(4006)
+    lblErrMsg = DisplayMsg(4006)
     Exit Sub
 End If
  brs = 2
@@ -819,7 +819,7 @@ While Not rGrid.EOF
          
          
          '.ColComboList(KolRWh) = getwh
-         .TextMatrix(brs, KolRWh) = RTrim(RDetail!WH_Name) ' RTrim(Get_Record("SELECT WH_Name FROM WareHouse_master WHERE WH_Code='" & (RDetail!wh_code) & "'"))
+         .TextMatrix(brs, KolRWh) = RTrim(RDetail!wh_code) 'RTrim(RDetail!WH_Name) ' RTrim(Get_Record("SELECT WH_Name FROM WareHouse_master WHERE WH_Code='" & (RDetail!wh_code) & "'"))
          'menyimpan whcode
          .TextMatrix(brs, KolWHCode) = RTrim(RDetail!wh_code)
          .Cell(flexcpBackColor, brs, KolRWh) = vbWhite
@@ -857,18 +857,16 @@ While Not rGrid.EOF
     rGrid.MoveNext
 Wend
 End With
-LblErrMsg = ""
+lblErrMsg = ""
 MousePointer = vbDefault
 End Sub
 Function IfNUllStr(Data)
-Dim s As String
-If Data = "" Or IsNull(Data) Then
-IfNUllStr = ""
-Else
-IfNUllStr = Trim(Data)
-End If
-
-
+    Dim s As String
+    If Data = "" Or IsNull(Data) Then
+    IfNUllStr = ""
+    Else
+    IfNUllStr = Trim(Data)
+    End If
 End Function
 'Query mengambil detail dari return
 Function GetQueryDetail(Baris)
@@ -902,13 +900,6 @@ End If
     If .Cell(flexcpBackColor, Row, 1) <> vbWhite And Col <> 0 Then
         Cancel = True
     End If
-    
- 
-
-
-
-    
-
 
 End With
 End Sub
@@ -922,7 +913,7 @@ Private Sub grid_Click()
 
 nilKosong = True
 With grid
-    LblErrMsg = ""
+    lblErrMsg = ""
     If .Row > 0 Then
         If .Cell(flexcpBackColor, .Row, .Col) = vbWhite Then .FocusRect = flexFocusInset Else .FocusRect = flexFocusNone
         If .Cell(flexcpBackColor, .Row, 2) <> &HE0E0E0 Then
@@ -1065,9 +1056,9 @@ End If
 If CDbl(.TextMatrix(barisatas, kolRQty)) > CDbl(.TextMatrix(barisatas, KolQty)) Then
     .TextMatrix(barisatas, kolRQty) = .TextMatrix(barisatas, kolRQty) - .TextMatrix(Row, kolRQty)
     .TextMatrix(Row, kolRQty) = 0
-    LblErrMsg = DisplayMsg(4043) & " " & .TextMatrix(barisatas, KolQty)
+    lblErrMsg = DisplayMsg(4043) & " " & .TextMatrix(barisatas, KolQty)
 Else
-LblErrMsg = ""
+lblErrMsg = ""
 End If
 
 End With
@@ -1102,7 +1093,7 @@ If UCase(.TextMatrix(Row, 0)) = "C" And .Cell(flexcpBackColor, Row, 0) = vbWhite
         
         .TextMatrix(Baris, KolItem) = IfNUllStr(.TextMatrix(.RowSel, KolItem))
         'ambil wh code sesuai dengan setting item master,akhir januari 2009 By dudi
-         sql = "select (SELECT WH_Name FROM Warehouse_master WHERE wh_Code=item_master.WH_CODE) WH_Name FROM item_Master WHERE Item_Code='" & IfNUllStr(.TextMatrix(.RowSel, KolItem)) & "'"
+         sql = "select (SELECT WH_Code FROM Warehouse_master WHERE wh_Code=item_master.WH_CODE) WH_Name FROM item_Master WHERE Item_Code='" & IfNUllStr(.TextMatrix(.RowSel, KolItem)) & "'"
         .TextMatrix(Baris, KolRWh) = RTrim(Get_Record(sql))  ' IfNUllStr(.TextMatrix(.RowSel, KolItem))
         .TextMatrix(Baris, KolDnTmp) = IfNUllStr(.TextMatrix(.RowSel, KolDn))
         .TextMatrix(Baris, KolLot) = IfNUllStr(.TextMatrix(.RowSel, KolLot))
@@ -1157,7 +1148,7 @@ Dim tanya
 Me.MousePointer = vbHourglass
 Select Case Index
     Case 0: 'Save
-        If chkSave(1) Then: LblErrMsg = "": Call SavingData '  ProcessSave
+        If chkSave(1) Then: lblErrMsg = "": Call SavingData '  ProcessSave
         
     Case 1:  'Cancel
        Call GridView: Call Kosong
@@ -1252,62 +1243,51 @@ With grid
 For i = 2 To .Rows - 1
        
        'mengecek kelengkapan data terlebih dahulu
-       
-       
+             
        
        If .Cell(flexcpBackColor, i, KolDn) = vbWhite Then 'Jika Reference nya berwana Putih
        
             'Hapus yang ada tanda D nye pada kolom pertama dan Yang Ada returnSeq_no nya di  kolom 22
             If .Cell(flexcpBackColor, i, KolDn) = vbWhite And UCase(.TextMatrix(i, 0)) = "D" And IfNol(.TextMatrix(i, KolReturnSeq)) <> 0 Then
-                LblInput = MsgBox("Do you really to delete this Reference " & .TextMatrix(i, KolDn) & " ?", _
+                LblInput = MsgBox("Do you really to delete this Reference " & RTrim(.TextMatrix(i, KolDn)) & " ?", _
                 vbYesNo + vbQuestion, "Confirmation")
                 If LblInput = vbYes Then
                     sq = "SELECT Return_qty,WH_Code,Return_Cls,Item_Code FROM    Delivery_Return WHERE "
                     sq = sq & " Cust_Code='" & .TextMatrix(i, KolCust) & "' And PO_NO='" & .TextMatrix(i, KolPoNo) & "' AND "
                     sq = sq & " DO_NO='" & .TextMatrix(i, KolDnTmp) & "' And PO_NO='" & .TextMatrix(i, KolPoNo) & "' AND "
                     sq = sq & " DOSeq_No=" & .TextMatrix(i, koldoseqno) & " And Seq_No=" & .TextMatrix(i, KolSeqNo) & " AND Returnseq_No=" & IfNol(.TextMatrix(i, KolReturnSeq))
-                
-                    'Update
-                    If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
-                    And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolWHCode) & "'", 0) = "01" Then
-                    'Delete Stokc
-                    Call newCls.updateStock(Get_Field(sq, 1), Get_Field(sq, 3), IfNol(Get_Field(sq, 0)), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
-                    End If
-                
+                    
+'                    'Update remark 20250901 Input Return tidak ada hubungannya dengan stock
+'                    If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
+'                    And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolWHCode) & "'", 0) = "01" Then
+'                    'Delete Stokc
+'                    Call newCls.updateStock(Get_Field(sq, 1), Get_Field(sq, 3), IfNol(Get_Field(sq, 0)), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
+'                    End If
+
                     sDel = "DELETE FROM Delivery_Return WHERE "
                     sDel = sDel & " Cust_Code='" & .TextMatrix(i, KolCust) & "' And PO_NO='" & .TextMatrix(i, KolPoNo) & "' AND "
                     sDel = sDel & " DO_NO='" & .TextMatrix(i, KolDnTmp) & "' And PO_NO='" & .TextMatrix(i, KolPoNo) & "' AND "
                     sDel = sDel & " DOSeq_No=" & .TextMatrix(i, koldoseqno) & " And Seq_No=" & .TextMatrix(i, KolSeqNo) & " AND Returnseq_No=" & IfNol(.TextMatrix(i, KolReturnSeq))
                     Db.Execute (sDel)
                     Ket = Ket & ",1"
-                    Delete_PartSupply i
+                    
+'                     'Update remark 20250901 Input Return tidak ada hubungannya dengan stock
+'                    Delete_PartSupply i
                 End If
-                
-                
-                
-
-            
-            
             End If
                 
-            
-            
-            
-        
             If .TextMatrix(i, 0) <> "D" Then
-            
-            
+                    
             If NotComplete Then
-                LblErrMsg = DisplayMsg(5012)
+                lblErrMsg = DisplayMsg(5012)
                 Exit Sub
             End If
             
             If CekTanggal Then
-                LblErrMsg = DisplayMsg(1022)
+                lblErrMsg = DisplayMsg(1022)
                 Exit Sub
             End If
-            
-            
+                        
                 If .TextMatrix(i, KolReturnSeq) = 0 Then 'Insert Data Baru
                     SqlInsert = "INSERT INTO Delivery_Return (Cust_Code,DO_No,PO_NO,Seq_No,DOSEq_No,"
                     SqlInsert = SqlInsert & " Return_Date, Item_Code,"
@@ -1320,7 +1300,7 @@ For i = 2 To .Rows - 1
                     SqlInsert = SqlInsert & "" & .TextMatrix(i, koldoseqno) & ",'" & Format(.TextMatrix(i, KolDate), "yyyy-MM-dd") & "',"
                     SqlInsert = SqlInsert & "'" & .TextMatrix(i, KolItem) & "',"
                     SqlInsert = SqlInsert & "'" & .TextMatrix(i, KolDn) & "'," & .TextMatrix(i, kolRQty) & ","
-                    SqlInsert = SqlInsert & "'" & .TextMatrix(i, KolWHCode) & "','" & .TextMatrix(i, KolRCls) & "',"
+                    SqlInsert = SqlInsert & "'" & .TextMatrix(i, KolRWh) & "','" & .TextMatrix(i, KolRCls) & "',"
                     SqlInsert = SqlInsert & "'" & .TextMatrix(i, KolRemarks) & "',"
                     SqlInsert = SqlInsert & "'" & Format(Now(), "yyyy-MM-dd") & "','" & Str_User & "','" & Format(Now(), "yyyy-MM-dd") & "',"
                     sField = "select * FROM unit_Cls WHERE Description='" & .TextMatrix(i, KolUnit) & "'"
@@ -1334,30 +1314,30 @@ For i = 2 To .Rows - 1
                     RetrunS = Get_Field("SELECT MAX(ReturnSeq_NO)AS MAXi  FROM Delivery_Return", 0)
                     Insert_PartSupplier i, RetrunS
                     
-                    'mengecek status item dan status wh
-                    If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
-                    And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolWHCode) & "'", 0) = "01" Then
-                    
-                    'Update Master_STOCK --- Insert Baru
-                    Call newCls.updateStock(.TextMatrix(i, KolWHCode), .TextMatrix(i, KolItem), -(.TextMatrix(i, kolRQty)), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
-                    End If
+'                    'mengecek status item dan status wh remark 20250901 Input Return tidak ada hubungannya dengan stock
+'                    If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
+'                    And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolRWh) & "'", 0) = "01" Then
+'
+'                    'Update Master_STOCK --- Insert Baru
+'                    Call newCls.updateStock(.TextMatrix(i, KolRWh), .TextMatrix(i, KolItem), -(.TextMatrix(i, kolRQty)), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
+'                    End If
                   
                   ElseIf IfNol(.TextMatrix(i, KolReturnSeq)) <> 0 Then 'Untuk UPDATE Data
                    
-                   
                    'Status nya Hapus Terlebih dahulu data yang ada d master_stock
-                   If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
-                    And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolWHCode) & "'", 0) = "01" Then
-                    'Query ambil data  Jumlah yang lama sebelum di ganti
-                    sq = "SELECT  Return_Qty FROM dbo.Delivery_Return "
-                    sq = sq & " WHERE "
-                    sq = sq & " Cust_Code='" & .TextMatrix(i, KolCust) & "' And PO_NO='" & .TextMatrix(i, KolPoNo) & "' AND "
-                    sq = sq & " DO_NO='" & .TextMatrix(i, KolDnTmp) & "' AND "
-                    sq = sq & " DOSeq_No=" & .TextMatrix(i, koldoseqno) & " And Seq_No=" & .TextMatrix(i, KolSeqNo) & " AND Returnseq_No=" & IfNol(.TextMatrix(i, KolReturnSeq))
-                    Call newCls.updateStock(.TextMatrix(i, KolWHCode), .TextMatrix(i, KolItem), IfNol(Get_Field(sq, 0)), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
-                   
-                   End If
-                   
+                    If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
+                     And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolRWh) & "'", 0) = "01" Then
+                         'Query ambil data  Jumlah yang lama sebelum di ganti
+                         sq = "SELECT  Return_Qty FROM dbo.Delivery_Return "
+                         sq = sq & " WHERE "
+                         sq = sq & " Cust_Code='" & .TextMatrix(i, KolCust) & "' And PO_NO='" & .TextMatrix(i, KolPoNo) & "' AND "
+                         sq = sq & " DO_NO='" & .TextMatrix(i, KolDnTmp) & "' AND "
+                         sq = sq & " DOSeq_No=" & .TextMatrix(i, koldoseqno) & " And Seq_No=" & .TextMatrix(i, KolSeqNo) & " AND Returnseq_No=" & IfNol(.TextMatrix(i, KolReturnSeq))
+                         
+                         'remark 20250901 Input Return tidak ada hubungannya dengan stock
+                         'Call newCls.updateStock(.TextMatrix(i, KolRWh), .TextMatrix(i, KolItem), IfNol(Get_Field(sq, 0)), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
+                    End If
+                    
                    
                    
                    sqlUpdate = " update dbo.Delivery_Return "
@@ -1365,7 +1345,7 @@ For i = 2 To .Rows - 1
                    sqlUpdate = sqlUpdate & " Return_Date ='" & .TextMatrix(i, KolDate) & "'"
                    sqlUpdate = sqlUpdate & " ,Reference ='" & .TextMatrix(i, KolDn) & "'"
                    sqlUpdate = sqlUpdate & " ,Return_Qty = " & .TextMatrix(i, kolRQty)
-                   sqlUpdate = sqlUpdate & " ,WH_Code ='" & .TextMatrix(i, KolWHCode) & "'"
+                   sqlUpdate = sqlUpdate & " ,WH_Code ='" & .TextMatrix(i, KolRWh) & "'"
                    sqlUpdate = sqlUpdate & " ,Return_Cls ='" & .TextMatrix(i, KolRCls) & "'"
                    sqlUpdate = sqlUpdate & " ,Remarks ='" & .TextMatrix(i, KolRemarks) & "'"
                    sqlUpdate = sqlUpdate & " ,Last_Update='" & Now() & "'"
@@ -1386,31 +1366,29 @@ For i = 2 To .Rows - 1
                    sqlUpdate = sqlUpdate & " DOSeq_No=" & .TextMatrix(i, koldoseqno) & " And Seq_No=" & .TextMatrix(i, KolSeqNo) & " AND Returnseq_No=" & IfNol(.TextMatrix(i, KolReturnSeq))
                    Db.Execute (sqlUpdate)
                    Ket = Ket & ",3"
-                   Update_PartSupplier i
                    
-                   'Insert Stock setelah data nya di hapus
-                     If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
-                     And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolWHCode) & "'", 0) = "01" Then
-                        Call newCls.updateStock(.TextMatrix(i, KolWHCode), .TextMatrix(i, KolItem), -.TextMatrix(i, kolRQty), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
-                     End If
+                   '20250901
+'                   Update_PartSupplier i
                    
-                   
-                    
-                   
+'                   'Insert Stock setelah data nya di hapus, remark 20250901 Input Return tidak ada hubungannya dengan stock
+'                     If Get_Field("select StockCOntrol_Cls FROM Item_master WHERE Item_code='" & .TextMatrix(i, KolItem) & "'", 0) = "01" _
+'                     And Get_Field("select StockCOntrol_Cls FROM Warehouse_Master WHERE Wh_Code='" & .TextMatrix(i, KolRWh) & "'", 0) = "01" Then
+'                        Call newCls.updateStock(.TextMatrix(i, KolRWh), .TextMatrix(i, KolItem), -.TextMatrix(i, kolRQty), IfNUllStr(.TextMatrix(i, KolLot)), Format(.TextMatrix(i, KolDate), "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
+'                     End If
+                     
                   End If
                     
                 End If
-       
        
        End If
 
 Next
 If Ket = "0" Then
-LblErrMsg = DisplayMsg(5012)
+lblErrMsg = DisplayMsg(5012)
 Else
 Call GridView
     'If s Then
-LblErrMsg = DisplayMsg(8005)
+lblErrMsg = DisplayMsg(8005)
     'End If
 End If
 
@@ -1437,7 +1415,7 @@ Dim SSS As String
       SSS = " update [Part_Supply]"
       SSS = SSS & "   SET "
       'SSS = SSS & ",[FromWarehouse_Code]='" & IfNUllStr(.TextMatrix(brs, KolCust)) & "'"
-      SSS = SSS & " [ToWarehouse_Code] ='" & .TextMatrix(brs, KolWHCode) & "'"
+      SSS = SSS & " [ToWarehouse_Code] ='" & .TextMatrix(brs, KolRWh) & "'"
       SSS = SSS & ",[ChildSupply_date]='" & Format(.TextMatrix(brs, KolDate), "MMM dd yyyy") & "'"
       SSS = SSS & ",[Supply_Cls] ='" & .TextMatrix(brs, KolRCls) & "'" & vbCrLf
       SSS = SSS & ",[ChildRequirement_Qty] =" & .TextMatrix(brs, kolRQty)
@@ -1478,7 +1456,7 @@ sql = sql & ",[recseq_NO]" & vbCrLf
 sql = sql & ",[Last_Update],[Last_User],[Register_Date])" & vbCrLf
 sql = sql & " Values ("
 sql = sql & "'" & .TextMatrix(brs, KolCust) & "',"
-sql = sql & "'Addres" & "','" & .TextMatrix(brs, KolWHCode) & "','" & Format(Now(), "MMM dd yyyy") & "'," & vbCrLf
+sql = sql & "'Addres" & "','" & .TextMatrix(brs, KolRWh) & "','" & Format(Now(), "MMM dd yyyy") & "'," & vbCrLf
 sql = sql & "'" & .TextMatrix(brs, KolItem) & "','" & .TextMatrix(brs, KolRCls) & "'," & .TextMatrix(brs, kolRQty) & "," & vbCrLf
 s = "SELECT * FROM unit_Cls WHERE Description='" & .TextMatrix(brs, KolUnit) & "'"
 d = "select * FROM curr_Cls where Description='" & .TextMatrix(brs, KolCurr) & "'"
@@ -1559,10 +1537,10 @@ End Sub
 
 '************************* Validate ************************
 Private Sub CboCust_Change()
- LblErrMsg.Caption = ""
-    lblcust.Caption = ""
-    If cboCust.MatchFound Then
-        If cboCust.Text <> "" Then lblcust.Caption = cboCust.List(cboCust.ListIndex, 1)
+ lblErrMsg.Caption = ""
+    lblCust.Caption = ""
+    If cboCust.matchFound Then
+        If cboCust.Text <> "" Then lblCust.Caption = cboCust.List(cboCust.ListIndex, 1)
         cboDO.clear
         Call GetCombo(cboDO, "Do_Master", "Rtrim(DO_NO)", "WHERE Cust_Code='" & cboCust & "' AND DO_date Between '" & DtStart & "' AND '" & DtEnd & "'", , "10", 120)
         
@@ -1601,7 +1579,7 @@ End Sub
 
 '************************* Out *****************************
 Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
-    If ErrMsg = "" Then Unload Me Else LblErrMsg.Caption = ErrMsg
+    If ErrMsg = "" Then Unload Me Else lblErrMsg.Caption = ErrMsg
 End Sub
 
 Private Sub CmdSubMenu_Click()

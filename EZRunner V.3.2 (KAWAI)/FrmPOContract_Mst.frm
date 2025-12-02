@@ -7,11 +7,11 @@ Begin VB.Form FrmPOContract_Mst
    ClientHeight    =   10620
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   15465
+   ClientWidth     =   17280
    Icon            =   "FrmPOContract_Mst.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   10620
-   ScaleWidth      =   15465
+   ScaleWidth      =   17280
    StartUpPosition =   2  'CenterScreen
    WindowState     =   2  'Maximized
    Begin VB.CommandButton cmdExcel 
@@ -27,7 +27,7 @@ Begin VB.Form FrmPOContract_Mst
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   11760
+      Left            =   13560
       Style           =   1  'Graphical
       TabIndex        =   26
       Tag             =   "FFTT*/"
@@ -53,7 +53,7 @@ Begin VB.Form FrmPOContract_Mst
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   14160
+      Left            =   15960
       Style           =   1  'Graphical
       TabIndex        =   21
       Tag             =   "FFTT*/"
@@ -73,7 +73,7 @@ Begin VB.Form FrmPOContract_Mst
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   12960
+      Left            =   14760
       Style           =   1  'Graphical
       TabIndex        =   20
       Tag             =   "FFTT*/"
@@ -128,7 +128,7 @@ Begin VB.Form FrmPOContract_Mst
       TabIndex        =   16
       Tag             =   "TFTT*/"
       Top             =   9360
-      Width           =   15165
+      Width           =   16965
       Begin VB.Label lblErrMsg 
          Alignment       =   2  'Center
          AutoSize        =   -1  'True
@@ -148,7 +148,7 @@ Begin VB.Form FrmPOContract_Mst
          TabIndex        =   17
          Tag             =   "TFTF*/"
          Top             =   195
-         Width           =   14925
+         Width           =   16725
       End
    End
    Begin VB.Frame Frame3 
@@ -158,7 +158,7 @@ Begin VB.Form FrmPOContract_Mst
       TabIndex        =   2
       Tag             =   "TTTF*/"
       Top             =   1080
-      Width           =   15165
+      Width           =   16965
       Begin VB.TextBox lblCust 
          BackColor       =   &H00FDDFE3&
          BorderStyle     =   0  'None
@@ -196,7 +196,7 @@ Begin VB.Form FrmPOContract_Mst
          TabIndex        =   4
          Tag             =   "TTFF*/"
          Top             =   1080
-         Width           =   2500
+         Width           =   4185
       End
       Begin VB.ComboBox cboStatus 
          BeginProperty Font 
@@ -239,7 +239,7 @@ Begin VB.Form FrmPOContract_Mst
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   124715011
+         Format          =   128319491
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DTPOFrom 
@@ -262,7 +262,7 @@ Begin VB.Form FrmPOContract_Mst
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   124715011
+         Format          =   128319491
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DTPOTo 
@@ -285,7 +285,7 @@ Begin VB.Form FrmPOContract_Mst
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   124715011
+         Format          =   128319491
          CurrentDate     =   37798
       End
       Begin VB.CommandButton CmdCreate 
@@ -301,7 +301,7 @@ Begin VB.Form FrmPOContract_Mst
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   13890
+         Left            =   15600
          Style           =   1  'Graphical
          TabIndex        =   5
          Tag             =   "TTFF*/"
@@ -401,11 +401,11 @@ Begin VB.Form FrmPOContract_Mst
          TabIndex        =   12
          Tag             =   "TTFF*/"
          Top             =   240
-         Width           =   2500
+         Width           =   4185
          VariousPropertyBits=   612386843
          MaxLength       =   50
          DisplayStyle    =   3
-         Size            =   "4410;556"
+         Size            =   "7382;556"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
@@ -532,8 +532,8 @@ Begin VB.Form FrmPOContract_Mst
       TabStop         =   0   'False
       Tag             =   "TTTT*/"
       Top             =   2880
-      Width           =   15195
-      _cx             =   26802
+      Width           =   16995
+      _cx             =   29977
       _cy             =   11271
       Appearance      =   1
       BorderStyle     =   1
@@ -670,6 +670,9 @@ Dim bteColRate As Byte
 Dim bteColQtyBOM As Byte
 Dim bteColQtyPO As Byte
 Dim bteColQtySet As Byte
+Dim bteColQtyReceipt As Byte
+Dim bteColSupplierCode As Byte
+Dim bteColSupplierName As Byte
 Dim bteColUnitCode As Byte
 Dim bteColUnitName As Byte
 Dim bteColPrice As Byte
@@ -692,14 +695,17 @@ Private Sub headerGrid()
     bteColQtyBOM = 9
     bteColQtyPO = 10
     bteColQtySet = 11
-    bteColUnitCode = 12
-    bteColUnitName = 13
-    bteColPrice = 14
-    bteColAmount = 15
-    bteColBctype = 16
-    bteColBcNo = 17
-    bteColBCDate = 18
-    bteColTot = 19
+    bteColQtyReceipt = 12
+    bteColSupplierCode = 13
+    bteColSupplierName = 14
+    bteColUnitCode = 15
+    bteColUnitName = 16
+    bteColPrice = 17
+    bteColAmount = 18
+    bteColBctype = 19
+    bteColBcNo = 20
+    bteColBCDate = 21
+    bteColTot = 22
 
     With grid
         .ColS = bteColTot
@@ -722,6 +728,9 @@ Private Sub headerGrid()
         .TextMatrix(0, bteColQtyBOM) = "Qty BOM"
         .TextMatrix(0, bteColQtyPO) = "Qty PO"
         .TextMatrix(0, bteColQtySet) = "Qty Set"
+        .TextMatrix(0, bteColQtyReceipt) = "Qty Receipt"
+        .TextMatrix(0, bteColSupplierCode) = "Supplier Code"
+        .TextMatrix(0, bteColSupplierName) = "Supplier Name"
         .TextMatrix(0, bteColUnitCode) = "Unit Code"
         .TextMatrix(0, bteColUnitName) = "Unit Name"
         .TextMatrix(0, bteColPrice) = "Price"
@@ -742,6 +751,9 @@ Private Sub headerGrid()
         .ColWidth(bteColQtyBOM) = 1100
         .ColWidth(bteColQtyPO) = 1000
         .ColWidth(bteColQtySet) = 1500
+        .ColWidth(bteColQtyReceipt) = 1500
+        .ColWidth(bteColSupplierCode) = 1750
+        .ColWidth(bteColSupplierName) = 2500
         .ColWidth(bteColUnitCode) = 1150
         .ColWidth(bteColUnitName) = 1150
         .ColWidth(bteColPrice) = 1200
@@ -772,6 +784,8 @@ Private Sub headerGrid()
         .ColAlignment(bteColBctype) = flexAlignCenterCenter
         .ColAlignment(bteColBcNo) = flexAlignCenterCenter
         .ColAlignment(bteColBCDate) = flexAlignCenterCenter
+        
+        .FrozenCols = 5
         
         For i = 0 To .ColS - 1
             .Row = 0
@@ -1043,6 +1057,9 @@ Private Sub gridLoad()
             grid.TextMatrix(i, bteColQtyBOM) = Format(RsIsiG("QtyBOM"), gs_formatQtyBOM)
             grid.TextMatrix(i, bteColQtyPO) = Format(RsIsiG("QtyPO"), gs_formatQty)
             grid.TextMatrix(i, bteColQtySet) = Format(RsIsiG("QtySet"), gs_formatQtyBOM)
+            grid.TextMatrix(i, bteColQtyReceipt) = Format(RsIsiG("Qty_Receipt"), gs_formatQtyBOM)
+            grid.TextMatrix(i, bteColSupplierCode) = RsIsiG("Supplier_Code") & ""
+            grid.TextMatrix(i, bteColSupplierName) = RsIsiG("Supplier_Name") & ""
             grid.TextMatrix(i, bteColUnitCode) = Trim(RsIsiG("Unit_Code") & "")
             grid.TextMatrix(i, bteColUnitName) = Trim(RsIsiG("Unit_Name") & "")
             grid.TextMatrix(i, bteColPrice) = Format(RsIsiG("Price"), gs_formatPrice)

@@ -532,7 +532,7 @@ Private Sub SaveData()
     Dim intRow As Integer
     Dim strSqlDel As String
     
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
     
     adoLock.ConnectionString = Db.ConnectionString
@@ -541,13 +541,13 @@ Private Sub SaveData()
     
     If grid.FindRow("D", , bytColSelect) <= 0 Then
         If txtCode.Text = "" Then
-            LblErrMsg.Caption = DisplayMsg("0001") & " Code !"
+            lblErrMsg.Caption = DisplayMsg("0001") & " Code !"
             txtCode.SetFocus
             GoTo ErrExit
         End If
         
         If txtDescription.Text = "" Then
-            LblErrMsg.Caption = DisplayMsg("0001") & " Description !"
+            lblErrMsg.Caption = DisplayMsg("0001") & " Description !"
             txtDescription.SetFocus
             GoTo ErrExit
         End If
@@ -563,7 +563,7 @@ Private Sub SaveData()
                 adoRs.Fields(4) = userLogin
                 adoRs.Fields(5) = Now
                 adoRs.update
-                LblErrMsg.Caption = DisplayMsg(1000)
+                lblErrMsg.Caption = DisplayMsg(1000)
             Else
                 If txtCode.Enabled Then
                     If MsgBox("Record already exist! Do you want to update?", vbQuestion + vbYesNo) = vbNo Then GoTo ErrExit
@@ -573,7 +573,7 @@ Private Sub SaveData()
                 adoRs.Fields(3) = Now
                 adoRs.Fields(4) = userLogin
                 adoRs.update
-                LblErrMsg.Caption = DisplayMsg(1101)
+                lblErrMsg.Caption = DisplayMsg(1101)
             End If
             adoRs.Close
         Else
@@ -586,7 +586,7 @@ Private Sub SaveData()
                 adoRs.Fields(3) = userLogin
                 adoRs.Fields(4) = Now
                 adoRs.update
-                LblErrMsg.Caption = DisplayMsg(1000)
+                lblErrMsg.Caption = DisplayMsg(1000)
             Else
                 If txtCode.Enabled Then
                     If MsgBox("Record already exist! Do you want to update?", vbQuestion + vbYesNo) = vbNo Then GoTo ErrExit
@@ -595,7 +595,7 @@ Private Sub SaveData()
                 adoRs.Fields(2) = Now
                 adoRs.Fields(3) = userLogin
                 adoRs.update
-                LblErrMsg.Caption = DisplayMsg(1101)
+                lblErrMsg.Caption = DisplayMsg(1101)
             End If
             adoRs.Close
         End If
@@ -607,7 +607,7 @@ Private Sub SaveData()
                     adoLock.Execute strSqlDel
                 End If
             Next
-            LblErrMsg.Caption = DisplayMsg(1201)
+            lblErrMsg.Caption = DisplayMsg(1201)
         Else
             GoTo ErrExit
         End If
@@ -628,8 +628,8 @@ ErrExit:
     Set adoRs = Nothing
     Set adoLock = Nothing
     Exit Sub
-errHandler:
-    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
+ErrHandler:
+    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
 End Sub
@@ -665,7 +665,7 @@ End Sub
 Private Sub ShowData()
     Dim adoRs As New ADODB.Recordset
     
-   On Error GoTo errHandler
+   On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
     
     SetGridHeader
@@ -710,6 +710,7 @@ Private Sub ShowData()
         strTable = "Model_Cls"
     Case "Clasification Part"
         strTable = "ClasificationPart_Cls"
+        txtDescription.MaxLength = 100
     End Select
     
     If UnitFlag = True Then
@@ -755,14 +756,14 @@ ErrExit:
     Me.MousePointer = vbDefault
     Set adoRs = Nothing
     Exit Sub
-errHandler:
-    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
+ErrHandler:
+    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
 End Sub
 
 Private Sub cmdClear_Click()
-    LblErrMsg.Caption = ""
+    lblErrMsg.Caption = ""
     ShowData
     
     txtCode.Enabled = True
@@ -784,7 +785,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
     If ErrMsg = "" Then
         Unload Me
     Else
-        LblErrMsg.Caption = ErrMsg
+        lblErrMsg.Caption = ErrMsg
     End If
 End Sub
 
@@ -827,7 +828,7 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-    LblErrMsg.Caption = ""
+    lblErrMsg.Caption = ""
     If Col = bytColSelect Then
         grid.EditMaxLength = 1
     Else
@@ -856,7 +857,7 @@ Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As 
 End Sub
 
 Private Sub SSTab_Click(PreviousTab As Integer)
-    LblErrMsg.Caption = ""
+    lblErrMsg.Caption = ""
     If PreviousTab <> SSTab.Tab Then cmdClear_Click
 End Sub
 
