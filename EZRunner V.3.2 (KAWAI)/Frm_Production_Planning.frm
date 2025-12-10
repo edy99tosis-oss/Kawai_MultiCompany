@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_Production_Planning 
    BackColor       =   &H00FDDFE3&
@@ -982,7 +982,7 @@ Begin VB.Form Frm_Production_Planning
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "MMM yyyy"
-         Format          =   129040387
+         Format          =   60817411
          UpDown          =   -1  'True
          CurrentDate     =   37867
       End
@@ -1001,13 +1001,14 @@ Begin VB.Form Frm_Production_Planning
          TabIndex        =   0
          Top             =   270
          Width           =   1335
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   10
          DisplayStyle    =   3
          Size            =   "2355;609"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -1883,7 +1884,7 @@ End With
 sql = "select * from group_cls"
 Set rstgroup = New Recordset
 rstgroup.Open sql, Db, adOpenKeyset, adLockOptimistic
-With cbogroup
+With cboGroup
     .clear
     .columnCount = 2
     .ColumnWidths = "50 pt;75 pt"
@@ -1902,10 +1903,10 @@ End Sub
 
 Sub adpartcombo()
 Dim sq As String
-If Trim(cbogroup.Text) = "" Then
+If Trim(cboGroup.Text) = "" Then
     sq = ""
 Else
-    sq = "and group_cls = '" & cbogroup & "'"
+    sq = "and group_cls = '" & cboGroup & "'"
 End If
 sql = "select item_code,rtrim(makeritem_code) makeritem_code, rtrim(item_name) item_name  from item_master where " & _
         " manufacture_code = '" & cbodealer.Text & "' and finishgoodpart_cls = '01' and production_cls = '01' " & sq & " and use_endday >= convert(char(8), getdate(), 112) " & _
@@ -1943,10 +1944,10 @@ If Trim(cbodealer.Text) <> "" Then
     rstcust.Find "trade_code = '" & cbodealer.Text & "'"
     If Not rstcust.EOF Then
         lbldesc(0) = Trim(rstcust!trade_name)
-        If Trim(cbogroup) <> "" Then
+        If Trim(cboGroup) <> "" Then
             adpartcombo
             rstgroup.Requery
-            rstgroup.Find "group_cls = '" & cbogroup.Text & "'"
+            rstgroup.Find "group_cls = '" & cboGroup.Text & "'"
             If Not rstgroup.EOF Then
                 adpartcombo
                 lbldesc(1) = Trim(rstgroup!Description)
@@ -2016,10 +2017,10 @@ If Trim(cbodealer.Text) <> "" Then
     rstcust.Find "trade_code = '" & cbodealer.Text & "'"
     If Not rstcust.EOF Then
         lbldesc(0) = Trim(rstcust!trade_name)
-        If Trim(cbogroup) <> "" Then
+        If Trim(cboGroup) <> "" Then
             adpartcombo
             rstgroup.Requery
-            rstgroup.Find "group_cls = '" & cbogroup.Text & "'"
+            rstgroup.Find "group_cls = '" & cboGroup.Text & "'"
             If Not rstgroup.EOF Then
                 adpartcombo
                 lbldesc(1) = Trim(rstgroup!Description)
@@ -2083,9 +2084,9 @@ Else
     Exit Sub
 End If
 
-If Trim(cbogroup) <> "" Then
+If Trim(cboGroup) <> "" Then
     rstgroup.Requery
-    rstgroup.Find "group_cls ='" & cbogroup.Text & "'"
+    rstgroup.Find "group_cls ='" & cboGroup.Text & "'"
     If Not rstgroup.EOF Then
         lbldesc(1) = Trim(rstgroup!Description)
     Else
@@ -2104,8 +2105,8 @@ If Trim(CboPart) <> "" Then
     rstpart.Requery
 End If
 
-If Trim(cbogroup) <> "" Then
-    sqlP = "and IM.group_cls = '" & cbogroup.Text & "'"
+If Trim(cboGroup) <> "" Then
+    sqlP = "and IM.group_cls = '" & cboGroup.Text & "'"
 Else
     sqlP = ""
 End If
@@ -2178,9 +2179,9 @@ Select Case Index
             clear
             clearheader
             cbodealer.ListIndex = -1
-            cbogroup.ListIndex = -1
+            cboGroup.ListIndex = -1
             CboPart.ListIndex = -1
-            Mydate = Format(Now, "MMM YYYY")
+            MYDate = Format(Now, "MMM YYYY")
         End If
 End Select
 End Sub
@@ -2245,17 +2246,17 @@ Private Sub Form_Load()
 HakU = hakUpdate(Me.Name)
 Call CompanyMaster
 'adtocombo
-Mydate = Format(Now, "mmm yyyy")
-X = Format(Me.Mydate, "mm")
+MYDate = Format(Now, "mmm yyyy")
+X = Format(Me.MYDate, "mm")
 For i = 0 To 5
     If X + i <= 12 Then
-        lblmonth(i) = MonthName(X + i)
-        thn(i) = Year(Mydate)
+        LblMonth(i) = MonthName(X + i)
+        thn(i) = Year(MYDate)
         bln(i) = (X + i)
     Else
-        lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(Mydate) + 1)
+        LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
         bln(i) = ((X + i) - 12)
-        thn(i) = Year(Mydate) + 1
+        thn(i) = Year(MYDate) + 1
     End If
 Next
 clear
@@ -2278,26 +2279,26 @@ End Sub
 Private Sub MYDate_Change()
 blnsubmit = False
 If edited Then
-    Mydate.Month = tgl_sb
-    Mydate.Year = thn_sb
-    Mydate.Year = Mydate.Year
+    MYDate.Month = tgl_sb
+    MYDate.Year = thn_sb
+    MYDate.Year = MYDate.Year
     Frame1.Enabled = False
     Exit Sub
 End If
 
 MYDate_Click
-tgl_sb = Mydate.Month
-thn_sb = Mydate.Year
-X = Format(Me.Mydate, "mm")
+tgl_sb = MYDate.Month
+thn_sb = MYDate.Year
+X = Format(Me.MYDate, "mm")
 For i = 0 To 5
     If X + i <= 12 Then
-        lblmonth(i) = MonthName(X + i)
-        thn(i) = Year(Mydate)
+        LblMonth(i) = MonthName(X + i)
+        thn(i) = Year(MYDate)
         bln(i) = (X + i)
     Else
-        lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(Mydate) + 1)
+        LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
         bln(i) = ((X + i) - 12)
-        thn(i) = Year(Mydate) + 1
+        thn(i) = Year(MYDate) + 1
     End If
 Next
 If Trim(cbodealer.Text) <> "" Then
@@ -2384,8 +2385,8 @@ End If
 End Sub
 
 Private Sub MYDate_Click()
-If Mydate.Month = 1 And Val(tgl_sb) = 12 Then Mydate.Year = Mydate.Year + 1
-If Mydate.Month = 12 And Val(tgl_sb) = 1 Then Mydate.Year = Mydate.Year - 1
+If MYDate.Month = 1 And Val(tgl_sb) = 12 Then MYDate.Year = MYDate.Year + 1
+If MYDate.Month = 12 And Val(tgl_sb) = 1 Then MYDate.Year = MYDate.Year - 1
 End Sub
 
 Private Sub MYDate_GotFocus()
@@ -2535,9 +2536,9 @@ Else
         If Trim(CboPart) <> "" Then
             CboPart = Trim(CboPart)
             If CboPart.matchFound Then
-                If Trim(cbogroup) <> "" Then
-                    cbogroup = Trim(cbogroup)
-                    If cbogroup.matchFound = False Then
+                If Trim(cboGroup) <> "" Then
+                    cboGroup = Trim(cboGroup)
+                    If cboGroup.matchFound = False Then
                         errcheck = True
                         lblerror = DisplayMsg(4064)
                         Exit Function

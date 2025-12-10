@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_IncomingMaterialReport 
    BackColor       =   &H00FDDFE3&
@@ -206,8 +206,8 @@ Begin VB.Form frm_IncomingMaterialReport
       TabStop         =   0   'False
       Top             =   285
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VB.CommandButton Cmd_Save 
       BackColor       =   &H00C0E0FF&
@@ -297,7 +297,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   130351107
+      Format          =   60227587
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -320,7 +320,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   130351107
+      Format          =   60227587
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -348,13 +348,14 @@ Begin VB.Form frm_IncomingMaterialReport
       TabIndex        =   0
       Top             =   1125
       Width           =   1500
-      VariousPropertyBits=   746604571
+      VariousPropertyBits=   746604569
       MaxLength       =   10
       DisplayStyle    =   3
       Size            =   "2646;609"
       MatchEntry      =   1
       ShowDropButtonWhen=   2
       FontName        =   "Verdana"
+      FontEffects     =   1073750016
       FontHeight      =   165
       FontCharSet     =   0
       FontPitchAndFamily=   2

@@ -276,7 +276,7 @@ Begin VB.Form frmPOParts
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   60620803
+         Format          =   61014019
          UpDown          =   -1  'True
          CurrentDate     =   37798
       End
@@ -304,13 +304,14 @@ Begin VB.Form frmPOParts
          TabIndex        =   0
          Top             =   180
          Width           =   1305
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   10
          DisplayStyle    =   3
          Size            =   "2302;556"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -1108,7 +1109,7 @@ Begin VB.Form frmPOParts
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60620803
+      Format          =   61014019
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker dtpDeliveryDate 
@@ -1130,7 +1131,7 @@ Begin VB.Form frmPOParts
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60620803
+      Format          =   61014019
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -2228,7 +2229,7 @@ Sub Browse()
 Dim p As String
 Dim a As Double
 
-    lblErrMsg = ""
+    LblErrMsg = ""
 
     sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
     If RS.State <> adStateClosed Then RS.Close
@@ -2912,7 +2913,7 @@ Private Sub TxtFc_Change()
         TxtFactoryName = TxtFc.List(TxtFc.ListIndex, 1)
     Else
         TxtFactoryName = ""
-        lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
     End If
     Call SetComboWHTo
 End Sub
@@ -2939,7 +2940,7 @@ Sub Kosong()
     
     ubah = False
     ada = False
-    lblErrMsg = ""
+    LblErrMsg = ""
     statusfix = 0
     kodeitem = ""
     
@@ -3373,7 +3374,7 @@ Private Sub cmdSearch_Click()
     
     Dim i As Double
     
-    lblErrMsg = ""
+    LblErrMsg = ""
     
     If txtSearch = "" Or grid.Rows = 2 Then txtSearch.SetFocus: Exit Sub
     If grid.Row = grid.Rows - 1 Then i = 2 Else i = grid.Row + 1
@@ -3395,7 +3396,7 @@ Private Sub cmdSearch_Click()
         If i = grid.Rows - 1 Then
             txtSearch = ""
             i = 2
-            lblErrMsg = DisplayMsg(8012)
+            LblErrMsg = DisplayMsg(8012)
             Exit Do
         End If
     Loop
@@ -3503,7 +3504,7 @@ Dim ketemu As Boolean
 Dim t As String
 
     ketemu = False
-    lblErrMsg = ""
+    LblErrMsg = ""
 
     kunci (False)
     GetDefaultValue
@@ -3559,7 +3560,7 @@ Private Sub cboStatus_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer
 End Sub
 
 Private Sub cbopono_Click()
-    lblErrMsg = ""
+    LblErrMsg = ""
     txtPoNo.Text = cboPONo.Text
     Header
     GetDefaultValue
@@ -3632,7 +3633,7 @@ Private Sub txtpono_KeyPress(KeyAscii As Integer)
         GetDefaultValue
         kosongBwh
         Dim p As String
-        lblErrMsg = ""
+        LblErrMsg = ""
         sql = "select * from purchaseorder_master where po_no='" & txtPoNo.Text & "' and sheetcoil_cls=0"
         If RS.State <> adStateClosed Then RS.Close
         RS.Open sql, Db, adOpenKeyset, adLockOptimistic
@@ -3659,7 +3660,7 @@ Dim ketemu As Boolean
 Dim t As String
 
 ketemu = False
-lblErrMsg = ""
+LblErrMsg = ""
 kunci (False)
 ClearPO
     If cboSupplier.ListIndex <> -1 Then
@@ -3709,7 +3710,7 @@ ClearPO
         Else
             txtPoNo.Text = ""
         End If
-        lblErrMsg.Caption = DisplayMsg(4050) '"Record with this Supplier Code not Exist"
+        LblErrMsg.Caption = DisplayMsg(4050) '"Record with this Supplier Code not Exist"
         cboSupplier.SetFocus
         Exit Sub
 
@@ -3910,11 +3911,11 @@ With grid
         txtSearch = ""
         If .TextMatrix(Row, bteColOrder) = "" Then .TextMatrix(Row, bteColOrder) = Format(0, gs_formatQty)
         If IsNumeric(.TextMatrix(Row, bteColOrder)) = False Then .TextMatrix(Row, bteColOrder) = Format(0, gs_formatQty)
-        If CDbl(.TextMatrix(Row, bteColOrder)) > gd_MaxQty Then lblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty: .TextMatrix(Row, bteColOrder) = Format(orderawal, gs_formatQty): .SetFocus: Exit Sub  '"Quantity must be lower or equal than 9,999,999.99"
-        lblErrMsg = ""
+        If CDbl(.TextMatrix(Row, bteColOrder)) > gd_MaxQty Then LblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty: .TextMatrix(Row, bteColOrder) = Format(orderawal, gs_formatQty): .SetFocus: Exit Sub  '"Quantity must be lower or equal than 9,999,999.99"
+        LblErrMsg = ""
         If CDbl(.TextMatrix(Row, bteColOrder)) < CDbl(.TextMatrix(Row, bteColMinOrder)) Then
 
-            lblErrMsg = "[9000]-Quantity must be greater or equal to Minimum Order"
+            LblErrMsg = "[9000]-Quantity must be greater or equal to Minimum Order"
             .TextMatrix(Row, bteColOrder) = Format(orderawal, gs_formatQty)
             .SetFocus
             Exit Sub
@@ -3940,7 +3941,7 @@ With grid
             .TextMatrix(Row, bteColRemainQtyContract) = Format((CDbl(.TextMatrix(Row, bteColRemainQtyContract)) - CDbl(.TextMatrix(Row, bteColOrder))), gs_formatQty)
         
             If .TextMatrix(Row, bteColRemainQtyContract) < 0 Then
-                lblErrMsg.Caption = "Invalid Qty, Qty Contract Remaining " & TempQtyBefore & " !"
+                LblErrMsg.Caption = "Invalid Qty, Qty Contract Remaining " & TempQtyBefore & " !"
                 .SetFocus
                 
                 Command1(0).Enabled = False
@@ -3957,7 +3958,7 @@ With grid
         If TempQtyBefore <> 0 Then
             If tempPriceContractBefore <> "" Then
             If txtPriceContract.Text <> tempPriceContractBefore Then
-                lblErrMsg.Caption = DisplayMsg(9016)
+                LblErrMsg.Caption = DisplayMsg(9016)
                 Exit Sub
             End If
         End If
@@ -4013,7 +4014,7 @@ With grid
             
             Set RS = Db.Execute(sql)
                 If Not (RS.BOF And RS.EOF) Then
-                lblErrMsg = DisplayMsg(59)
+                LblErrMsg = DisplayMsg(59)
                 .AddItem ""
                 .TextMatrix(Row, bteColOrder) = Format(orderawal, gs_formatQty)
                 .TextMatrix(Row, bteColFixOrder) = Format(orderawal, gs_formatQty)
@@ -4139,7 +4140,7 @@ Private Sub grid_Click()
 End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
-lblErrMsg = ""
+LblErrMsg = ""
   If grid.Col = bteColOrder Then
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
       KeyAscii = 0
@@ -4164,7 +4165,7 @@ Dim startm As Date
 Dim endm As Date
 
 If grid.Rows > 2 Then
-    If hakAkses("frm_ReceiptSupplyScheculeInquiry") = 0 Then lblErrMsg = DisplayMsg(3007):   Exit Sub
+    If hakAkses("frm_ReceiptSupplyScheculeInquiry") = 0 Then LblErrMsg = DisplayMsg(3007):   Exit Sub
     date1 = DateAdd("m", 1, dtpPeriod.Value)
     diff = DateDiff("d", Format(dtpPeriod, "yyyy-mm-01"), Format(date1, "yyyy-mm-01"))
     startm = CDate(Year(dtpPeriod) & "-" & Month(dtpPeriod) & "-01")
@@ -4192,22 +4193,22 @@ Dim strTempCurr As String
 Dim VSeq As Long
 
 Me.MousePointer = vbHourglass
-lblErrMsg = ""
+LblErrMsg = ""
 a = 0
 
 Select Case Index
 Case 0
 
-    If hakUpdate(Me.Name) = 0 Then lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+    If hakUpdate(Me.Name) = 0 Then LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
     
     If txtPoNo.Text = "" Then
         txtPoNo.SetFocus
-        lblErrMsg = DisplayMsg(1048) '"Please Select PO No"
+        LblErrMsg = DisplayMsg(1048) '"Please Select PO No"
         Me.MousePointer = vbDefault
         Exit Sub
     ElseIf cboSupplier.Text = "" Then
         cboSupplier.SetFocus
-        lblErrMsg = DisplayMsg(1054) '"Please Select Supplier Code"
+        LblErrMsg = DisplayMsg(1054) '"Please Select Supplier Code"
         Me.MousePointer = vbDefault
         Exit Sub
     
@@ -4221,7 +4222,7 @@ Case 0
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
 
     If RS.BOF And RS.EOF Then
-      lblErrMsg.Caption = DisplayMsg(4015)
+      LblErrMsg.Caption = DisplayMsg(4015)
       txtPoNo.SetFocus
       Me.MousePointer = vbDefault
       Exit Sub
@@ -4270,11 +4271,11 @@ Case 0
                         .Row = i
                         .SetFocus
                         actrow = i
-                        lblErrMsg = DisplayMsg(1012) '"Please Input Order Quantity"
+                        LblErrMsg = DisplayMsg(1012) '"Please Input Order Quantity"
                         Me.MousePointer = vbDefault
                         Exit Sub
                     ElseIf CDbl(.TextMatrix(i, bteColOrder)) > gd_MaxQty Then
-                        lblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty '"Quantity must be lower or equal than 9,999,999.99"
+                        LblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty '"Quantity must be lower or equal than 9,999,999.99"
                         .Col = bteColOrder
                         .Row = i
                         .SetFocus
@@ -4291,7 +4292,7 @@ Case 0
                             actrow = i
                             .SetFocus
                             grid_Click
-                            lblErrMsg = DisplayMsg(1028)
+                            LblErrMsg = DisplayMsg(1028)
                             Me.MousePointer = vbDefault
                             Exit Sub
                         End If
@@ -4310,7 +4311,7 @@ Case 0
                         actrow = i
                         .SetFocus
                         grid_Click
-                        lblErrMsg = DisplayMsg(4084)
+                        LblErrMsg = DisplayMsg(4084)
                         Me.MousePointer = vbHourglass
                         Exit Sub
                     End If
@@ -4324,7 +4325,7 @@ Case 0
                         .Row = i
                         .SetFocus
                         actrow = i
-                        lblErrMsg = DisplayMsg(1204)
+                        LblErrMsg = DisplayMsg(1204)
                         Me.MousePointer = vbDefault
                         Exit Sub
                     End If
@@ -4450,7 +4451,7 @@ Case 0
                                 
             End If
             
-            lblErrMsg = DisplayMsg(1101)
+            LblErrMsg = DisplayMsg(1101)
             
         End With
         
@@ -4465,15 +4466,15 @@ Case 2
 
     If cboStatus.ListIndex = 0 Then
         
-        If hakUpdate(Me.Name) = 0 Then lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+        If hakUpdate(Me.Name) = 0 Then LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
         If cboSupplier.Text = "" Then
             cboSupplier.SetFocus
-            lblErrMsg = DisplayMsg(1054) '"Please Select Supplier Code"
+            LblErrMsg = DisplayMsg(1054) '"Please Select Supplier Code"
             Me.MousePointer = vbDefault
             Exit Sub
         ElseIf cboWHTo.matchFound = False Then
             cboWHTo.SetFocus
-            lblErrMsg = DisplayMsg("0031") '"Please Select Warehouse"
+            LblErrMsg = DisplayMsg("0031") '"Please Select Warehouse"
             Me.MousePointer = vbDefault
             Exit Sub
         Else
@@ -4481,7 +4482,7 @@ Case 2
                 cboSupplier.MatchEntry = 1
                 cboSupplier.Text = cboSupplier.Text
                 If cboSupplier.matchFound = False Then
-                    lblErrMsg = DisplayMsg(4050)
+                    LblErrMsg = DisplayMsg(4050)
                     cboSupplier.SetFocus
                     cboSupplier.MatchEntry = 2
                     Me.MousePointer = vbDefault
@@ -4492,7 +4493,7 @@ Case 2
                 
             If txtPoNo.Text = "" Then
                 txtPoNo.SetFocus
-                lblErrMsg = DisplayMsg(1046) '"Please Input PO No"
+                LblErrMsg = DisplayMsg(1046) '"Please Input PO No"
                 Me.MousePointer = vbDefault
                 Exit Sub
             End If
@@ -4509,7 +4510,7 @@ Case 2
                 RS.Open sql, Db, adOpenKeyset, adLockOptimistic
                   
                 If Not (RS.BOF And RS.EOF) Then
-                    lblErrMsg.Caption = DisplayMsg(1023)
+                    LblErrMsg.Caption = DisplayMsg(1023)
                     txtPoNo.SetFocus
                     Me.MousePointer = vbDefault
                     Exit Sub
@@ -4548,7 +4549,7 @@ Case 2
                 
             cboStatus.Text = "Update"
             If cboSupplier.Text <> "" Then browseitem: formatprice
-            lblErrMsg.Caption = DisplayMsg(1000)
+            LblErrMsg.Caption = DisplayMsg(1000)
             ubah = True
         End If
     
@@ -4556,7 +4557,7 @@ Case 2
     
         If txtPoNo.Text = "" Then
             txtPoNo.SetFocus
-            lblErrMsg = DisplayMsg(1048) '"Please Select PO No"
+            LblErrMsg = DisplayMsg(1048) '"Please Select PO No"
             Me.MousePointer = vbDefault
             Exit Sub
         Else
@@ -4568,7 +4569,7 @@ Case 2
                 txtGrandTotal.Text = Format(0, gs_formatAmount)
                 txtremarks.Text = ""
     
-                lblErrMsg.Caption = DisplayMsg(4015)
+                LblErrMsg.Caption = DisplayMsg(4015)
                 txtPoNo.SetFocus
                 Me.MousePointer = vbDefault
                 Exit Sub
@@ -4608,15 +4609,15 @@ End Sub
 
 Private Sub command2_Click(Index As Integer)
 Dim Atas As String
-lblErrMsg.Caption = ""
+LblErrMsg.Caption = ""
 
 Select Case Index
     Case 1:
             If intpage = 1 Then
-               lblErrMsg.Caption = DisplayMsg(4020) '"This is the first page !"
+               LblErrMsg.Caption = DisplayMsg(4020) '"This is the first page !"
             ElseIf jmlpage > 1 Then
                intpage = 1
-               lblErrMsg.Caption = ""
+               LblErrMsg.Caption = ""
             End If
 
             On Error Resume Next
@@ -4624,11 +4625,11 @@ Select Case Index
 
     Case 2:
             If intpage = 1 Then
-               lblErrMsg = DisplayMsg(4020) '"This is the first page !"
+               LblErrMsg = DisplayMsg(4020) '"This is the first page !"
             Else
                intpage = intpage - 1
                If intpage < 0 Then intpage = 0
-               lblErrMsg = ""
+               LblErrMsg = ""
             End If
             On Error Resume Next
             Atas = grid.TopRow
@@ -4640,9 +4641,9 @@ Select Case Index
             If intpage < jmlpage Then
               intpage = intpage + 1
               If intpage > jmlpage Then intpage = jmlpage
-              lblErrMsg.Caption = ""
+              LblErrMsg.Caption = ""
             Else
-              lblErrMsg.Caption = DisplayMsg(4021) '"This is the last page !"
+              LblErrMsg.Caption = DisplayMsg(4021) '"This is the last page !"
             End If
 
             On Error Resume Next
@@ -4650,10 +4651,10 @@ Select Case Index
 
     Case 4:
             If intpage = jmlpage Then
-              lblErrMsg.Caption = DisplayMsg(4021) '"This is the last page !"
+              LblErrMsg.Caption = DisplayMsg(4021) '"This is the last page !"
             ElseIf intpage < jmlpage Then
               intpage = jmlpage
-              lblErrMsg.Caption = ""
+              LblErrMsg.Caption = ""
             End If
 
             On Error Resume Next
@@ -4674,7 +4675,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    lblErrMsg.Caption = ErrMsg
+    LblErrMsg.Caption = ErrMsg
 End If
 End Sub
 

@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmDOCreate 
    BackColor       =   &H00FDDFE3&
@@ -51,7 +51,7 @@ Begin VB.Form frmDOCreate
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Format          =   128843777
+      Format          =   60620801
       CurrentDate     =   41092
    End
    Begin VB.TextBox txtbcno 
@@ -163,7 +163,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128843779
+         Format          =   60620803
          CurrentDate     =   37799
       End
       Begin MSForms.ComboBox cboDeliveryCls 
@@ -688,7 +688,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128843779
+         Format          =   60620803
          CurrentDate     =   37799
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -710,7 +710,7 @@ Begin VB.Form frmDOCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128843779
+         Format          =   60620803
          CurrentDate     =   37860
       End
       Begin VB.Label Label 
@@ -740,7 +740,7 @@ Begin VB.Form frmDOCreate
          TabIndex        =   0
          Top             =   240
          Width           =   1500
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   6
          DisplayStyle    =   3
          Size            =   "2646;582"
@@ -749,6 +749,7 @@ Begin VB.Form frmDOCreate
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -3702,7 +3703,7 @@ Sub HapusDOMaster()
     Db.Execute sql
 End Sub
 
-Private Sub cmdSubMenu_Click()
+Private Sub CmdSubMenu_Click()
     Call HapusDOMaster
     DoEvents
     frmMainMenu.Show
@@ -3787,7 +3788,7 @@ Private Function uf_check_SuratJalan_OrderDifferent() As Boolean
     Dim Pos As Integer
     Dim ls_sql As String
     Dim found As Boolean
-    Dim rs As New ADODB.Recordset
+    Dim RS As New ADODB.Recordset
      
     found = False
     If gridBawah.Rows > 1 Then
@@ -3796,10 +3797,10 @@ Private Function uf_check_SuratJalan_OrderDifferent() As Boolean
                 " where po_no='" & Trim(gridBawah.TextMatrix(Pos, bteColPONo)) & "' " & _
                 " and item_code='" & Trim(gridBawah.TextMatrix(Pos, bteColProdCode)) & "' " & _
                 " and Seq_no='" & Trim(gridBawah.TextMatrix(Pos, bteColSeqNo)) & "' "
-            If rs.State <> adStateClosed Then rs.Close
-            rs.CursorLocation = adUseClient
-            rs.Open ls_sql, Db, adOpenKeyset, adLockOptimistic
-            If rs.EOF = True Then
+            If RS.State <> adStateClosed Then RS.Close
+            RS.CursorLocation = adUseClient
+            RS.Open ls_sql, Db, adOpenKeyset, adLockOptimistic
+            If RS.EOF = True Then
                 found = True
                 Exit For
             End If
@@ -3812,7 +3813,7 @@ Private Function uf_check_SuratJalan_OrderDifferent() As Boolean
     Else
         uf_check_SuratJalan_OrderDifferent = True
     End If
-    If rs.State <> adStateClosed Then rs.Close
+    If RS.State <> adStateClosed Then RS.Close
 End Function
 
 Private Function GetMinSerial(a As String, b As String, C As Double, d As String) As String

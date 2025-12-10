@@ -186,7 +186,7 @@ Begin VB.Form FrmPackingStatus
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60096515
+         Format          =   60555267
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtDel2 
@@ -217,7 +217,7 @@ Begin VB.Form FrmPackingStatus
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60096515
+         Format          =   60227587
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -245,13 +245,14 @@ Begin VB.Form FrmPackingStatus
          TabIndex        =   18
          Top             =   240
          Width           =   1515
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   10
          DisplayStyle    =   3
          Size            =   "2672;609"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -497,20 +498,20 @@ Private Sub TxtCc_Change()
         TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
     Else
         TxtCompanyName = ""
-        lblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
     End If
     Call IsiCombo
 End Sub
 '------------------------------------------------------------------
 
 Private Sub CboCust_Change()
-lblErrMsg = ""
+LblErrMsg = ""
 Header
 If cboCust.matchFound Then
     lblCust.Text = cboCust.Column(1)
 Else
     lblCust.Text = ""
-    lblErrMsg.Caption = DisplayMsg(4072)
+    LblErrMsg.Caption = DisplayMsg(4072)
 End If
 End Sub
 
@@ -632,7 +633,7 @@ End Sub
 
 Private Sub cmdSearch_Click()
 Header
-lblErrMsg = ""
+LblErrMsg = ""
 FillGrid
 End Sub
 
@@ -644,7 +645,7 @@ Private Sub CmdSubMenu_Click()
 End Sub
 
 Private Sub CmdSubmit_Click()
-lblErrMsg = ""
+LblErrMsg = ""
 Dim LMPMonth, TMPMonth, NMPMonth As Long
 Dim LMRec, TMRec, NMRec As Long
 Dim LMSupply, TMSupply, NMSupply As Long
@@ -658,13 +659,13 @@ Dim booUpdate As Boolean
 Me.MousePointer = vbHourglass
 
 If cboCust.matchFound = False Then
-    lblErrMsg.Caption = DisplayMsg(4072)
+    LblErrMsg.Caption = DisplayMsg(4072)
     Me.MousePointer = vbDefault
     Exit Sub
 End If
 
 If hakUpdate(Me.Name) = 0 Then _
-lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Me.MousePointer = vbDefault: Exit Sub
+LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Me.MousePointer = vbDefault: Exit Sub
 
 booUpdate = False
 
@@ -956,7 +957,7 @@ Db.CommitTrans
 If booUpdate Then
     Header
     FillGrid
-    lblErrMsg = DisplayMsg(1000)
+    LblErrMsg = DisplayMsg(1000)
 End If
 Me.MousePointer = vbDefault
 End Sub
@@ -965,18 +966,18 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    lblErrMsg.Caption = ErrMsg
+    LblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
 Private Sub DTDel1_Change()
 Header
-lblErrMsg = ""
+LblErrMsg = ""
 End Sub
 
 Private Sub DtDel2_Change()
 Header
-lblErrMsg = ""
+LblErrMsg = ""
 End Sub
 
 Private Sub Form_Load()
@@ -1021,7 +1022,7 @@ Dim i As Long
     cboCust.List(0, 1) = strAll
     
     If rsisi.State = 1 Then rsisi.Close
-    SSql = "select trade_code, trade_name from trade_master where Company_Code = '" & Trim(TxtCC.Text) & "' and (trade_cls = 2 or trade_cls = 4) --and country_cls='1'"
+    SSql = "select trade_code, trade_name from trade_master where /*Company_Code = '" & Trim(TxtCC.Text) & "' and*/ (trade_cls = 2 or trade_cls = 4) --and country_cls='1'"
     rsisi.Open SSql, Db, adOpenKeyset, adLockOptimistic
     If Not rsisi.EOF And Not rsisi.BOF Then
         i = 1
@@ -1058,13 +1059,13 @@ If Col = ColIssue Then
 End If
 
 If Col = ColFix Then
-    lblErrMsg = up_ValidateDateRange(Format(grid.TextMatrix(Row, ColPacDate), "yyyy-MM-dd"), True)
-    If lblErrMsg <> "" Then Cancel = True
+    LblErrMsg = up_ValidateDateRange(Format(grid.TextMatrix(Row, ColPacDate), "yyyy-MM-dd"), True)
+    If LblErrMsg <> "" Then Cancel = True
 End If
 End Sub
 
 Private Sub grid_Click()
-lblErrMsg = ""
+LblErrMsg = ""
 grid.FocusRect = flexFocusInset
 If grid.Col = ColFix Then
     Exit Sub

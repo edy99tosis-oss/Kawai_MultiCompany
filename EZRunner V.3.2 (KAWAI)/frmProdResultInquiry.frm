@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmProdResultInquiry 
    BackColor       =   &H00FDDFE3&
@@ -148,7 +148,7 @@ Begin VB.Form frmProdResultInquiry
          Tag             =   "TTFF*/"
          Top             =   230
          Width           =   1335
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   6
          DisplayStyle    =   3
          Size            =   "2355;556"
@@ -157,6 +157,7 @@ Begin VB.Form frmProdResultInquiry
          ShowDropButtonWhen=   2
          Value           =   "AAAAAA"
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -316,7 +317,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128778243
+      Format          =   60096515
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -339,7 +340,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128778243
+      Format          =   60096515
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 

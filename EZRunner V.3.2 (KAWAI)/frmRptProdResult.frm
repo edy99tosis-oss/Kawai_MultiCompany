@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmRptProdResult 
    BackColor       =   &H00FDDFE3&
@@ -68,7 +68,7 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   7864323
+         Format          =   159973379
          CurrentDate     =   37860
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -90,7 +90,7 @@ Begin VB.Form frmRptProdResult
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   7864323
+         Format          =   159973379
          CurrentDate     =   37799
       End
       Begin VB.Line Line8 
@@ -129,7 +129,7 @@ Begin VB.Form frmRptProdResult
          TabIndex        =   0
          Top             =   360
          Width           =   1530
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   6
          DisplayStyle    =   3
          Size            =   "2699;582"
@@ -138,6 +138,7 @@ Begin VB.Form frmRptProdResult
          ShowDropButtonWhen=   2
          Value           =   "AAAAAA"
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -484,7 +485,7 @@ Private Sub CmdExcel_Click()
     rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
     
     If rsCek.EOF Then
-        lblErrMsg.Caption = DisplayMsg(4006)
+        LblErrMsg.Caption = DisplayMsg(4006)
     Else
             
         With xlapp
@@ -631,23 +632,23 @@ Public Sub cbo_Click(Index As Integer)
     cbo(Index) = cbo(Index)
     If cbo(Index).matchFound Then
         lblNm(Index) = cbo(Index).Column(1)
-        lblErrMsg = ""
+        LblErrMsg = ""
     Else
         lblNm(Index) = ""
-        lblErrMsg = DisplayMsg(4016)
+        LblErrMsg = DisplayMsg(4016)
     End If
 End Sub
 
 Private Sub cbo_Change(Index As Integer)
     lblNm(Index) = ""
-    lblErrMsg = ""
+    LblErrMsg = ""
 End Sub
 
 Private Sub dtAwal_Change()
-    lblErrMsg = ""
+    LblErrMsg = ""
     If Format(dtAwal, "yyyy-MM-dd") > _
         Format(CDate(dtAkhir), "yyyy-MM-dd") Then _
-    lblErrMsg = DisplayMsg(4068): Exit Sub
+    LblErrMsg = DisplayMsg(4068): Exit Sub
 End Sub
 
 Private Sub dtAwal_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -655,10 +656,10 @@ Private Sub dtAwal_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub dtAkhir_Change()
-    lblErrMsg = ""
+    LblErrMsg = ""
     If Format(dtAwal, "yyyy-MM-dd") > _
         Format(CDate(dtAkhir), "yyyy-MM-dd") Then _
-        lblErrMsg = DisplayMsg(4066): Exit Sub
+        LblErrMsg = DisplayMsg(4066): Exit Sub
 End Sub
 
 Private Sub dtAkhir_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -674,15 +675,15 @@ Dim Rpt As New FrmRpt3
     Me.MousePointer = vbHourglass
     
     If cbo(0) = "" Then
-        lblErrMsg = DisplayMsg(1040)
+        LblErrMsg = DisplayMsg(1040)
         cbo(0).SetFocus
     Else
         cbo(0) = cbo(0)
         If cbo(0).matchFound = False Then
-            lblErrMsg = DisplayMsg(4016)
+            LblErrMsg = DisplayMsg(4016)
             cbo(0).SetFocus
         Else
-            lblErrMsg = ""
+            LblErrMsg = ""
             
             sql = "select * from " & _
                     vbLf & " (select rtrim(a.supplier_code) supplier_code,rtrim(a.warehouse_code) wh_code,rtrim(c.Trade_Name) Trade_Name, rtrim(po_no)po_no,rtrim(a.item_code) item_code, rtrim(b.makeritem_code) makeritem_code, rtrim(b.Item_Name) Item_Name, receipt_Date, " & _
@@ -713,7 +714,7 @@ Dim Rpt As New FrmRpt3
             Set rsRpt = Db.Execute(sql)
             
             If rsRpt.EOF Then
-                lblErrMsg.Caption = DisplayMsg(4006)
+                LblErrMsg.Caption = DisplayMsg(4006)
             Else
                 sqlprint = sql
                 reportcode = "ProdResultByFactory"
@@ -764,7 +765,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    lblErrMsg.Caption = ErrMsg
+    LblErrMsg.Caption = ErrMsg
 End If
 End Sub
 '**************

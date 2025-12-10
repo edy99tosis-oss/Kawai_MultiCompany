@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_Production_Result 
    BackColor       =   &H00FDDFE3&
@@ -2448,7 +2448,7 @@ Begin VB.Form Frm_Production_Result
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   128778243
+         Format          =   157614083
          UpDown          =   -1  'True
          CurrentDate     =   37802
       End
@@ -2476,13 +2476,14 @@ Begin VB.Form Frm_Production_Result
          TabIndex        =   0
          Top             =   225
          Width           =   1290
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   10
          DisplayStyle    =   3
          Size            =   "2275;609"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -3763,8 +3764,8 @@ Private Sub adpartcombo()
     Dim rstpart As New ADODB.Recordset
     Dim sq As String
     
-    If Trim(cbogroup.Text) <> strAll Then
-        sq = "and group_cls = '" & cbogroup & "'"
+    If Trim(cboGroup.Text) <> strAll Then
+        sq = "and group_cls = '" & cboGroup & "'"
     End If
     
     If Trim(cbodealer.Text) = strAll Then
@@ -3848,7 +3849,7 @@ Private Sub adtocombo()
     
     sql = "select * from group_cls"
     adoRs.Open sql, Db, adOpenKeyset, adLockOptimistic
-    With cbogroup
+    With cboGroup
         .clear
         .columnCount = 2
         .ColumnWidths = "50 pt;75 pt"
@@ -3881,14 +3882,14 @@ Private Sub clear()
         Text1(i).BackColor = vbWhite
         Text1(i).DataChanged = False
         Text1(i).Enabled = False
-        text2(i).Text = 0
-        text2(i).BackColor = vbWhite
-        text2(i).DataChanged = False
-        text2(i).Enabled = False
-        text3(i).Text = 0
-        text3(i).BackColor = vbWhite
-        text3(i).DataChanged = False
-        text3(i).Enabled = False
+        Text2(i).Text = 0
+        Text2(i).BackColor = vbWhite
+        Text2(i).DataChanged = False
+        Text2(i).Enabled = False
+        Text3(i).Text = 0
+        Text3(i).BackColor = vbWhite
+        Text3(i).DataChanged = False
+        Text3(i).Enabled = False
         Text4(i).Text = 0
         Text4(i).BackColor = vbWhite
         Text4(i).DataChanged = False
@@ -3908,13 +3909,13 @@ Private Function getdata() As Boolean
     Dim sqlP As String
     
     If Trim(cbodealer.Text) = "" Then Exit Function
-    If Trim(cbogroup.Text) = "" Then Exit Function
+    If Trim(cboGroup.Text) = "" Then Exit Function
     If Trim(CboPart.Text) = "" Then Exit Function
     
-    If Trim(cbogroup) = strAll Then
+    If Trim(cboGroup) = strAll Then
         sqlP = ") x "
     Else
-        sqlP = "and item_master.group_cls = '" & cbogroup.Text & "') x "
+        sqlP = "and item_master.group_cls = '" & cboGroup.Text & "') x "
     End If
     
     sql = "     select x.*,isnull(aqty,0) r1,isnull(bqty,0) r2,isnull(cqty,0) r3, isnull(dqty,0) r4,isnull(eqty,0) r5,isnull(fqty,0) r6,  " & vbCrLf & _
@@ -4003,29 +4004,29 @@ Private Sub displayrecords()
                     End If
                     'Order data
                     If InStr(1, rstresult.Fields(i + 10).Value, ".") Then
-                        text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
+                        Text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
                     Else
-                        text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
+                        Text2(i + Y * 6).Text = Format(rstresult.Fields(i + 10).Value, gs_formatQty)
                     End If
                     'Shipment data
                     If InStr(1, rstresult.Fields(i + 16).Value, ".") Then
-                        text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
+                        Text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
                     Else
-                        text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
+                        Text3(i + Y * 6).Text = Format(rstresult.Fields(i + 16).Value, gs_formatQty)
                     End If
                     
                     'Balance Order - Shipment
-                    If InStr(1, CDbl(Text1(i + Y * 6).Text) - CDbl(text2(i + Y * 6).Text), ".") Then
-                        Text4(i + Y * 6).Text = Format(CDbl(text2(i + Y * 6).Text) - CDbl(text3(i + Y * 6).Text), gs_formatQty)
+                    If InStr(1, CDbl(Text1(i + Y * 6).Text) - CDbl(Text2(i + Y * 6).Text), ".") Then
+                        Text4(i + Y * 6).Text = Format(CDbl(Text2(i + Y * 6).Text) - CDbl(Text3(i + Y * 6).Text), gs_formatQty)
                     Else
-                        Text4(i + Y * 6).Text = Format(CDbl(text2(i + Y * 6).Text) - CDbl(text3(i + Y * 6).Text), gs_formatQty)
+                        Text4(i + Y * 6).Text = Format(CDbl(Text2(i + Y * 6).Text) - CDbl(Text3(i + Y * 6).Text), gs_formatQty)
                     End If
                     
                     Text1(i + Y * 6).Tag = rstresult!Unit_cls & "," & CDbl(Text1(i + Y * 6))
                     Text1(i + Y * 6).BackColor = vbWhite
                     Text1(i + Y * 6).DataChanged = False
-                    text2(i + Y * 6).DataChanged = False
-                    text3(i + Y * 6).DataChanged = False
+                    Text2(i + Y * 6).DataChanged = False
+                    Text3(i + Y * 6).DataChanged = False
                     Text4(i + Y * 6).DataChanged = False
                 Next
             rstresult.MoveNext
@@ -4153,10 +4154,10 @@ Private Sub production_report()
         zbln(i) = rbln(i)
     Next
 
-    If Trim(cbogroup) = strAll Then
+    If Trim(cboGroup) = strAll Then
         sql3 = " )x "
     Else
-        sql3 = "and item_master.group_cls = '" & cbogroup.Text & "' ) x "
+        sql3 = "and item_master.group_cls = '" & cboGroup.Text & "' ) x "
     End If
     
     sql = "select x.item_code, x.makercode, x.itemname, x.unit_cls, " & vbCrLf & _
@@ -4275,12 +4276,12 @@ With xlapp
         If Idx = 11 Then
             .Range("A" & Idx) = "Part Number / Product Code"
             .Range("B" & Idx) = ""
-            .Range("C" & Idx) = lblmonth(0)
-            .Range("D" & Idx) = lblmonth(1)
-            .Range("E" & Idx) = lblmonth(2)
-            .Range("F" & Idx) = lblmonth(3)
-            .Range("G" & Idx) = lblmonth(4)
-            .Range("H" & Idx) = lblmonth(5)
+            .Range("C" & Idx) = LblMonth(0)
+            .Range("D" & Idx) = LblMonth(1)
+            .Range("E" & Idx) = LblMonth(2)
+            .Range("F" & Idx) = LblMonth(3)
+            .Range("G" & Idx) = LblMonth(4)
+            .Range("H" & Idx) = LblMonth(5)
             .Range("a" & Idx, "H" & Idx).Borders(xlEdgeTop).LineStyle = xlContinuous
             .Range("a" & Idx, "H" & Idx).Borders(xlEdgeBottom).LineStyle = xlDouble
             Idx = Idx + 1
@@ -4376,9 +4377,9 @@ Private Function errcheck() As Boolean
             If Trim(CboPart) <> "" Then
                 CboPart = Trim(CboPart)
                 If CboPart.matchFound Then
-                    If Trim(cbogroup) <> "" Then
-                        cbogroup = Trim(cbogroup)
-                        If cbogroup.matchFound = False Then
+                    If Trim(cboGroup) <> "" Then
+                        cboGroup = Trim(cboGroup)
+                        If cboGroup.matchFound = False Then
                             errcheck = True
                             lblerror = DisplayMsg(4064)
                             Exit Function
@@ -4419,8 +4420,8 @@ Private Sub cbodealer_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub cboGroup_Change()
-    If cbogroup.matchFound Then
-        lbldesc(1).Caption = cbogroup.Column(1)
+    If cboGroup.matchFound Then
+        lbldesc(1).Caption = cboGroup.Column(1)
         adpartcombo
         If getdata Then displayrecords
     Else
@@ -4498,7 +4499,7 @@ Private Sub cmdAction_Click(Index As Integer)
         clear
         clearheader
         cbodealer.ListIndex = -1
-        cbogroup.ListIndex = -1
+        cboGroup.ListIndex = -1
         CboPart.ListIndex = -1
         MYDate = Format(Now, "MMM YYYY")
         Me.MousePointer = vbDefault
@@ -4569,11 +4570,11 @@ Private Sub Form_Load()
     X = Format(Me.MYDate, "mm")
     For i = 0 To 5
         If X + i <= 12 Then
-            lblmonth(i) = MonthName(X + i)
+            LblMonth(i) = MonthName(X + i)
             thn(i) = Year(MYDate)
             bln(i) = (X + i)
         Else
-            lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
+            LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
             bln(i) = ((X + i) - 12)
             thn(i) = Year(MYDate) + 1
         End If
@@ -4619,11 +4620,11 @@ Private Sub MYDate_Change()
     X = Format(Me.MYDate, "mm")
     For i = 0 To 5
         If X + i <= 12 Then
-            lblmonth(i) = MonthName(X + i)
+            LblMonth(i) = MonthName(X + i)
             thn(i) = Year(MYDate)
             bln(i) = (X + i)
         Else
-            lblmonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
+            LblMonth(i) = MonthName((X + i) - 12) & " " & (Year(MYDate) + 1)
             bln(i) = ((X + i) - 12)
             thn(i) = Year(MYDate) + 1
         End If
@@ -4720,7 +4721,7 @@ Private Sub text2_GotFocus(Index As Integer)
 End Sub
 
 Private Sub text3_Change(Index As Integer)
-    text3(Index).DataChanged = False
+    Text3(Index).DataChanged = False
 End Sub
 
 Private Sub text3_GotFocus(Index As Integer)

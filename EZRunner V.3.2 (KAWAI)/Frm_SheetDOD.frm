@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form Frm_SheetDOD 
    BackColor       =   &H00FDDFE3&
@@ -149,7 +149,7 @@ Begin VB.Form Frm_SheetDOD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129171459
+         Format          =   60227587
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker sdate 
@@ -171,7 +171,7 @@ Begin VB.Form Frm_SheetDOD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129171459
+         Format          =   60227587
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -189,13 +189,14 @@ Begin VB.Form Frm_SheetDOD
          TabIndex        =   0
          Top             =   285
          Width           =   1485
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   10
          DisplayStyle    =   3
          Size            =   "2619;556"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -440,7 +441,7 @@ Sub Header()
     bteColSJAmount = 5
     bteColFix = 6
     
-    With Grid
+    With grid
         .ColS = 7
         .Rows = 1
         
@@ -510,12 +511,12 @@ Select Case Index
             Me.MousePointer = vbHourglass
             do_no = ""
             bolrpt = False
-            For i = 1 To Grid.Rows - 1
-                If Grid.Cell(flexcpChecked, i, bteColSelect) = 1 Then
+            For i = 1 To grid.Rows - 1
+                If grid.Cell(flexcpChecked, i, bteColSelect) = 1 Then
                     If do_no = "" Then
-                        do_no = "'" & Trim(Grid.TextMatrix(i, bteColSJNo)) & "'"
+                        do_no = "'" & Trim(grid.TextMatrix(i, bteColSJNo)) & "'"
                     Else
-                        do_no = do_no + ",'" & Trim(Grid.TextMatrix(i, bteColSJNo)) & "'"
+                        do_no = do_no + ",'" & Trim(grid.TextMatrix(i, bteColSJNo)) & "'"
                     End If
                     bolrpt = True
                 End If
@@ -562,8 +563,8 @@ Private Sub Form_Load()
 bteHakPrice = hakPrice(Me.Name)
 Header
 FillCompanyCombo TxtFc
-sdate = Format(Now, "dd mmm yyyy")
-edate = Format(Now, "dd mmm yyyy")
+SDate = Format(Now, "dd mmm yyyy")
+EDate = Format(Now, "dd mmm yyyy")
 CtrlMenu1.FormName = Me.Name
 Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 End Sub
@@ -591,11 +592,11 @@ Sub display()
     Dim companyFilter As String
     
     ' Validasi tanggal
-    If CDate(sdate) > CDate(edate) Then
+    If CDate(SDate) > CDate(EDate) Then
         lblerror.Caption = DisplayMsg("4068")  ' "Start date cannot be greater than End date"
         Me.MousePointer = vbDefault
         Exit Sub
-    ElseIf CDate(edate) < CDate(sdate) Then
+    ElseIf CDate(EDate) < CDate(SDate) Then
         lblerror.Caption = DisplayMsg("4066")  ' "End date cannot be smaller than Start date"
         Me.MousePointer = vbDefault
         Exit Sub
@@ -620,8 +621,8 @@ Sub display()
           "FROM do_master d " & _
           "INNER JOIN trade_master t ON d.cust_code = t.trade_code " & _
           "INNER JOIN warehouse_master wh ON d.WHCode = wh.WH_Code " & _
-          "WHERE d.do_date >= '" & sdate & "' " & _
-          "AND d.do_date <= '" & edate & "' " & _
+          "WHERE d.do_date >= '" & SDate & "' " & _
+          "AND d.do_date <= '" & EDate & "' " & _
           sqlP & companyFilter & _
           " ORDER BY d.do_no"
     
@@ -632,7 +633,7 @@ Sub display()
     
     ' Isi grid
     If Not rst.EOF Then
-        With Grid
+        With grid
             .Refresh
             .Rows = rst.RecordCount + 1
             .Row = .Rows - 1
@@ -678,8 +679,8 @@ End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 If Col = bteColSelect Then
-    If Grid.Cell(flexcpChecked, Row, bteColFix) = flexUnchecked Then
-        Grid.Cell(flexcpChecked, Row, bteColSelect) = flexUnchecked
+    If grid.Cell(flexcpChecked, Row, bteColFix) = flexUnchecked Then
+        grid.Cell(flexcpChecked, Row, bteColSelect) = flexUnchecked
         lblerror = DisplayMsg("0042")
     Else
         lblerror = ""
@@ -711,8 +712,8 @@ End Sub
 
 Sub blank()
 cboisu.ListIndex = -1
-sdate = Format(Now, "dd MMM YYYY")
-edate = Format(Now, "dd MMM YYYY")
+SDate = Format(Now, "dd MMM YYYY")
+EDate = Format(Now, "dd MMM YYYY")
 End Sub
 
 Private Sub sdate_KeyDown(KeyCode As Integer, Shift As Integer)

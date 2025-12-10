@@ -338,13 +338,14 @@ Begin VB.Form F_ManufactureLine
       TabIndex        =   0
       Top             =   840
       Width           =   1560
-      VariousPropertyBits=   746604571
+      VariousPropertyBits=   746604569
       MaxLength       =   10
       DisplayStyle    =   3
       Size            =   "2752;609"
       MatchEntry      =   1
       ShowDropButtonWhen=   2
       FontName        =   "Verdana"
+      FontEffects     =   1073750016
       FontHeight      =   165
       FontCharSet     =   0
       FontPitchAndFamily=   2
@@ -521,26 +522,26 @@ Dim bteColLineName As Byte
 Private Sub CmdManufacture_Click(Index As Integer)
     Select Case Index
     Case 4:
-        If hakUpdate(Me.Name) = 0 Then Lblpesan = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+        If hakUpdate(Me.Name) = 0 Then LblPesan = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
         If DtRec = 1 Then
             Call DtUpdate
             'DtRec = 3
-            TxtCode.Text = ""
-            TxtDesc.Text = ""
-            TxtCode.Enabled = True
+            txtCode.Text = ""
+            txtDesc.Text = ""
+            txtCode.Enabled = True
             DtRec = 3
         ElseIf DtRec = 2 Then
             Call DtDelete
             DtRec = 3
         ElseIf DtRec = 3 Then
             Call DtSave
-            TxtCode.Text = ""
-            TxtDesc.Text = ""
+            txtCode.Text = ""
+            txtDesc.Text = ""
         End If
     Case 2:
         Call Hidden
         Call ClearS
-        Lblpesan = ""
+        LblPesan = ""
     Case 0:
         DoEvents
         frmMainMenu.Show
@@ -555,7 +556,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
     If ErrMsg = "" Then
         Unload Me
     Else
-        Lblpesan.Caption = ErrMsg
+        LblPesan.Caption = ErrMsg
     End If
 End Sub
 
@@ -578,13 +579,13 @@ End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
     Dim TextGrid As String, Data1 As String, rtrec As Integer, i As Integer
     
-    TextGrid = Grid.Text
+    TextGrid = grid.Text
     If TextGrid = "S" Then
         Data1 = "S"
-        TxtCode.Enabled = False
-        TxtCode = Trim(Grid.TextMatrix(Row, bteColLineCode))
-        TxtDesc = Trim(Grid.TextMatrix(Row, bteColLineName))
-        Isian = Trim(TxtCode)
+        txtCode.Enabled = False
+        txtCode = Trim(grid.TextMatrix(Row, bteColLineCode))
+        txtDesc = Trim(grid.TextMatrix(Row, bteColLineName))
+        Isian = Trim(txtCode)
         DtRec = 1
         Call ClearS
     ElseIf TextGrid = "D" Then
@@ -593,16 +594,16 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
         Call ClearS("S")
         'Call Hidden
     Else
-        For i = 1 To Grid.Rows - 1
-            If Grid.TextMatrix(i, bteColSelect) = "S" Then
+        For i = 1 To grid.Rows - 1
+            If grid.TextMatrix(i, bteColSelect) = "S" Then
                 rtrec = 3
                 Call ClearS
                 Call Hidden
                 GoTo Olah
             End If
         Next i
-        For i = 1 To Grid.Rows - 1
-            If Grid.TextMatrix(i, bteColSelect) = "D" Then
+        For i = 1 To grid.Rows - 1
+            If grid.TextMatrix(i, bteColSelect) = "D" Then
                 rtrec = 2
                 GoTo Olah
             End If
@@ -612,17 +613,17 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
     End If
     
 Olah:
-    Grid.TextMatrix(Row, Col) = TextGrid
-    Grid.Col = Col
-    Grid.Row = Row
+    grid.TextMatrix(Row, Col) = TextGrid
+    grid.Col = Col
+    grid.Row = Row
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-    If Grid.Col > bteColSelect Then Cancel = True
+    If grid.Col > bteColSelect Then Cancel = True
 End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
-    If Grid.Col = bteColSelect Then
+    If grid.Col = bteColSelect Then
         KeyAscii = Asc(UCase(Chr(KeyAscii)))
         If KeyAscii <> Asc("D") And KeyAscii <> Asc("S") And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyReturn Then
             KeyAscii = 0
@@ -639,13 +640,13 @@ End Sub
 Private Sub TxtCode_LostFocus()
     Dim sql As String, RsCode As New ADODB.Recordset
     If RsCode.State <> adStateClosed Then RsCode.Close
-    RsCode.Open "select * from manufacture_line where Company_Code='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'", Db, adOpenDynamic, adLockOptimistic, adCmdText
+    RsCode.Open "select * from manufacture_line where Company_Code='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'", Db, adOpenDynamic, adLockOptimistic, adCmdText
     If Not (RsCode.BOF And RsCode.EOF) Then
-        TxtDesc = Trim(RsCode("line_name"))
-        Lblpesan = DisplayMsg(3004)
-        Test = Trim(TxtCode)
+        txtDesc = Trim(RsCode("line_name"))
+        LblPesan = DisplayMsg(3004)
+        Test = Trim(txtCode)
     End If
-    Test = Trim(TxtCode)
+    Test = Trim(txtCode)
 End Sub
 
 Private Sub txtDesc_KeyPress(KeyAscii As Integer)
@@ -659,7 +660,7 @@ Private Sub TxtFc_Change()
         DamiUpd = Trim(TxtFc)
     Else
         TxtFactoryName = ""
-        Lblpesan = DisplayMsg(4069)  '"Record is not found"
+        LblPesan = DisplayMsg(4069)  '"Record is not found"
         DamiUpd = Trim(TxtFc)
     End If
     Call TradeMaster
@@ -667,11 +668,11 @@ End Sub
 
 Private Sub TxtMc_Change()
     If TxtMc.matchFound Then
-        TxtName = TxtMc.List(TxtMc.ListIndex, 1)
+        txtName = TxtMc.List(TxtMc.ListIndex, 1)
         DamiUpd = Trim(TxtMc)
     Else
-        TxtName = ""
-        Lblpesan = DisplayMsg(4069)  '"Record is not found"
+        txtName = ""
+        LblPesan = DisplayMsg(4069)  '"Record is not found"
         DamiUpd = Trim(TxtMc)
     End If
     Call Browse
@@ -694,23 +695,23 @@ Private Sub Header()
     bteColLineCode = 2
     bteColLineName = 3
     
-    Grid.ColS = 4
-    Grid.Rows = 1
+    grid.ColS = 4
+    grid.Rows = 1
     
-    Grid.TextMatrix(0, bteColSelect) = " "
-    Grid.TextMatrix(0, bteColLineCode) = "Line CD"
-    Grid.TextMatrix(0, bteColLineName) = "Line Name"
+    grid.TextMatrix(0, bteColSelect) = " "
+    grid.TextMatrix(0, bteColLineCode) = "Line CD"
+    grid.TextMatrix(0, bteColLineName) = "Line Name"
     
-    Grid.ColWidth(bteColId) = 0
-    Grid.ColWidth(bteColSelect) = 300
-    Grid.ColWidth(bteColLineCode) = 1000
-    Grid.ColWidth(bteColLineName) = 6600
+    grid.ColWidth(bteColId) = 0
+    grid.ColWidth(bteColSelect) = 300
+    grid.ColWidth(bteColLineCode) = 1000
+    grid.ColWidth(bteColLineName) = 6600
     
-    Grid.ColAlignment(bteColSelect) = flexAlignCenterCenter
-    Grid.ColAlignment(bteColLineCode) = flexAlignLeftCenter
-    Grid.ColAlignment(bteColLineName) = flexAlignLeftCenter
+    grid.ColAlignment(bteColSelect) = flexAlignCenterCenter
+    grid.ColAlignment(bteColLineCode) = flexAlignLeftCenter
+    grid.ColAlignment(bteColLineName) = flexAlignLeftCenter
     
-    Grid.EditMaxLength = 1
+    grid.EditMaxLength = 1
 
 End Sub
 
@@ -719,31 +720,31 @@ Private Sub Old_DtSave()
     Dim rsCek As New ADODB.Recordset
     
     Call OlahDt
-    If TxtCode <> "" And TxtDesc <> "" And TxtMc <> "" Then
+    If txtCode <> "" And txtDesc <> "" And TxtMc <> "" Then
         sql = "select * from trade_master where trade_code='" & Trim(TxtMc) & "'"
         If rsCek.State <> adStateClosed Then rsCek.Close
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         If (rsCek.BOF And rsCek.EOF) Then
-            Lblpesan = DisplayMsg(1052)
+            LblPesan = DisplayMsg(1052)
             Exit Sub
         End If
-        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
+        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'"
         If RsSave.State <> adStateClosed Then RsSave.Close
         RsSave.Open sql, Db, adOpenDynamic, adLockOptimistic
         If Not (RsSave.BOF And RsSave.EOF) Then
             LblInput = MsgBox("Do you really to update line code ?", vbYesNo + vbQuestion, "Confirmation")
             If LblInput = vbYes Then
-                sql = "update manufacture_line set line_name='" & Trim(TxtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-                    "where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
+                sql = "update manufacture_line set line_name='" & Trim(txtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
+                    "where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'"
                 Db.Execute (sql)
-                Lblpesan = DisplayMsg(1101)
+                LblPesan = DisplayMsg(1101)
             Else
-                Lblpesan = ""
+                LblPesan = ""
             End If
         Else
-            sql = "insert manufacture_line(Company_Code, Manufacture_Code, Line_Code, Line_Name, Last_Update, Last_User) values('" & Trim(TxtFc) & "', '" & Trim(TxtMc) & "','" & Trim(TxtCode) & "', '" & Trim(TxtDesc) & "', getdate(), '" & userLogin & "')"
+            sql = "insert manufacture_line(Company_Code, Manufacture_Code, Line_Code, Line_Name, Last_Update, Last_User) values('" & Trim(TxtFc) & "', '" & Trim(TxtMc) & "','" & Trim(txtCode) & "', '" & Trim(txtDesc) & "', getdate(), '" & userLogin & "')"
             Db.Execute (sql)
-            Lblpesan = DisplayMsg(1000)
+            LblPesan = DisplayMsg(1000)
         End If
     End If
     Call Browse
@@ -757,7 +758,7 @@ Private Sub DtSave()
     
     Call OlahDt
     
-    If TxtCode <> "" And TxtDesc <> "" And TxtMc <> "" Then
+    If txtCode <> "" And txtDesc <> "" And TxtMc <> "" Then
         On Error GoTo ErrHandler
         
         ' 1. Cek apakah Manufacture_Code valid di trade_master
@@ -765,12 +766,12 @@ Private Sub DtSave()
         If rsCek.State <> adStateClosed Then rsCek.Close
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         If (rsCek.BOF And rsCek.EOF) Then
-            Lblpesan = DisplayMsg(1052)
+            LblPesan = DisplayMsg(1052)
             GoTo CleanUp
         End If
         
         ' 2. Cek keberadaan data di manufacture_line
-        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
+        sql = "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'"
         If rsCek.State <> adStateClosed Then rsCek.Close
         rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
         
@@ -785,15 +786,15 @@ Private Sub DtSave()
                 
                 cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
                 cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
-                cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(TxtCode))
-                cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(TxtDesc))
+                cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(txtCode))
+                cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(txtDesc))
                 cmd.Parameters.append cmd.CreateParameter("@Last_User", adVarChar, adParamInput, 20, userLogin)
                 cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
                 
                 cmd.Execute
                 messageID = cmd.Parameters("@MessageID").Value
             Else
-                Lblpesan = ""
+                LblPesan = ""
                 GoTo CleanUp
             End If
         ' 4. Jika data tidak ditemukan, lakukan INSERT
@@ -805,8 +806,8 @@ Private Sub DtSave()
             
             cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
             cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
-            cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(TxtCode))
-            cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(TxtDesc))
+            cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(txtCode))
+            cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(txtDesc))
             cmd.Parameters.append cmd.CreateParameter("@Last_User", adVarChar, adParamInput, 20, userLogin)
             cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
             
@@ -816,12 +817,12 @@ Private Sub DtSave()
         
         ' 5. Tampilkan pesan berdasarkan MessageID
         Select Case messageID
-            Case 1000: Lblpesan = DisplayMsg(1000) ' Sukses Insert
-            Case 1101: Lblpesan = DisplayMsg(1101) ' Sukses Update
-            Case 8012: Lblpesan = DisplayMsg(8012) ' Trade Code tidak ditemukan
-            Case 57: Lblpesan = "Terjadi kesalahan pada database."
-            Case 3004: Lblpesan = DisplayMsg(3004) ' Data sudah ada
-            Case Else: Lblpesan = "Terjadi kesalahan tidak diketahui (ID: " & messageID & ")"
+            Case 1000: LblPesan = DisplayMsg(1000) ' Sukses Insert
+            Case 1101: LblPesan = DisplayMsg(1101) ' Sukses Update
+            Case 8012: LblPesan = DisplayMsg(8012) ' Trade Code tidak ditemukan
+            Case 57: LblPesan = "Terjadi kesalahan pada database."
+            Case 3004: LblPesan = DisplayMsg(3004) ' Data sudah ada
+            Case Else: LblPesan = "Terjadi kesalahan tidak diketahui (ID: " & messageID & ")"
         End Select
         
     End If
@@ -838,7 +839,7 @@ CleanUp:
     Exit Sub
 
 ErrHandler:
-    Lblpesan = "Error: " & err.Description
+    LblPesan = "Error: " & err.Description
     Resume CleanUp
 End Sub
 
@@ -848,11 +849,11 @@ Private Sub Browse()
     If RsBros.State <> adStateClosed Then RsBros.Close
     RsBros.Open "select * from manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "'", Db, adOpenDynamic, adLockOptimistic, adCmdText
     Do While Not RsBros.EOF
-        Grid.AddItem ""
-        Grid.TextMatrix(Grid.Rows - 1, bteColSelect) = ""
-        Grid.TextMatrix(Grid.Rows - 1, bteColLineCode) = Trim(RsBros("line_code"))
-        Grid.TextMatrix(Grid.Rows - 1, bteColLineName) = Trim(RsBros("line_name"))
-        Grid.Cell(flexcpBackColor, Grid.Rows - 1, bteColSelect) = &HFFFFFF
+        grid.AddItem ""
+        grid.TextMatrix(grid.Rows - 1, bteColSelect) = ""
+        grid.TextMatrix(grid.Rows - 1, bteColLineCode) = Trim(RsBros("line_code"))
+        grid.TextMatrix(grid.Rows - 1, bteColLineName) = Trim(RsBros("line_name"))
+        grid.Cell(flexcpBackColor, grid.Rows - 1, bteColSelect) = &HFFFFFF
         RsBros.MoveNext
     Loop
     Call Clearin
@@ -861,80 +862,106 @@ End Sub
 
 Private Sub HeaderText()
     Dim i As Integer
-    For i = 1 To Grid.Rows - 1
-        If Trim(Grid.TextMatrix(i, bteColLineCode)) = Trim(Test) Then
-            Grid.Row = i
-            Grid.SetFocus
-            Grid.TopRow = i - 1
+    For i = 1 To grid.Rows - 1
+        If Trim(grid.TextMatrix(i, bteColLineCode)) = Trim(Test) Then
+            grid.Row = i
+            grid.SetFocus
+            grid.TopRow = i - 1
         End If
     Next i
 End Sub
 
 Private Sub Clearin()
-    TxtCode = ""
-    TxtDesc = ""
-    TxtCode.Enabled = True
+    txtCode = ""
+    txtDesc = ""
+    txtCode.Enabled = True
 End Sub
 
 Private Sub Old_DtUpdate()
     Dim sql As String, RsUd As New ADODB.Recordset
-    sql = "update manufacture_line set line_name='" & Trim(TxtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
-        "where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(TxtCode) & "'"
+    sql = "update manufacture_line set line_name='" & Trim(txtDesc) & "', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
+        "where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(txtCode) & "'"
     Db.Execute (sql)
-    Lblpesan = DisplayMsg(1101)
-    Test = Trim(TxtCode)
+    LblPesan = DisplayMsg(1101)
+    Test = Trim(txtCode)
     Call Browse
 End Sub
 
 Private Sub DtUpdate()
-    Dim cmd As New ADODB.Command
-    Dim messageID As Integer
+    Dim cmd As ADODB.Command
+    Dim p As ADODB.Parameter
+    Dim messageID As Variant
     
     On Error GoTo ErrHandler
     
     Set cmd = New ADODB.Command
     cmd.ActiveConnection = Db
-    cmd.CommandType = adCmdStoredProc
+    cmd.CommandType = 4          ' adCmdStoredProc = 4
     cmd.CommandText = "sp_ManufactureLine_Upd"
     
-    cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
-    cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
-    cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(TxtCode))
-    cmd.Parameters.append cmd.CreateParameter("@Line_Name", adVarChar, adParamInput, 100, Trim(TxtDesc))
-    cmd.Parameters.append cmd.CreateParameter("@Last_User", adVarChar, adParamInput, 20, userLogin)
-    cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
-    
+    ' -- konstanta numerik supaya tidak tergantung referensi ADO berbeda
+    Const adVarCharNum = 200
+    Const adIntegerNum = 3
+    Const adParamInputNum = 1
+    Const adParamOutputNum = 2
+
+    ' Pastikan menggunakan .Text dari kontrol textbox
+    ' Buat parameter satu-per-satu, append sebagai object
+    Set p = cmd.CreateParameter("@Company_Code", adVarCharNum, adParamInputNum, 20, Trim$(TxtFc.Text))
+    cmd.Parameters.append p
+
+    Set p = cmd.CreateParameter("@Manufacture_Code", adVarCharNum, adParamInputNum, 20, Trim$(TxtMc.Text))
+    cmd.Parameters.append p
+
+    Set p = cmd.CreateParameter("@Line_Code", adVarCharNum, adParamInputNum, 20, Trim$(txtCode.Text))
+    cmd.Parameters.append p
+
+    Set p = cmd.CreateParameter("@Line_Name", adVarCharNum, adParamInputNum, 100, Trim$(txtDesc.Text))
+    cmd.Parameters.append p
+
+    Set p = cmd.CreateParameter("@Last_User", adVarCharNum, adParamInputNum, 20, Trim$(userLogin))
+    cmd.Parameters.append p
+
+    ' OUTPUT parameter — beri size dan dummy value (beberapa provider butuh)
+    Set p = cmd.CreateParameter("@MessageID", adIntegerNum, adParamOutputNum, 4, 0)
+    cmd.Parameters.append p
+
+    ' Optional: prepare sebelum execute (tidak wajib)
+    On Error Resume Next
+    cmd.Prepared = True
+    On Error GoTo ErrHandler
+
     cmd.Execute
+
+    ' Ambil nilai output
     messageID = cmd.Parameters("@MessageID").Value
-    
-    If messageID = 1101 Then
-        Lblpesan = DisplayMsg(1101)
-    Else
-        Lblpesan = DisplayMsg(messageID)
-    End If
-    
-    Test = Trim(TxtCode)
+
+    ' Tampilkan pesan
+    LblPesan = DisplayMsg(CInt(messageID))
+
+    Test = Trim$(txtCode.Text)
     Call Browse
-    
+
     Exit Sub
 
 ErrHandler:
-    Lblpesan = "Error: " & err.Description
-    If Not cmd Is Nothing Then Set cmd = Nothing
+    LblPesan = "Error: " & err.number & " - " & err.Description
+    On Error Resume Next
+    Set cmd = Nothing
 End Sub
 
 Private Sub ClearS(Optional C As String)
     Dim i As Integer
-    Grid.Col = bteColSelect
+    grid.Col = bteColSelect
     If C <> "" Then
-        For i = 1 To Grid.Rows - 1
-            Grid.Row = i
-            If Grid.Text = C Then Grid.Text = ""
+        For i = 1 To grid.Rows - 1
+            grid.Row = i
+            If grid.Text = C Then grid.Text = ""
         Next i
     Else
-        For i = 1 To Grid.Rows - 1
-            Grid.Row = i
-            Grid.Text = ""
+        For i = 1 To grid.Rows - 1
+            grid.Row = i
+            grid.Text = ""
         Next i
     End If
 End Sub
@@ -948,24 +975,24 @@ Private Sub Old_DtDelete()
     
     LblInput = MsgBox("Do you really to delete line code ?", vbYesNo + vbQuestion, "Confirmation")
     If LblInput = vbYes Then
-        For i = 1 To Grid.Rows - 1
-            If Grid.TextMatrix(i, bteColSelect) = "D" Then
-                sql = "select * from item_master where manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(Grid.TextMatrix(i, bteColLineCode)) & "'"
+        For i = 1 To grid.Rows - 1
+            If grid.TextMatrix(i, bteColSelect) = "D" Then
+                sql = "select * from item_master where manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(grid.TextMatrix(i, bteColLineCode)) & "'"
                 If RsDel.State <> adStateClosed Then RsDel.Close
                 RsDel.Open sql, Db, adOpenDynamic, adLockOptimistic
                 If Not (RsDel.BOF And RsDel.EOF) Then
                     IMCodeAda = IMCodeAda & " " & RsDel("manufacture_code") & ","
                     IMLineAda = IMLineAda & " " & RsDel("line_code") & ","
                 Else
-                    sql = "delete manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(Grid.TextMatrix(i, bteColLineCode)) & "'"
+                    sql = "delete manufacture_line where Company_Code ='" & Trim(TxtFc) & "' and manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(grid.TextMatrix(i, bteColLineCode)) & "'"
                     Db.Execute (sql)
                 End If
             End If
         Next i
         If IMCodeAda <> "" Then
-            Lblpesan = "Update Failed!. This record is used in table 'Item Master'"
+            LblPesan = "Update Failed!. This record is used in table 'Item Master'"
         Else
-            Lblpesan = DisplayMsg(1201)
+            LblPesan = DisplayMsg(1201)
         End If
         Call Browse
         Call Isi(IMLineAda)
@@ -987,10 +1014,10 @@ Private Sub DtDelete()
     If LblInput = vbYes Then
         On Error GoTo ErrHandler
         
-        For i = 1 To Grid.Rows - 1
-            If Grid.TextMatrix(i, bteColSelect) = "D" Then
+        For i = 1 To grid.Rows - 1
+            If grid.TextMatrix(i, bteColSelect) = "D" Then
                 ' Pengecekan ke item_master TIDAK DIUBAH
-                sql = "select * from item_master where manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(Grid.TextMatrix(i, bteColLineCode)) & "'"
+                sql = "select * from item_master where manufacture_code='" & Trim(TxtMc) & "' and line_code='" & Trim(grid.TextMatrix(i, bteColLineCode)) & "'"
                 If RsDel.State <> adStateClosed Then RsDel.Close
                 RsDel.Open sql, Db, adOpenDynamic, adLockOptimistic
                 
@@ -1006,7 +1033,7 @@ Private Sub DtDelete()
                     
                     cmd.Parameters.append cmd.CreateParameter("@Company_Code", adVarChar, adParamInput, 20, Trim(TxtFc))
                     cmd.Parameters.append cmd.CreateParameter("@Manufacture_Code", adVarChar, adParamInput, 20, Trim(TxtMc))
-                    cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(Grid.TextMatrix(i, bteColLineCode)))
+                    cmd.Parameters.append cmd.CreateParameter("@Line_Code", adVarChar, adParamInput, 20, Trim(grid.TextMatrix(i, bteColLineCode)))
                     cmd.Parameters.append cmd.CreateParameter("@MessageID", adInteger, adParamOutput)
                     
                     cmd.Execute
@@ -1017,9 +1044,9 @@ Private Sub DtDelete()
         
         ' Bagian akhir TIDAK DIUBAH
         If IMCodeAda <> "" Then
-            Lblpesan = "Update Failed!. This record is used in table 'Item Master'"
+            LblPesan = "Update Failed!. This record is used in table 'Item Master'"
         Else
-            Lblpesan = DisplayMsg(1201)
+            LblPesan = DisplayMsg(1201)
         End If
         Call Browse
         Call Isi(IMLineAda)
@@ -1036,7 +1063,7 @@ Private Sub DtDelete()
     Exit Sub
 
 ErrHandler:
-    Lblpesan = "Error: " & err.Description
+    LblPesan = "Error: " & err.Description
     If Not cmd Is Nothing Then Set cmd = Nothing
     If Not RsDel Is Nothing Then
         If RsDel.State <> adStateClosed Then RsDel.Close
@@ -1049,7 +1076,7 @@ Private Sub Isi(DtLine$)
     
     LmNo = ""
     Panjang = 0
-    For i = 1 To Grid.Rows - 1
+    For i = 1 To grid.Rows - 1
         TLine = ""
         For X = 1 To Len(Trim(DtLine)) - Panjang
             DLine = Mid(Trim(DtLine), X, 1)
@@ -1062,31 +1089,31 @@ Private Sub Isi(DtLine$)
         Next X
     
 Masuk:
-        If Grid.TextMatrix(i, bteColLineCode) = TLine Then
-            Grid.TextMatrix(i, bteColSelect) = "D"
+        If grid.TextMatrix(i, bteColLineCode) = TLine Then
+            grid.TextMatrix(i, bteColSelect) = "D"
         End If
     Next i
 End Sub
 
 Private Sub OlahDt()
     If TxtFc = "" Then
-        Lblpesan = DisplayMsg(1052)  '"Please input Company code!"
+        LblPesan = DisplayMsg(1052)  '"Please input Company code!"
         TxtFc.SetFocus
         Dami = 1
         Exit Sub
     ElseIf TxtMc = "" Then
-        Lblpesan = DisplayMsg(1052)  '"Please input manufacture code!"
+        LblPesan = DisplayMsg(1052)  '"Please input manufacture code!"
         TxtMc.SetFocus
         Dami = 1
         Exit Sub
-    ElseIf TxtCode = "" Then
-        Lblpesan = DisplayMsg(1041)  '"Please input line code!"
-        TxtCode.SetFocus
+    ElseIf txtCode = "" Then
+        LblPesan = DisplayMsg(1041)  '"Please input line code!"
+        txtCode.SetFocus
         Dami = 1
         Exit Sub
-    ElseIf TxtDesc = "" Then
-        Lblpesan = DisplayMsg(1053)  '"Please input line name!"
-        TxtDesc.SetFocus
+    ElseIf txtDesc = "" Then
+        LblPesan = DisplayMsg(1053)  '"Please input line name!"
+        txtDesc.SetFocus
         Dami = 1
         Exit Sub
     End If
@@ -1098,7 +1125,7 @@ Private Sub Find()
     
     LblInput = InputBox("Input manufacture code or line code", "Search")
     If InStr(1, LblInput, "'") > 0 Then
-        Lblpesan = DisplayMsg(4073)   '"Record is not found"
+        LblPesan = DisplayMsg(4073)   '"Record is not found"
         Exit Sub
     End If
     If vbOK Then
@@ -1108,20 +1135,20 @@ Private Sub Find()
         RsFind.Open sql, Db, adOpenDynamic, adLockOptimistic, adCmdText
         If Not (RsFind.BOF And RsFind.EOF) Then
             Do While Not RsFind.EOF
-                Grid.AddItem ""
-                Grid.TextMatrix(Grid.Rows - 1, bteColSelect) = ""
-                Grid.TextMatrix(Grid.Rows - 1, bteColLineCode) = Trim(RsFind("line_code"))
-                Grid.TextMatrix(Grid.Rows - 1, bteColLineName) = Trim(RsFind("line_name"))
-                Grid.Cell(flexcpBackColor, Grid.Rows - 1, bteColSelect) = &HFFFFFF
+                grid.AddItem ""
+                grid.TextMatrix(grid.Rows - 1, bteColSelect) = ""
+                grid.TextMatrix(grid.Rows - 1, bteColLineCode) = Trim(RsFind("line_code"))
+                grid.TextMatrix(grid.Rows - 1, bteColLineName) = Trim(RsFind("line_name"))
+                grid.Cell(flexcpBackColor, grid.Rows - 1, bteColSelect) = &HFFFFFF
                 RsFind.MoveNext
             Loop
-            Lblpesan = ""
+            LblPesan = ""
         Else
-            Lblpesan = DisplayMsg(4073) '"Record is not found!"
+            LblPesan = DisplayMsg(4073) '"Record is not found!"
         End If
     Else
         Call Browse
-        Lblpesan = ""
+        LblPesan = ""
     End If
 End Sub
 
@@ -1154,14 +1181,14 @@ End Sub
 
 Private Sub SiPutih()
     Dim i As Integer
-    For i = 1 To Grid.Rows - 1
-        Grid.Cell(flexcpBackColor, i, bteColSelect) = &HFFFFFF
+    For i = 1 To grid.Rows - 1
+        grid.Cell(flexcpBackColor, i, bteColSelect) = &HFFFFFF
     Next
 End Sub
 
 Private Sub Hidden()
-    TxtCode = ""
-    TxtDesc = ""
-    TxtCode.Enabled = True
-    TxtCode.SetFocus
+    txtCode = ""
+    txtDesc = ""
+    txtCode.Enabled = True
+    txtCode.SetFocus
 End Sub

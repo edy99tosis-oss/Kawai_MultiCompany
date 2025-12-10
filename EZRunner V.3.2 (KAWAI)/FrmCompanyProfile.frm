@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmCompanyProfile 
@@ -34,7 +34,7 @@ Begin VB.Form FrmCompanyProfile
       Left            =   7547
       Style           =   1  'Graphical
       TabIndex        =   46
-      Top             =   6765
+      Top             =   7215
       Visible         =   0   'False
       Width           =   1215
    End
@@ -52,7 +52,7 @@ Begin VB.Form FrmCompanyProfile
       Left            =   3647
       TabIndex        =   81
       TabStop         =   0   'False
-      Top             =   6765
+      Top             =   7215
       Visible         =   0   'False
       Width           =   1335
    End
@@ -73,19 +73,19 @@ Begin VB.Form FrmCompanyProfile
       Left            =   8852
       Style           =   1  'Graphical
       TabIndex        =   47
-      Top             =   6765
+      Top             =   7215
       Visible         =   0   'False
       Width           =   1215
    End
    Begin TabDlg.SSTab SSTab1 
-      Height          =   4935
+      Height          =   5565
       Left            =   390
       TabIndex        =   51
       TabStop         =   0   'False
-      Top             =   1125
+      Top             =   945
       Width           =   10965
       _ExtentX        =   19341
-      _ExtentY        =   8705
+      _ExtentY        =   9816
       _Version        =   393216
       Tabs            =   7
       TabsPerRow      =   7
@@ -1284,7 +1284,7 @@ Begin VB.Form FrmCompanyProfile
                Strikethrough   =   0   'False
             EndProperty
             CustomFormat    =   "dd MMM yyyy"
-            Format          =   136970243
+            Format          =   61210627
             CurrentDate     =   37810
          End
          Begin VB.Label Label15 
@@ -1991,10 +1991,10 @@ Begin VB.Form FrmCompanyProfile
          End
       End
       Begin VB.Frame Frame2 
-         Height          =   4335
+         Height          =   4875
          Left            =   240
          TabIndex        =   55
-         Top             =   480
+         Top             =   495
          Width           =   10305
          Begin VB.TextBox Text1 
             BeginProperty Font 
@@ -2012,7 +2012,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   50
             TabIndex        =   127
             Text            =   "AAAAAAAAAAAAAAA"
-            Top             =   3960
+            Top             =   4410
             Width           =   3975
          End
          Begin VB.TextBox Text1 
@@ -2031,7 +2031,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   50
             TabIndex        =   0
             Text            =   "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-            Top             =   310
+            Top             =   765
             Width           =   4575
          End
          Begin VB.TextBox Text1 
@@ -2050,7 +2050,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   15
             TabIndex        =   8
             Text            =   "AAAAAAAAAAAAAAA"
-            Top             =   3480
+            Top             =   3930
             Width           =   1815
          End
          Begin VB.TextBox Text1 
@@ -2069,7 +2069,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   15
             TabIndex        =   7
             Text            =   "AAAAAAAAAAAAAAA"
-            Top             =   3022
+            Top             =   3465
             Width           =   1815
          End
          Begin VB.TextBox Text1 
@@ -2088,7 +2088,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   15
             TabIndex        =   6
             Text            =   "AAAAAAAAAAAAAAA"
-            Top             =   3022
+            Top             =   3465
             Width           =   1815
          End
          Begin VB.TextBox Text1 
@@ -2107,7 +2107,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   10
             TabIndex        =   4
             Text            =   "AAAAAAAAAA"
-            Top             =   2118
+            Top             =   2565
             Width           =   1575
          End
          Begin VB.TextBox Text1 
@@ -2126,7 +2126,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   100
             TabIndex        =   3
             Text            =   "AAAAAAAAAAAAAAAAAAAA"
-            Top             =   1666
+            Top             =   2115
             Width           =   2535
          End
          Begin VB.TextBox Text1 
@@ -2145,7 +2145,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   100
             TabIndex        =   5
             Text            =   "AAAAAAAAAAAAAAAAAAAA"
-            Top             =   2570
+            Top             =   3015
             Width           =   2535
          End
          Begin VB.TextBox Text1 
@@ -2164,7 +2164,7 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   100
             TabIndex        =   2
             Text            =   "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-            Top             =   1200
+            Top             =   1650
             Width           =   3615
          End
          Begin VB.TextBox Text1 
@@ -2183,8 +2183,47 @@ Begin VB.Form FrmCompanyProfile
             MaxLength       =   100
             TabIndex        =   1
             Text            =   "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-            Top             =   762
+            Top             =   1215
             Width           =   3615
+         End
+         Begin MSForms.ComboBox cboFactory 
+            Height          =   315
+            Left            =   3810
+            TabIndex        =   130
+            Top             =   315
+            Width           =   1590
+            VariousPropertyBits=   746604571
+            MaxLength       =   7
+            DisplayStyle    =   7
+            Size            =   "2805;556"
+            ColumnCount     =   2
+            ListRows        =   20
+            MatchEntry      =   0
+            ShowDropButtonWhen=   2
+            FontName        =   "Verdana"
+            FontHeight      =   165
+            FontCharSet     =   0
+            FontPitchAndFamily=   2
+         End
+         Begin VB.Label Label1 
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Factory Code        :"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   195
+            Index           =   24
+            Left            =   1980
+            TabIndex        =   129
+            Top             =   405
+            Width           =   1695
          End
          Begin VB.Label Label28 
             BackStyle       =   0  'Transparent
@@ -2201,7 +2240,7 @@ Begin VB.Form FrmCompanyProfile
             Height          =   195
             Left            =   1920
             TabIndex        =   128
-            Top             =   3960
+            Top             =   4410
             Width           =   1815
          End
          Begin VB.Label Label1 
@@ -2218,9 +2257,9 @@ Begin VB.Form FrmCompanyProfile
             EndProperty
             Height          =   195
             Index           =   0
-            Left            =   1958
+            Left            =   1980
             TabIndex        =   75
-            Top             =   330
+            Top             =   765
             Width           =   1815
          End
          Begin VB.Label Label19 
@@ -2239,7 +2278,7 @@ Begin VB.Form FrmCompanyProfile
             Height          =   255
             Left            =   5640
             TabIndex        =   63
-            Top             =   3030
+            Top             =   3480
             Width           =   255
          End
          Begin VB.Label Label9 
@@ -2257,7 +2296,7 @@ Begin VB.Form FrmCompanyProfile
             Height          =   195
             Left            =   1920
             TabIndex        =   62
-            Top             =   3480
+            Top             =   3930
             Width           =   1935
          End
          Begin VB.Label Label8 
@@ -2273,9 +2312,9 @@ Begin VB.Form FrmCompanyProfile
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   1958
+            Left            =   1965
             TabIndex        =   61
-            Top             =   3030
+            Top             =   3480
             Width           =   1815
          End
          Begin VB.Label Label7 
@@ -2291,9 +2330,9 @@ Begin VB.Form FrmCompanyProfile
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   1958
+            Left            =   1965
             TabIndex        =   60
-            Top             =   2130
+            Top             =   2580
             Width           =   1815
          End
          Begin VB.Label Label6 
@@ -2309,9 +2348,9 @@ Begin VB.Form FrmCompanyProfile
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   1958
+            Left            =   1965
             TabIndex        =   59
-            Top             =   1680
+            Top             =   2130
             Width           =   1815
          End
          Begin VB.Label Label5 
@@ -2327,9 +2366,9 @@ Begin VB.Form FrmCompanyProfile
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   1958
+            Left            =   1965
             TabIndex        =   58
-            Top             =   2580
+            Top             =   3030
             Width           =   1815
          End
          Begin VB.Label Label4 
@@ -2345,9 +2384,9 @@ Begin VB.Form FrmCompanyProfile
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   1958
+            Left            =   1965
             TabIndex        =   57
-            Top             =   1230
+            Top             =   1680
             Width           =   1815
          End
          Begin VB.Label Label2 
@@ -2363,9 +2402,9 @@ Begin VB.Form FrmCompanyProfile
                Strikethrough   =   0   'False
             EndProperty
             Height          =   195
-            Left            =   1958
+            Left            =   1965
             TabIndex        =   56
-            Top             =   780
+            Top             =   1230
             Width           =   1815
          End
       End
@@ -2500,7 +2539,7 @@ Begin VB.Form FrmCompanyProfile
       Height          =   525
       Left            =   392
       TabIndex        =   53
-      Top             =   6120
+      Top             =   6570
       Width           =   10965
       Begin VB.Label LblErrMsg 
          Alignment       =   2  'Center
@@ -2539,7 +2578,7 @@ Begin VB.Form FrmCompanyProfile
       Left            =   392
       Style           =   1  'Graphical
       TabIndex        =   48
-      Top             =   6765
+      Top             =   7215
       Width           =   1155
    End
    Begin VB.CommandButton Command2 
@@ -2559,7 +2598,7 @@ Begin VB.Form FrmCompanyProfile
       Left            =   10142
       Style           =   1  'Graphical
       TabIndex        =   45
-      Top             =   6750
+      Top             =   7200
       Width           =   1215
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -2695,33 +2734,50 @@ Sub kosonggrid()
 End Sub
 
 Sub Browse()
-    sql = "select * from Company_Profile"
+
+    Dim vFactory As String
+    vFactory = Trim(cboFactory.Text)
+
+    ' Filter per factory jika dipilih
+    If vFactory <> "" Then
+        sql = "SELECT * FROM Company_Profile WHERE Company_Code = '" & vFactory & "'"
+    Else
+        sql = "SELECT * FROM Company_Profile"
+    End If
+
     If RS.State <> adStateClosed Then RS.Close
     RS.Open sql, Db, adOpenKeyset, adLockOptimistic
-    
+
     If RS.BOF And RS.EOF Then
-      first = True
-    Else
-      For i = 0 To 35
-        Text1(i).Text = IIf(IsNull(Trim(RS(i + 1))), "", Trim(RS(i + 1)))
-      Next i
-      tglpengukuhan.Value = IIf(IsNull(RS(40)), Format(Now, "dd MMM yyyy"), Format(RS(40), "dd MMM yyyy"))
-      txtBC(0).Text = Trim(RS(43) & "")
-      txtBC(1).Text = Trim(RS(44) & "")
-      txtBC(2).Text = Trim(RS(45) & "")
-      txtBC(3).Text = Trim(RS(46) & "")
-      Text1(36).Text = Trim(RS(52) & "")
-      first = False
+        first = True
+        Exit Sub
     End If
+
+    For i = 0 To 35
+        Text1(i).Text = IIf(IsNull(Trim(RS(i + 1))), "", Trim(RS(i + 1)))
+    Next i
+
+    tglpengukuhan.Value = IIf(IsNull(RS(40)), Format(Now, "dd MMM yyyy"), Format(RS(40), "dd MMM yyyy"))
+    txtBC(0).Text = Trim(RS(43) & "")
+    txtBC(1).Text = Trim(RS(44) & "")
+    txtBC(2).Text = Trim(RS(45) & "")
+    txtBC(3).Text = Trim(RS(46) & "")
+    Text1(36).Text = Trim(RS(52) & "")
+    
+    first = False
 
 End Sub
 
 Sub BrowseGrid()
-  Dim i  As Integer
+    Dim vFactory As String
+    vFactory = Trim(cboFactory.Text)
 
-  i = 1
+    Dim i  As Integer
 
-    sql = "select * from company_bank where company_code='00000' order by bank_name, address1, address2, city, postal_code, currency_code, account_no"
+    i = 1
+
+    grid.Rows = 1
+    sql = "select * from company_bank where company_code='" & vFactory & "' order by bank_name, address1, address2, city, postal_code, currency_code, account_no"
     If rsGrid.State <> adStateClosed Then rsGrid.Close
     rsGrid.Open sql, Db, adOpenKeyset, adLockOptimistic
   
@@ -2768,6 +2824,7 @@ Private Sub Form_Load()
     txtBC(3).Text = ""
     
   Call up_FillCombo(cbocurr, "curr_cls")
+  CompanyMaster
     
     updateGrid = False
     kosonggrid
@@ -2797,6 +2854,8 @@ End Sub
 Private Sub command2_Click(Index As Integer)
 Dim hapus As Boolean, ugrid As Boolean
 Dim tanya
+Dim vFactory As String
+vFactory = Trim(cboFactory.Text)
 
 hapus = False
 ugrid = False
@@ -2810,9 +2869,10 @@ ugrid = False
         Else
             
             If (first) Then
-              RS.AddNew
-              RS(0) = "00000"
+                RS.AddNew
+                RS("Company_Code") = vFactory
             End If
+
             For i = 0 To 35
                 RS(i + 1) = Text1(i).Text
             Next i
@@ -3061,4 +3121,17 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     RS.Close
     If rsGrid.State <> adStateClosed Then rsGrid.Close
+End Sub
+
+Private Sub CompanyMaster()
+    FillCompanyCombo cboFactory
+End Sub
+
+Private Sub cboFactory_Change()
+    If cboFactory.matchFound Then
+        Browse
+        BrowseGrid
+    Else
+        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
 End Sub

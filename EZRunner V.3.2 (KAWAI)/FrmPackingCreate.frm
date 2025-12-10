@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmPackingCreate 
    BackColor       =   &H00FDDFE3&
@@ -571,7 +571,7 @@ Begin VB.Form FrmPackingCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136839171
+         Format          =   61014019
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtEtd 
@@ -593,7 +593,7 @@ Begin VB.Form FrmPackingCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136839171
+         Format          =   61014019
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtStuffing 
@@ -615,7 +615,7 @@ Begin VB.Form FrmPackingCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136839171
+         Format          =   61014019
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtEta 
@@ -637,7 +637,7 @@ Begin VB.Form FrmPackingCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136839171
+         Format          =   61014019
          CurrentDate     =   37798
       End
       Begin VB.TextBox TxtDay 
@@ -1299,7 +1299,7 @@ Begin VB.Form FrmPackingCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136839171
+         Format          =   61014019
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtDel2 
@@ -1330,7 +1330,7 @@ Begin VB.Form FrmPackingCreate
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   136839171
+         Format          =   61014019
          CurrentDate     =   37798
       End
       Begin MSForms.ComboBox cboFactory 
@@ -1340,7 +1340,7 @@ Begin VB.Form FrmPackingCreate
          TabIndex        =   104
          Top             =   210
          Width           =   1500
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   6
          DisplayStyle    =   3
          Size            =   "2646;582"
@@ -1349,6 +1349,7 @@ Begin VB.Form FrmPackingCreate
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -2270,7 +2271,7 @@ Private Sub Header()
     ColPo = 33 + 2
     ColpoSeqNo = 34 + 2
     
-    With Grid
+    With grid
         
         .clear
         .ColS = 35 + 2
@@ -2384,7 +2385,7 @@ End Sub
 Sub AdCboTrans()
 'TRANS
 Dim rsisi As New ADODB.Recordset
-    With cboTrans
+    With CboTrans
         .clear
         .columnCount = 2
         .AddItem ""
@@ -2544,7 +2545,7 @@ Private Sub IsiComboPacking()
     Dim rsno As New ADODB.Recordset
     
     sql = "select packing_no from packing_master where cust_code = '" & cboCust.Text & "' " & _
-    "and etd >= '" & Format(DtDel1.Value, "yyyy-MM-dd") & "' " & _
+    "and etd >= '" & Format(DTDel1.Value, "yyyy-MM-dd") & "' " & _
     " and etd <= '" & Format(DtDel2.Value, "yyyy-MM-dd") & "' "
             If cboPONo.Text <> "ALL" And cboPONo <> "" Then
                 sql = sql & " AND LIST_DO like'%" & cboPONo & "%' "
@@ -2552,10 +2553,10 @@ Private Sub IsiComboPacking()
             sql = sql & " order by packing_no "
             
     rsno.Open sql, Db, adOpenKeyset, adLockOptimistic
-    cboPacking.clear
+    CboPacking.clear
     If Not rsno.EOF Then
         While Not rsno.EOF
-            cboPacking.AddItem Trim(rsno.Fields("packing_no"))
+            CboPacking.AddItem Trim(rsno.Fields("packing_no"))
             rsno.MoveNext
         Wend
     End If
@@ -2579,7 +2580,7 @@ Private Sub IsiDefaultValue()
     TxtTo.Text = ""
     TxtCountry.Text = ""
     TxtFinal.Text = ""
-    TxtRemarks.Text = ""
+    txtremarks.Text = ""
     lblFix.Caption = ""
     '''''''''''''''''''''''''''''
     'cbopackingtype.ListIndex = 0
@@ -2592,10 +2593,10 @@ Private Sub IsiDefaultValue()
     
     adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     If Not adoRs.EOF Then
-        cboTrans.ListIndex = Val(adoRs.Fields("Transportation_Cls") & "")
+        CboTrans.ListIndex = Val(adoRs.Fields("Transportation_Cls") & "")
         cboPaymentCode.ListIndex = Val(adoRs.Fields("POPayment_Code") & "")
         cboPaymentTerm.Text = Trim(adoRs.Fields("POPayment_Terms") & "")
-        TxtPaymentTerm.Text = adoRs.Fields("POPayment") & ""
+        txtPaymentTerm.Text = adoRs.Fields("POPayment") & ""
         TxtDay.Text = adoRs.Fields("POPayment_Day") & ""
         TxtCaseMark(0).Text = Trim(adoRs.Fields("POCaseMark1") & "")
         TxtCaseMark(1).Text = Trim(adoRs.Fields("POCaseMark2") & "")
@@ -2603,10 +2604,10 @@ Private Sub IsiDefaultValue()
         TxtCaseMark(3).Text = Trim(adoRs.Fields("POCaseMark4") & "")
         TxtCaseMark(4).Text = Trim(adoRs.Fields("POCaseMark5") & "")
     Else
-        cboTrans.ListIndex = 0
+        CboTrans.ListIndex = 0
         cboPaymentCode.ListIndex = 0
         cboPaymentTerm.ListIndex = 0
-        TxtPaymentTerm.Text = ""
+        txtPaymentTerm.Text = ""
         TxtDay.Text = ""
         TxtCaseMark(0).Text = ""
         TxtCaseMark(1).Text = ""
@@ -2642,13 +2643,13 @@ Private Sub GeneratePackingNo()
     rsno.Open sql, Db, adOpenKeyset, adLockOptimistic
     
     If rsno.EOF Then
-        cboPacking.Text = "001/" & VRom(DtPacking.Month) & "/" & Format(DtPacking, "YY")
+        CboPacking.Text = "001/" & VRom(DtPacking.Month) & "/" & Format(DtPacking, "YY")
     Else
-            cboPacking.Text = Format(rsno.Fields("Nomor"), "000") & "/" & VRom(DtPacking.Month) & "/" & Format(DtPacking, "YY")
+            CboPacking.Text = Format(rsno.Fields("Nomor"), "000") & "/" & VRom(DtPacking.Month) & "/" & Format(DtPacking, "YY")
     End If
     
     If rsno.State <> adStateClosed Then rsno.Close
-    TxtPacNo.Text = cboPacking.Text
+    TxtPacNo.Text = CboPacking.Text
 
 End Sub
 
@@ -2656,7 +2657,7 @@ Private Sub IsiDataPacking()
     
     Dim RS As New ADODB.Recordset
     
-    RS.Open "select *,(select Description from Transportation_Cls  WHERE Transportation_Cls=a.Transportation_Cls) DESCRIPTION from packing_master a where ltrim(packing_no) = '" & Trim(cboPacking.Text) & "' ", Db, adOpenKeyset, adLockOptimistic
+    RS.Open "select *,(select Description from Transportation_Cls  WHERE Transportation_Cls=a.Transportation_Cls) DESCRIPTION from packing_master a where ltrim(packing_no) = '" & Trim(CboPacking.Text) & "' ", Db, adOpenKeyset, adLockOptimistic
     
     If Not RS.EOF Then
         
@@ -2673,8 +2674,8 @@ Private Sub IsiDataPacking()
         'AdCboTrans
         
         
-        cboTrans.Column(1) = (RS.Fields("Transportation_Cls"))
-        cboTrans.Column(0) = IIf(IsNull(RS.Fields("DESCRIPTION")), "", Trim(RS.Fields("DESCRIPTION")))
+        CboTrans.Column(1) = (RS.Fields("Transportation_Cls"))
+        CboTrans.Column(0) = IIf(IsNull(RS.Fields("DESCRIPTION")), "", Trim(RS.Fields("DESCRIPTION")))
         'cboTrans = (rs.Fields("DESCRIPTION"))
         cboPaymentCode.ListIndex = Val(RS.Fields("Payment_Code"))
         cboPaymentTerm.Text = Trim(RS.Fields("Payment_Terms") & "")
@@ -2687,7 +2688,7 @@ Private Sub IsiDataPacking()
         TxtCountry.Text = Trim(RS.Fields("Country_Origin"))
         TxtFinal.Text = Trim(RS.Fields("Final_Destination"))
         
-        TxtPaymentTerm.Text = RS.Fields("Payment") & ""
+        txtPaymentTerm.Text = RS.Fields("Payment") & ""
         TxtDay.Text = RS.Fields("Payment_Days")
         
         TxtCaseMark(0).Text = Trim(RS.Fields("POCaseMark1") & "")
@@ -2695,14 +2696,14 @@ Private Sub IsiDataPacking()
         TxtCaseMark(2).Text = Trim(RS.Fields("POCaseMark3") & "")
         TxtCaseMark(3).Text = Trim(RS.Fields("POCaseMark4") & "")
         TxtCaseMark(4).Text = Trim(RS.Fields("POCaseMark5") & "")
-        TxtRemarks.Text = Trim(RS.Fields("Remarks") & "")
+        txtremarks.Text = Trim(RS.Fields("Remarks") & "")
         
         cbopackingtype.Text = Trim(RS!PackingStyle_Cls)
         cboPlaceofDestination.Text = IIf(IsNull(RS.Fields("Final_Destination_Cls")), "1", Trim(RS.Fields("Final_Destination_Cls")))
 '        cboWH.Text = Trim(rs.Fields("WHCode") & "")
         
         If RS.Fields("Fix_Cls") = "1" Then lblFix.Caption = "Status Fix" Else lblFix.Caption = ""
-        TxtPacNo.Text = cboPacking.Text
+        TxtPacNo.Text = CboPacking.Text
     
     Else
         
@@ -2743,7 +2744,7 @@ sql = sql + "                   )tb  where rtrim(do_no) + rtrim(item_code) + cas
             "                       (select rtrim(de.Do_No) + rtrim(item_code) + cast(DoSeq_no as varchar) " & vbCrLf & _
             "                           from packing_detail as de inner join packing_master as ms  " & vbCrLf & _
             "                               on de.packing_no = ms.packing_no  " & vbCrLf & _
-            "                           where ms.cust_code = '" & Trim(cboCust.Text) & "' and ltrim(de.packing_no) = '" & Trim(cboPacking.Text) & "')  " & vbCrLf & _
+            "                           where ms.cust_code = '" & Trim(cboCust.Text) & "' and ltrim(de.packing_no) = '" & Trim(CboPacking.Text) & "')  " & vbCrLf & _
             "                                   and cust_code = '" & Trim(cboCust.Text) & "' " & vbCrLf & _
             "   union     " & vbCrLf & _
             "       select   do_no,  item_code,SerialNoFrom,SerialNoTo,    " & vbCrLf & _
@@ -2755,7 +2756,7 @@ sql = sql + "               unit_cls,delivery_date,currency_code,Price,DoSeq_no,
             "                   select m.cust_code,m.do_no,d.item_code,SerialNoFrom,SerialNoTo,d.qty,d.unit_cls, " & vbCrLf & _
             "                           d.delivery_date,d.currency_code,d.Price,DoSeq_no,d.Po_No,d.Seq_No " & vbCrLf & _
             "                       From DO_Master As m Inner Join Delivery_Order As d on m.do_no = d.do_no  where fix_cls=1 " & vbCrLf & _
-            "                       )tb where cust_code = '" & Trim(cboCust.Text) & "'  and delivery_date >= '" & Format(DtDel1.Value, "yyyy-MM-dd") & "' " & vbCrLf & _
+            "                       )tb where cust_code = '" & Trim(cboCust.Text) & "'  and delivery_date >= '" & Format(DTDel1.Value, "yyyy-MM-dd") & "' " & vbCrLf & _
             "                          and delivery_date <= '" & Format(DtDel2.Value, "yyyy-MM-dd") & "'  "
             
 
@@ -2776,20 +2777,20 @@ If Not RsIsiG.EOF And Not RsIsiG.BOF Then
     
     
     While Not RsIsiG.EOF
-        Grid.Rows = Grid.Rows + 1
-        Grid.TextMatrix(i, ColAsk) = ""
-        Grid.TextMatrix(i, ColContainerNo) = ""
-        Grid.TextMatrix(i, ColDrySize) = ""
-        Grid.TextMatrix(i, ColOrder) = Trim(RsIsiG.Fields("Do_No"))
-        Grid.TextMatrix(i, ColProd) = Trim(RsIsiG.Fields("item_code"))
-        Grid.TextMatrix(i, ColMaker) = Trim(RsIsiG.Fields("mki"))
-        Grid.TextMatrix(i, ColDesc) = Trim(RsIsiG.Fields("iname"))
+        grid.Rows = grid.Rows + 1
+        grid.TextMatrix(i, ColAsk) = ""
+        grid.TextMatrix(i, ColContainerNo) = ""
+        grid.TextMatrix(i, ColDrySize) = ""
+        grid.TextMatrix(i, ColOrder) = Trim(RsIsiG.Fields("Do_No"))
+        grid.TextMatrix(i, ColProd) = Trim(RsIsiG.Fields("item_code"))
+        grid.TextMatrix(i, ColMaker) = Trim(RsIsiG.Fields("mki"))
+        grid.TextMatrix(i, ColDesc) = Trim(RsIsiG.Fields("iname"))
         
         If RsCariQty.State = 1 Then RsCariQty.Close
         RsCariQty.Open "select isnull(sum(qty),0) as q from packing_detail where Do_No = '" & RsIsiG.Fields("Do_No") & "' and item_code = '" & RsIsiG.Fields("item_code") & "' and currency_code = '" & RsIsiG.Fields("currency_code") & "' and DoSeq_no = " & RsIsiG.Fields("DoSeq_no") & " and Order_SeqNo=" & RsIsiG.Fields("Seq_no") & " ", Db, adOpenKeyset, adLockOptimistic
         
         If RsQ.State = 1 Then RsQ.Close
-        RsQ.Open "select isnull(sum(qty),0) as q from packing_detail where Do_No = '" & RsIsiG.Fields("Do_No") & "' and ltrim(packing_no) = '" & Trim(cboPacking.Text) & "' and item_code = '" & RsIsiG.Fields("item_code") & "' and currency_code = '" & RsIsiG.Fields("currency_code") & "' and DoSeq_no = " & RsIsiG.Fields("DoSeq_no") & " and Order_SeqNo=" & RsIsiG.Fields("Seq_no") & " ", Db, adOpenKeyset, adLockOptimistic
+        RsQ.Open "select isnull(sum(qty),0) as q from packing_detail where Do_No = '" & RsIsiG.Fields("Do_No") & "' and ltrim(packing_no) = '" & Trim(CboPacking.Text) & "' and item_code = '" & RsIsiG.Fields("item_code") & "' and currency_code = '" & RsIsiG.Fields("currency_code") & "' and DoSeq_no = " & RsIsiG.Fields("DoSeq_no") & " and Order_SeqNo=" & RsIsiG.Fields("Seq_no") & " ", Db, adOpenKeyset, adLockOptimistic
         
         If RsIsiG!number_entering <> 0 Then
             CartonQty = Fix((RsIsiG!Qty - RsCariQty.Fields("q")) / RsIsiG!number_entering)
@@ -2821,42 +2822,42 @@ If Not RsIsiG.EOF And Not RsIsiG.BOF Then
         Volume = (RsIsiG!Length / 100) * (RsIsiG!Width / 100) * (RsIsiG!Thickness / 100)
         VolumePacking = Format((Volume * CartonQty), gs_formatVolume)
                                  
-        Grid.TextMatrix(i, ColQty) = Format(0, gs_formatQty)
-        Grid.TextMatrix(i, colrem) = Format(0, gs_formatQty)
-        Grid.TextMatrix(i, ColUnit) = uf_GetUnitDescription(RsIsiG("unit_cls"))
+        grid.TextMatrix(i, ColQty) = Format(0, gs_formatQty)
+        grid.TextMatrix(i, colrem) = Format(0, gs_formatQty)
+        grid.TextMatrix(i, ColUnit) = uf_GetUnitDescription(RsIsiG("unit_cls"))
         
         If Not IsNull(RsIsiG.Fields("SerialNoFrom")) Then
-            Grid.TextMatrix(i, ColSerialFrom) = IIf(Trim(RsIsiG.Fields("SerialNoFrom")) = "", "", Trim(RsIsiG.Fields("SerialNoFrom")))
-            Grid.TextMatrix(i, ColSerialTo) = IIf(Trim(RsIsiG.Fields("SerialNoTo")) = "", "", Trim(RsIsiG.Fields("SerialNoTo")))
+            grid.TextMatrix(i, ColSerialFrom) = IIf(Trim(RsIsiG.Fields("SerialNoFrom")) = "", "", Trim(RsIsiG.Fields("SerialNoFrom")))
+            grid.TextMatrix(i, ColSerialTo) = IIf(Trim(RsIsiG.Fields("SerialNoTo")) = "", "", Trim(RsIsiG.Fields("SerialNoTo")))
         End If
         
-        Grid.TextMatrix(i, ColWeight) = Format(NetWeight, gs_formatWeight)
-        Grid.TextMatrix(i, ColWGros) = Format(GrossWeight, gs_formatWeight)
-        Grid.TextMatrix(i, ColVol) = Format(Volume, gs_formatVolume)
-        Grid.TextMatrix(i, ColPacking) = Format(RsIsiG!number_entering, gs_formatLength)
-        Grid.TextMatrix(i, ColCartonNo) = ""
-        Grid.TextMatrix(i, ColLength) = Format(RsIsiG!Length, gs_formatLength)
-        Grid.TextMatrix(i, ColWidth) = Format(RsIsiG!Width, gs_formatWidth)
-        Grid.TextMatrix(i, ColThickness) = Format(RsIsiG!Thickness, gs_formatThickness)
-        Grid.TextMatrix(i, ColDelDate) = Format(RsIsiG.Fields("delivery_date"), "dd MMM yyyy")
-        Grid.TextMatrix(i, ColCurr) = uf_GetCurrencyDescription(RsIsiG.Fields("currency_code"))
-        Grid.TextMatrix(i, ColPrice) = Format(RsIsiG.Fields("Price"), gs_formatPrice)
-        Grid.TextMatrix(i, ColAmount) = Format(0, gs_formatAmountIDR)
-        Grid.TextMatrix(i, ColCounter) = "HEAD"
-        Grid.TextMatrix(i, ColCurrT) = RsIsiG.Fields("currency_code")
-        Grid.TextMatrix(i, ColUnitT) = RsIsiG.Fields("unit_cls")
-        Grid.TextMatrix(i, ColRemT) = RsIsiG.Fields("qty") - RsCariQty.Fields("q") + RsQ.Fields("q")
-        Grid.TextMatrix(i, ColPos) = ""
-        Grid.TextMatrix(i, ColSeq) = RsIsiG.Fields("DoSeq_no")
-        Grid.TextMatrix(i, ColQtyPerCarton) = RsIsiG!number_entering
+        grid.TextMatrix(i, ColWeight) = Format(NetWeight, gs_formatWeight)
+        grid.TextMatrix(i, ColWGros) = Format(GrossWeight, gs_formatWeight)
+        grid.TextMatrix(i, ColVol) = Format(Volume, gs_formatVolume)
+        grid.TextMatrix(i, ColPacking) = Format(RsIsiG!number_entering, gs_formatLength)
+        grid.TextMatrix(i, ColCartonNo) = ""
+        grid.TextMatrix(i, ColLength) = Format(RsIsiG!Length, gs_formatLength)
+        grid.TextMatrix(i, ColWidth) = Format(RsIsiG!Width, gs_formatWidth)
+        grid.TextMatrix(i, ColThickness) = Format(RsIsiG!Thickness, gs_formatThickness)
+        grid.TextMatrix(i, ColDelDate) = Format(RsIsiG.Fields("delivery_date"), "dd MMM yyyy")
+        grid.TextMatrix(i, ColCurr) = uf_GetCurrencyDescription(RsIsiG.Fields("currency_code"))
+        grid.TextMatrix(i, ColPrice) = Format(RsIsiG.Fields("Price"), gs_formatPrice)
+        grid.TextMatrix(i, ColAmount) = Format(0, gs_formatAmountIDR)
+        grid.TextMatrix(i, ColCounter) = "HEAD"
+        grid.TextMatrix(i, ColCurrT) = RsIsiG.Fields("currency_code")
+        grid.TextMatrix(i, ColUnitT) = RsIsiG.Fields("unit_cls")
+        grid.TextMatrix(i, ColRemT) = RsIsiG.Fields("qty") - RsCariQty.Fields("q") + RsQ.Fields("q")
+        grid.TextMatrix(i, ColPos) = ""
+        grid.TextMatrix(i, ColSeq) = RsIsiG.Fields("DoSeq_no")
+        grid.TextMatrix(i, ColQtyPerCarton) = RsIsiG!number_entering
         
-        Grid.TextMatrix(i, ColPo) = RsIsiG.Fields("Po_No")
-        Grid.TextMatrix(i, ColpoSeqNo) = RsIsiG.Fields("Seq_no")
+        grid.TextMatrix(i, ColPo) = RsIsiG.Fields("Po_No")
+        grid.TextMatrix(i, ColpoSeqNo) = RsIsiG.Fields("Seq_no")
 
 
         
-        Grid.Cell(flexcpBackColor, i, ColCtr, i, ColAmount) = &HE0E0E0
-        Grid.Cell(flexcpBackColor, i, ColAsk) = &HFFFFFF
+        grid.Cell(flexcpBackColor, i, ColCtr, i, ColAmount) = &HE0E0E0
+        grid.Cell(flexcpBackColor, i, ColAsk) = &HFFFFFF
         
         'ISI CHILD
         If RsIsiD.State = 1 Then RsIsiD.Close
@@ -2895,7 +2896,7 @@ If Not RsIsiG.EOF And Not RsIsiG.BOF Then
                       "     pd.amount, pd.order_no as po_no, pd.order_seqno as seq_no" & vbCrLf & _
                       "     from packing_detail as pd inner join packing_master as pm " & vbCrLf & _
                       "     on pd.packing_no = pm.packing_no " & vbCrLf & _
-                      "     where ltrim(pm.packing_no) = '" & UCase(cboPacking.Text) & "' " & vbCrLf & _
+                      "     where ltrim(pm.packing_no) = '" & UCase(CboPacking.Text) & "' " & vbCrLf & _
                       "     and pm.cust_code = '" & UCase(cboCust.Text) & "' " & vbCrLf & _
                       "     and pd.Do_No = '" & UCase(RsIsiG.Fields("Do_No")) & "' " & vbCrLf & _
                       "     and pd.item_code = '" & UCase(RsIsiG.Fields("item_code")) & "'  " & vbCrLf & _
@@ -2941,7 +2942,7 @@ sql = sql + "      pd.qty,  " & vbCrLf & _
             "      from packing_detail as pd inner join packing_master as pm  "
 
 sql = sql + "      on pd.packing_no = pm.packing_no  " & vbCrLf & _
-            "     where ltrim(pm.packing_no) = '" & UCase(cboPacking.Text) & "' " & vbCrLf & _
+            "     where ltrim(pm.packing_no) = '" & UCase(CboPacking.Text) & "' " & vbCrLf & _
             "     and pm.cust_code = '" & UCase(cboCust.Text) & "' " & vbCrLf & _
             "     and pd.Do_No = '" & UCase(RsIsiG.Fields("Do_No")) & "' " & vbCrLf & _
             "     and pd.item_code = '" & UCase(RsIsiG.Fields("item_code")) & "'  " & vbCrLf & _
@@ -2960,71 +2961,71 @@ sql = sql + "      on pd.packing_no = pm.packing_no  " & vbCrLf & _
             RsIsiD.MoveFirst
             While Not RsIsiD.EOF
                 If RsIsiD.Fields("detail_cls") = "1" Then
-                    Grid.Rows = Grid.Rows + 1
+                    grid.Rows = grid.Rows + 1
                     j = j + 1
                     k = k + 1
-                    Grid.Cell(flexcpChecked, j, ColCtr) = flexChecked
-                    Grid.TextMatrix(j, ColAsk) = ""
-                    Grid.TextMatrix(j, ColContainerNo) = Trim(RsIsiD.Fields("Container_No"))
-                    Grid.TextMatrix(j, ColDrySize) = Trim(RsIsiD.Fields("Container_Size"))
-                    Grid.TextMatrix(j, ColOrder) = ""
-                    Grid.TextMatrix(j, ColProd) = ""
-                    Grid.TextMatrix(j, ColDesc) = ""
-                    Grid.TextMatrix(j, ColQty) = Format(RsIsiD.Fields("qty"), gs_formatQty)
-                    Grid.TextMatrix(j, colrem) = ""
-                    Grid.TextMatrix(j, ColUnit) = uf_GetUnitDescription(RsIsiD("unit_cls"))
+                    grid.Cell(flexcpChecked, j, ColCtr) = flexChecked
+                    grid.TextMatrix(j, ColAsk) = ""
+                    grid.TextMatrix(j, ColContainerNo) = Trim(RsIsiD.Fields("Container_No"))
+                    grid.TextMatrix(j, ColDrySize) = Trim(RsIsiD.Fields("Container_Size"))
+                    grid.TextMatrix(j, ColOrder) = ""
+                    grid.TextMatrix(j, ColProd) = ""
+                    grid.TextMatrix(j, ColDesc) = ""
+                    grid.TextMatrix(j, ColQty) = Format(RsIsiD.Fields("qty"), gs_formatQty)
+                    grid.TextMatrix(j, colrem) = ""
+                    grid.TextMatrix(j, ColUnit) = uf_GetUnitDescription(RsIsiD("unit_cls"))
                     
-                    Grid.TextMatrix(j, ColSerialFrom) = IIf(IsNull(RsIsiD.Fields("SerialNoFrom")), "", Trim(RsIsiD.Fields("SerialNoFrom")))
-                    Grid.TextMatrix(j, ColSerialTo) = IIf(IsNull(RsIsiD.Fields("SerialNoTo")), "", Trim(RsIsiD.Fields("SerialNoTo")))
+                    grid.TextMatrix(j, ColSerialFrom) = IIf(IsNull(RsIsiD.Fields("SerialNoFrom")), "", Trim(RsIsiD.Fields("SerialNoFrom")))
+                    grid.TextMatrix(j, ColSerialTo) = IIf(IsNull(RsIsiD.Fields("SerialNoTo")), "", Trim(RsIsiD.Fields("SerialNoTo")))
                     
-                    Grid.TextMatrix(j, ColWeight) = Format(RsIsiD.Fields("qtyweight_netto"), gs_formatWeight)
-                    Grid.TextMatrix(j, ColWGros) = Format(RsIsiD.Fields("qtyweight_gross"), gs_formatWeight)
-                    Grid.TextMatrix(j, ColVol) = Format(RsIsiD.Fields("qty_volume"), gs_formatVolume)
-                    Grid.TextMatrix(j, ColPacking) = Format(RsIsiD.Fields("Qty_Ctn"), gs_formatBox)
-                    Grid.TextMatrix(j, ColCartonNo) = IIf(IsNull(RsIsiD.Fields("Ctn_No")), "", RsIsiD.Fields("Ctn_No"))
-                    Grid.TextMatrix(j, ColLength) = Format(RsIsiD.Fields("length"), gs_formatLength)
-                    Grid.TextMatrix(j, ColWidth) = Format(RsIsiD.Fields("width"), gs_formatWidth)
-                    Grid.TextMatrix(j, ColThickness) = Format(RsIsiD.Fields("thickness"), gs_formatThickness)
-                    Grid.TextMatrix(j, ColDelDate) = ""
-                    Grid.TextMatrix(j, ColCurr) = uf_GetCurrencyDescription(RsIsiG.Fields("currency_code"))
-                    Grid.TextMatrix(j, ColPrice) = Format(RsIsiD.Fields("Price"), gs_formatPrice)
-                    Grid.TextMatrix(j, ColAmount) = Format(RsIsiD.Fields("Amount"), gs_formatAmountIDR)
-                    Grid.TextMatrix(j, ColCounter) = "CHILD"
-                    Grid.TextMatrix(j, ColCurrT) = RsIsiG.Fields("currency_code")
-                    Grid.TextMatrix(j, ColUnitT) = RsIsiG.Fields("unit_cls")
-                    Grid.TextMatrix(j, ColRemT) = "0"
-                    Grid.TextMatrix(j, ColPos) = k
-                    Grid.TextMatrix(j, ColPip) = "1"
-                    Grid.TextMatrix(j, ColQtyPerCarton) = RsIsiG!number_entering
-                    Grid.TextMatrix(j, ColNetWeight) = NetWeight
-                    Grid.TextMatrix(j, ColGrossWeight) = GrossWeight
+                    grid.TextMatrix(j, ColWeight) = Format(RsIsiD.Fields("qtyweight_netto"), gs_formatWeight)
+                    grid.TextMatrix(j, ColWGros) = Format(RsIsiD.Fields("qtyweight_gross"), gs_formatWeight)
+                    grid.TextMatrix(j, ColVol) = Format(RsIsiD.Fields("qty_volume"), gs_formatVolume)
+                    grid.TextMatrix(j, ColPacking) = Format(RsIsiD.Fields("Qty_Ctn"), gs_formatBox)
+                    grid.TextMatrix(j, ColCartonNo) = IIf(IsNull(RsIsiD.Fields("Ctn_No")), "", RsIsiD.Fields("Ctn_No"))
+                    grid.TextMatrix(j, ColLength) = Format(RsIsiD.Fields("length"), gs_formatLength)
+                    grid.TextMatrix(j, ColWidth) = Format(RsIsiD.Fields("width"), gs_formatWidth)
+                    grid.TextMatrix(j, ColThickness) = Format(RsIsiD.Fields("thickness"), gs_formatThickness)
+                    grid.TextMatrix(j, ColDelDate) = ""
+                    grid.TextMatrix(j, ColCurr) = uf_GetCurrencyDescription(RsIsiG.Fields("currency_code"))
+                    grid.TextMatrix(j, ColPrice) = Format(RsIsiD.Fields("Price"), gs_formatPrice)
+                    grid.TextMatrix(j, ColAmount) = Format(RsIsiD.Fields("Amount"), gs_formatAmountIDR)
+                    grid.TextMatrix(j, ColCounter) = "CHILD"
+                    grid.TextMatrix(j, ColCurrT) = RsIsiG.Fields("currency_code")
+                    grid.TextMatrix(j, ColUnitT) = RsIsiG.Fields("unit_cls")
+                    grid.TextMatrix(j, ColRemT) = "0"
+                    grid.TextMatrix(j, ColPos) = k
+                    grid.TextMatrix(j, ColPip) = "1"
+                    grid.TextMatrix(j, ColQtyPerCarton) = RsIsiG!number_entering
+                    grid.TextMatrix(j, ColNetWeight) = NetWeight
+                    grid.TextMatrix(j, ColGrossWeight) = GrossWeight
                     
-                    Grid.TextMatrix(j, ColPo) = RTrim(RsIsiG.Fields("Po_No"))
-                    Grid.TextMatrix(j, ColpoSeqNo) = RsIsiG.Fields("Seq_no")
+                    grid.TextMatrix(j, ColPo) = RTrim(RsIsiG.Fields("Po_No"))
+                    grid.TextMatrix(j, ColpoSeqNo) = RsIsiG.Fields("Seq_no")
 
                     
-                    Grid.Cell(flexcpBackColor, j, ColCtr) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColContainerNo, j, ColAmount) = &H80000018
-                    Grid.Cell(flexcpBackColor, j, ColContainerNo) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColDrySize) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColQty) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColCtr) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColContainerNo, j, ColAmount) = &H80000018
+                    grid.Cell(flexcpBackColor, j, ColContainerNo) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColDrySize) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColQty) = &HFFFFFF
                     
                     'Grid.Cell(flexcpBackColor, J, ColSerialFrom) = &HFFFFFF
                     'Grid.Cell(flexcpBackColor, J, ColSerialTo) = &HFFFFFF
                     
-                    Grid.Cell(flexcpBackColor, j, ColWeight) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColWGros) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColWeight) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColWGros) = &HFFFFFF
                     'grid.Cell(flexcpBackColor, J, ColVol) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColPacking) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColCartonNo) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColLength) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColWidth) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColThickness) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColPacking) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColCartonNo) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColLength) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColWidth) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColThickness) = &HFFFFFF
                     
-                    Grid.TextMatrix(i, ColPos) = k
+                    grid.TextMatrix(i, ColPos) = k
                     
                     
-                    If Grid.TextMatrix(j, ColCounter) = "CHILD" Then
+                    If grid.TextMatrix(j, ColCounter) = "CHILD" Then
                     TotalHead CDbl(ColQty), CDbl(j), CDbl(colrem), 1
 '                        TotalHead CDbl(ColWeight), CDbl(j), CDbl(ColWeight), 0
 '                        TotalHead CDbl(ColWGros), CDbl(j), CDbl(ColWGros), 0
@@ -3041,70 +3042,70 @@ sql = sql + "      on pd.packing_no = pm.packing_no  " & vbCrLf & _
 isitambah:
                 k = k + 1
                 If RsIsiG.Fields("qty") - RsCariQty.Fields("q") > 0 Then
-                    Grid.Rows = Grid.Rows + 1
+                    grid.Rows = grid.Rows + 1
                     j = j + 1
-                    Grid.Cell(flexcpChecked, j, ColCtr) = flexUnchecked
-                    Grid.TextMatrix(j, ColAsk) = ""
-                    Grid.TextMatrix(j, ColContainerNo) = ""
-                    Grid.TextMatrix(j, ColDrySize) = ""
-                    Grid.TextMatrix(j, ColOrder) = ""
-                    Grid.TextMatrix(j, ColProd) = ""
-                    Grid.TextMatrix(j, ColDesc) = ""
-                    Grid.TextMatrix(j, ColQty) = Format(CDbl(RsIsiG.Fields("qty")) - CDbl(RsCariQty.Fields("q")), gs_formatQty)
-                    Grid.TextMatrix(j, colrem) = ""
-                    Grid.TextMatrix(j, ColUnit) = Grid.TextMatrix(i, ColUnit)
+                    grid.Cell(flexcpChecked, j, ColCtr) = flexUnchecked
+                    grid.TextMatrix(j, ColAsk) = ""
+                    grid.TextMatrix(j, ColContainerNo) = ""
+                    grid.TextMatrix(j, ColDrySize) = ""
+                    grid.TextMatrix(j, ColOrder) = ""
+                    grid.TextMatrix(j, ColProd) = ""
+                    grid.TextMatrix(j, ColDesc) = ""
+                    grid.TextMatrix(j, ColQty) = Format(CDbl(RsIsiG.Fields("qty")) - CDbl(RsCariQty.Fields("q")), gs_formatQty)
+                    grid.TextMatrix(j, colrem) = ""
+                    grid.TextMatrix(j, ColUnit) = grid.TextMatrix(i, ColUnit)
                     
                     If Not IsNull(RsIsiG.Fields("SerialNoFrom")) Then
-                        Grid.TextMatrix(j, ColSerialFrom) = IIf(Trim(RsIsiG.Fields("SerialNoFrom")) = "", "", Trim(RsIsiG.Fields("SerialNoFrom")))
-                        Grid.TextMatrix(j, ColSerialTo) = IIf(Trim(RsIsiG.Fields("SerialNoTo")) = "", "", Trim(RsIsiG.Fields("SerialNoTo")))
+                        grid.TextMatrix(j, ColSerialFrom) = IIf(Trim(RsIsiG.Fields("SerialNoFrom")) = "", "", Trim(RsIsiG.Fields("SerialNoFrom")))
+                        grid.TextMatrix(j, ColSerialTo) = IIf(Trim(RsIsiG.Fields("SerialNoTo")) = "", "", Trim(RsIsiG.Fields("SerialNoTo")))
                     End If
                     
-                    Grid.TextMatrix(j, ColWeight) = Format(NetWeightPacking, gs_formatWeight)
-                    Grid.TextMatrix(j, ColWGros) = Format(GrossWeightPacking, gs_formatWeight)
-                    Grid.TextMatrix(j, ColVol) = Format(VolumePacking, gs_formatVolume)
-                    Grid.TextMatrix(j, ColPacking) = Format(CartonQty, gs_formatBox)
-                    Grid.TextMatrix(j, ColCartonNo) = ""
-                    Grid.TextMatrix(j, ColLength) = Format(RsIsiG.Fields("length"), gs_formatLength)
-                    Grid.TextMatrix(j, ColWidth) = Format(RsIsiG.Fields("width"), gs_formatWidth)
-                    Grid.TextMatrix(j, ColThickness) = Format(RsIsiG.Fields("thickness"), gs_formatThickness)
-                    Grid.TextMatrix(j, ColDelDate) = ""
-                    Grid.TextMatrix(j, ColCurr) = uf_GetCurrencyDescription(RsIsiG.Fields("currency_code"))
-                    Grid.TextMatrix(j, ColPrice) = Format(RsIsiG.Fields("Price"), gs_formatPrice)
-                    Grid.TextMatrix(j, ColAmount) = Format(0, gs_formatAmountIDR)
-                    Grid.TextMatrix(j, ColCounter) = "CHILD"
-                    Grid.TextMatrix(j, ColCurrT) = RsIsiG.Fields("currency_code")
-                    Grid.TextMatrix(j, ColUnitT) = RsIsiG.Fields("unit_cls")
-                    Grid.TextMatrix(j, ColRemT) = ""
-                    Grid.TextMatrix(j, ColPos) = k
-                    Grid.TextMatrix(j, ColQtyPerCarton) = RsIsiG!number_entering
-                    Grid.TextMatrix(j, ColNetWeight) = NetWeight
-                    Grid.TextMatrix(j, ColGrossWeight) = GrossWeight
+                    grid.TextMatrix(j, ColWeight) = Format(NetWeightPacking, gs_formatWeight)
+                    grid.TextMatrix(j, ColWGros) = Format(GrossWeightPacking, gs_formatWeight)
+                    grid.TextMatrix(j, ColVol) = Format(VolumePacking, gs_formatVolume)
+                    grid.TextMatrix(j, ColPacking) = Format(CartonQty, gs_formatBox)
+                    grid.TextMatrix(j, ColCartonNo) = ""
+                    grid.TextMatrix(j, ColLength) = Format(RsIsiG.Fields("length"), gs_formatLength)
+                    grid.TextMatrix(j, ColWidth) = Format(RsIsiG.Fields("width"), gs_formatWidth)
+                    grid.TextMatrix(j, ColThickness) = Format(RsIsiG.Fields("thickness"), gs_formatThickness)
+                    grid.TextMatrix(j, ColDelDate) = ""
+                    grid.TextMatrix(j, ColCurr) = uf_GetCurrencyDescription(RsIsiG.Fields("currency_code"))
+                    grid.TextMatrix(j, ColPrice) = Format(RsIsiG.Fields("Price"), gs_formatPrice)
+                    grid.TextMatrix(j, ColAmount) = Format(0, gs_formatAmountIDR)
+                    grid.TextMatrix(j, ColCounter) = "CHILD"
+                    grid.TextMatrix(j, ColCurrT) = RsIsiG.Fields("currency_code")
+                    grid.TextMatrix(j, ColUnitT) = RsIsiG.Fields("unit_cls")
+                    grid.TextMatrix(j, ColRemT) = ""
+                    grid.TextMatrix(j, ColPos) = k
+                    grid.TextMatrix(j, ColQtyPerCarton) = RsIsiG!number_entering
+                    grid.TextMatrix(j, ColNetWeight) = NetWeight
+                    grid.TextMatrix(j, ColGrossWeight) = GrossWeight
                     
-                    Grid.TextMatrix(i, ColPo) = RsIsiG.Fields("Po_No")
-                    Grid.TextMatrix(i, ColpoSeqNo) = RsIsiG.Fields("Seq_no")
+                    grid.TextMatrix(i, ColPo) = RsIsiG.Fields("Po_No")
+                    grid.TextMatrix(i, ColpoSeqNo) = RsIsiG.Fields("Seq_no")
                     
                     
-                    Grid.Cell(flexcpBackColor, j, ColCtr) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColContainerNo, j, ColAmount) = &H80000018
-                    Grid.Cell(flexcpBackColor, j, ColContainerNo) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColDrySize) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColQty) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColWeight) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColWGros) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColVol) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColPacking) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColCartonNo) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColLength) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColWidth) = &HFFFFFF
-                    Grid.Cell(flexcpBackColor, j, ColThickness) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColCtr) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColContainerNo, j, ColAmount) = &H80000018
+                    grid.Cell(flexcpBackColor, j, ColContainerNo) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColDrySize) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColQty) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColWeight) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColWGros) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColVol) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColPacking) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColCartonNo) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColLength) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColWidth) = &HFFFFFF
+                    grid.Cell(flexcpBackColor, j, ColThickness) = &HFFFFFF
                 Else
                     'k = k - 1
                 End If
             End If
             
-            Grid.TextMatrix(i, ColPos) = k
+            grid.TextMatrix(i, ColPos) = k
             
-            If Grid.TextMatrix(j, ColCounter) = "CHILD" Then
+            If grid.TextMatrix(j, ColCounter) = "CHILD" Then
             TotalHead CDbl(ColQty), CDbl(j), CDbl(colrem), 1
 '            TotalHead CDbl(ColWeight), CDbl(j), CDbl(ColWeight), 0
 '            TotalHead CDbl(ColWGros), CDbl(j), CDbl(ColWGros), 0
@@ -3138,7 +3139,7 @@ sql = " select distinct DM.Do_No, Dm.Cust_Code,isnull(om.Location_Code,DM.Cust_C
             " from DO_Master DM inner join Delivery_Order DO on DM.Do_No=DO.Do_no " & vbCrLf & _
             " inner join OrderEntry_Master OM on DO.Po_No=OM.Po_No " & vbCrLf & _
             " where DM.cust_code = '" & cboCust & _
-            "' and Do_Date >='" & Format(DtDel1, "yyyy-MM-dd") & _
+            "' and Do_Date >='" & Format(DTDel1, "yyyy-MM-dd") & _
             "' and Do_Date <= '" & Format(DtDel2, "yyyy-MM-dd") & _
             "' and (DM.Fix_Cls = 1) " & _
             "order by DM.Do_NO"
@@ -3168,14 +3169,14 @@ Private Sub clearmark(strNilai As String)
 
     Dim k As Long
     If strNilai = "D" Then
-        For k = 2 To Grid.Rows - 1
-            If Grid.TextMatrix(k, 1) = "S" Then
-                Grid.TextMatrix(k, 1) = ""
+        For k = 2 To grid.Rows - 1
+            If grid.TextMatrix(k, 1) = "S" Then
+                grid.TextMatrix(k, 1) = ""
             End If
         Next
     Else
-        For k = 2 To Grid.Rows - 1
-                Grid.TextMatrix(k, 1) = ""
+        For k = 2 To grid.Rows - 1
+                grid.TextMatrix(k, 1) = ""
         Next
     End If
 
@@ -3187,47 +3188,47 @@ Private Sub TotalHead(colubah As Long, rowubah As Long, colhasil As Long, chk As
     Dim X As Double
     
 Atas:
-    rowstart = (rowubah - CDbl(Grid.TextMatrix(rowubah, ColPos)))
+    rowstart = (rowubah - CDbl(grid.TextMatrix(rowubah, ColPos)))
     
-    Grid.TextMatrix(rowstart, colubah) = 0
+    grid.TextMatrix(rowstart, colubah) = 0
     
     If chk = 1 Then
-        Grid.TextMatrix(rowstart, ColAmount) = 0
-        Grid.TextMatrix(rowubah, ColAmount) = uf_Trunc(CDbl(Grid.TextMatrix(rowubah, colubah)) * CDbl(Grid.TextMatrix(rowubah, ColPrice)), gi_decimalDigitAmountIDR)
-        Grid.TextMatrix(rowubah, ColAmount) = Format(Grid.TextMatrix(rowubah, ColAmount), gs_formatAmountIDR)
+        grid.TextMatrix(rowstart, ColAmount) = 0
+        grid.TextMatrix(rowubah, ColAmount) = uf_Trunc(CDbl(grid.TextMatrix(rowubah, colubah)) * CDbl(grid.TextMatrix(rowubah, ColPrice)), gi_decimalDigitAmountIDR)
+        grid.TextMatrix(rowubah, ColAmount) = Format(grid.TextMatrix(rowubah, ColAmount), gs_formatAmountIDR)
     End If
     X = 0
-    For i = rowstart To CDbl(rowstart + CDbl(Grid.TextMatrix(rowstart, ColPos)))
+    For i = rowstart To CDbl(rowstart + CDbl(grid.TextMatrix(rowstart, ColPos)))
         
-        Grid.TextMatrix(rowstart, colubah) = CDbl(Grid.TextMatrix(rowstart, colubah)) + CDbl(IIf(Trim(Grid.TextMatrix(i, colubah)) = "", 0, Grid.TextMatrix(i, colubah)))
-        If Grid.TextMatrix(i, ColPip) <> "XAXAXA" Then
-            X = X + CDbl(IIf(Trim(Grid.TextMatrix(i, colubah)) = "", 0, Grid.TextMatrix(i, colubah)))
+        grid.TextMatrix(rowstart, colubah) = CDbl(grid.TextMatrix(rowstart, colubah)) + CDbl(IIf(Trim(grid.TextMatrix(i, colubah)) = "", 0, grid.TextMatrix(i, colubah)))
+        If grid.TextMatrix(i, ColPip) <> "XAXAXA" Then
+            X = X + CDbl(IIf(Trim(grid.TextMatrix(i, colubah)) = "", 0, grid.TextMatrix(i, colubah)))
         End If
         If chk = 1 Then
-            Grid.TextMatrix(rowstart, ColAmount) = CDbl(Grid.TextMatrix(rowstart, ColAmount)) + CDbl(Grid.TextMatrix(i, ColAmount))
-            Grid.TextMatrix(rowstart, ColAmount) = Format(Grid.TextMatrix(rowstart, ColAmount), gs_formatAmountIDR)
+            grid.TextMatrix(rowstart, ColAmount) = CDbl(grid.TextMatrix(rowstart, ColAmount)) + CDbl(grid.TextMatrix(i, ColAmount))
+            grid.TextMatrix(rowstart, ColAmount) = Format(grid.TextMatrix(rowstart, ColAmount), gs_formatAmountIDR)
         End If
     Next
     
     If colubah = ColQty Then
-        Grid.TextMatrix(rowstart, colubah) = Format(Grid.TextMatrix(rowstart, colubah), gs_formatQty)
+        grid.TextMatrix(rowstart, colubah) = Format(grid.TextMatrix(rowstart, colubah), gs_formatQty)
     ElseIf colubah = ColWeight Or colubah = ColWGros Then
-        Grid.TextMatrix(rowstart, colubah) = Format(Grid.TextMatrix(rowstart, colubah), gs_formatWeight)
+        grid.TextMatrix(rowstart, colubah) = Format(grid.TextMatrix(rowstart, colubah), gs_formatWeight)
     ElseIf colubah = ColPacking Then
-        Grid.TextMatrix(rowstart, colubah) = Format(Grid.TextMatrix(rowstart, colubah), gs_formatBox)
+        grid.TextMatrix(rowstart, colubah) = Format(grid.TextMatrix(rowstart, colubah), gs_formatBox)
     ElseIf colubah = ColVol Then
-        Grid.TextMatrix(rowstart, colubah) = Format(Grid.TextMatrix(rowstart, colubah), gs_formatVolume)
+        grid.TextMatrix(rowstart, colubah) = Format(grid.TextMatrix(rowstart, colubah), gs_formatVolume)
     ElseIf colubah = ColLength Then
-        Grid.TextMatrix(rowstart, colubah) = Format(Grid.TextMatrix(rowstart, colubah), gs_formatLength)
+        grid.TextMatrix(rowstart, colubah) = Format(grid.TextMatrix(rowstart, colubah), gs_formatLength)
     ElseIf colubah = ColWidth Then
-        Grid.TextMatrix(rowstart, colubah) = Format(Grid.TextMatrix(rowstart, colubah), gs_formatWidth)
+        grid.TextMatrix(rowstart, colubah) = Format(grid.TextMatrix(rowstart, colubah), gs_formatWidth)
     ElseIf colubah = ColThickness Then
-        Grid.TextMatrix(rowstart, colubah) = Format(Grid.TextMatrix(rowstart, colubah), gs_formatThickness)
+        grid.TextMatrix(rowstart, colubah) = Format(grid.TextMatrix(rowstart, colubah), gs_formatThickness)
     End If
     
     If chk = 1 Then
-        Grid.TextMatrix(rowstart, colhasil) = CDbl(Grid.TextMatrix(rowstart, ColRemT)) - X
-        Grid.TextMatrix(rowstart, colhasil) = Format(Grid.TextMatrix(rowstart, colhasil), gs_formatQty)
+        grid.TextMatrix(rowstart, colhasil) = CDbl(grid.TextMatrix(rowstart, ColRemT)) - X
+        grid.TextMatrix(rowstart, colhasil) = Format(grid.TextMatrix(rowstart, colhasil), gs_formatQty)
     End If
 
 End Sub
@@ -3243,15 +3244,15 @@ Private Sub GrandTotal()
     ttweigtg = 0
     ttvol = 0
     
-    For i = 2 To Grid.Rows - 1
-        If Grid.TextMatrix(i, ColCounter) = "CHILD" Then
-            If Grid.Cell(flexcpChecked, i, ColCtr) = flexChecked Then
-                ttam = ttam + CDbl(Grid.TextMatrix(i, ColAmount))
-                ttqty = ttqty + CDbl(Grid.TextMatrix(i, ColQty))
-                ttctnqty = ttctnqty + CDbl(Grid.TextMatrix(i, ColPacking))
-                ttweight = ttweight + CDbl(Grid.TextMatrix(i, ColWeight))
-                ttweigtg = ttweigtg + CDbl(Grid.TextMatrix(i, ColWGros))
-                ttvol = ttvol + CDbl(Grid.TextMatrix(i, ColVol))
+    For i = 2 To grid.Rows - 1
+        If grid.TextMatrix(i, ColCounter) = "CHILD" Then
+            If grid.Cell(flexcpChecked, i, ColCtr) = flexChecked Then
+                ttam = ttam + CDbl(grid.TextMatrix(i, ColAmount))
+                ttqty = ttqty + CDbl(grid.TextMatrix(i, ColQty))
+                ttctnqty = ttctnqty + CDbl(grid.TextMatrix(i, ColPacking))
+                ttweight = ttweight + CDbl(grid.TextMatrix(i, ColWeight))
+                ttweigtg = ttweigtg + CDbl(grid.TextMatrix(i, ColWGros))
+                ttvol = ttvol + CDbl(grid.TextMatrix(i, ColVol))
             End If
         End If
     Next
@@ -3307,8 +3308,8 @@ End Function
 
 Private Sub CboCust_Change()
     
-    lblErrMsg = ""
-    DtDel1.Value = Date
+    LblErrMsg = ""
+    DTDel1.Value = Date
     DtDel2.Value = Date
     DtStuffing.Value = Date
     DtPacking.Value = Date
@@ -3324,7 +3325,7 @@ Private Sub CboCust_Change()
         sql = "select distinct Do_No, Cust_Code " & _
             "from DO_Master where " & _
             "cust_code = '" & cboCust & _
-            "' and Do_Date >='" & Format(DtDel1, "yyyy-MM-dd") & _
+            "' and Do_Date >='" & Format(DTDel1, "yyyy-MM-dd") & _
             "' and Do_Date <= '" & Format(DtDel2, "yyyy-MM-dd") & _
             "' and (Fix_Cls = 1) " & _
             "order by Do_NO"
@@ -3342,7 +3343,7 @@ Private Sub CboCust_Change()
     Else
         lblCust.Text = ""
         cboPONo.clear
-        cboPacking.clear
+        CboPacking.clear
     End If
     
 End Sub
@@ -3355,7 +3356,7 @@ End Sub
 
 Private Sub cboDelPlace_Change()
 
-    lblErrMsg = ""
+    LblErrMsg = ""
     If cboDelPlace.matchFound Then
         lblDelPlace.Caption = cboDelPlace.List(cboDelPlace.ListIndex, 1)
         TxtFinal = cboDelPlace.List(cboDelPlace.ListIndex, 2)
@@ -3367,10 +3368,10 @@ Private Sub cboDelPlace_Change()
 End Sub
 
 Private Sub cboFactory_Change(Index As Integer)
-lblErrMsg.Caption = ""
+LblErrMsg.Caption = ""
 
     If cboFactory(4).ListIndex <> -1 Then
-        txtFactoryName.Text = cboFactory(4).Column(1)
+        TxtFactoryName.Text = cboFactory(4).Column(1)
     End If
 
 End Sub
@@ -3386,8 +3387,8 @@ Private Sub cboNotify_Change()
 End Sub
 
 Private Sub cboPacking_Change()
-    TxtPacNo.Text = cboPacking.Text
-    If cboPacking.matchFound Then
+    TxtPacNo.Text = CboPacking.Text
+    If CboPacking.matchFound Then
         IsiDataPacking
     Else
         IsiDefaultValue
@@ -3400,7 +3401,7 @@ End Sub
 
 Private Sub cboPacking_DblClick(Cancel As MSForms.ReturnBoolean)
 
-    If cboPacking.locked Then cboPacking.locked = False Else cboPacking.locked = True
+    If CboPacking.locked Then CboPacking.locked = False Else CboPacking.locked = True
 
 End Sub
 
@@ -3408,10 +3409,10 @@ Private Sub cboPaymentTerm_Click()
     
     If cboPaymentTerm.matchFound Then
         lblTerm.Caption = cboPaymentTerm.List(cboPaymentTerm.ListIndex, 1)
-        TxtPaymentTerm.Text = cboPaymentTerm.List(cboPaymentTerm.ListIndex, 1)
+        txtPaymentTerm.Text = cboPaymentTerm.List(cboPaymentTerm.ListIndex, 1)
     Else
         lblTerm.Caption = ""
-        TxtPaymentTerm.Text = ""
+        txtPaymentTerm.Text = ""
     End If
     
 End Sub
@@ -3425,7 +3426,7 @@ Private Sub cboPlaceofDestination_Change()
 End Sub
 
 Private Sub CboPOnO_Change()
-    If cboPONo.matchFound And cboPONo.ListIndex > 0 And Not cboPacking.matchFound Then
+    If cboPONo.matchFound And cboPONo.ListIndex > 0 And Not CboPacking.matchFound Then
         cboNotify = cboPONo.Column(1)
         cboDelPlace = cboPONo.Column(1)
     End If
@@ -3436,7 +3437,7 @@ Private Sub cbopono_Click()
             
     
     sql = "select packing_no from packing_master where cust_code = '" & cboCust.Text & "' " & vbCrLf & _
-            "and etd >= '" & Format(DtDel1.Value, "yyyy-MM-dd") & "' " & vbCrLf & _
+            "and etd >= '" & Format(DTDel1.Value, "yyyy-MM-dd") & "' " & vbCrLf & _
             "and etd <= '" & Format(DtDel2.Value, "yyyy-MM-dd") & "' "
             If cboPONo.Text <> "ALL" Then
             sql = sql & " AND LIST_DO like '%" & cboPONo & "%' "
@@ -3446,13 +3447,13 @@ Private Sub cbopono_Click()
         If CekSql(sql) Then
             IsiComboPacking
         Else
-            cboPacking.clear
+            CboPacking.clear
         End If
 End Sub
 
 Private Sub cboStatus_Click()
 'On Error GoTo MsgError
-lblErrMsg = ""
+LblErrMsg = ""
 MousePointer = vbHourglass
     
     CmdCreate.Caption = cboStatus.Text
@@ -3462,11 +3463,11 @@ MousePointer = vbHourglass
         ClearPacking
         'GeneratePackingNo
         IsiDefaultValue
-        cboPacking.clear
-        cboPacking.Text = ""
+        CboPacking.clear
+        CboPacking.Text = ""
     Else
         IsiComboPacking
-        cboPacking.Text = ""
+        CboPacking.Text = ""
     End If
     
     Header
@@ -3475,11 +3476,11 @@ MousePointer = vbHourglass
 Exit Sub
 MsgError:
 MousePointer = vbDefault
-lblErrMsg = err.number & " " & err.Description
+LblErrMsg = err.number & " " & err.Description
 End Sub
 
 Private Sub cboTrans_Change()
-    Select Case cboTrans.ListIndex
+    Select Case CboTrans.ListIndex
     Case 1
         lblCaption(9).Caption = "First Flight"
         lblCaption(10).Caption = "Second Flight"
@@ -3493,7 +3494,7 @@ Private Sub cboTrans_Change()
 End Sub
 
 Private Sub CboTrans_Click()
-    Select Case cboTrans.ListIndex
+    Select Case CboTrans.ListIndex
     Case 1
         lblCaption(9).Caption = "First Flight"
         lblCaption(10).Caption = "Second Flight"
@@ -3518,7 +3519,7 @@ End Sub
 Private Sub cmdClear_Click()
     
     cboCust.Text = ""
-    TxtPacNo.Text = cboPacking.Text
+    TxtPacNo.Text = CboPacking.Text
     If cboStatus.ListIndex = 1 Then cboStatus.ListIndex = 0
     IsiDefaultValue
     
@@ -3528,42 +3529,42 @@ Private Sub CmdCreate_Click()
     
     Dim adoRs As New ADODB.Recordset
     
-    lblErrMsg = ""
+    LblErrMsg = ""
     Me.MousePointer = vbHourglass
     
-    If Trim(cboPacking.Text) = "" Then
-        lblErrMsg = DisplayMsg(4010)
+    If Trim(CboPacking.Text) = "" Then
+        LblErrMsg = DisplayMsg(4010)
         Me.MousePointer = vbDefault
-        cboPacking.SetFocus
+        CboPacking.SetFocus
         Exit Sub
     End If
     
     If cboCust.matchFound = False Then
-        lblErrMsg = DisplayMsg(4072)
+        LblErrMsg = DisplayMsg(4072)
         cboCust.SetFocus
         Me.MousePointer = vbDefault
         Exit Sub
     End If
-    If cboPacking = "" Then
-    lblErrMsg = DisplayMsg(8130)
+    If CboPacking = "" Then
+    LblErrMsg = DisplayMsg(8130)
         cboCust.SetFocus
         Me.MousePointer = vbDefault
         Exit Sub
     
     End If
     If cboPaymentTerm = "" Then
-        lblErrMsg = DisplayMsg(8123)
+        LblErrMsg = DisplayMsg(8123)
         cboPaymentTerm.SetFocus
         Me.MousePointer = vbDefault
         Exit Sub
     ElseIf cboPaymentTerm.matchFound = False Then
-        lblErrMsg = DisplayMsg(8123)
+        LblErrMsg = DisplayMsg(8123)
         cboPaymentTerm.SetFocus
         Me.MousePointer = vbDefault
         Exit Sub
     End If
     If cboDelPlace.matchFound = False Then
-        lblErrMsg = DisplayMsg(4072)
+        LblErrMsg = DisplayMsg(4072)
         cboDelPlace.SetFocus
         Me.MousePointer = vbDefault
         Exit Sub
@@ -3573,31 +3574,31 @@ Private Sub CmdCreate_Click()
     If cboStatus.ListIndex = 1 Then 'Create Baru
     
         If Trim(cboPONo.Text) = "" Then
-            lblErrMsg = DisplayMsg(1048)
+            LblErrMsg = DisplayMsg(1048)
             Me.MousePointer = vbDefault
             cboPONo.SetFocus
             Exit Sub
         End If
         If Trim(cbopackingtype.Text) = "" Then
-            lblErrMsg = DisplayMsg(8130)
+            LblErrMsg = DisplayMsg(8130)
             MousePointer = vbDefault
             cbopackingtype.SetFocus
             Exit Sub
         ElseIf cbopackingtype.matchFound = False Then
-            lblErrMsg = DisplayMsg(8131)
+            LblErrMsg = DisplayMsg(8131)
             MousePointer = vbDefault
-            cboPacking.SetFocus
+            CboPacking.SetFocus
             Exit Sub
         End If
         
-        sql = "select packing_no from packing_master  where packing_no  = '" & Trim(cboPacking) & "'"
+        sql = "select packing_no from packing_master  where packing_no  = '" & Trim(CboPacking) & "'"
         adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
         If Not adoRs.EOF Then
-            lblErrMsg = DisplayMsg(1023)
+            LblErrMsg = DisplayMsg(1023)
             Me.MousePointer = vbDefault
             adoRs.Close
             Set adoRs = Nothing
-            cboPacking.SetFocus
+            CboPacking.SetFocus
             Exit Sub
         End If
         
@@ -3620,7 +3621,7 @@ Private Sub CmdCreate_Click()
             cboDelPlace.Text & "', '" & _
             Trim(TxtTitle.Text) & "', '" & _
             cboNotify.Text & "', '" & _
-            cboPacking.Text & "', '" & _
+            CboPacking.Text & "', '" & _
             Format(DtPacking.Value, "yyyy-MM-dd") & "', '" & _
             Format(DtStuffing.Value, "yyyy-MM-dd") & "', '" & _
             Format(DtEtd.Value, "yyyy-MM-dd") & "', '" & _
@@ -3629,8 +3630,8 @@ Private Sub CmdCreate_Click()
             cboPaymentCode.List(cboPaymentCode.ListIndex, 1) & "', " & _
             Val(TxtDay.Text) & ", '" & _
             cboPaymentTerm.Text & "', '" & _
-            TxtPaymentTerm.Text & "', '" & _
-            cboTrans.List(cboTrans.ListIndex, 1) & "', '" & _
+            txtPaymentTerm.Text & "', '" & _
+            CboTrans.List(CboTrans.ListIndex, 1) & "', '" & _
             TxtForwarder.Text & "', '" & _
             TxtVessel.Text & "', '" & _
             TxtMotherVessel.Text & "', '" & _
@@ -3639,7 +3640,7 @@ Private Sub CmdCreate_Click()
             TxtTo.Text & "', '" & _
             TxtFinal.Text & "', '" & _
             TxtCaseMark(0).Text & "', '" & TxtCaseMark(1).Text & "', '" & TxtCaseMark(2).Text & "', '" & TxtCaseMark(3).Text & "', '" & TxtCaseMark(4).Text & "', '" & _
-            Trim(TxtRemarks.Text) & "', '" & cbopackingtype.Text & "','" & Trim(cboPlaceofDestination.Text) & "')"
+            Trim(txtremarks.Text) & "', '" & cbopackingtype.Text & "','" & Trim(cboPlaceofDestination.Text) & "')"
             'cboWH.Text & "')"
         
         Db.Execute sql
@@ -3653,7 +3654,7 @@ Private Sub CmdCreate_Click()
     If CekInvoice Then
         IsiGridHead
         GrandTotal
-        lblErrMsg = DisplayMsg(4110)
+        LblErrMsg = DisplayMsg(4110)
         Me.MousePointer = vbDefault
         Exit Sub
     End If
@@ -3667,15 +3668,15 @@ End Sub
 Sub IsiHeader()
 Dim RHeader As New ADODB.Recordset
 Set RHeader = Nothing
-sql = "SELECT * FORM Packing_Master WHRE ltrim(Packing_No)='" & cboPacking & "'"
+sql = "SELECT * FORM Packing_Master WHRE ltrim(Packing_No)='" & CboPacking & "'"
 
 End Sub
 Private Sub CmdPreview_Click()
     
     Me.MousePointer = vbHourglass
     
-    Call PackingPrintStatus("'" & cboPacking.Text & "'")
-    Call PackingPrint("'" & cboPacking.Text & "'")
+    Call PackingPrintStatus("'" & CboPacking.Text & "'")
+    Call PackingPrint("'" & CboPacking.Text & "'")
     
     Me.MousePointer = vbDefault
     
@@ -3685,7 +3686,7 @@ Private Sub cmdserialnumber_Click()
 
     Me.MousePointer = vbHourglass
     
-    Call PackingPrintStatus("'" & cboPacking.Text & "'")
+    Call PackingPrintStatus("'" & CboPacking.Text & "'")
 '    Call PackingPrint("'" & cboPacking.Text & "'")
     
     Dim application As New CRAXDDRT.application
@@ -3710,7 +3711,7 @@ Private Sub cmdserialnumber_Click()
                       "     Inner Join Trade_Master TM1 on PM.Consignee=TM1.Trade_Code " & vbCrLf & _
                       "     Inner Join Item_Master IM on PD.Item_Code=IM.Item_Code " & vbCrLf & _
                       "     Left Join PaymentTerm_Cls PT on PM.Payment_Terms=PT.PaymentTerm_Cls " & vbCrLf & _
-                      "     Where ltrim(PM.Packing_No)='" & Trim(cboPacking.Text) & "' " & vbCrLf & _
+                      "     Where ltrim(PM.Packing_No)='" & Trim(CboPacking.Text) & "' " & vbCrLf & _
                       "     Order By PM.Packing_No, PD.PackingSeq_No, PD.Item_Code"
 
 
@@ -3730,7 +3731,7 @@ Private Sub cmdserialnumber_Click()
 
         reportcode = "PackingList_SerialNumber"
         printorient = 1
-        packing_no = cboPacking.Text
+        packing_no = CboPacking.Text
         With Rpt.CRViewer1
             .ReportSource = report
             .ViewReport
@@ -3753,7 +3754,7 @@ Dim rsCompany As New ADODB.Recordset
 Dim NO As Integer, Idx As Integer, intCount As Integer, TQty As Double, IntPos As Integer
 
 On Error GoTo ErrHandlerExcel
-lblErrMsg.Caption = ""
+LblErrMsg.Caption = ""
 DoEvents
 
 
@@ -3762,7 +3763,7 @@ sql = " Select PD.Order_No SI_No,PM.Packing_Date,PM.Final_Destination, PD.Qty," 
             "       From Packing_Master PM  " & vbCrLf & _
             "           Inner Join Packing_Detail PD On PM.Packing_No=PD.Packing_No " & vbCrLf & _
             "           Inner Join Item_Master IM on PD.Item_Code=Im.Item_Code " & vbCrLf & _
-            "       Where ltrim(PM.Packing_No)='" & Trim(cboPacking) & "'"
+            "       Where ltrim(PM.Packing_No)='" & Trim(CboPacking) & "'"
 
 
 rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
@@ -3957,7 +3958,7 @@ ErrHandlerExcel:
 Screen.MousePointer = vbDefault
 If rsCek.State <> adStateClosed Then rsCek.Close
 Set rsCek = Nothing
-lblErrMsg.Caption = "[" & err.number & "] " & err.Description
+LblErrMsg.Caption = "[" & err.number & "] " & err.Description
 err.clear
         
 End Sub
@@ -3979,40 +3980,40 @@ Private Sub CmdSubmit_Click()
     
     Me.MousePointer = vbHourglass
     If lblFix <> "" Then
-        lblErrMsg = DisplayMsg(4046)
+        LblErrMsg = DisplayMsg(4046)
         Me.MousePointer = vbDefault
         Exit Sub
     End If
      
     If hakUpdate(Me.Name) = 0 Then _
-    lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+    LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
     
     If CekInvoice Then
-        lblErrMsg = DisplayMsg(4110)
+        LblErrMsg = DisplayMsg(4110)
         Me.MousePointer = vbDefault
         Exit Sub
     End If
     
     '#20071004 Yudha, check data surat jalan yang item nya beda dengan order entry
     If uf_check_SuratJalan_OrderDifferent = False Then
-        lblErrMsg = DisplayMsg("0079")
+        LblErrMsg = DisplayMsg("0079")
         Me.MousePointer = vbDefault
         Exit Sub
     End If
     
     '20080108 Dudi.. Mengecek apakah sudah ada packing master atau belum
-    If Not CekSql("SELECT * FROM Packing_Master WHERE ltrim(Packing_No)='" & Trim(cboPacking.Text) & "'") Then
-        lblErrMsg = DisplayMsg("1038")
+    If Not CekSql("SELECT * FROM Packing_Master WHERE ltrim(Packing_No)='" & Trim(CboPacking.Text) & "'") Then
+        LblErrMsg = DisplayMsg("1038")
         Me.MousePointer = vbDefault
         Exit Sub
     End If
     
     'cek Qty di grid gak boleh 0 & cek CartonNo ga boleh kosong
-    For X = 2 To Grid.Rows - 1
-        If Grid.Cell(flexcpChecked, X, ColCtr) = flexChecked Then
-            If Grid.TextMatrix(X, ColCounter) = "CHILD" Then
-                If CDbl(Grid.TextMatrix(X, ColQty)) = 0 Then
-                    lblErrMsg = DisplayMsg(4043) & " 0 !"
+    For X = 2 To grid.Rows - 1
+        If grid.Cell(flexcpChecked, X, ColCtr) = flexChecked Then
+            If grid.TextMatrix(X, ColCounter) = "CHILD" Then
+                If CDbl(grid.TextMatrix(X, ColQty)) = 0 Then
+                    LblErrMsg = DisplayMsg(4043) & " 0 !"
                     Me.MousePointer = vbDefault
                     Exit Sub
 '                ElseIf Trim(grid.TextMatrix(x, ColCartonNo)) = "" Then
@@ -4045,8 +4046,8 @@ Private Sub CmdSubmit_Click()
         "Payment_Code = '" & cboPaymentCode.List(cboPaymentCode.ListIndex, 0) & "',  " & _
         "Payment_Days = " & Val(TxtDay.Text) & ", " & _
         "Payment_Terms = '" & Trim(cboPaymentTerm.Text) & "', " & _
-        "Payment = '" & Trim(TxtPaymentTerm) & "',  " & _
-        "Transportation_Cls = '" & cboTrans.List(cboTrans.ListIndex, 1) & "', " & _
+        "Payment = '" & Trim(txtPaymentTerm) & "',  " & _
+        "Transportation_Cls = '" & CboTrans.List(CboTrans.ListIndex, 1) & "', " & _
         "Forwarder = '" & Trim(TxtForwarder.Text) & "', " & _
         "Vessel = '" & Trim(TxtVessel.Text) & "', " & _
         "Mother_Vessel = '" & Trim(TxtMotherVessel.Text) & "', " & _
@@ -4061,28 +4062,28 @@ Private Sub CmdSubmit_Click()
         "POCaseMark3 = '" & TxtCaseMark(2).Text & "', " & _
         "POCaseMark4 = '" & TxtCaseMark(3).Text & "', " & _
         "POCaseMark5 = '" & TxtCaseMark(4).Text & "', " & _
-        "Remarks = '" & TxtRemarks.Text & "', " & _
+        "Remarks = '" & txtremarks.Text & "', " & _
         "PackingStyle_Cls = '" & cbopackingtype.Text & "', " & _
         "Final_Destination_Cls = '" & Trim(cboPlaceofDestination.Text) & "',"
         '"WHCode = '" & cboWH.Text & "', "
         sql = sql & "Last_Update=getdate()," & _
         "Last_User='" & userLogin & "' " & _
-        "Where ltrim(Packing_No) = '" & Trim(cboPacking.Text) & "'"
+        "Where ltrim(Packing_No) = '" & Trim(CboPacking.Text) & "'"
                   
     Db.Execute sql
     
-    If Grid.Rows > 2 Then
+    If grid.Rows > 2 Then
     
-        sql = "delete from packing_detail where ltrim(packing_no) = '" & Trim(cboPacking.Text) & "'"
+        sql = "delete from packing_detail where ltrim(packing_no) = '" & Trim(CboPacking.Text) & "'"
         Db.Execute sql
         
         j = 1
         k = 1
-        For i = 2 To Grid.Rows - 1
+        For i = 2 To grid.Rows - 1
             
-            If Grid.TextMatrix(i, ColCounter) = "HEAD" Then k = Grid.TextMatrix(i, ColSeq)
+            If grid.TextMatrix(i, ColCounter) = "HEAD" Then k = grid.TextMatrix(i, ColSeq)
             
-                If Grid.Cell(flexcpChecked, i, ColCtr) = flexChecked Then
+                If grid.Cell(flexcpChecked, i, ColCtr) = flexChecked Then
      
 '                    If Trim(grid.TextMatrix(i, ColContainerNo)) = "" Then
 '                        LblErrMsg = DisplayMsg(4103)
@@ -4117,32 +4118,32 @@ Private Sub CmdSubmit_Click()
                         "Amount, Order_No, Order_SeqNo) "
                         
                     sql = sql & "Values ('" & _
-                        cboPacking.Text & "', '" & _
-                        Trim(Grid.TextMatrix(i, ColContainerNo)) & "', '" & _
-                        Trim(Grid.TextMatrix(i, ColDrySize)) & "', " & _
+                        CboPacking.Text & "', '" & _
+                        Trim(grid.TextMatrix(i, ColContainerNo)) & "', '" & _
+                        Trim(grid.TextMatrix(i, ColDrySize)) & "', " & _
                         j & ", '" & _
-                        Trim(Grid.TextMatrix(CDbl(i) - CDbl(Grid.TextMatrix(i, ColPos)), ColOrder)) & "', " & _
+                        Trim(grid.TextMatrix(CDbl(i) - CDbl(grid.TextMatrix(i, ColPos)), ColOrder)) & "', " & _
                         k & ", '" & _
-                        Trim(Grid.TextMatrix(CDbl(i) - CDbl(Grid.TextMatrix(i, ColPos)), ColProd)) & "', '"
+                        Trim(grid.TextMatrix(CDbl(i) - CDbl(grid.TextMatrix(i, ColPos)), ColProd)) & "', '"
                     sql = sql & _
-                        Trim(Grid.TextMatrix(i, ColSerialFrom)) & "','" & _
-                        Trim(Grid.TextMatrix(i, ColSerialTo)) & "','" & _
-                        Trim(Grid.TextMatrix(CDbl(i) - CDbl(Grid.TextMatrix(i, ColPos)), ColMaker)) & "', " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColQty))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColLength))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColWidth))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColThickness))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColWeight))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColWGros))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColVol))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColPacking))) & ", '" & _
-                        Trim(Grid.TextMatrix(i, ColCartonNo)) & "', '1', '" & _
-                        Trim(Grid.TextMatrix(CDbl(i) - CDbl(Grid.TextMatrix(i, ColPos)), ColUnitT)) & "', '" & _
-                        Trim(Grid.TextMatrix(CDbl(i) - CDbl(Grid.TextMatrix(i, ColPos)), ColCurrT)) & "', " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColPrice))) & ", " & _
-                        CDbl(Trim(Grid.TextMatrix(i, ColAmount))) & ",'" & _
-                        Trim(Grid.TextMatrix(CDbl(i) - CDbl(Grid.TextMatrix(i, ColPos)), ColPo)) & _
-                        "'," & Trim(Grid.TextMatrix(CDbl(i) - CDbl(Grid.TextMatrix(i, ColPos)), ColpoSeqNo)) & ")"
+                        Trim(grid.TextMatrix(i, ColSerialFrom)) & "','" & _
+                        Trim(grid.TextMatrix(i, ColSerialTo)) & "','" & _
+                        Trim(grid.TextMatrix(CDbl(i) - CDbl(grid.TextMatrix(i, ColPos)), ColMaker)) & "', " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColQty))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColLength))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColWidth))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColThickness))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColWeight))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColWGros))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColVol))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColPacking))) & ", '" & _
+                        Trim(grid.TextMatrix(i, ColCartonNo)) & "', '1', '" & _
+                        Trim(grid.TextMatrix(CDbl(i) - CDbl(grid.TextMatrix(i, ColPos)), ColUnitT)) & "', '" & _
+                        Trim(grid.TextMatrix(CDbl(i) - CDbl(grid.TextMatrix(i, ColPos)), ColCurrT)) & "', " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColPrice))) & ", " & _
+                        CDbl(Trim(grid.TextMatrix(i, ColAmount))) & ",'" & _
+                        Trim(grid.TextMatrix(CDbl(i) - CDbl(grid.TextMatrix(i, ColPos)), ColPo)) & _
+                        "'," & Trim(grid.TextMatrix(CDbl(i) - CDbl(grid.TextMatrix(i, ColPos)), ColpoSeqNo)) & ")"
                         
                     Db.Execute sql
                     j = j + 1
@@ -4154,16 +4155,16 @@ Private Sub CmdSubmit_Click()
             "List_DoDate = '" & listPODate & "', " & _
             "Last_Update=getdate()," & _
             "Last_User='" & userLogin & "' " & _
-            "Where ltrim(Packing_No) = '" & Trim(cboPacking.Text) & "'"
+            "Where ltrim(Packing_No) = '" & Trim(CboPacking.Text) & "'"
         Db.Execute sql
         
         Db.CommitTrans
         IsiGridHead
         GrandTotal
-        lblErrMsg = DisplayMsg(1000)
+        LblErrMsg = DisplayMsg(1000)
     Else
         Db.RollbackTrans
-        lblErrMsg = DisplayMsg(5012)
+        LblErrMsg = DisplayMsg(5012)
     End If
     Me.MousePointer = vbDefault
 
@@ -4174,7 +4175,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
     If ErrMsg = "" Then
         Unload Me
     Else
-        lblErrMsg.Caption = ErrMsg
+        LblErrMsg.Caption = ErrMsg
     End If
 
 End Sub
@@ -4186,7 +4187,7 @@ Private Sub DTDel1_Change()
         If cboStatus.Text = "Update" Then IsiComboPacking
     Else
         cboPONo.clear
-        cboPacking.clear
+        CboPacking.clear
     End If
 
 End Sub
@@ -4198,7 +4199,7 @@ Private Sub DtDel2_Change()
         If cboStatus.Text = "Update" Then IsiComboPacking
     Else
         cboPONo.clear
-        cboPacking.clear
+        CboPacking.clear
     End If
 
 End Sub
@@ -4208,7 +4209,7 @@ Private Sub DtEtd_Change()
 End Sub
 
 Private Sub DtPacking_Change()
-If cboPacking.Text = "" Then
+If CboPacking.Text = "" Then
     'GeneratePackingNo 'Pak toha minta dimanualkan tidak usah outomatic
     DtStuffing.Value = DtPacking.Value
 End If
@@ -4219,7 +4220,7 @@ Private Sub Form_Load()
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
     
-    DtDel1.Value = Date
+    DTDel1.Value = Date
     DtDel2.Value = Date
     DtStuffing.Value = Date
     DtPacking.Value = Date
@@ -4239,265 +4240,265 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 
-    lblErrMsg = ""
+    LblErrMsg = ""
     Dim cr As String
     cr = ""
-    cr = Grid.TextMatrix(Row, ColCurrT)
-    For i = 2 To Grid.Rows - 1
-        If Grid.TextMatrix(i, ColCounter) = "CHILD" Then
-            If Grid.Cell(flexcpChecked, i, ColCtr) = flexChecked Then
-                If Grid.TextMatrix(i, ColCurrT) <> cr Then
-                    Grid.Cell(flexcpChecked, Row, ColCtr) = flexUnchecked
-                    lblErrMsg = DisplayMsg(44)
+    cr = grid.TextMatrix(Row, ColCurrT)
+    For i = 2 To grid.Rows - 1
+        If grid.TextMatrix(i, ColCounter) = "CHILD" Then
+            If grid.Cell(flexcpChecked, i, ColCtr) = flexChecked Then
+                If grid.TextMatrix(i, ColCurrT) <> cr Then
+                    grid.Cell(flexcpChecked, Row, ColCtr) = flexUnchecked
+                    LblErrMsg = DisplayMsg(44)
                 End If
             End If
         End If
     Next
   
-    If Grid.Col = ColAsk Then
-        If Len(Grid.Text) > 1 Then Grid.Text = Left(Grid.Text, 1)
-        If Grid.Text = "C" Then
-            If Grid.TextMatrix(Grid.Row, ColRemT) <> 0 Then
-                Grid.Rows = Grid.Rows + 1
-                For i = Grid.Rows - 1 To Grid.Row + 2 Step -1
-                    Grid.Cell(flexcpChecked, i, ColCtr) = Grid.Cell(flexcpChecked, i - 1, ColCtr)
-                    Grid.TextMatrix(i, ColAsk) = Grid.TextMatrix(i - 1, ColAsk)
-                    Grid.TextMatrix(i, ColContainerNo) = Grid.TextMatrix(i - 1, ColContainerNo)
-                    Grid.TextMatrix(i, ColDrySize) = Grid.TextMatrix(i - 1, ColDrySize)
-                    Grid.TextMatrix(i, ColOrder) = Grid.TextMatrix(i - 1, ColOrder)
-                    Grid.TextMatrix(i, ColProd) = Grid.TextMatrix(i - 1, ColProd)
-                    Grid.TextMatrix(i, ColMaker) = Grid.TextMatrix(i - 1, ColMaker)
-                    Grid.TextMatrix(i, ColDesc) = Grid.TextMatrix(i - 1, ColDesc)
-                    Grid.TextMatrix(i, ColQty) = Grid.TextMatrix(i - 1, ColQty)
-                    Grid.TextMatrix(i, colrem) = Grid.TextMatrix(i - 1, colrem)
-                    Grid.TextMatrix(i, ColUnit) = Grid.TextMatrix(i - 1, ColUnit)
-                    Grid.TextMatrix(i, ColWeight) = Grid.TextMatrix(i - 1, ColWeight)
-                    Grid.TextMatrix(i, ColWGros) = Grid.TextMatrix(i - 1, ColWGros)
-                    Grid.TextMatrix(i, ColVol) = Grid.TextMatrix(i - 1, ColVol)
-                    Grid.TextMatrix(i, ColPacking) = Grid.TextMatrix(i - 1, ColPacking)
-                    Grid.TextMatrix(i, ColCartonNo) = Grid.TextMatrix(i - 1, ColCartonNo)
-                    Grid.TextMatrix(i, ColLength) = Grid.TextMatrix(i - 1, ColLength)
-                    Grid.TextMatrix(i, ColWidth) = Grid.TextMatrix(i - 1, ColWidth)
-                    Grid.TextMatrix(i, ColThickness) = Grid.TextMatrix(i - 1, ColThickness)
-                    Grid.TextMatrix(i, ColDelDate) = Grid.TextMatrix(i - 1, ColDelDate)
-                    Grid.TextMatrix(i, ColCurr) = Grid.TextMatrix(i - 1, ColCurr)
-                    Grid.TextMatrix(i, ColPrice) = Grid.TextMatrix(i - 1, ColPrice)
-                    Grid.TextMatrix(i, ColAmount) = Grid.TextMatrix(i - 1, ColAmount)
-                    Grid.TextMatrix(i, ColCounter) = Grid.TextMatrix(i - 1, ColCounter)
-                    Grid.TextMatrix(i, ColCurrT) = Grid.TextMatrix(i - 1, ColCurrT)
-                    Grid.TextMatrix(i, ColUnitT) = Grid.TextMatrix(i - 1, ColUnitT)
-                    Grid.TextMatrix(i, ColRemT) = Grid.TextMatrix(i - 1, ColRemT)
-                    Grid.TextMatrix(i, ColPos) = Grid.TextMatrix(i - 1, ColPos)
-                    Grid.TextMatrix(i, ColPip) = Grid.TextMatrix(i - 1, ColPip)
-                    Grid.TextMatrix(i, ColSeq) = Grid.TextMatrix(i - 1, ColSeq)
-                    Grid.TextMatrix(i, ColQtyPerCarton) = Grid.TextMatrix(i - 1, ColQtyPerCarton)
-                    Grid.TextMatrix(i, ColNetWeight) = Grid.TextMatrix(i - 1, ColNetWeight)
-                    Grid.TextMatrix(i, ColGrossWeight) = Grid.TextMatrix(i - 1, ColGrossWeight)
+    If grid.Col = ColAsk Then
+        If Len(grid.Text) > 1 Then grid.Text = Left(grid.Text, 1)
+        If grid.Text = "C" Then
+            If grid.TextMatrix(grid.Row, ColRemT) <> 0 Then
+                grid.Rows = grid.Rows + 1
+                For i = grid.Rows - 1 To grid.Row + 2 Step -1
+                    grid.Cell(flexcpChecked, i, ColCtr) = grid.Cell(flexcpChecked, i - 1, ColCtr)
+                    grid.TextMatrix(i, ColAsk) = grid.TextMatrix(i - 1, ColAsk)
+                    grid.TextMatrix(i, ColContainerNo) = grid.TextMatrix(i - 1, ColContainerNo)
+                    grid.TextMatrix(i, ColDrySize) = grid.TextMatrix(i - 1, ColDrySize)
+                    grid.TextMatrix(i, ColOrder) = grid.TextMatrix(i - 1, ColOrder)
+                    grid.TextMatrix(i, ColProd) = grid.TextMatrix(i - 1, ColProd)
+                    grid.TextMatrix(i, ColMaker) = grid.TextMatrix(i - 1, ColMaker)
+                    grid.TextMatrix(i, ColDesc) = grid.TextMatrix(i - 1, ColDesc)
+                    grid.TextMatrix(i, ColQty) = grid.TextMatrix(i - 1, ColQty)
+                    grid.TextMatrix(i, colrem) = grid.TextMatrix(i - 1, colrem)
+                    grid.TextMatrix(i, ColUnit) = grid.TextMatrix(i - 1, ColUnit)
+                    grid.TextMatrix(i, ColWeight) = grid.TextMatrix(i - 1, ColWeight)
+                    grid.TextMatrix(i, ColWGros) = grid.TextMatrix(i - 1, ColWGros)
+                    grid.TextMatrix(i, ColVol) = grid.TextMatrix(i - 1, ColVol)
+                    grid.TextMatrix(i, ColPacking) = grid.TextMatrix(i - 1, ColPacking)
+                    grid.TextMatrix(i, ColCartonNo) = grid.TextMatrix(i - 1, ColCartonNo)
+                    grid.TextMatrix(i, ColLength) = grid.TextMatrix(i - 1, ColLength)
+                    grid.TextMatrix(i, ColWidth) = grid.TextMatrix(i - 1, ColWidth)
+                    grid.TextMatrix(i, ColThickness) = grid.TextMatrix(i - 1, ColThickness)
+                    grid.TextMatrix(i, ColDelDate) = grid.TextMatrix(i - 1, ColDelDate)
+                    grid.TextMatrix(i, ColCurr) = grid.TextMatrix(i - 1, ColCurr)
+                    grid.TextMatrix(i, ColPrice) = grid.TextMatrix(i - 1, ColPrice)
+                    grid.TextMatrix(i, ColAmount) = grid.TextMatrix(i - 1, ColAmount)
+                    grid.TextMatrix(i, ColCounter) = grid.TextMatrix(i - 1, ColCounter)
+                    grid.TextMatrix(i, ColCurrT) = grid.TextMatrix(i - 1, ColCurrT)
+                    grid.TextMatrix(i, ColUnitT) = grid.TextMatrix(i - 1, ColUnitT)
+                    grid.TextMatrix(i, ColRemT) = grid.TextMatrix(i - 1, ColRemT)
+                    grid.TextMatrix(i, ColPos) = grid.TextMatrix(i - 1, ColPos)
+                    grid.TextMatrix(i, ColPip) = grid.TextMatrix(i - 1, ColPip)
+                    grid.TextMatrix(i, ColSeq) = grid.TextMatrix(i - 1, ColSeq)
+                    grid.TextMatrix(i, ColQtyPerCarton) = grid.TextMatrix(i - 1, ColQtyPerCarton)
+                    grid.TextMatrix(i, ColNetWeight) = grid.TextMatrix(i - 1, ColNetWeight)
+                    grid.TextMatrix(i, ColGrossWeight) = grid.TextMatrix(i - 1, ColGrossWeight)
                     'grid.TextMatrix(i, ColpoSeqNo) = grid.TextMatrix(i - 1, ColpoSeqNo)
                     
-                    If Grid.TextMatrix(i, ColCounter) = "HEAD" Then
-                        Grid.Cell(flexcpBackColor, i, ColContainerNo, i, ColAmount) = &H80000018
-                        Grid.Cell(flexcpBackColor, i, ColCtr, i, ColAmount) = &HE0E0E0
-                        Grid.Cell(flexcpBackColor, i, ColAsk) = &HFFFFFF
-                    ElseIf Grid.TextMatrix(i, ColCounter) = "CHILD" Then
-                        Grid.Cell(flexcpBackColor, i, ColCtr) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColAsk) = &H80000018
-                        Grid.Cell(flexcpBackColor, i, ColContainerNo, i, ColAmount) = &H80000018
-                        Grid.Cell(flexcpBackColor, i, ColContainerNo) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColDrySize) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColQty) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColWeight) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColWGros) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColVol) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColPacking) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColCartonNo) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColLength) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColWidth) = &HFFFFFF
-                        Grid.Cell(flexcpBackColor, i, ColThickness) = &HFFFFFF
+                    If grid.TextMatrix(i, ColCounter) = "HEAD" Then
+                        grid.Cell(flexcpBackColor, i, ColContainerNo, i, ColAmount) = &H80000018
+                        grid.Cell(flexcpBackColor, i, ColCtr, i, ColAmount) = &HE0E0E0
+                        grid.Cell(flexcpBackColor, i, ColAsk) = &HFFFFFF
+                    ElseIf grid.TextMatrix(i, ColCounter) = "CHILD" Then
+                        grid.Cell(flexcpBackColor, i, ColCtr) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColAsk) = &H80000018
+                        grid.Cell(flexcpBackColor, i, ColContainerNo, i, ColAmount) = &H80000018
+                        grid.Cell(flexcpBackColor, i, ColContainerNo) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColDrySize) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColQty) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColWeight) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColWGros) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColVol) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColPacking) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColCartonNo) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColLength) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColWidth) = &HFFFFFF
+                        grid.Cell(flexcpBackColor, i, ColThickness) = &HFFFFFF
                     End If
                 Next
                 
-                Grid.Cell(flexcpChecked, Grid.Row + 1, ColCtr) = flexUnchecked
-                Grid.TextMatrix(Grid.Row + 1, ColAsk) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColContainerNo) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColDrySize) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColOrder) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColProd) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColDesc) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColQty) = Format(0, gs_formatQty)
-                Grid.TextMatrix(Grid.Row + 1, colrem) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColUnit) = Grid.TextMatrix(Grid.Row, ColUnit)
-                Grid.TextMatrix(Grid.Row + 1, ColWeight) = Format(0, gs_formatWeight)
-                Grid.TextMatrix(Grid.Row + 1, ColWGros) = Format(0, gs_formatWeight)
-                Grid.TextMatrix(Grid.Row + 1, ColVol) = Format(0, gs_formatVolume)
-                Grid.TextMatrix(Grid.Row + 1, ColPacking) = Format(0, gs_formatBox)
-                Grid.TextMatrix(Grid.Row + 1, ColCartonNo) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColDelDate) = ""
-                Grid.TextMatrix(Grid.Row + 1, ColCurr) = Grid.TextMatrix(Grid.Row, ColCurr)
-                Grid.TextMatrix(Grid.Row + 1, ColPrice) = Grid.TextMatrix(Grid.Row, ColPrice)
-                Grid.TextMatrix(Grid.Row + 1, ColAmount) = Format(0, gs_formatAmountIDR)
-                Grid.TextMatrix(Grid.Row + 1, ColCounter) = "CHILD"
-                Grid.TextMatrix(i, ColCurrT) = Grid.TextMatrix(Grid.Row, ColCurrT)
-                Grid.TextMatrix(i, ColUnitT) = Grid.TextMatrix(Grid.Row, ColUnitT)
-                Grid.TextMatrix(i, ColUnitT) = Grid.TextMatrix(Grid.Row, ColUnitT)
+                grid.Cell(flexcpChecked, grid.Row + 1, ColCtr) = flexUnchecked
+                grid.TextMatrix(grid.Row + 1, ColAsk) = ""
+                grid.TextMatrix(grid.Row + 1, ColContainerNo) = ""
+                grid.TextMatrix(grid.Row + 1, ColDrySize) = ""
+                grid.TextMatrix(grid.Row + 1, ColOrder) = ""
+                grid.TextMatrix(grid.Row + 1, ColProd) = ""
+                grid.TextMatrix(grid.Row + 1, ColDesc) = ""
+                grid.TextMatrix(grid.Row + 1, ColQty) = Format(0, gs_formatQty)
+                grid.TextMatrix(grid.Row + 1, colrem) = ""
+                grid.TextMatrix(grid.Row + 1, ColUnit) = grid.TextMatrix(grid.Row, ColUnit)
+                grid.TextMatrix(grid.Row + 1, ColWeight) = Format(0, gs_formatWeight)
+                grid.TextMatrix(grid.Row + 1, ColWGros) = Format(0, gs_formatWeight)
+                grid.TextMatrix(grid.Row + 1, ColVol) = Format(0, gs_formatVolume)
+                grid.TextMatrix(grid.Row + 1, ColPacking) = Format(0, gs_formatBox)
+                grid.TextMatrix(grid.Row + 1, ColCartonNo) = ""
+                grid.TextMatrix(grid.Row + 1, ColDelDate) = ""
+                grid.TextMatrix(grid.Row + 1, ColCurr) = grid.TextMatrix(grid.Row, ColCurr)
+                grid.TextMatrix(grid.Row + 1, ColPrice) = grid.TextMatrix(grid.Row, ColPrice)
+                grid.TextMatrix(grid.Row + 1, ColAmount) = Format(0, gs_formatAmountIDR)
+                grid.TextMatrix(grid.Row + 1, ColCounter) = "CHILD"
+                grid.TextMatrix(i, ColCurrT) = grid.TextMatrix(grid.Row, ColCurrT)
+                grid.TextMatrix(i, ColUnitT) = grid.TextMatrix(grid.Row, ColUnitT)
+                grid.TextMatrix(i, ColUnitT) = grid.TextMatrix(grid.Row, ColUnitT)
                 'tambahan dudi, Januari 2009
-                Grid.TextMatrix(i, ColpoSeqNo) = Grid.TextMatrix(Grid.Row, ColpoSeqNo)
-                Grid.TextMatrix(i, ColPos) = Grid.TextMatrix(Grid.Row, ColPos)
+                grid.TextMatrix(i, ColpoSeqNo) = grid.TextMatrix(grid.Row, ColpoSeqNo)
+                grid.TextMatrix(i, ColPos) = grid.TextMatrix(grid.Row, ColPos)
                 
-                Grid.TextMatrix(i, ColRemT) = ""
+                grid.TextMatrix(i, ColRemT) = ""
         
-                Grid.Cell(flexcpBackColor, i, ColCtr) = &HFFFFFF
+                grid.Cell(flexcpBackColor, i, ColCtr) = &HFFFFFF
         
-                For i = 1 To CDbl(Grid.TextMatrix(Grid.Row, ColPos) + 1)
-                    Grid.TextMatrix(Grid.Row + i, ColPos) = i
-                    Grid.TextMatrix(Grid.Row, ColPos) = i
+                For i = 1 To CDbl(grid.TextMatrix(grid.Row, ColPos) + 1)
+                    grid.TextMatrix(grid.Row + i, ColPos) = i
+                    grid.TextMatrix(grid.Row, ColPos) = i
                 Next
                 
-                clearmark (Grid.Text)
+                clearmark (grid.Text)
             Else
-                clearmark (Grid.Text)
-                lblErrMsg = DisplayMsg("0043")
+                clearmark (grid.Text)
+                LblErrMsg = DisplayMsg("0043")
             End If
         End If
     End If
     
-    If Grid.Col = ColWeight Or Grid.Col = ColWGros Or Grid.Col = ColVol Or Grid.Col = ColPacking Or Grid.Col = ColQtyPerCarton Or _
-        Grid.Col = ColLength Or Grid.Col = ColWidth Or Grid.Col = ColThickness Then
-        If Trim(Grid.Text) = "" Then Grid.Text = "0"
-        If Not IsNumeric(Grid.Text) Then
-            Grid.Text = Q
+    If grid.Col = ColWeight Or grid.Col = ColWGros Or grid.Col = ColVol Or grid.Col = ColPacking Or grid.Col = ColQtyPerCarton Or _
+        grid.Col = ColLength Or grid.Col = ColWidth Or grid.Col = ColThickness Then
+        If Trim(grid.Text) = "" Then grid.Text = "0"
+        If Not IsNumeric(grid.Text) Then
+            grid.Text = Q
         End If
     End If
     
-    If Grid.Col = ColQty Then
-        If CDbl(Grid.Text) > gd_MaxQty Then
-            Grid.Text = Q
-            lblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
+    If grid.Col = ColQty Then
+        If CDbl(grid.Text) > gd_MaxQty Then
+            grid.Text = Q
+            LblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
         Else
-            If Trim(Grid.TextMatrix(Row, ColSerialTo)) <> "" Then _
-            Grid.TextMatrix(Row, ColSerialTo) = GetSerialTo(Grid.TextMatrix(Row, ColSerialFrom), CDbl(Grid.Text))
+            If Trim(grid.TextMatrix(Row, ColSerialTo)) <> "" Then _
+            grid.TextMatrix(Row, ColSerialTo) = GetSerialTo(grid.TextMatrix(Row, ColSerialFrom), CDbl(grid.Text))
         End If
-    ElseIf Grid.Col = ColSerialFrom Then
-        If Trim(Grid.TextMatrix(Row, ColSerialTo)) <> "" Then _
-        Grid.TextMatrix(Row, ColSerialTo) = GetSerialTo(Grid.TextMatrix(Row, ColSerialFrom), CDbl(Grid.TextMatrix(Row, ColQty)))
-    ElseIf Grid.Col = ColWeight Or Grid.Col = ColWGros Then
-        If CDbl(Grid.Text) > gd_MaxWeight Then
-            Grid.Text = Q
-            lblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
+    ElseIf grid.Col = ColSerialFrom Then
+        If Trim(grid.TextMatrix(Row, ColSerialTo)) <> "" Then _
+        grid.TextMatrix(Row, ColSerialTo) = GetSerialTo(grid.TextMatrix(Row, ColSerialFrom), CDbl(grid.TextMatrix(Row, ColQty)))
+    ElseIf grid.Col = ColWeight Or grid.Col = ColWGros Then
+        If CDbl(grid.Text) > gd_MaxWeight Then
+            grid.Text = Q
+            LblErrMsg = DisplayMsg(8030) & " " & gd_MaxWeight & " !"
         End If
-    ElseIf Grid.Col = ColVol Then
-        If CDbl(Grid.Text) > gd_MaxVolume Then
-            Grid.Text = Q
-            lblErrMsg = DisplayMsg("0049") & " " & gd_MaxVolume & " !"
+    ElseIf grid.Col = ColVol Then
+        If CDbl(grid.Text) > gd_MaxVolume Then
+            grid.Text = Q
+            LblErrMsg = DisplayMsg("0049") & " " & gd_MaxVolume & " !"
         End If
-    ElseIf Grid.Col = ColPacking Then
-        If CDbl(Grid.Text) > gd_MaxBox Then
-            Grid.Text = Q
-            lblErrMsg = DisplayMsg(4037) & " " & gd_MaxBox & " !"
+    ElseIf grid.Col = ColPacking Then
+        If CDbl(grid.Text) > gd_MaxBox Then
+            grid.Text = Q
+            LblErrMsg = DisplayMsg(4037) & " " & gd_MaxBox & " !"
         End If
-    ElseIf Grid.Col = ColLength Then
-        If CDbl(Grid.Text) > gd_MaxLength Then
-            Grid.Text = Q
-            lblErrMsg = DisplayMsg(4037) & " " & gd_MaxLength & " !"
+    ElseIf grid.Col = ColLength Then
+        If CDbl(grid.Text) > gd_MaxLength Then
+            grid.Text = Q
+            LblErrMsg = DisplayMsg(4037) & " " & gd_MaxLength & " !"
         End If
-    ElseIf Grid.Col = ColWidth Then
-        If CDbl(Grid.Text) > gd_MaxWidth Then
-            Grid.Text = Q
-            lblErrMsg = DisplayMsg(4037) & " " & gd_MaxWidth & " !"
+    ElseIf grid.Col = ColWidth Then
+        If CDbl(grid.Text) > gd_MaxWidth Then
+            grid.Text = Q
+            LblErrMsg = DisplayMsg(4037) & " " & gd_MaxWidth & " !"
         End If
-    ElseIf Grid.Col = ColThickness Then
-        If CDbl(Grid.Text) > gd_MaxThickness Then
-            Grid.Text = Q
-            lblErrMsg = DisplayMsg(4037) & " " & gd_MaxThickness & " !"
+    ElseIf grid.Col = ColThickness Then
+        If CDbl(grid.Text) > gd_MaxThickness Then
+            grid.Text = Q
+            LblErrMsg = DisplayMsg(4037) & " " & gd_MaxThickness & " !"
         End If
     End If
     
-    If Grid.Col = ColQty Then
-        If Trim(Grid.Text) = "" Then Grid.Text = "0"
-        TotalHead CDbl(ColQty), CDbl(Grid.Row), CDbl(colrem), 1
-        If Grid.TextMatrix(CDbl(Grid.Row) - CDbl(Grid.TextMatrix(Grid.Row, ColPos)), colrem) < 0 Then
-            Grid.TextMatrix(Grid.Row, ColQty) = Q
-            lblErrMsg = DisplayMsg(4045) & " Remaining Qty !"
-            TotalHead CDbl(ColQty), CDbl(Grid.Row), CDbl(colrem), 1
+    If grid.Col = ColQty Then
+        If Trim(grid.Text) = "" Then grid.Text = "0"
+        TotalHead CDbl(ColQty), CDbl(grid.Row), CDbl(colrem), 1
+        If grid.TextMatrix(CDbl(grid.Row) - CDbl(grid.TextMatrix(grid.Row, ColPos)), colrem) < 0 Then
+            grid.TextMatrix(grid.Row, ColQty) = Q
+            LblErrMsg = DisplayMsg(4045) & " Remaining Qty !"
+            TotalHead CDbl(ColQty), CDbl(grid.Row), CDbl(colrem), 1
         Else
-            Grid.TextMatrix(Row, ColQty) = Format(Grid.TextMatrix(Row, ColQty), gs_formatQty)
-            If CDbl(Grid.TextMatrix(Row, ColQtyPerCarton)) <> 0 Then
-                CartonQty = Fix(CDbl(Grid.Text) / CDbl(Grid.TextMatrix(Row, ColQtyPerCarton)))
+            grid.TextMatrix(Row, ColQty) = Format(grid.TextMatrix(Row, ColQty), gs_formatQty)
+            If CDbl(grid.TextMatrix(Row, ColQtyPerCarton)) <> 0 Then
+                CartonQty = Fix(CDbl(grid.Text) / CDbl(grid.TextMatrix(Row, ColQtyPerCarton)))
             Else
                 CartonQty = 0
             End If
                      
-            NetWeight = CDbl(Grid.TextMatrix(Row, ColNetWeight))
-            If CDbl(Grid.TextMatrix(Row, ColQtyPerCarton)) = 0 Then
+            NetWeight = CDbl(grid.TextMatrix(Row, ColNetWeight))
+            If CDbl(grid.TextMatrix(Row, ColQtyPerCarton)) = 0 Then
                 NetSisa = 0
             Else
-                NetSisa = ((CDbl(Grid.Text) Mod CDbl(Grid.TextMatrix(Row, ColQtyPerCarton))) / _
-                    CDbl(Grid.TextMatrix(Row, ColQtyPerCarton))) * CDbl(Grid.TextMatrix(Row, ColNetWeight))
+                NetSisa = ((CDbl(grid.Text) Mod CDbl(grid.TextMatrix(Row, ColQtyPerCarton))) / _
+                    CDbl(grid.TextMatrix(Row, ColQtyPerCarton))) * CDbl(grid.TextMatrix(Row, ColNetWeight))
             End If
             NetWeightPacking = (NetWeight * CartonQty) + NetSisa
             
-            GrossWeight = CDbl(Grid.TextMatrix(Row, ColGrossWeight))
-            If CDbl(Grid.TextMatrix(Row, ColQtyPerCarton)) = 0 Then
+            GrossWeight = CDbl(grid.TextMatrix(Row, ColGrossWeight))
+            If CDbl(grid.TextMatrix(Row, ColQtyPerCarton)) = 0 Then
                 GrossSisa = 0
             Else
-                GrossSisa = ((CDbl(Grid.Text) Mod CDbl(Grid.TextMatrix(Row, ColQtyPerCarton))) / _
-                CDbl(Grid.TextMatrix(Row, ColQtyPerCarton))) * CDbl(Grid.TextMatrix(Row, ColGrossWeight))
+                GrossSisa = ((CDbl(grid.Text) Mod CDbl(grid.TextMatrix(Row, ColQtyPerCarton))) / _
+                CDbl(grid.TextMatrix(Row, ColQtyPerCarton))) * CDbl(grid.TextMatrix(Row, ColGrossWeight))
             End If
             GrossWeightPacking = (GrossWeight * CartonQty) + GrossSisa
             
-            If CDbl(Grid.TextMatrix(Row, ColQtyPerCarton)) <> 0 Then
-                CartonQty = uf_Ceiling(CDbl(Grid.Text) / CDbl(Grid.TextMatrix(Row, ColQtyPerCarton)))
-                Grid.TextMatrix(Row, ColPacking) = Format(CartonQty, gs_formatBox)
+            If CDbl(grid.TextMatrix(Row, ColQtyPerCarton)) <> 0 Then
+                CartonQty = uf_Ceiling(CDbl(grid.Text) / CDbl(grid.TextMatrix(Row, ColQtyPerCarton)))
+                grid.TextMatrix(Row, ColPacking) = Format(CartonQty, gs_formatBox)
             Else
                 CartonQty = 0
-                Grid.TextMatrix(Row, ColPacking) = Format(CartonQty, gs_formatBox)
+                grid.TextMatrix(Row, ColPacking) = Format(CartonQty, gs_formatBox)
             End If
             
-            Volume = (CDbl(Grid.TextMatrix(Row, ColLength)) / 1000) * (CDbl(Grid.TextMatrix(Row, ColWidth)) / 1000) * (CDbl(Grid.TextMatrix(Row, ColThickness)) / 1000)    '* Round(CDbl(ColQty) / CDbl(grid.TextMatrix(Row, ColQtyPerCarton)))
+            Volume = (CDbl(grid.TextMatrix(Row, ColLength)) / 1000) * (CDbl(grid.TextMatrix(Row, ColWidth)) / 1000) * (CDbl(grid.TextMatrix(Row, ColThickness)) / 1000)    '* Round(CDbl(ColQty) / CDbl(grid.TextMatrix(Row, ColQtyPerCarton)))
             VolumePacking = Format((Volume * CartonQty), gs_formatVolume)
             
-            Grid.TextMatrix(Row, ColWeight) = Format(NetWeightPacking, gs_formatWeight)
-            Grid.TextMatrix(Row, ColWGros) = Format(GrossWeightPacking, gs_formatWeight)
-            Grid.TextMatrix(Row, ColVol) = Format(VolumePacking, gs_formatVolume)
+            grid.TextMatrix(Row, ColWeight) = Format(NetWeightPacking, gs_formatWeight)
+            grid.TextMatrix(Row, ColWGros) = Format(GrossWeightPacking, gs_formatWeight)
+            grid.TextMatrix(Row, ColVol) = Format(VolumePacking, gs_formatVolume)
         End If
     End If
     
-    If Grid.Col = ColPacking Then
-        If Trim(Grid.Text) = "" Then Grid.Text = "0"
-        Grid.TextMatrix(Row, ColPacking) = Format(Grid.TextMatrix(Row, ColPacking), gs_formatBox)
-        CartonQty = CDbl(Grid.Text)
+    If grid.Col = ColPacking Then
+        If Trim(grid.Text) = "" Then grid.Text = "0"
+        grid.TextMatrix(Row, ColPacking) = Format(grid.TextMatrix(Row, ColPacking), gs_formatBox)
+        CartonQty = CDbl(grid.Text)
         
-        NetWeight = CDbl(Grid.TextMatrix(Row, ColNetWeight))
+        NetWeight = CDbl(grid.TextMatrix(Row, ColNetWeight))
         NetWeightPacking = NetWeight * CartonQty
             
-        GrossWeight = CDbl(Grid.TextMatrix(Row, ColGrossWeight))
+        GrossWeight = CDbl(grid.TextMatrix(Row, ColGrossWeight))
         GrossWeightPacking = GrossWeight * CartonQty
         
-        Volume = (CDbl(Grid.TextMatrix(Row, ColLength)) / 1000) * (CDbl(Grid.TextMatrix(Row, ColWidth)) / 1000) * (CDbl(Grid.TextMatrix(Row, ColThickness)) / 1000)
+        Volume = (CDbl(grid.TextMatrix(Row, ColLength)) / 1000) * (CDbl(grid.TextMatrix(Row, ColWidth)) / 1000) * (CDbl(grid.TextMatrix(Row, ColThickness)) / 1000)
         VolumePacking = Format((Volume * CartonQty), gs_formatVolume)
         
-        Grid.TextMatrix(Row, ColWeight) = Format(NetWeightPacking, gs_formatWeight)
-        Grid.TextMatrix(Row, ColWGros) = Format(GrossWeightPacking, gs_formatWeight)
-        Grid.TextMatrix(Row, ColVol) = VolumePacking
+        grid.TextMatrix(Row, ColWeight) = Format(NetWeightPacking, gs_formatWeight)
+        grid.TextMatrix(Row, ColWGros) = Format(GrossWeightPacking, gs_formatWeight)
+        grid.TextMatrix(Row, ColVol) = VolumePacking
     End If
     
-    If Grid.Col = ColWeight Then
-        Grid.TextMatrix(Row, ColWeight) = Format(Grid.TextMatrix(Row, ColWeight), gs_formatWeight)
+    If grid.Col = ColWeight Then
+        grid.TextMatrix(Row, ColWeight) = Format(grid.TextMatrix(Row, ColWeight), gs_formatWeight)
     End If
     
-    If Grid.Col = ColWGros Then
-        Grid.TextMatrix(Row, ColWGros) = Format(Grid.TextMatrix(Row, ColWGros), gs_formatWeight)
+    If grid.Col = ColWGros Then
+        grid.TextMatrix(Row, ColWGros) = Format(grid.TextMatrix(Row, ColWGros), gs_formatWeight)
     End If
     
-    If Grid.Col = ColVol Then
-        Grid.TextMatrix(Row, ColVol) = Format(Grid.TextMatrix(Row, ColVol), gs_formatVolume)
+    If grid.Col = ColVol Then
+        grid.TextMatrix(Row, ColVol) = Format(grid.TextMatrix(Row, ColVol), gs_formatVolume)
     End If
     
-    If Grid.Col = ColLength Or Grid.Col = ColWidth Or Grid.Col = ColThickness Then
-        Grid.TextMatrix(Row, ColVol) = Format(( _
-            (CDbl(Grid.TextMatrix(Row, ColLength)) / 1000) * _
-            (CDbl(Grid.TextMatrix(Row, ColWidth)) / 1000) * _
-            (CDbl(Grid.TextMatrix(Row, ColThickness)) / 1000)) * CDbl(Grid.TextMatrix(Row, ColPacking)), gs_formatVolume)
+    If grid.Col = ColLength Or grid.Col = ColWidth Or grid.Col = ColThickness Then
+        grid.TextMatrix(Row, ColVol) = Format(( _
+            (CDbl(grid.TextMatrix(Row, ColLength)) / 1000) * _
+            (CDbl(grid.TextMatrix(Row, ColWidth)) / 1000) * _
+            (CDbl(grid.TextMatrix(Row, ColThickness)) / 1000)) * CDbl(grid.TextMatrix(Row, ColPacking)), gs_formatVolume)
     End If
         
     GrandTotal
@@ -4506,39 +4507,39 @@ End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
     
-    Grid.EditMaxLength = 1
-    If Grid.Col = ColAsk Then
-        If Grid.TextMatrix(Grid.Row, ColCounter) = "HEAD" Then
+    grid.EditMaxLength = 1
+    If grid.Col = ColAsk Then
+        If grid.TextMatrix(grid.Row, ColCounter) = "HEAD" Then
             Exit Sub
         End If
     End If
-    If Grid.Col = ColContainerNo Then
-        Grid.EditMaxLength = 255
+    If grid.Col = ColContainerNo Then
+        grid.EditMaxLength = 255
     End If
-    If Grid.Col = ColDrySize Then
-        Grid.EditMaxLength = 25
+    If grid.Col = ColDrySize Then
+        grid.EditMaxLength = 25
     End If
-    If Grid.TextMatrix(Grid.Row, ColCounter) = "CHILD" Then
-        If Grid.Col = ColQty Or Grid.Col = ColWeight Or Grid.Col = ColWGros Or Grid.Col = ColPacking _
-            Or Grid.Col = ColLength Or Grid.Col = ColWidth Or Grid.Col = ColThickness Then
-            Q = IIf(Trim(Grid.TextMatrix(Grid.Row, Grid.Col)) = "", 0, Grid.TextMatrix(Grid.Row, Grid.Col))
-            Select Case Grid.Col
-            Case ColQty, ColPacking: Grid.EditMaxLength = 7
-            Case ColWeight, ColWGros: Grid.EditMaxLength = 10
-            Case ColLength, ColWidth, ColThickness: Grid.EditMaxLength = 9
+    If grid.TextMatrix(grid.Row, ColCounter) = "CHILD" Then
+        If grid.Col = ColQty Or grid.Col = ColWeight Or grid.Col = ColWGros Or grid.Col = ColPacking _
+            Or grid.Col = ColLength Or grid.Col = ColWidth Or grid.Col = ColThickness Then
+            Q = IIf(Trim(grid.TextMatrix(grid.Row, grid.Col)) = "", 0, grid.TextMatrix(grid.Row, grid.Col))
+            Select Case grid.Col
+            Case ColQty, ColPacking: grid.EditMaxLength = 7
+            Case ColWeight, ColWGros: grid.EditMaxLength = 10
+            Case ColLength, ColWidth, ColThickness: grid.EditMaxLength = 9
             End Select
         End If
-        If Grid.Col = ColCartonNo Then
-            Grid.EditMaxLength = 10
+        If grid.Col = ColCartonNo Then
+            grid.EditMaxLength = 10
         End If
-        If Grid.Col = ColCtr Then
-            If CheckPONo(Grid.TextMatrix(Row - Grid.TextMatrix(Row, ColPos), ColOrder)) Then Exit Sub
+        If grid.Col = ColCtr Then
+            If CheckPONo(grid.TextMatrix(Row - grid.TextMatrix(Row, ColPos), ColOrder)) Then Exit Sub
         End If
-        If Grid.Cell(flexcpChecked, Grid.Row, ColCtr) = flexChecked Then
-            If Grid.Col = ColContainerNo Or Grid.Col = ColDrySize _
-                Or Grid.Col = ColQty Or ColSerialFrom Or Grid.Col = ColWeight _
-                Or Grid.Col = ColWGros Or Grid.Col = ColPacking _
-                Or Grid.Col = ColCartonNo Or Grid.Col = ColLength Or Grid.Col = ColWidth Or Grid.Col = ColThickness _
+        If grid.Cell(flexcpChecked, grid.Row, ColCtr) = flexChecked Then
+            If grid.Col = ColContainerNo Or grid.Col = ColDrySize _
+                Or grid.Col = ColQty Or ColSerialFrom Or grid.Col = ColWeight _
+                Or grid.Col = ColWGros Or grid.Col = ColPacking _
+                Or grid.Col = ColCartonNo Or grid.Col = ColLength Or grid.Col = ColWidth Or grid.Col = ColThickness _
              Then
                 Exit Sub
              End If
@@ -4550,23 +4551,23 @@ End Sub
 
 Private Sub grid_Click()
 
-    If Grid.Row > 1 Then
-        Grid.FocusRect = flexFocusNone
-        If Grid.Col = ColAsk Then
-            If Grid.TextMatrix(Grid.Row, ColCounter) = "HEAD" Then
-                Grid.FocusRect = flexFocusInset
+    If grid.Row > 1 Then
+        grid.FocusRect = flexFocusNone
+        If grid.Col = ColAsk Then
+            If grid.TextMatrix(grid.Row, ColCounter) = "HEAD" Then
+                grid.FocusRect = flexFocusInset
                 Exit Sub
             End If
         End If
-        If Grid.TextMatrix(Grid.Row, ColCounter) = "CHILD" Then
-            If Grid.Col = ColCtr Then Grid.FocusRect = flexFocusInset
-            If Grid.Cell(flexcpChecked, Grid.Row, ColCtr) = flexChecked Then
-                If Grid.Col = ColCtr Or Grid.Col = ColContainerNo Or Grid.Col = ColDrySize _
-                    Or Grid.Col = ColQty Or Grid.Col = ColWeight _
-                    Or Grid.Col = ColWGros Or Grid.Col = ColPacking _
-                    Or Grid.Col = ColCartonNo Or Grid.Col = ColLength Or Grid.Col = ColWidth Or Grid.Col = ColThickness _
+        If grid.TextMatrix(grid.Row, ColCounter) = "CHILD" Then
+            If grid.Col = ColCtr Then grid.FocusRect = flexFocusInset
+            If grid.Cell(flexcpChecked, grid.Row, ColCtr) = flexChecked Then
+                If grid.Col = ColCtr Or grid.Col = ColContainerNo Or grid.Col = ColDrySize _
+                    Or grid.Col = ColQty Or grid.Col = ColWeight _
+                    Or grid.Col = ColWGros Or grid.Col = ColPacking _
+                    Or grid.Col = ColCartonNo Or grid.Col = ColLength Or grid.Col = ColWidth Or grid.Col = ColThickness _
                     Then
-                        Grid.FocusRect = flexFocusInset
+                        grid.FocusRect = flexFocusInset
                 End If
             End If
         End If
@@ -4577,24 +4578,24 @@ End Sub
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
 
     KeyAscii = Asc(UCase(Chr(KeyAscii)))
-    If Grid.TextMatrix(Grid.Row, ColCounter) = "HEAD" Then
-        If Grid.Col = ColAsk Then
-            If Len(Grid.TextMatrix(Grid.Row, ColCtr)) = 1 Then KeyAscii = 0
+    If grid.TextMatrix(grid.Row, ColCounter) = "HEAD" Then
+        If grid.Col = ColAsk Then
+            If Len(grid.TextMatrix(grid.Row, ColCtr)) = 1 Then KeyAscii = 0
             If KeyAscii <> Asc("C") And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyReturn Then
                 KeyAscii = 0
             End If
             If KeyAscii = Asc(".") Then KeyAscii = 0
         End If
-    ElseIf Grid.TextMatrix(Grid.Row, ColCounter) = "CHILD" Then
-        If Grid.Col = ColAsk Then
-            If Len(Grid.TextMatrix(Grid.Row, ColCtr)) = 1 Then KeyAscii = 0
+    ElseIf grid.TextMatrix(grid.Row, ColCounter) = "CHILD" Then
+        If grid.Col = ColAsk Then
+            If Len(grid.TextMatrix(grid.Row, ColCtr)) = 1 Then KeyAscii = 0
             If KeyAscii <> Asc("D") And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyReturn Then
                KeyAscii = 0
             End If
         End If
-        If Grid.Col = ColQty Or Grid.Col = ColLength Or Grid.Col = ColWidth Or Grid.Col = ColThickness Then If KeyAscii = Asc(".") Then KeyAscii = 0
-        If Grid.Col <> ColQty And Grid.Col <> ColWeight And Grid.Col <> ColWGros And Grid.Col <> ColVol And Grid.Col <> ColPacking _
-            And Grid.Col <> ColLength And Grid.Col <> ColWidth And Grid.Col <> ColThickness Then
+        If grid.Col = ColQty Or grid.Col = ColLength Or grid.Col = ColWidth Or grid.Col = ColThickness Then If KeyAscii = Asc(".") Then KeyAscii = 0
+        If grid.Col <> ColQty And grid.Col <> ColWeight And grid.Col <> ColWGros And grid.Col <> ColVol And grid.Col <> ColPacking _
+            And grid.Col <> ColLength And grid.Col <> ColWidth And grid.Col <> ColThickness Then
         Else
             If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn And KeyAscii <> vbKeyEscape Then
                 KeyAscii = 0
@@ -4626,7 +4627,7 @@ End Sub
 
 Private Sub cbopackingtype_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
 If KeyCode = 13 Then
-    Call uf_ValidateComboData(cbopackingtype, "0024", lblErrMsg, lblpackingtype)
+    Call uf_ValidateComboData(cbopackingtype, "0024", LblErrMsg, lblpackingtype)
 End If
 End Sub
 
@@ -4635,7 +4636,7 @@ Dim rsIsiPO As New ADODB.Recordset
 Dim tampungPO As String
 Dim tampungPODate As String
 
-    sql = "Select distinct a.Do_No, b.Do_date from packing_detail a inner join DO_Master b on a.Do_No = b.Do_No where ltrim(packing_no) = '" & Trim(cboPacking.Text) & "'"
+    sql = "Select distinct a.Do_No, b.Do_date from packing_detail a inner join DO_Master b on a.Do_No = b.Do_No where ltrim(packing_no) = '" & Trim(CboPacking.Text) & "'"
     rsIsiPO.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     If rsIsiPO.EOF Then
         listPO = ""
@@ -4657,7 +4658,7 @@ End Function
 
 Private Function CekInvoice() As Boolean
     Dim adoRs As New ADODB.Recordset
-    sql = "select  packing_no from invoice_detail where ltrim(packing_no) = '" & Trim(cboPacking) & "'"
+    sql = "select  packing_no from invoice_detail where ltrim(packing_no) = '" & Trim(CboPacking) & "'"
     adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     CekInvoice = Not adoRs.EOF
     adoRs.Close
@@ -4708,13 +4709,13 @@ Private Function uf_check_SuratJalan_OrderDifferent() As Boolean
     Dim found As Boolean
     Dim RS As New ADODB.Recordset
     found = False
-    If Grid.Rows > 1 Then
-        For Pos = 1 To Grid.Rows - 1
-            If Grid.TextMatrix(Pos, ColCounter) = "HEAD" Then
+    If grid.Rows > 1 Then
+        For Pos = 1 To grid.Rows - 1
+            If grid.TextMatrix(Pos, ColCounter) = "HEAD" Then
                 ls_sql = " select * from Delivery_Order " & _
-                    " where Do_No='" & Trim(Grid.TextMatrix(Pos, ColOrder)) & "' " & _
-                    " and item_code='" & Trim(Grid.TextMatrix(Pos, ColProd)) & "' " & _
-                    " and DoSeq_no='" & Trim(Grid.TextMatrix(Pos, ColSeq)) & "' "
+                    " where Do_No='" & Trim(grid.TextMatrix(Pos, ColOrder)) & "' " & _
+                    " and item_code='" & Trim(grid.TextMatrix(Pos, ColProd)) & "' " & _
+                    " and DoSeq_no='" & Trim(grid.TextMatrix(Pos, ColSeq)) & "' "
                 If RS.State <> adStateClosed Then RS.Close
                 RS.CursorLocation = adUseClient
                 RS.Open ls_sql, Db, adOpenKeyset, adLockOptimistic

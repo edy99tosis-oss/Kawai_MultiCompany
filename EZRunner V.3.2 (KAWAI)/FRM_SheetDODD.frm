@@ -92,7 +92,7 @@ Begin VB.Form FRM_SheetDODD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60489731
+         Format          =   60424195
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker sdate 
@@ -114,7 +114,7 @@ Begin VB.Form FRM_SheetDODD
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60489731
+         Format          =   60424195
          CurrentDate     =   37798
       End
       Begin VB.Line Line2 
@@ -129,13 +129,14 @@ Begin VB.Form FRM_SheetDODD
          TabIndex        =   0
          Top             =   225
          Width           =   1500
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   10
          DisplayStyle    =   3
          Size            =   "2646;609"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -475,7 +476,7 @@ Dim bteColFix As Byte
 Dim bteHakPrice As Byte
 
 Sub Header()
-With Grid
+With grid
     bteColSelect = 0
     bteColSJNo = 1
     bteColSJDate = 2
@@ -506,12 +507,12 @@ End Sub
 
 '----------------------update multi company------------------------
 Private Sub CompanyMaster()
-    FillCompanyCombo TxtCc
+    FillCompanyCombo TxtCC
 End Sub
 
 Private Sub TxtCc_Change()
-    If TxtCc.matchFound Then
-        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+    If TxtCC.matchFound Then
+        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
     Else
         TxtCompanyName = ""
         lblerror.Caption = DisplayMsg(4069)  '"Record is not found"
@@ -582,12 +583,12 @@ Private Sub cmdAction_Click(Index As Integer)
     Case 2, 3
         do_no = ""
         bolrpt = False
-        For i = 1 To Grid.Rows - 1
-            If Grid.Cell(flexcpChecked, i, bteColSelect) = 1 Then
+        For i = 1 To grid.Rows - 1
+            If grid.Cell(flexcpChecked, i, bteColSelect) = 1 Then
                 If do_no = "" Then
-                    do_no = "'" & Trim(Grid.TextMatrix(i, bteColSJNo)) & "'"
+                    do_no = "'" & Trim(grid.TextMatrix(i, bteColSJNo)) & "'"
                 Else
-                    do_no = do_no + ",'" & Trim(Grid.TextMatrix(i, bteColSJNo)) & "'"
+                    do_no = do_no + ",'" & Trim(grid.TextMatrix(i, bteColSJNo)) & "'"
                 End If
                 bolrpt = True
             End If
@@ -633,10 +634,10 @@ Private Sub Form_Load()
   If gb_Simulation = True Then Call up_InitSimulation(Me)
 bteHakPrice = hakPrice(Me.Name)
 Header
-FillCompanyCombo TxtCc
+FillCompanyCombo TxtCC
 'adtocombo
-sdate = Format(Now, "dd mmm yyyy")
-edate = Format(Now, "dd mmm yyyy")
+SDate = Format(Now, "dd mmm yyyy")
+EDate = Format(Now, "dd mmm yyyy")
 CtrlMenu1.FormName = Me.Name
 Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 End Sub
@@ -647,7 +648,7 @@ Sub adtocombo()
 
 ' SQL filter company langsung di trade_master
 sql = "SELECT * FROM trade_master WHERE trade_cls='2'"
-If Trim(TxtCc.Text) <> "" Then
+If Trim(TxtCC.Text) <> "" Then
     'sql = sql & " AND Company_Code = '" & TxtCc.Text & "'"
 End If
 sql = sql & " ORDER BY trade_name"
@@ -663,7 +664,7 @@ With cbodealer
 i = 0
 Do Until rstcust.EOF
     .AddItem ""
-    .List(i, 0) = Trim(rstcust!trade_code)
+    .List(i, 0) = Trim(rstcust!Trade_Code)
     .List(i, 1) = Trim(rstcust!trade_name)
     i = i + 1
     rstcust.MoveNext
@@ -692,11 +693,11 @@ Sub display()
     Me.MousePointer = vbHourglass
     
     ' --- Validasi tanggal ---
-    If CDate(sdate) > CDate(edate) Then
+    If CDate(SDate) > CDate(EDate) Then
         lblerror.Caption = DisplayMsg("4068")   ' "Start date cannot be greater than End date"
         Me.MousePointer = vbDefault
         Exit Sub
-    ElseIf CDate(edate) < CDate(sdate) Then
+    ElseIf CDate(EDate) < CDate(SDate) Then
         lblerror.Caption = DisplayMsg("4066")   ' "End date cannot be smaller than Start date"
         Me.MousePointer = vbDefault
         Exit Sub
@@ -710,8 +711,8 @@ Sub display()
     End If
     
     ' --- Filter Company jika ada ---
-    If Trim(TxtCc.Text) <> "" Then
-        companyFilter = " AND wh.company_code = '" & TxtCc.Text & "' "
+    If Trim(TxtCC.Text) <> "" Then
+        companyFilter = " AND wh.company_code = '" & TxtCC.Text & "' "
     Else
         companyFilter = ""
     End If
@@ -721,8 +722,8 @@ Sub display()
           "FROM do_master d " & _
           "INNER JOIN warehouse_master wh ON d.WHCode = wh.WH_Code " & _
           "WHERE d.cust_code = '" & cbodealer.Text & "' " & _
-          "AND d.do_date >= '" & sdate & "' " & _
-          "AND d.do_date <= '" & edate & "' " & _
+          "AND d.do_date >= '" & SDate & "' " & _
+          "AND d.do_date <= '" & EDate & "' " & _
           sqlP & companyFilter & _
           " ORDER BY d.Do_no"
     
@@ -733,7 +734,7 @@ Sub display()
     
     ' --- Isi grid ---
     If Not rst.EOF Then
-        With Grid
+        With grid
             .Refresh
             .Rows = rst.RecordCount + 1
             .Row = .Rows - 1
@@ -742,7 +743,7 @@ Sub display()
             For i = 1 To rst.RecordCount
                 .Cell(flexcpChecked, i, bteColSelect) = flexUnchecked
                 .TextMatrix(i, bteColSJNo) = Trim(rst!do_no)
-                .TextMatrix(i, bteColSJDate) = Format(rst!Do_date, "dd MMM yyyy")
+                .TextMatrix(i, bteColSJDate) = Format(rst!do_date, "dd MMM yyyy")
                 .TextMatrix(i, bteColSJAmount) = Format(rst!Amount, gs_formatAmountIDR)
                 
                 If IsNull(rst!fix_cls) Or rst!fix_cls = 0 Then
@@ -779,8 +780,8 @@ End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 If Col = bteColSelect Then
-    If Grid.Cell(flexcpChecked, Row, bteColFix) = flexUnchecked Then
-        Grid.Cell(flexcpChecked, Row, bteColSelect) = flexUnchecked
+    If grid.Cell(flexcpChecked, Row, bteColFix) = flexUnchecked Then
+        grid.Cell(flexcpChecked, Row, bteColSelect) = flexUnchecked
         lblerror = DisplayMsg("0042")
     Else
         lblerror = ""
@@ -795,7 +796,7 @@ If Col <> bteColSelect Then Cancel = True
 End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
-If Grid.Col = bteColSelect Then
+If grid.Col = bteColSelect Then
    KeyAscii = Asc(UCase(Chr(KeyAscii)))
    If KeyAscii <> Asc("D") And KeyAscii <> Asc("S") And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyDelete Then
       KeyAscii = 0
@@ -817,8 +818,8 @@ End Sub
 Sub blank()
 cbodealer.ListIndex = -1
 cboisu.ListIndex = -1
-sdate = Format(Now, "dd MMM YYYY")
-edate = Format(Now, "dd MMM YYYY")
+SDate = Format(Now, "dd MMM YYYY")
+EDate = Format(Now, "dd MMM YYYY")
 End Sub
 
 
