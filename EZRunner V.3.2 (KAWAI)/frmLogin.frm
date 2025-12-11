@@ -18,7 +18,6 @@ Begin VB.Form frmLogin
    EndProperty
    Icon            =   "frmLogin.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    MaxButton       =   0   'False
    MinButton       =   0   'False
    MouseIcon       =   "frmLogin.frx":0E42
@@ -125,6 +124,13 @@ Begin VB.Form frmLogin
       Top             =   5670
       Width           =   1000
    End
+   Begin VB.Image Image1 
+      Height          =   3630
+      Left            =   735
+      Picture         =   "frmLogin.frx":114C
+      Top             =   405
+      Width           =   7335
+   End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -171,24 +177,9 @@ Begin VB.Form frmLogin
    Begin VB.Image Image2 
       Height          =   1305
       Left            =   705
-      Picture         =   "frmLogin.frx":114C
+      Picture         =   "frmLogin.frx":57D46
       Top             =   4995
       Width           =   4920
-   End
-   Begin VB.Image Image4 
-      Height          =   270
-      Left            =   7575
-      Picture         =   "frmLogin.frx":15FF6
-      Top             =   195
-      Visible         =   0   'False
-      Width           =   990
-   End
-   Begin VB.Image Image1 
-      Height          =   3630
-      Left            =   735
-      Picture         =   "frmLogin.frx":1650C
-      Top             =   405
-      Width           =   7335
    End
    Begin VB.Label LblErrMsg 
       Alignment       =   2  'Center
@@ -302,7 +293,7 @@ Public NeedFactorySelection As Boolean
 Sub Kosong()
     txtUser.Text = ""
     txtPass.Text = ""
-    txtmenu.Text = ""
+    txtMenu.Text = ""
     LblErrMsg = ""
 End Sub
 
@@ -423,7 +414,7 @@ Dim passLogin As String
             lockOut = rsUser("locked")
             InvalidLogin = rsUser("InvalidLogin")
             UserInitPO = IIf(IsNull(rsUser("InitPO")), "", rsUser("InitPO"))
-            UserCompanyCode = Trim(rsUser("Company_Code"))
+            UserCompanyCode = IIf(IsNull(rsUser("Company_Code")), "", rsUser("Company_Code"))
             
             'DBName
             Dim Rct As String, CC As Long
@@ -483,7 +474,7 @@ Dim passLogin As String
 '                        LblErrMsg = DisplayMsg(3006)
 '                    End If
 '                End If
-            If txtmenu = "" Then
+            If txtMenu = "" Then
                 DoEvents
             
                 If CheckFactoryPrivilege() Then
@@ -491,7 +482,7 @@ Dim passLogin As String
                 End If
             
             Else
-                If panggilForm(txtmenu) = 0 Then
+                If panggilForm(txtMenu) = 0 Then
                     DoEvents: Me.Hide
                 Else
                     LblErrMsg = DisplayMsg(3006)

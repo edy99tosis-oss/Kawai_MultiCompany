@@ -35,23 +35,23 @@ Begin VB.Form frmUserSetup
       _ExtentY        =   6165
       _Version        =   393216
       Tabs            =   2
-      Tab             =   1
       TabsPerRow      =   2
       TabHeight       =   520
       TabCaption(0)   =   "USER - MENU"
       TabPicture(0)   =   "frmUserSetup.frx":0E42
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "Grid"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "USER - FACTORY"
       TabPicture(1)   =   "frmUserSetup.frx":0E5E
-      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "gridFactory"
       Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VSFlex8Ctl.VSFlexGrid Grid 
          Height          =   2955
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   51
          Top             =   420
          Width           =   14115
@@ -148,7 +148,7 @@ Begin VB.Form frmUserSetup
       End
       Begin VSFlex8Ctl.VSFlexGrid gridFactory 
          Height          =   2955
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   52
          Top             =   420
          Width           =   14115
@@ -1293,7 +1293,7 @@ Private Sub headerGrid()
     bteColUpdate = 5
     bteColPrice = 6
     
-    With Grid
+    With grid
         .clear
         .ColS = 7
         .Rows = 1
@@ -1400,8 +1400,8 @@ End Sub
 'End Sub
 
 Private Sub TxtCc_Change()
-    If TxtCc.matchFound Then
-        TxtCompanyName = TxtCc.List(TxtCc.ListIndex, 1)
+    If TxtCC.matchFound Then
+        TxtCompanyName = TxtCC.List(TxtCC.ListIndex, 1)
     Else
         TxtCompanyName = ""
         LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
@@ -1418,8 +1418,8 @@ Sub Kosong()
     txtPass2 = ""
     cboUser = ""
     txtDesc = ""
-    txtPO = ""
-    TxtCc.clear
+    txtpo = ""
+    TxtCC.clear
     Check1.Value = 0
     optStatus(1).Value = True
     ubah = False
@@ -1536,7 +1536,7 @@ Dim rsPriv As New ADODB.Recordset
     rsPriv.CursorLocation = adUseClient
     rsPriv.Open sql, Db, adOpenDynamic, adLockOptimistic
     
-With Grid
+With grid
     For i = 1 To rsPriv.RecordCount
         DoEvents
         .Rows = .Rows + 1
@@ -1626,7 +1626,7 @@ End Sub
 Sub cekSelect(kol As Long)
 Dim cek, noCek As Integer
 
-With Grid
+With grid
     '******** agar cekBox nya jika semuanya udah ke-select/not
     cek = 0
     For i = 1 To .Rows - 1
@@ -1650,7 +1650,7 @@ End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim cek As Integer
 
-With Grid
+With grid
     If Row <> 0 Then
         If Col = bteColAccess Or Col = bteColUpdate Or Col = bteColPrice Then Call cekSelect(Col)
     Else
@@ -1670,7 +1670,7 @@ End With
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-With Grid
+With grid
     If Col <> bteColAccess And Col <> bteColUpdate And Col <> bteColPrice Then Cancel = 1
 End With
 End Sub
@@ -1788,13 +1788,13 @@ Select Case Index
                 If Not (.EOF) And ubah = False Then LblErrMsg = DisplayMsg(1001): Me.MousePointer = vbDefault: Exit Sub
                 
                 If .EOF Then .AddNew
-                !Company_Code = TxtCc 'update company code (multi company)
+                !Company_Code = TxtCC 'update company code (multi company)
                 !app_ID = "P01"
                 !userName = txtUser
                 !Name = txtName
                 !Password = fc_Encrypt(txtPass1)
                 !Description = txtDesc
-                !InitPO = txtPO
+                !InitPO = txtpo
                 !status_Admin = IIf(optStatus(0).Value, 1, 0)
                 !locked = Check1.Value
                 !InvalidLogin = 0
@@ -1849,11 +1849,11 @@ Sub simpanGrid()
 Dim rsSimpan As New ADODB.Recordset
 Dim sqlB As String
     
-    With Grid
+    With grid
         sqlB = "select * from user_Privilege " & _
             "where userName = '" & txtUser & "' and App_ID = 'P01'"
         
-        For i = 1 To Grid.Rows - 1
+        For i = 1 To grid.Rows - 1
             sql = sqlB & " and Menu_Id ='" & Trim(.TextMatrix(i, bteColMenuID)) & "'"
             If rsSimpan.State <> adStateClosed Then rsSimpan.Close
             rsSimpan.Open sql, Db, adOpenStatic, adLockOptimistic
@@ -1972,7 +1972,7 @@ With rsUser
         Check1.Value = !locked
         Call Check1_Click
         txtDesc = Trim(!Description)
-        txtPO = Trim(!InitPO & "")
+        txtpo = Trim(!InitPO & "")
         cboUser = ""
     End If
 End With

@@ -190,26 +190,19 @@ Begin VB.Form frmMainMenu
       Top             =   7560
       Width           =   435
    End
-   Begin VB.Image Image4 
-      Height          =   270
-      Left            =   11040
-      Picture         =   "frmMainMenu.frx":4DAE
-      Top             =   120
-      Width           =   990
-   End
    Begin VB.Image Image2 
       Height          =   1110
       Index           =   0
       Left            =   5400
-      Picture         =   "frmMainMenu.frx":52C4
-      Top             =   6600
+      Picture         =   "frmMainMenu.frx":4DAE
+      Top             =   6480
       Width           =   4200
    End
    Begin VB.Image Image2 
       Height          =   3135
       Index           =   1
       Left            =   5640
-      Picture         =   "frmMainMenu.frx":145D6
+      Picture         =   "frmMainMenu.frx":140C0
       Top             =   1830
       Width           =   6270
    End
@@ -273,15 +266,6 @@ Begin VB.Form frmMainMenu
       Left            =   120
       Top             =   1560
       Width           =   375
-   End
-   Begin VB.Image Image1 
-      Height          =   4350
-      Left            =   6240
-      Picture         =   "frmMainMenu.frx":54780
-      Stretch         =   -1  'True
-      Top             =   2010
-      Visible         =   0   'False
-      Width           =   4425
    End
 End
 Attribute VB_Name = "frmMainMenu"
