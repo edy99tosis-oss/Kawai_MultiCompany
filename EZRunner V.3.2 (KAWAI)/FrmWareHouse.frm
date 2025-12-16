@@ -413,7 +413,7 @@ Begin VB.Form FrmWarehouse
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60489731
+      Format          =   155975683
       CurrentDate     =   37818
    End
    Begin VB.Label Label3 
@@ -1521,13 +1521,13 @@ Sub DataGrid()
             
             ' Parameter Input
             .Parameters.append .CreateParameter("@WH_Code", adVarChar, adParamInput, 15, kode)
-            .Parameters.append .CreateParameter("@WH_Name", adVarChar, adParamInput, 50, Trim(TxtWh(1)))
+            .Parameters.append .CreateParameter("@WH_Name", adVarChar, adParamInput, 50, Trim(TxtWh(1).Text))
             .Parameters.append .CreateParameter("@Adm_Group", adVarChar, adParamInput, 15, cbotrade.List(cbotrade.ListIndex, 0))
             .Parameters.append .CreateParameter("@StockControl_Cls", adVarChar, adParamInput, 2, CboStock.List(CboStock.ListIndex, 0))
             .Parameters.append .CreateParameter("@Use_EndDay", adVarChar, adParamInput, 8, UseEnd)
             .Parameters.append .CreateParameter("@Last_User", adVarChar, adParamInput, 15, userLogin)
             .Parameters.append .CreateParameter("@NG_Cls", adVarChar, adParamInput, 2, cboNG.List(cboNG.ListIndex, 0))
-            .Parameters.append .CreateParameter("@Company_Code", adVarChar, adParamInput, 5, Trim(TxtCC))
+            .Parameters.append .CreateParameter("@Company_Code", adVarChar, adParamInput, 5, Trim(TxtCC.Text))
             
             ' Parameter Output
             .Parameters.append .CreateParameter("@MessageID", adInteger, adParamOutput)
