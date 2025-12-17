@@ -131,7 +131,7 @@ Begin VB.Form frm_ReceiptSupplyScheculeInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60096515
+      Format          =   61145091
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -252,7 +252,7 @@ Begin VB.Form frm_ReceiptSupplyScheculeInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60096515
+      Format          =   60555267
       CurrentDate     =   37798
    End
    Begin VB.Label Label6 
@@ -477,7 +477,7 @@ Private Sub Header()
     bteColBalAmount = 22
     bteColBalEffective = 23
         
-    With Grid
+    With grid
         .Rows = 2
         .ColS = 24
         
@@ -606,7 +606,7 @@ Private Sub SettingGrid()
     
     On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
-    Lblpesan.Caption = ""
+    LblPesan.Caption = ""
     
 sql = " DECLARE @item_code CHAR(15)  " & vbCrLf & _
             " DECLARE @start_date DATETIME  " & vbCrLf & _
@@ -1299,7 +1299,7 @@ sql = sql + "     ORDER BY trans.Item_Code , " & vbCrLf & _
         dblBalance = CDbl(Format(adoRs.Fields("stock_begin") + adoRs.Fields("stock_in") - adoRs.Fields("stock_out"), gs_formatQty))
         dblBalanceEffective = dblBalanceOrder + dblBalance
        
-        With Grid
+        With grid
             .AddItem ""
             .TextMatrix(.Rows - 1, bteColDate) = "Beginning"
             .TextMatrix(.Rows - 1, bteColOrderBal) = Format(dblBalanceOrder, gs_formatQty)
@@ -1374,7 +1374,7 @@ ErrExit:
     Set adoRs = Nothing
     Exit Sub
 ErrHandler:
-    Lblpesan.Caption = err.Description
+    LblPesan.Caption = err.Description
     err.clear
     Resume ErrExit
 End Sub
@@ -1389,7 +1389,7 @@ Private Sub SettingGrid_Old()
     
     On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
-    Lblpesan.Caption = ""
+    LblPesan.Caption = ""
     
     sql = " declare @item_code char(15) " & vbCrLf & _
                 " declare @start_date datetime " & vbCrLf & _
@@ -1647,7 +1647,7 @@ Private Sub SettingGrid_Old()
         dblBalance = CDbl(Format(adoRs.Fields("stock_begin") + adoRs.Fields("stock_in") - adoRs.Fields("stock_out"), gs_formatQty))
         dblBalanceEffective = dblBalanceOrder + dblBalance
        
-        With Grid
+        With grid
             .AddItem ""
             .TextMatrix(.Rows - 1, bteColDate) = "Beginning"
             .TextMatrix(.Rows - 1, bteColOrderBal) = Format(dblBalanceOrder, gs_formatQty)
@@ -1722,7 +1722,7 @@ ErrExit:
     Set adoRs = Nothing
     Exit Sub
 ErrHandler:
-    Lblpesan.Caption = err.Description
+    LblPesan.Caption = err.Description
     err.clear
     Resume ErrExit
 End Sub
@@ -1733,29 +1733,29 @@ Public Sub ClickSearch()
 End Sub
 
 Private Sub CboItemCD_Change()
-    Lblpesan = ""
+    LblPesan = ""
     Call Header
     If CboItemCD.matchFound Then
-        LblDesc = CboItemCD.List(CboItemCD.ListIndex, 1)
+        lbldesc = CboItemCD.List(CboItemCD.ListIndex, 1)
         Lbl_UnitDesc = CboItemCD.List(CboItemCD.ListIndex, 2)
     Else
-        LblDesc = ""
+        lbldesc = ""
         Lbl_UnitDesc = ""
-        Lblpesan = DisplayMsg(4003)
+        LblPesan = DisplayMsg(4003)
     End If
 End Sub
 
 Private Sub CboItemCD_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
     If KeyCode = 13 Then
-        Lblpesan = ""
+        LblPesan = ""
         Call Header
         If CboItemCD.matchFound Then
-            LblDesc = CboItemCD.List(CboItemCD.ListIndex, 1)
+            lbldesc = CboItemCD.List(CboItemCD.ListIndex, 1)
             Lbl_UnitDesc = CboItemCD.List(CboItemCD.ListIndex, 2)
         Else
-            LblDesc = ""
+            lbldesc = ""
             Lbl_UnitDesc = ""
-            Lblpesan = DisplayMsg(4003)
+            LblPesan = DisplayMsg(4003)
         End If
     End If
 End Sub
@@ -1772,11 +1772,11 @@ Private Sub cmd_preview_Click()
     
     On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
-    Lblpesan.Caption = ""
+    LblPesan.Caption = ""
     
     adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly
     If adoRs.EOF Then
-        Lblpesan.Caption = DisplayMsg(4006)
+        LblPesan.Caption = DisplayMsg(4006)
         GoTo ErrExit
     End If
     
@@ -1788,7 +1788,7 @@ Private Sub cmd_preview_Click()
     With crRpt
         .Database.Tables(1).SetDataSource adoRs
         .ReportTitle = "Receipt Supply Schedule Inquiry"
-        .FormulaFields(2).Text = "'" & Trim(CboItemCD.Text) & "  " & Trim(LblDesc.Caption) & "'"
+        .FormulaFields(2).Text = "'" & Trim(CboItemCD.Text) & "  " & Trim(lbldesc.Caption) & "'"
         .FormulaFields(3).Text = "'" & Trim(Lbl_UnitDesc.Caption) & "'"
         .FormulaFields(4).Text = "'" & Format(DMonth(0).Value, "dd-MMM-yyyy") & " to " & Format(DMonth(1).Value, "dd-MMM-yyyy") & "'"
         .FormulaFields(11).Text = "" & gi_decimalDigitQty & ""
@@ -1812,7 +1812,7 @@ ErrExit:
     Set adoRs = Nothing
     Exit Sub
 ErrHandler:
-    Lblpesan.Caption = err.Description
+    LblPesan.Caption = err.Description
     err.clear
     Resume ErrExit
 End Sub
@@ -1820,20 +1820,20 @@ End Sub
 Private Sub Cmd_Save_Click(Index As Integer)
     Select Case Index
     Case 8
-        If Cmd_Save(8).Caption = "&Back" And frmPOParts.popanggil = "poparts" Then
-            Cmd_Save(8).Caption = "Sub &Menu"
+        If Cmd_save(8).Caption = "&Back" And frmPOParts.popanggil = "poparts" Then
+            Cmd_save(8).Caption = "Sub &Menu"
             frmPOParts.popanggil = ""
             frmPOParts.Show
             Unload Me
             Exit Sub
-        ElseIf Cmd_Save(8).Caption = "&Back" And frmPOSteelCoil.popanggil = "posteelcoil" Then
-            Cmd_Save(8).Caption = "Sub &Menu"
+        ElseIf Cmd_save(8).Caption = "&Back" And frmPOSteelCoil.popanggil = "posteelcoil" Then
+            Cmd_save(8).Caption = "Sub &Menu"
             frmPOSteelCoil.popanggil = ""
             frmPOSteelCoil.Show
             Unload Me
             Exit Sub
-        ElseIf Cmd_Save(8).Caption = "&Back" And frmPOSubcon.popanggil = "posubcon" Then
-            Cmd_Save(8).Caption = "Sub &Menu"
+        ElseIf Cmd_save(8).Caption = "&Back" And frmPOSubcon.popanggil = "posubcon" Then
+            Cmd_save(8).Caption = "Sub &Menu"
             frmPOSubcon.popanggil = ""
             frmPOSubcon.Show
             Unload Me
@@ -1843,7 +1843,7 @@ Private Sub Cmd_Save_Click(Index As Integer)
         Unload Me
     Case 9
         If CboItemCD.Text = "" Then
-            Lblpesan = DisplayMsg(1009)
+            LblPesan = DisplayMsg(1009)
         Else
             Call SettingGrid
         End If
@@ -1863,15 +1863,15 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
     If ErrMsg = "" Then
         Unload Me
     Else
-        Lblpesan.Caption = ErrMsg
+        LblPesan.Caption = ErrMsg
     End If
 End Sub
 
 Private Sub DMonth_Change(Index As Integer)
-    Lblpesan.Caption = ""
+    LblPesan.Caption = ""
     If Index = 0 Then
         If DMonth(0).Value > dteMRP Then
-            Lblpesan.Caption = "[0000] Date start must be lower than MRP setting !"
+            LblPesan.Caption = "[0000] Date start must be lower than MRP setting !"
             DMonth(0).Value = dteMRP
         End If
     End If
@@ -1898,6 +1898,7 @@ Private Sub Form_Load()
     
     Call AddToComboItem
     Call Header
+    Text1.Visible = False
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
