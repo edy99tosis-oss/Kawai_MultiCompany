@@ -34,6 +34,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   555
       Left            =   300
       TabIndex        =   20
+      Tag             =   "TTFF*/"
       Top             =   9375
       Width           =   14715
       Begin VB.Label LblErrMsg 
@@ -53,6 +54,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   240
          Left            =   60
          TabIndex        =   21
+         Tag             =   "TTFF*/"
          Top             =   210
          Width           =   14550
       End
@@ -65,6 +67,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Left            =   13125
       Style           =   1  'Graphical
       TabIndex        =   8
+      Tag             =   "TTFF*/"
       Top             =   10050
       Width           =   1860
    End
@@ -75,6 +78,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Left            =   8760
       Style           =   1  'Graphical
       TabIndex        =   7
+      Tag             =   "TTFF*/"
       Top             =   2520
       Width           =   1065
    End
@@ -85,6 +89,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Left            =   300
       Style           =   1  'Graphical
       TabIndex        =   9
+      Tag             =   "TTFF*/"
       Top             =   10050
       Width           =   1140
    End
@@ -95,6 +100,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       List            =   "frm_ProdResultAutoRequest.frx":0E4C
       Style           =   2  'Dropdown List
       TabIndex        =   6
+      Tag             =   "TTFF*/"
       Top             =   2565
       Width           =   885
    End
@@ -103,6 +109,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   1575
       Left            =   360
       TabIndex        =   12
+      Tag             =   "TTFF*/"
       Top             =   840
       Width           =   14715
       Begin VB.Line Line8 
@@ -118,6 +125,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   3
          Left            =   3285
          TabIndex        =   29
+         Tag             =   "TTFF*/"
          Top             =   360
          Width           =   3045
       End
@@ -129,6 +137,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   7
          Left            =   225
          TabIndex        =   28
+         Tag             =   "TTFF*/"
          Top             =   330
          Width           =   1140
       End
@@ -137,9 +146,10 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   3
          Left            =   1680
          TabIndex        =   0
+         Tag             =   "TTFF*/"
          Top             =   270
          Width           =   1530
-         VariousPropertyBits=   746604571
+         VariousPropertyBits=   746604569
          MaxLength       =   6
          DisplayStyle    =   3
          Size            =   "2699;556"
@@ -147,6 +157,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
+         FontEffects     =   1073750016
          FontHeight      =   165
          FontCharSet     =   0
          FontPitchAndFamily=   2
@@ -157,6 +168,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   195
          Left            =   9705
          TabIndex        =   26
+         Tag             =   "TTFF*/"
          Top             =   735
          Width           =   3525
       End
@@ -164,6 +176,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Height          =   315
          Left            =   8085
          TabIndex        =   25
+         Tag             =   "TTFF*/"
          Top             =   660
          Width           =   1530
          VariousPropertyBits=   746604571
@@ -187,6 +200,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   6
          Left            =   6465
          TabIndex        =   24
+         Tag             =   "TTFF*/"
          Top             =   690
          Width           =   1155
       End
@@ -212,6 +226,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   5
          Left            =   6465
          TabIndex        =   23
+         Tag             =   "TTFF*/"
          Top             =   330
          Width           =   1470
       End
@@ -220,6 +235,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   2
          Left            =   8085
          TabIndex        =   3
+         Tag             =   "TTFF*/"
          Top             =   270
          Width           =   1530
          VariousPropertyBits=   746604571
@@ -242,6 +258,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   2
          Left            =   9705
          TabIndex        =   22
+         Tag             =   "TTFF*/"
          Top             =   330
          Width           =   3525
       End
@@ -252,6 +269,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   0
          Left            =   3285
          TabIndex        =   16
+         Tag             =   "TTFF*/"
          Top             =   690
          Width           =   3045
       End
@@ -263,6 +281,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   1
          Left            =   240
          TabIndex        =   15
+         Tag             =   "TTFF*/"
          Top             =   1080
          Width           =   855
       End
@@ -271,6 +290,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   0
          Left            =   1665
          TabIndex        =   1
+         Tag             =   "TTFF*/"
          Top             =   660
          Width           =   1530
          VariousPropertyBits=   746604571
@@ -291,6 +311,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   1
          Left            =   1650
          TabIndex        =   2
+         Tag             =   "TTFF*/"
          Top             =   1080
          Width           =   1530
          VariousPropertyBits=   746604571
@@ -312,6 +333,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   1
          Left            =   3270
          TabIndex        =   14
+         Tag             =   "TTFF*/"
          Top             =   1140
          Width           =   1515
       End
@@ -330,6 +352,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Index           =   0
          Left            =   225
          TabIndex        =   13
+         Tag             =   "TTFF*/"
          Top             =   690
          Width           =   1170
       End
@@ -345,6 +368,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   330
       Left            =   1950
       TabIndex        =   4
+      Tag             =   "TTFF*/"
       Top             =   2550
       Width           =   1530
       _ExtentX        =   2699
@@ -360,13 +384,14 @@ Begin VB.Form frm_ProdResultAutoRequest
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128516099
+      Format          =   137232387
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
       Height          =   330
       Left            =   3840
       TabIndex        =   5
+      Tag             =   "TTFF*/"
       Top             =   2550
       Width           =   1530
       _ExtentX        =   2699
@@ -382,13 +407,14 @@ Begin VB.Form frm_ProdResultAutoRequest
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128516099
+      Format          =   137232387
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   6255
       Left            =   300
       TabIndex        =   10
+      Tag             =   "TTFF*/"
       Top             =   3045
       Width           =   14715
       _cx             =   25956
@@ -501,6 +527,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Index           =   4
       Left            =   5565
       TabIndex        =   19
+      Tag             =   "TTFF*/"
       Top             =   2625
       Width           =   1230
    End
@@ -512,6 +539,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Index           =   3
       Left            =   3585
       TabIndex        =   18
+      Tag             =   "TTFF*/"
       Top             =   2625
       Width           =   165
    End
@@ -523,6 +551,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Index           =   2
       Left            =   465
       TabIndex        =   17
+      Tag             =   "TTFF*/"
       Top             =   2625
       Width           =   1380
    End
@@ -543,6 +572,7 @@ Begin VB.Form frm_ProdResultAutoRequest
       Height          =   390
       Left            =   300
       TabIndex        =   11
+      Tag             =   "TTFF*/"
       Top             =   330
       Width           =   14715
    End
@@ -1593,6 +1623,7 @@ Private Sub Command1_Click(Index As Integer) '#Submit
         adoRs.Open sql, Db, adOpenDynamic, adLockReadOnly, adCmdText
         If Not adoRs.EOF Then ls_requestCls = Trim(adoRs!Request_Cls) Else ls_requestCls = "1"
         adoRs.Close
+        
         ' Error in trigger if choose more than 1 record
         ls_sql = "Update Daily_Production Set Request_Cls = '" & Trim(ls_requestCls) & "', Last_Update = GETDATE(), Last_User = '" & userLogin & "' Where Seq_No In (" + ls_dailySeqNo + ")"
         Db.Execute ls_sql

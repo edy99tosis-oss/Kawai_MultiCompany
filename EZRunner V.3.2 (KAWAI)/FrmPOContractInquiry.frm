@@ -12,8 +12,8 @@ Begin VB.Form FrmPOContractInquiry
    ClientWidth     =   14520
    Icon            =   "FrmPOContractInquiry.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   15615
-   ScaleWidth      =   28560
+   ScaleHeight     =   10590
+   ScaleWidth      =   14520
    StartUpPosition =   2  'CenterScreen
    WindowState     =   2  'Maximized
    Begin VB.CommandButton Command1 
@@ -135,7 +135,7 @@ Begin VB.Form FrmPOContractInquiry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128122883
+         Format          =   141033475
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker DTPTo 
@@ -158,7 +158,7 @@ Begin VB.Form FrmPOContractInquiry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128122883
+         Format          =   141033475
          CurrentDate     =   37810
       End
       Begin VB.Line Line2 
@@ -458,7 +458,7 @@ Sub Header()
     bteAmount = 13
     TotCol = 14
 
-    With Grid
+    With grid
         .clear
         .Rows = 2
         .ColS = TotCol
@@ -537,7 +537,7 @@ Sub Header()
 
     End With
 
-    lblErrMsg.Caption = ""
+    LblErrMsg.Caption = ""
  
 End Sub
 
@@ -550,10 +550,10 @@ Private Sub CboSupplier_Change()
 End Sub
 
 Private Sub CmdExcel_Click()
-If Grid.Rows > 1 Then
+If grid.Rows > 1 Then
     up_Excel
 Else
-    lblErrMsg.Caption = DisplayMsg("0013")
+    LblErrMsg.Caption = DisplayMsg("0013")
 End If
     
 End Sub
@@ -561,11 +561,11 @@ End Sub
 Private Sub cmdSearch_Click()
 
     If cboSupplier.Text = "" Then
-        lblErrMsg = DisplayMsg(1054)
+        LblErrMsg = DisplayMsg(1054)
         cboSupplier.SetFocus
         Exit Sub
     ElseIf CDate(DTPTo) < CDate(DTPFrom) Then
-        lblErrMsg.Caption = DisplayMsg(4077) & " " & Format(DTPTo, "dd MMM yyyy")   '"delivery Date must be higher than "
+        LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(DTPTo, "dd MMM yyyy")   '"delivery Date must be higher than "
         DTPTo.SetFocus
         Exit Sub
     End If
@@ -574,8 +574,8 @@ Private Sub cmdSearch_Click()
       cboSupplier.MatchEntry = 1
       cboSupplier.Text = cboSupplier.Text
       
-        If cboSupplier.MatchFound = False Then
-          lblErrMsg = DisplayMsg(4050)
+        If cboSupplier.matchFound = False Then
+          LblErrMsg = DisplayMsg(4050)
           cboSupplier.SetFocus
           cboSupplier.MatchEntry = 2
           Exit Sub
@@ -589,7 +589,7 @@ End Sub
 
 Private Sub Command1_Click(Index As Integer)
 Dim top As Integer
-lblErrMsg.Caption = ""
+LblErrMsg.Caption = ""
 
     Select Case Index
     Case 0: Unload Me
@@ -599,6 +599,7 @@ lblErrMsg.Caption = ""
 End Sub
 
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
 
     Header
     
@@ -662,14 +663,14 @@ Me.MousePointer = vbHourglass
     
     
     If (RS.BOF And RS.EOF) Then
-        lblErrMsg.Caption = DisplayMsg(4006)
+        LblErrMsg.Caption = DisplayMsg(4006)
         Me.MousePointer = vbDefault
         Exit Sub
     Else
         
         i = 2
         
-        With Grid
+        With grid
             Do While Not RS.EOF
                 .Rows = .Rows + 1
                                 
@@ -713,9 +714,9 @@ Private Sub up_Excel()
     Dim strFileName As String
     
     Me.MousePointer = vbHourglass
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
-    lblErrMsg.Caption = ""
+    LblErrMsg.Caption = ""
                            
         Me.MousePointer = vbHourglass
                 
@@ -732,7 +733,7 @@ Private Sub up_Excel()
         Set RS = cmd.Execute
         
         If (RS.BOF And RS.EOF) Then
-            lblErrMsg.Caption = DisplayMsg(4006)
+            LblErrMsg.Caption = DisplayMsg(4006)
             Me.MousePointer = vbDefault
         Exit Sub
     Else
@@ -769,7 +770,7 @@ Private Sub up_Excel()
             '***********************************************************
             
             '********************Garis Footer************************************************************
-            .Range("A" & 6 + Grid.Rows - 2 & ":M" & 6 + Grid.Rows - 2).Borders(xlEdgeBottom).LineStyle = xlDouble
+            .Range("A" & 6 + grid.Rows - 2 & ":M" & 6 + grid.Rows - 2).Borders(xlEdgeBottom).LineStyle = xlDouble
             '********************************************************************************************
             
             .Range("A6:M6").horizontalAlignment = xlHAlignCenter
@@ -792,33 +793,33 @@ Private Sub up_Excel()
             Dim Row As Integer, i As Integer
             Row = 1
             i = 6
-            Do While i <= 4 + Grid.Rows
-                .Range("A" & i) = Grid.TextMatrix(Row, btePONo)
-                .Range("B" & i) = Grid.TextMatrix(Row, bteSuppCode)
-                .Range("C" & i) = Grid.TextMatrix(Row, bteSuppName)
-                .Range("D" & i) = Grid.TextMatrix(Row, btePODate)
-                .Range("E" & i) = Grid.TextMatrix(Row, bteDelDate)
-                .Range("F" & i) = Grid.TextMatrix(Row, bteItemCode)
-                .Range("G" & i) = Grid.TextMatrix(Row, bteItemName)
-                .Range("H" & i) = Grid.TextMatrix(Row, bteQty)
-                .Range("I" & i) = Grid.TextMatrix(Row, bteQtyRemainingPO)
-                .Range("J" & i) = Grid.TextMatrix(Row, bteQtyReceipt)
-                .Range("K" & i) = Grid.TextMatrix(Row, bteQtyRemainingReceipt)
-                .Range("L" & i) = Grid.TextMatrix(Row, btePrice)
-                .Range("M" & i) = Grid.TextMatrix(Row, bteAmount)
+            Do While i <= 4 + grid.Rows
+                .Range("A" & i) = grid.TextMatrix(Row, btePONo)
+                .Range("B" & i) = grid.TextMatrix(Row, bteSuppCode)
+                .Range("C" & i) = grid.TextMatrix(Row, bteSuppName)
+                .Range("D" & i) = grid.TextMatrix(Row, btePODate)
+                .Range("E" & i) = grid.TextMatrix(Row, bteDelDate)
+                .Range("F" & i) = grid.TextMatrix(Row, bteItemCode)
+                .Range("G" & i) = grid.TextMatrix(Row, bteItemName)
+                .Range("H" & i) = grid.TextMatrix(Row, bteQty)
+                .Range("I" & i) = grid.TextMatrix(Row, bteQtyRemainingPO)
+                .Range("J" & i) = grid.TextMatrix(Row, bteQtyReceipt)
+                .Range("K" & i) = grid.TextMatrix(Row, bteQtyRemainingReceipt)
+                .Range("L" & i) = grid.TextMatrix(Row, btePrice)
+                .Range("M" & i) = grid.TextMatrix(Row, bteAmount)
                               
                 i = i + 1
                 Row = Row + 1
             Loop
             '***********************
             
-            .Range("A6", "M" & 6 + Grid.Rows - 1).Columns.Font.Name = "Arial"
-            .Range("A6", "M" & 6 + Grid.Rows - 1).Columns.Font.Size = 8
+            .Range("A6", "M" & 6 + grid.Rows - 1).Columns.Font.Name = "Arial"
+            .Range("A6", "M" & 6 + grid.Rows - 1).Columns.Font.Size = 8
 
-            .Range("D7:D" & 7 + Grid.Rows - 1).NumberFormat = "[$-409]d-mmm-yyyy;@"
-            .Range("E7:E" & 7 + Grid.Rows - 1).NumberFormat = "[$-409]d-mmm-yyyy;@"
-            .Range("A7:g" & 7 + Grid.Rows - 1).horizontalAlignment = xlLeft
-            .Range("H7:M" & 7 + Grid.Rows - 1).NumberFormat = gs_formatQty
+            .Range("D7:D" & 7 + grid.Rows - 1).NumberFormat = "[$-409]d-mmm-yyyy;@"
+            .Range("E7:E" & 7 + grid.Rows - 1).NumberFormat = "[$-409]d-mmm-yyyy;@"
+            .Range("A7:g" & 7 + grid.Rows - 1).horizontalAlignment = xlLeft
+            .Range("H7:M" & 7 + grid.Rows - 1).NumberFormat = gs_formatQty
             .Range("A:M").Columns.AutoFit
     
             .Visible = True
@@ -838,8 +839,8 @@ ErrExit:
     Set RS = Nothing
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
-    lblErrMsg.Caption = "[" & err.number & "] " & err.Description
+ErrHandler:
+    LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
     

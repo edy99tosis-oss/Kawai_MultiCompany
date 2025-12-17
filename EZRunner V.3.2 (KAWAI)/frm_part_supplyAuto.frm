@@ -303,7 +303,7 @@ Begin VB.Form frm_part_supplyAuto
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   134086659
+      Format          =   137232387
       CurrentDate     =   37867
    End
    Begin VB.Frame Frame1 
@@ -1270,7 +1270,7 @@ Private Sub GetFormulaQty(StrParent As String, strItemCode As String, dblQty As 
     Dim adoRs As New ADODB.Recordset
     Dim booRecurring As Boolean
     
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     sql = "Select c.Item_Code, c.Production_Cls, a.Qty, Item_Child = (Select Distinct Parent_ItemCode From BOM_Master Where Parent_ItemCode = a.Item_Code) " & _
         "From BOM_Master a " & _
@@ -1299,7 +1299,7 @@ Private Sub GetFormulaQty(StrParent As String, strItemCode As String, dblQty As 
 ErrExit:
     Set adoRs = Nothing
     Exit Sub
-errHandler:
+ErrHandler:
     lbl_pesan.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -1312,7 +1312,7 @@ Private Sub setting_grid(Index As Integer)
     Dim ls_sqlJoin As String
     Dim ld_pakingSize As Double
 
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
 '    kali = kali + 1
 '    MsgBox kali
@@ -1430,7 +1430,7 @@ ErrExit:
     Set rs_join = Nothing
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
+ErrHandler:
     lbl_pesan.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -1599,7 +1599,7 @@ Private Sub cmd_daily_Click()
     With frm_ProdResultAutoRequest
         .fromProd = False
         .Command1(1).Enabled = False
-        .cmdSubMenu.Caption = "&Back"
+        .CmdSubMenu.Caption = "&Back"
         .Show
         Call .initGroup
         Me.Hide
@@ -1674,7 +1674,6 @@ End If
 End Function
 
 Private Sub UpdateRequestNo(Status As String)
-
 Dim ls_supReqNoResin As String
 Dim ls_supReqNoOther As String
 
@@ -1689,7 +1688,7 @@ If cbo_supplyNo(0).ListCount > 0 Then
     
 End If
 
-Db.BeginTrans
+'Db.BeginTrans
 
 If Status = "update" Then
        
@@ -1734,14 +1733,16 @@ Else '#Delete
 
 End If
 
-Db.CommitTrans
+'Db.CommitTrans
 End Sub
 
 Private Sub Cmd_Submit_Click()
-
 Dim j As Integer
 Dim sqlupd As String
+Dim isTransStarted As Boolean
 
+' isTransStarted = False
+ 
 If hakUpdate(Me.Name) = 0 Then _
 lbl_pesan = DisplayMsg(3008): Exit Sub
 
@@ -1755,7 +1756,7 @@ If lbl_pesan <> "" Then Exit Sub
     Call navigateButton(True)
     
     Me.MousePointer = vbHourglass
-    
+
     '#Update data Supply CLs and Request date in Supply Request Master
     Call UpdateRequestNo("update")
     
@@ -1768,7 +1769,9 @@ If lbl_pesan <> "" Then Exit Sub
     End If
     sqlupd = ""
     
-    Db.BeginTrans
+'    Db.BeginTrans
+
+    
     For i = 0 To 0
     
         For j = 1 To Grid1(i).Rows - 1
@@ -1874,9 +1877,8 @@ If is_status = "insert" Then
 Else
     lbl_pesan.Caption = DisplayMsg(1101) ' "Update data success !"
 End If
-
-Db.CommitTrans
-
+    
+'Db.CommitTrans
 End Sub
 
 Public Sub cmd_update_Click(Index As Integer)
@@ -2233,7 +2235,7 @@ Dim i As Long
 End Sub
 
 Private Sub cboRepItem_Change()
-    If cboRepItem.MatchFound Or cboRepItem.Text <> "" Then
+    If cboRepItem.matchFound Or cboRepItem.Text <> "" Then
         With Grid1(0)
             .TextMatrix(Idx, bteColChangeItem) = cboRepItem.Text
         End With
@@ -2245,7 +2247,7 @@ Private Sub cboRepItem_Change()
 End Sub
 
 Private Sub cboRepItem_Click()
-    If cboRepItem.MatchFound Or cboRepItem.Text <> "" Then
+    If cboRepItem.matchFound Or cboRepItem.Text <> "" Then
          With Grid1(0)
             .TextMatrix(Idx, bteColChangeItem) = cboRepItem.Text
         End With
@@ -2257,7 +2259,7 @@ Private Sub cboRepItem_Click()
 End Sub
 
 Private Sub cboRepItem_LostFocus()
-    If cboRepItem.MatchFound Or cboRepItem.Text <> "" Then
+    If cboRepItem.matchFound Or cboRepItem.Text <> "" Then
         With Grid1(0)
             .TextMatrix(Idx, bteColChangeItem) = cboRepItem.Text
         End With

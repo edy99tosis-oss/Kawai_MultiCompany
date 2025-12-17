@@ -210,7 +210,7 @@ Begin VB.Form FrmPOAdjustment_Price
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   294780931
+         Format          =   141033475
          CurrentDate     =   37868
       End
       Begin MSComCtl2.DTPicker PODate2 
@@ -232,7 +232,7 @@ Begin VB.Form FrmPOAdjustment_Price
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   294780931
+         Format          =   141033475
          CurrentDate     =   37868
       End
       Begin VB.Line Line2 
@@ -377,8 +377,8 @@ Begin VB.Form FrmPOAdjustment_Price
       TabIndex        =   1
       Top             =   270
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   5925
@@ -625,7 +625,7 @@ End Sub
 
 
 Private Sub CboCust_Change()
-    CboPOnO = ""
+    cboPONo = ""
     BtnCOmbo = True
 End Sub
 
@@ -657,7 +657,7 @@ If Trim(lblSupp.Text) = "" Then Exit Sub
                       "         And Supplier_Code='" & Trim(cboCust) & "' "
             
     Set rsno = Db.Execute(sqlno)
-    With CboPOnO
+    With cboPONo
         .clear
         Do While Not rsno.EOF
             .AddItem Trim(rsno("PO_No"))
@@ -682,7 +682,7 @@ End Sub
 
 Private Sub cbocust_LostFocus()
     If Trim(cboCust) = "" Then LblErr = "": Exit Sub
-    If cboCust.MatchFound = False Then
+    If cboCust.matchFound = False Then
         lblAddr.Text = ""
         lblSupp.Text = ""
         LblErr = DisplayMsg("0032")
@@ -718,8 +718,8 @@ End If
 End Sub
 
 Private Sub CboPOnO_LostFocus()
-      If Trim(CboPOnO) = "" Then LblErr = "": Exit Sub
-    If CboPOnO.MatchFound = False Then
+      If Trim(cboPONo) = "" Then LblErr = "": Exit Sub
+    If cboPONo.matchFound = False Then
         LblErr = DisplayMsg("4015"): Exit Sub
     Else
          LblErr = ""
@@ -746,7 +746,7 @@ End Sub
 Private Sub cmdSearch_Click()
 
 If Trim(cboCust) = "" Then LblErr = DisplayMsg("1054"): Exit Sub 'Please Selecet Supplier Code
-If Trim(CboPOnO) = "" Then LblErr = DisplayMsg("9001"): Exit Sub 'Please Select PO No.
+If Trim(cboPONo) = "" Then LblErr = DisplayMsg("9001"): Exit Sub 'Please Select PO No.
 
 Call Header
 DblJml = 0
@@ -754,7 +754,7 @@ Dim StrOPen As String
 StrOPen = "Select* , " & _
                 " (Select Item_name from  Item_Master  Where Item_Code = A.item_Code) Item_Name2 " & _
                 " From PurChaseOrder_Detail A " & _
-                " Where Po_NO = '" & Trim(CboPOnO) & "'"
+                " Where Po_NO = '" & Trim(cboPONo) & "'"
 If rsGrid.State <> adStateClosed Then rsGrid.Close
 rsGrid.Open StrOPen, Db, adOpenDynamic, adLockOptimistic
 Do While Not rsGrid.EOF
@@ -790,11 +790,11 @@ Private Sub CmdSubmit_Click()
     Db.BeginTrans
      For km = 1 To grid.Rows - 1
             Db.Execute "Update PurchaseOrder_detail set Amount= " & CDbl(Trim(grid.TextMatrix(km, bteColAmount))) & "  , Price_Adj = " & CDbl(Trim(grid.TextMatrix(km, bteColAdjPrice))) & ", " & _
-                              " Last_User='" & userLogin & "', Last_Update=GetDate()  Where Po_No = '" & Trim(CboPOnO) & "' and Item_Code = '" & Trim(grid.TextMatrix(km, bteColPartNo)) & "'"
+                              " Last_User='" & userLogin & "', Last_Update=GetDate()  Where Po_No = '" & Trim(cboPONo) & "' and Item_Code = '" & Trim(grid.TextMatrix(km, bteColPartNo)) & "'"
             
      Next km
      Db.Execute "Update PurchaseOrder_master Set Amount =" & CDbl(txtamount) & " , Total_Amount = " & CDbl(txtamount) & ", " & _
-                              " Last_User='" & userLogin & "', Last_Update=GetDate()  Where Po_No ='" & Trim(CboPOnO) & "'"
+                              " Last_User='" & userLogin & "', Last_Update=GetDate()  Where Po_No ='" & Trim(cboPONo) & "'"
      Db.CommitTrans
      LblErr = DisplayMsg("1000")
      Exit Sub
@@ -806,7 +806,7 @@ ErrH:
 End Sub
 
 Private Sub Form_Load()
-
+If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
     
@@ -884,12 +884,12 @@ End If
 End Sub
 
 Private Sub PODate_Change()
-    CboPOnO = ""
+    cboPONo = ""
     BtnCOmbo = True
 End Sub
 
 Private Sub PODate2_Change()
-    CboPOnO = ""
+    cboPONo = ""
     BtnCOmbo = True
 End Sub
 

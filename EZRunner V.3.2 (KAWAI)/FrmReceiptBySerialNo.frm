@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
 Object = "{6BF52A50-394A-11D3-B153-00C04F79FAA6}#1.0#0"; "wmp.dll"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmReceiptBySerialNo 
    BackColor       =   &H00FDDFE3&
@@ -203,7 +203,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61210627
+         Format          =   132120579
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtpTo 
@@ -226,7 +226,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61210627
+         Format          =   132120579
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpDNDate 
@@ -249,7 +249,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61210627
+         Format          =   132120579
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpReceiptDate 
@@ -272,7 +272,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61210627
+         Format          =   132120579
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpBCDate 
@@ -295,7 +295,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61210627
+         Format          =   132120579
          CurrentDate     =   37798
       End
       Begin VB.Line Line1 
@@ -1064,7 +1064,7 @@ Private Sub up_Header()
     bteColQty = 5
     btecolRSstatus = 6
     
-    With Grid
+    With grid
         .ColS = 7
         .Rows = 1
         
@@ -1214,8 +1214,8 @@ Dim prm14 As ADODB.Parameter
     
     cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
     cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH.Text))
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DtpFrom)
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DtpTo)
+    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DTPFrom)
+    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DTPTo)
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "3")
     
@@ -1358,9 +1358,9 @@ Private Sub cmdSearch_Click()
 End Sub
 
 Private Sub DtpFrom_Change()
-    If CDate(DtpFrom.Value) > (DtpTo.Value) Then
+    If CDate(DTPFrom.Value) > (DTPTo.Value) Then
         lbl_pesan.Caption = DisplayMsg("4068") 'Start Date must be lower than End Date                ' "Start Date must be lower than " & DTPicker2akhir.Value & " !!!"
-        DtpFrom.SetFocus
+        DTPFrom.SetFocus
     Else
         up_FillComboDNNo
         If lbl_pesan <> "" Then Exit Sub
@@ -1370,9 +1370,9 @@ Private Sub DtpFrom_Change()
 End Sub
 
 Private Sub DtpTo_Change()
-     If CDate(DtpTo.Value) > CDate(DtpFrom.Value) Then
+     If CDate(DTPTo.Value) > CDate(DTPFrom.Value) Then
         lbl_pesan.Caption = DisplayMsg("4066") ''End Date must be higher than Start Date
-        DtpTo.SetFocus
+        DTPTo.SetFocus
     Else
         up_FillComboDNNo
         up_FillComboBC
@@ -1381,6 +1381,7 @@ Private Sub DtpTo_Change()
 End Sub
 
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me)
  CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
     
@@ -1435,8 +1436,8 @@ Private Sub up_Clear()
     lblToWH(2).Text = ""
     lbl_pesan = ""
     
-    DtpFrom.Value = DateSerial(Year(Now), Month(Now), 1)
-    DtpTo.Value = Now()
+    DTPFrom.Value = DateSerial(Year(Now), Month(Now), 1)
+    DTPTo.Value = Now()
     dtpDNDate.Value = Now()
     dtpReceiptDate.Value = Now()
     dtpBCDate.Value = Now()
@@ -1466,8 +1467,8 @@ Dim cmd As ADODB.Command
     
     cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, "")
     cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, "")
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDate, adParamInput, , Format(DtpFrom.Value, "YYYY-MM-DD"))
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDate, adParamInput, , Format(DtpTo.Value, "YYYY-MM-DD"))
+    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDate, adParamInput, , Format(DTPFrom.Value, "YYYY-MM-DD"))
+    cmd.Parameters.append cmd.CreateParameter("DateTo", adDate, adParamInput, , Format(DTPTo.Value, "YYYY-MM-DD"))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "")
     If OptSerialNo.Value = True Then
         cmd.Parameters.append cmd.CreateParameter("SerialNo", adVarChar, adParamInput, 1, "1")
@@ -1716,15 +1717,15 @@ PSStatus = 0
     
     cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
     cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH.Text))
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DtpFrom)
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DtpTo)
+    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DTPFrom)
+    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DTPTo)
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "2")
     
     Set RS = cmd.Execute
         
         i = 1
-        With Grid
+        With grid
             If RS.EOF = False Then
                 While Not RS.EOF
                     .Rows = .Rows + 1
@@ -1741,7 +1742,7 @@ PSStatus = 0
                         .Cell(flexcpChecked, i, btecolRSstatus) = flexChecked
                         .TextMatrix(i, bteColSelect) = flexChecked
                         .Cell(flexcpChecked, i, ColCheck) = flexChecked
-                        Grid.Cell(flexcpBackColor, i, ColCheck, i, btecolRSstatus) = vbGreen
+                        grid.Cell(flexcpBackColor, i, ColCheck, i, btecolRSstatus) = vbGreen
                         iScan = iScan + 1
                         
                         If OptWithoutSerialNo.Value = True Then
@@ -1758,7 +1759,7 @@ PSStatus = 0
                     If RS("Scan_Cls") = 1 Then
                         .TextMatrix(i, bteColSelect) = flexChecked
                         .Cell(flexcpChecked, i, ColCheck) = flexChecked
-                        Grid.Cell(flexcpBackColor, i, ColCheck, i, btecolRSstatus) = vbGreen
+                        grid.Cell(flexcpBackColor, i, ColCheck, i, btecolRSstatus) = vbGreen
                         iScanCls = iScanCls + 1
                         iTempScan = iScanCls
                     End If
@@ -1825,8 +1826,8 @@ Function up_GetPrice(ItemCode As String) As Double
        
     sql = "SELECT TOP 1 isnull(price,0) Price FROM Price_Master WHERE " & _
         "Item_Code='" & ItemCode & _
-        "' and start_date<='" & Format(DtpFrom, "yyyymmdd") & _
-        "' and end_date>='" & Format(DtpTo, "yyyymmdd") & _
+        "' and start_date<='" & Format(DTPFrom, "yyyymmdd") & _
+        "' and end_date>='" & Format(DTPTo, "yyyymmdd") & _
         "' order by trade_code desc, priority_cls desc"
         
     Set RSGetPrice = Db.Execute(sql)
@@ -1841,8 +1842,8 @@ Function up_GetCurrency(ItemCode As String) As String
        
     sql = "SELECT TOP 1 Currency_Code ,isnull(price,0) Price FROM Price_Master WHERE " & _
         "Item_Code='" & ItemCode & _
-        "' and start_date<='" & Format(DtpFrom, "yyyymmdd") & _
-        "' and end_date>='" & Format(DtpTo, "yyyymmdd") & _
+        "' and start_date<='" & Format(DTPFrom, "yyyymmdd") & _
+        "' and end_date>='" & Format(DTPTo, "yyyymmdd") & _
         "' order by trade_code desc, priority_cls desc"
         
     Set RSGetCurr = Db.Execute(sql)
@@ -1904,10 +1905,10 @@ Dim prm As ADODB.Parameter
 
 KeyAscii = Asc(UCase(Chr(KeyAscii)))
 
-    For i = 1 To Grid.Rows - 1
+    For i = 1 To grid.Rows - 1
         
-        If Grid.Cell(flexcpChecked, i, ColCheck) = flexUnchecked Then
-            If LTrim(txtBarcode.Text) = LTrim(Grid.TextMatrix(i, bteColBarcodeNo)) Then
+        If grid.Cell(flexcpChecked, i, ColCheck) = flexUnchecked Then
+            If LTrim(txtBarcode.Text) = LTrim(grid.TextMatrix(i, bteColBarcodeNo)) Then
 
                 
                 If iTempScan = 0 Then
@@ -1927,8 +1928,8 @@ KeyAscii = Asc(UCase(Chr(KeyAscii)))
 '                    Exit Sub
 '                End If
                 
-                Grid.Cell(flexcpChecked, i, ColCheck) = flexChecked
-                Grid.Cell(flexcpBackColor, i, ColCheck, i, btecolRSstatus) = vbGreen
+                grid.Cell(flexcpChecked, i, ColCheck) = flexChecked
+                grid.Cell(flexcpBackColor, i, ColCheck, i, btecolRSstatus) = vbGreen
                 lbl_pesan = ""
 
                 wmp.URL = (App.path & "\Correct.mp3")
@@ -1956,7 +1957,7 @@ KeyAscii = Asc(UCase(Chr(KeyAscii)))
                 lbl_pesan = "Invalid Barcode No"
             End If
         Else
-            If txtBarcode.Text = Grid.TextMatrix(i, bteColBarcodeNo) Then
+            If txtBarcode.Text = grid.TextMatrix(i, bteColBarcodeNo) Then
                 lbl_pesan = "Barcode No Already Scan"
             Else
                 lbl_pesan = "Invalid Barcode No"
@@ -2041,7 +2042,7 @@ Private Sub up_Print()
     
     Me.MousePointer = vbHourglass
 
-    sql = "EXEC sp_SupplyScan_Sel '" & RTrim(cboFromWH.Text) & "', '" & RTrim(cboToWH.Text) & "', '" & DtpFrom & "', '" & DtpTo & "', " & vbCrLf & _
+    sql = "EXEC sp_SupplyScan_Sel '" & RTrim(cboFromWH.Text) & "', '" & RTrim(cboToWH.Text) & "', '" & DTPFrom & "', '" & DTPTo & "', " & vbCrLf & _
           " '" & RTrim(cboDNo.Text) & "', '" & 2 & "' "
             
     If RS.State = adStateOpen Then RS.Close
@@ -2068,7 +2069,7 @@ Private Sub up_Print()
     .Range("D6") = "Receipt Date"
     .Range("D3:D6").Font.Bold = True
         
-    .Range("B3") = ": " & DtpFrom.Value
+    .Range("B3") = ": " & DTPFrom.Value
     .Range("B4") = ": " & cboDNo.Text
     .Range("B5") = ": " & cboDNo.Text
     .Range("B6") = ": " & cboFromWH.Text
@@ -2169,7 +2170,7 @@ End Sub
 'End Function
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
-    With Grid
+    With grid
         If Col = bteColSelect Or Col = btecolRSstatus Then
             .Cell(flexcpChecked, Row, bteColSelect) = 1
             .Cell(flexcpChecked, Row, btecolRSstatus) = 1

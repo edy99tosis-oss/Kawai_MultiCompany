@@ -58,7 +58,7 @@ Begin VB.Form frmRptSupplyList
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   295239683
+         Format          =   141033475
          CurrentDate     =   38808
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -80,7 +80,7 @@ Begin VB.Form frmRptSupplyList
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   295239683
+         Format          =   141033475
          CurrentDate     =   39174
       End
       Begin VB.Label lbl_supply 
@@ -379,7 +379,7 @@ Sub adtocombo()
       i = 1
       Do While Not rs_warehouse.EOF
        .AddItem
-       .List(i, 0) = Trim(rs_warehouse!wh_code)
+       .List(i, 0) = Trim(rs_warehouse!WH_Code)
        .List(i, 1) = Trim(rs_warehouse!WH_Name)
        i = i + 1
        rs_warehouse.MoveNext
@@ -402,7 +402,7 @@ Sub adtocombo()
       rs_warehouse.Requery
       Do While Not rs_warehouse.EOF
        .AddItem
-       .List(i, 0) = Trim(rs_warehouse!wh_code)
+       .List(i, 0) = Trim(rs_warehouse!WH_Code)
        .List(i, 1) = Trim(rs_warehouse!WH_Name)
        i = i + 1
        rs_warehouse.MoveNext
@@ -447,7 +447,7 @@ End Sub
 
 Private Sub cbo_frwarehouse_Click()
 cbo_frwarehouse = cbo_frwarehouse
-    If cbo_frwarehouse.MatchFound Then
+    If cbo_frwarehouse.matchFound Then
         lbl_frwarehouse = cbo_frwarehouse.Column(1)
         LblErrMsg = ""
     Else
@@ -467,7 +467,7 @@ End Sub
 
 Private Sub cbo_towarehouse_Click()
 cbo_towarehouse = cbo_towarehouse
-    If cbo_towarehouse.MatchFound Then
+    If cbo_towarehouse.matchFound Then
         lbl_towarehouse = cbo_towarehouse.Column(1)
         LblErrMsg = ""
     Else
@@ -485,7 +485,7 @@ End Sub
 
 Public Sub cbo_supply_Click()
     cbo_supply = cbo_supply
-    If cbo_supply.MatchFound Then
+    If cbo_supply.matchFound Then
         lbl_supply = cbo_supply.Column(1)
         LblErrMsg = ""
     Else
@@ -509,11 +509,13 @@ Private Sub Form_Load()
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
     
-    sql_warehouse = "select WH_Code, WH_Name from Warehouse_Master " & _
-                    "Union " & _
-                    "select Trade_Code as WH_Code, Trade_Name as WH_Name from Trade_Master " & _
-                    "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
-                    "order by WH_Code "
+'    sql_warehouse = "select WH_Code, WH_Name from Warehouse_Master " & _
+'                    "Union " & _
+'                    "select Trade_Code as WH_Code, Trade_Name as WH_Name from Trade_Master " & _
+'                    "where trade_code in (select distinct manufacture_code from manufacture_line) " & _
+'                    "order by WH_Code "
+    sql_warehouse = "EXEC dbo.sp_RptSupplyList_FillCombo @UserID = '" & userLogin & "'"
+    
     If rs_warehouse.State <> adStateClosed Then rs_warehouse.Close
     rs_warehouse.Open sql_warehouse, Db, adOpenKeyset, adLockOptimistic
     
@@ -571,16 +573,16 @@ Dim Rpt As New FrmRpt3
         cbo_towarehouse = cbo_towarehouse
         cbo_supply = cbo_supply
         
-        If cbo_finish_good.MatchFound = False Then
+        If cbo_finish_good.matchFound = False Then
             LblErrMsg = DisplayMsg(8078)
             cbo_finish_good.SetFocus
-        ElseIf cbo_frwarehouse.MatchFound = False Then
+        ElseIf cbo_frwarehouse.matchFound = False Then
             LblErrMsg = DisplayMsg(4018)
             cbo_frwarehouse.SetFocus
-        ElseIf cbo_towarehouse.MatchFound = False Then
+        ElseIf cbo_towarehouse.matchFound = False Then
             LblErrMsg = DisplayMsg(4018)
             cbo_towarehouse.SetFocus
-        ElseIf cbo_supply.MatchFound = False Then
+        ElseIf cbo_supply.matchFound = False Then
             LblErrMsg = DisplayMsg(8070)
             cbo_supply.SetFocus
         Else

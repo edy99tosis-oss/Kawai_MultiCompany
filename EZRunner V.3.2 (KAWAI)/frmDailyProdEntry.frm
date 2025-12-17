@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmDailyProdEntry 
    BackColor       =   &H00FDDFE3&
@@ -399,7 +399,7 @@ Begin VB.Form frmDailyProdEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60293123
+      Format          =   137232387
       CurrentDate     =   37859
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
@@ -529,7 +529,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60293123
+         Format          =   137232387
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -561,7 +561,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   60424195
+         Format          =   137232387
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -1268,7 +1268,7 @@ Sub Header()
     bteColPONo = 13 + 2
     bteColSeqNo = 14 + 2
     
-    With grid
+    With Grid
       .clear
       .Rows = 1
       .ColS = 15 + 2
@@ -1358,8 +1358,8 @@ Sub Kosong()
 End Sub
 
 Sub kosongBwh()
-    CboItemCode.Enabled = True
-    CboItemCode.Text = ""
+    cboitemcode.Enabled = True
+    cboitemcode.Text = ""
     LblPart.Text = ""
     lbldesc.Text = ""
     txtQty.Text = Format(0, gs_formatQty)
@@ -1453,7 +1453,7 @@ Dim i As Long
         "and use_endday > convert(char(8), getdate(), 112) order by item_name"
     Set RsLine = Db.Execute(sqlLine)
     
-    With CboItemCode
+    With cboitemcode
         .clear
         .columnCount = 5
         .ColumnWidths = "80pt;80pt;240pt;0pt;0pt"
@@ -1561,7 +1561,7 @@ Sub Browse()
       
     i = 1
     If Not (rsGrid.BOF And rsGrid.EOF) Then
-        With grid
+        With Grid
             Do While Not rsGrid.EOF
                 .Rows = .Rows + 1
                 .TextMatrix(i, bteColProdCode) = Trim(rsGrid("Item_Code"))
@@ -1673,11 +1673,11 @@ Private Sub CboItemCode_Change()
 End Sub
 
 Private Sub cboitemcode_Click()
-    If CboItemCode.ListIndex <> -1 Then
-        LblPart.Text = CboItemCode.Column(1)
-        lbldesc.Text = CboItemCode.Column(2)
-        lblunit1.Caption = CboItemCode.Column(3)
-        lblUnit.Caption = CboItemCode.Column(4)
+    If cboitemcode.ListIndex <> -1 Then
+        LblPart.Text = cboitemcode.Column(1)
+        lbldesc.Text = cboitemcode.Column(2)
+        lblunit1.Caption = cboitemcode.Column(3)
+        lblUnit.Caption = cboitemcode.Column(4)
     End If
     Call StartSerial
 End Sub
@@ -1685,10 +1685,10 @@ End Sub
 Private Sub cboitemcode_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
   Dim i As Integer
   If KeyCode = 13 Then
-    For i = 0 To CboItemCode.ListCount - 1
-        If CboItemCode.Text = CboItemCode.List(i) Then
-            If CboItemCode.Column(1) = CboItemCode.List(i, 1) Then
-                CboItemCode.ListIndex = i
+    For i = 0 To cboitemcode.ListCount - 1
+        If cboitemcode.Text = cboitemcode.List(i) Then
+            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
+                cboitemcode.ListIndex = i
                 Exit For
             End If
         End If
@@ -1700,10 +1700,10 @@ End Sub
 
 Private Sub cboItemCode_LostFocus()
     Dim i As Integer
-    For i = 0 To CboItemCode.ListCount - 1
-        If CboItemCode.Text = CboItemCode.List(i) Then
-            If CboItemCode.Column(1) = CboItemCode.List(i, 1) Then
-                CboItemCode.ListIndex = i
+    For i = 0 To cboitemcode.ListCount - 1
+        If cboitemcode.Text = cboitemcode.List(i) Then
+            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
+                cboitemcode.ListIndex = i
                 cboitemcode_Click
                 Exit For
             End If
@@ -1712,11 +1712,11 @@ Private Sub cboItemCode_LostFocus()
 End Sub
 
 Private Sub cmdBrowser_Click()
- If CboItemCode.Enabled = True Then
+ If cboitemcode.Enabled = True Then
   Me.MousePointer = vbHourglass
-  frm_BrowseItem.getItemCode = CboItemCode.Text
+  frm_BrowseItem.getItemCode = cboitemcode.Text
   frm_BrowseItem.Show 1
-  CboItemCode.Text = frm_BrowseItem.getItemCode
+  cboitemcode.Text = frm_BrowseItem.getItemCode
   Me.MousePointer = vbDefault
  End If
 End Sub
@@ -1825,13 +1825,13 @@ End Sub
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim TextGrid As String
 
-With grid
-    TextGrid = grid.Text
+With Grid
+    TextGrid = Grid.Text
 
     If TextGrid = "S" Then
         Status = "update"
-        CboItemCode.Text = .TextMatrix(Row, bteColProdCode)
-        CboItemCode.Enabled = False
+        cboitemcode.Text = .TextMatrix(Row, bteColProdCode)
+        cboitemcode.Enabled = False
         LblPart.Text = .TextMatrix(Row, bteColPart)
         lbldesc.Text = .TextMatrix(Row, bteColDesc)
         TxtLotNo.Text = .TextMatrix(Row, bteColLotNo)
@@ -1860,7 +1860,7 @@ With grid
     End If
 
     .TextMatrix(Row, Col) = TextGrid
-    If grid.TextMatrix(Row, bteColAuto) = "Yes" Then Auto_Cls = 1 Else Auto_Cls = 0
+    If Grid.TextMatrix(Row, bteColAuto) = "Yes" Then Auto_Cls = 1 Else Auto_Cls = 0
 End With
 
 End Sub
@@ -1868,7 +1868,7 @@ End Sub
 Private Sub kosongColGrid(Optional Kolom As String)
     Dim i As Integer
     
-    With grid
+    With Grid
         .Col = 0
     
         If Kolom <> "" Then
@@ -1890,11 +1890,11 @@ Private Sub kosongColGrid(Optional Kolom As String)
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-    If grid.Col <> bteColSelect Then Cancel = True
+    If Grid.Col <> bteColSelect Then Cancel = True
 End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
-  If grid.Col = bteColSelect Then
+  If Grid.Col = bteColSelect Then
     KeyAscii = Asc(UCase(Chr(KeyAscii)))
     If KeyAscii <> Asc("S") And KeyAscii <> Asc("D") And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then
       KeyAscii = 0
@@ -1981,17 +1981,17 @@ Select Case Index
                                        
                            
                 
-            If CboItemCode.Text <> "" Then
-                CboItemCode.MatchEntry = 1
-                CboItemCode.Text = CboItemCode.Text
-                If CboItemCode.matchFound = False Then
+            If cboitemcode.Text <> "" Then
+                cboitemcode.MatchEntry = 1
+                cboitemcode.Text = cboitemcode.Text
+                If cboitemcode.matchFound = False Then
                     '**** cek Data cocok / tdk dgn Database
                     Dim rsDB As New ADODB.Recordset
-                    rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(CboItemCode.Text) & "'", Db, adOpenKeyset, adLockOptimistic
+                    rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(cboitemcode.Text) & "'", Db, adOpenKeyset, adLockOptimistic
                     If rsDB.EOF = True Then
                         LblErrMsg = DisplayMsg(4003)    'Record With this Product No. not found
-                        CboItemCode.SetFocus
-                        CboItemCode.MatchEntry = 2
+                        cboitemcode.SetFocus
+                        cboitemcode.MatchEntry = 2
                         Exit Sub
                     End If
                     rsDB.Close
@@ -2003,7 +2003,7 @@ Select Case Index
                 Exit Sub
             End If
             
-                With grid
+                With Grid
                     For i = 1 To .Rows - 1
                         If .TextMatrix(i, bteColSelect) = "D" Then
                             If IsEmpty(tanya) Then tanya = MsgBox("Do You Really Want To Delete This Data ?", vbQuestion & vbYesNo, "Confirmation")
@@ -2125,7 +2125,7 @@ Select Case Index
                             
                            ubah = True
                            
-                            sql = "select Request_Cls from daily_production where seq_no='" & grid.TextMatrix(i, bteColSeqNo) & "' "
+                            sql = "select Request_Cls from daily_production where seq_no='" & Grid.TextMatrix(i, bteColSeqNo) & "' "
                             Set rs1 = Db.Execute(sql)
                             If Not (rs1.BOF And rs1.EOF) Then
                                 req_cls = Trim(rs1.Fields("request_cls"))
@@ -2136,7 +2136,7 @@ Select Case Index
                             Set rs1 = Db.Execute(sql1)
                             If Not (rs1.BOF And rs1.EOF) Then
                                 LblErrMsg.Caption = DisplayMsg("9010")
-                                grid.Row = i
+                                Grid.Row = i
                                 Exit Sub
                             End If
                         
@@ -2165,7 +2165,7 @@ Select Case Index
                 'Bila ada perubahan Schedule Date maka perubahan harus tetap dalam Bulan atau Tahun yg sama
                 ElseIf ubah And Not (Month(scheduledate.Value) = Month(lblschdate) And Year(scheduledate.Value) = Year(lblschdate)) Then
                    sql1 = "select isnull(sum(qty),0) Qtyresult from part_receipt " & _
-                          "where receipt_cls='P1' and dailySeq_no = " & grid.TextMatrix(i, bteColSeqNo)
+                          "where receipt_cls='P1' and dailySeq_no = " & Grid.TextMatrix(i, bteColSeqNo)
                    Set rs1 = Db.Execute(sql1)
                    If Not rs1.EOF Then
                         If rs1("Qtyresult") > 0 Then
@@ -2176,10 +2176,10 @@ Select Case Index
                    End If
                 End If
                 
-                If CboItemCode.Text <> "" Or txtQty.Text <> "" Or txtremark1.Text <> "" Or TxtLotNo.Text <> "" Then
+                If cboitemcode.Text <> "" Or txtQty.Text <> "" Or txtremark1.Text <> "" Or TxtLotNo.Text <> "" Then
                 
-                    If CboItemCode.Text = "" Then
-                       CboItemCode.SetFocus
+                    If cboitemcode.Text = "" Then
+                       cboitemcode.SetFocus
                        LblErrMsg = DisplayMsg(1024)  '"Please Select Product code"
                        Exit Sub
                     ElseIf TxtLotNo = "" Then
@@ -2245,7 +2245,7 @@ Select Case Index
                                 For X = awal To akhir
                                     TempSerial = Depan & Format(X, String(Panjang - 1, "0"))
                                 ' sql1 = "Select * from Serial_Detail where item_code='" & cboitemcode.Text & "' and "
-                                   sql1 = "Select * from Serial_Detail where --item_code='" & CboItemCode.Text & "' and " & vbCrLf & _
+                                   sql1 = "Select * from Serial_Detail where --item_code='" & cboitemcode.Text & "' and " & vbCrLf & _
                                     " Serial_NO='" & TempSerial & "' "
                                     Set rsCek = Db.Execute(sql1)
                                     If Not rsCek.EOF Then
@@ -2258,7 +2258,7 @@ Select Case Index
 '                                        lblErrMsg = "[000] - Serial Number " & TempSerial & " doesn't Exist at Order Data !!! "
 '                                        Me.MousePointer = vbDefault
 '                                        Exit Sub
-                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(CboItemCode) & "'," & _
+                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(cboitemcode) & "'," & _
                                         vbLf & "'" & Trim(TempSerial) & "','',0,'1')"
                                         dbw.Execute (sql1)
                                         SerialStatus = True
@@ -2298,7 +2298,7 @@ Select Case Index
                                 
                                 sql1 = " select * From ( " & vbLf & _
                                     " Select * From Serial_Detail Where Po_SeqNo is not null ) n " & vbLf & _
-                                    " Where Item_Code='" & CboItemCode.Text & "' and Serial_No='" & TempSerial & "' and product_No <>'" & TxtSeqNo & "'"
+                                    " Where Item_Code='" & cboitemcode.Text & "' and Serial_No='" & TempSerial & "' and product_No <>'" & TxtSeqNo & "'"
                                 
 '                                sql1 = " Select * From " & _
 '                                    vbLf & " (Select * from Serial_Detail where item_code='" & cboItemCode.Text & "' and " & _
@@ -2313,7 +2313,7 @@ Select Case Index
                                         Exit Sub
                                     End If
                                 Else
-                                    sql1 = "Select * From Serial_Detail Where Item_Code='" & CboItemCode & "' And " & _
+                                    sql1 = "Select * From Serial_Detail Where Item_Code='" & cboitemcode & "' And " & _
                                             "Serial_No='" & TempSerial & "'"
                                     Set rsCek = Db.Execute(sql1)
                                     If rsCek.EOF Then
@@ -2321,7 +2321,7 @@ Select Case Index
 '                                        Me.MousePointer = vbDefault
 '                                        Exit Sub
 
-                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(CboItemCode) & "'," & _
+                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(cboitemcode) & "'," & _
                                         vbLf & "'" & Trim(TempSerial) & "','',0,'1')"
                                         dbw.Execute (sql1)
                                         
@@ -2339,7 +2339,7 @@ Select Case Index
                             rsUpdate("prod_barcode") = Trim(cboCust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & TxtSeqNo.Text
                        End If
                        
-                       rsUpdate("item_Code") = CboItemCode.Text
+                       rsUpdate("item_Code") = cboitemcode.Text
                        rsUpdate("lot_no") = TxtLotNo.Text
                        rsUpdate("schedule_date") = Format(scheduledate.Value, "YYYY-MM-DD")
                        rsUpdate("qty") = txtQty.Text
@@ -2355,7 +2355,7 @@ Select Case Index
                         ' Save and update Serial Number Status - 20090210
                         
                         sql1 = "Update Serial_Detail Set Product_No=NULL, " & _
-                                 " Serial_Status = '1' Where item_Code='" & CboItemCode.Text & "' And " & _
+                                 " Serial_Status = '1' Where item_Code='" & cboitemcode.Text & "' And " & _
                                  " Product_No='" & rsUpdate("seq_no") & "'"
                         dbw.Execute (sql1)
                         
@@ -2364,7 +2364,7 @@ Select Case Index
                            For X = awal To akhir
                                 TempSerial = Depan & Format(X, String(Panjang - 1, "0"))
                                 sql1 = "Update Serial_Detail Set Product_No='" & rsUpdate("seq_no") & "' , " & _
-                                         " Serial_Status = '2' Where item_Code='" & CboItemCode.Text & "' And " & _
+                                         " Serial_Status = '2' Where item_Code='" & cboitemcode.Text & "' And " & _
                                          " Serial_No='" & TempSerial & "'"
                                 dbw.Execute (sql1)
                             Next X
@@ -2517,7 +2517,7 @@ Dim LongAwal As Long
 
 'On Error Resume Next
 
-strSQL = "Select * From Item_Master Where Item_Code='" & Trim(CboItemCode) & "'"
+strSQL = "Select * From Item_Master Where Item_Code='" & Trim(cboitemcode) & "'"
 Set RsSerial = Db.Execute(strSQL)
 
 If RsSerial.EOF Then
@@ -2577,7 +2577,7 @@ strSQL = "exec SP_DailyProductionEntry_Validasi_SerialNo " & seqNo & ",'" & Trim
 Set RsSerial = Db.Execute(strSQL)
 i = 1
 If Not (RsSerial.BOF And RsSerial.EOF) Then
-        With grid
+        With Grid
             Do While Not RsSerial.EOF
                 If i = 1 Then
                     uf_ValidasiSerialNo = "Serial No Already Exist..! " & uf_ValidasiSerialNo & "Item Code :" & RsSerial("Item_code") & " - Date : " & Format(RsSerial("Schedule_Date"), "dd MMM yyyy")

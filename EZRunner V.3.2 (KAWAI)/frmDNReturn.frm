@@ -238,7 +238,7 @@ Begin VB.Form frmDNReturn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128712707
+         Format          =   141033475
          CurrentDate     =   37859
       End
    End
@@ -287,7 +287,7 @@ Begin VB.Form frmDNReturn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128712707
+         Format          =   141033475
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtEnd 
@@ -309,7 +309,7 @@ Begin VB.Form frmDNReturn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128712707
+         Format          =   141033475
          CurrentDate     =   37798
       End
       Begin MSForms.ComboBox CboCust 
@@ -535,7 +535,7 @@ nilKosong = True
 
     End If
     tempRow = 0
-    lblErrMsg = ""
+    LblErrMsg = ""
 nilKosong = False
 End Sub
 
@@ -637,6 +637,8 @@ If KeyAscii = Asc("'") Then KeyAscii = 0
 End Sub
 
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
+
 nilKosong = True
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
@@ -757,7 +759,7 @@ grid.Rows = 2
 grid.Rows = tmp
 
 If rGrid.EOF Then
-    lblErrMsg = DisplayMsg(4006)
+    LblErrMsg = DisplayMsg(4006)
     Exit Sub
 End If
  brs = 2
@@ -819,9 +821,9 @@ While Not rGrid.EOF
          
          
          '.ColComboList(KolRWh) = getwh
-         .TextMatrix(brs, KolRWh) = RTrim(RDetail!wh_code) 'RTrim(RDetail!WH_Name) ' RTrim(Get_Record("SELECT WH_Name FROM WareHouse_master WHERE WH_Code='" & (RDetail!wh_code) & "'"))
+         .TextMatrix(brs, KolRWh) = RTrim(RDetail!WH_Code) 'RTrim(RDetail!WH_Name) ' RTrim(Get_Record("SELECT WH_Name FROM WareHouse_master WHERE WH_Code='" & (RDetail!wh_code) & "'"))
          'menyimpan whcode
-         .TextMatrix(brs, KolWHCode) = RTrim(RDetail!wh_code)
+         .TextMatrix(brs, KolWHCode) = RTrim(RDetail!WH_Code)
          .Cell(flexcpBackColor, brs, KolRWh) = vbWhite
          
          .ColComboList(KolRCls) = "#D1;DN Return|#D2;Sales Return"
@@ -857,7 +859,7 @@ While Not rGrid.EOF
     rGrid.MoveNext
 Wend
 End With
-lblErrMsg = ""
+LblErrMsg = ""
 MousePointer = vbDefault
 End Sub
 Function IfNUllStr(Data)
@@ -913,7 +915,7 @@ Private Sub grid_Click()
 
 nilKosong = True
 With grid
-    lblErrMsg = ""
+    LblErrMsg = ""
     If .Row > 0 Then
         If .Cell(flexcpBackColor, .Row, .Col) = vbWhite Then .FocusRect = flexFocusInset Else .FocusRect = flexFocusNone
         If .Cell(flexcpBackColor, .Row, 2) <> &HE0E0E0 Then
@@ -1014,9 +1016,9 @@ Set rd = Db.Execute(s)
 
 While Not rd.EOF
 If getwh = "" Then
-  getwh = "#" & RTrim(rd!wh_code) & ";" & RTrim(rd!WH_Name) & ""
+  getwh = "#" & RTrim(rd!WH_Code) & ";" & RTrim(rd!WH_Name) & ""
 Else
-getwh = getwh & "|#" & RTrim(rd!wh_code) & ";" & RTrim(rd!WH_Name) & ""
+getwh = getwh & "|#" & RTrim(rd!WH_Code) & ";" & RTrim(rd!WH_Name) & ""
 End If
 rd.MoveNext
 Wend
@@ -1056,9 +1058,9 @@ End If
 If CDbl(.TextMatrix(barisatas, kolRQty)) > CDbl(.TextMatrix(barisatas, KolQty)) Then
     .TextMatrix(barisatas, kolRQty) = .TextMatrix(barisatas, kolRQty) - .TextMatrix(Row, kolRQty)
     .TextMatrix(Row, kolRQty) = 0
-    lblErrMsg = DisplayMsg(4043) & " " & .TextMatrix(barisatas, KolQty)
+    LblErrMsg = DisplayMsg(4043) & " " & .TextMatrix(barisatas, KolQty)
 Else
-lblErrMsg = ""
+LblErrMsg = ""
 End If
 
 End With
@@ -1148,7 +1150,7 @@ Dim tanya
 Me.MousePointer = vbHourglass
 Select Case Index
     Case 0: 'Save
-        If chkSave(1) Then: lblErrMsg = "": Call SavingData '  ProcessSave
+        If chkSave(1) Then: LblErrMsg = "": Call SavingData '  ProcessSave
         
     Case 1:  'Cancel
        Call GridView: Call Kosong
@@ -1279,12 +1281,12 @@ For i = 2 To .Rows - 1
             If .TextMatrix(i, 0) <> "D" Then
                     
             If NotComplete Then
-                lblErrMsg = DisplayMsg(5012)
+                LblErrMsg = DisplayMsg(5012)
                 Exit Sub
             End If
             
             If CekTanggal Then
-                lblErrMsg = DisplayMsg(1022)
+                LblErrMsg = DisplayMsg(1022)
                 Exit Sub
             End If
                         
@@ -1384,11 +1386,11 @@ For i = 2 To .Rows - 1
 
 Next
 If Ket = "0" Then
-lblErrMsg = DisplayMsg(5012)
+LblErrMsg = DisplayMsg(5012)
 Else
 Call GridView
     'If s Then
-lblErrMsg = DisplayMsg(8005)
+LblErrMsg = DisplayMsg(8005)
     'End If
 End If
 
@@ -1537,7 +1539,7 @@ End Sub
 
 '************************* Validate ************************
 Private Sub CboCust_Change()
- lblErrMsg.Caption = ""
+ LblErrMsg.Caption = ""
     lblCust.Caption = ""
     If cboCust.matchFound Then
         If cboCust.Text <> "" Then lblCust.Caption = cboCust.List(cboCust.ListIndex, 1)
@@ -1579,7 +1581,7 @@ End Sub
 
 '************************* Out *****************************
 Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
-    If ErrMsg = "" Then Unload Me Else lblErrMsg.Caption = ErrMsg
+    If ErrMsg = "" Then Unload Me Else LblErrMsg.Caption = ErrMsg
 End Sub
 
 Private Sub CmdSubMenu_Click()

@@ -60,6 +60,7 @@ Begin VB.Form frm_item_master2
       _Version        =   393216
       Style           =   1
       Tabs            =   2
+      Tab             =   1
       TabHeight       =   520
       BackColor       =   16637923
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -73,22 +74,25 @@ Begin VB.Form frm_item_master2
       EndProperty
       TabCaption(0)   =   "    General    "
       TabPicture(0)   =   "Frm_item_master2.frx":0E42
-      Tab(0).ControlEnabled=   -1  'True
-      Tab(0).Control(0)=   "Frame4"
+      Tab(0).ControlEnabled=   0   'False
+      Tab(0).Control(0)=   "Frame3"
       Tab(0).Control(0).Enabled=   0   'False
-      Tab(0).Control(1)=   "Frame5"
+      Tab(0).Control(1)=   "Frame8"
       Tab(0).Control(1).Enabled=   0   'False
-      Tab(0).Control(2)=   "Frame8"
+      Tab(0).Control(2)=   "Frame5"
       Tab(0).Control(2).Enabled=   0   'False
-      Tab(0).Control(3)=   "Frame3"
+      Tab(0).Control(3)=   "Frame4"
       Tab(0).Control(3).Enabled=   0   'False
       Tab(0).ControlCount=   4
       TabCaption(1)   =   "Manufacture"
       TabPicture(1)   =   "Frm_item_master2.frx":0E5E
-      Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Frame1"
+      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).Control(0)=   "Frame2"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "Frame9"
-      Tab(1).Control(2)=   "Frame2"
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "Frame1"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       Begin VB.Frame Frame1 
          Caption         =   "Material Dimension"
@@ -102,7 +106,7 @@ Begin VB.Form frm_item_master2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   3300
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   152
          Top             =   3000
          Width           =   5250
@@ -426,7 +430,7 @@ Begin VB.Form frm_item_master2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   2325
-         Left            =   -74820
+         Left            =   180
          TabIndex        =   148
          Top             =   585
          Width           =   5250
@@ -582,7 +586,7 @@ Begin VB.Form frm_item_master2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   6495
-         Left            =   6120
+         Left            =   -68880
          TabIndex        =   121
          Top             =   480
          Width           =   8265
@@ -855,7 +859,7 @@ Begin VB.Form frm_item_master2
                Strikethrough   =   0   'False
             EndProperty
             CustomFormat    =   "dd MMM yyyy"
-            Format          =   117374979
+            Format          =   141033475
             CurrentDate     =   37818
          End
          Begin VB.Label Label74 
@@ -1969,7 +1973,7 @@ Begin VB.Form frm_item_master2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   2550
-         Left            =   150
+         Left            =   -74850
          TabIndex        =   112
          Top             =   4380
          Width           =   5865
@@ -2280,7 +2284,7 @@ Begin VB.Form frm_item_master2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   5760
-         Left            =   -69420
+         Left            =   5580
          TabIndex        =   90
          Top             =   585
          Width           =   8760
@@ -3200,7 +3204,7 @@ Begin VB.Form frm_item_master2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   1440
-         Left            =   135
+         Left            =   -74865
          TabIndex        =   86
          Tag             =   " '#Loop to get SupplyReqNo Resin"
          Top             =   450
@@ -3349,7 +3353,7 @@ Begin VB.Form frm_item_master2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   2370
-         Left            =   165
+         Left            =   -74835
          TabIndex        =   84
          Top             =   1950
          Width           =   5865
@@ -4719,7 +4723,7 @@ End Sub
 Private Sub cmbbox_warehouse_Change()
     lbl_pesan.Caption = ""
     lbl_warehouse.Caption = ""
-    If cmbbox_warehouse.MatchFound Then
+    If cmbbox_warehouse.matchFound Then
         lbl_warehouse.Caption = cmbbox_warehouse.List(cmbbox_warehouse.ListIndex, 1)
     End If
 End Sub
@@ -5172,7 +5176,7 @@ If rs_warehouse_master.EOF = False Or rs_warehouse_master.BOF = False Then
     rs_warehouse_master.MoveFirst
     While rs_warehouse_master.EOF = False
         cmbbox_warehouse.AddItem ""
-        cmbbox_warehouse.List(i, 0) = Trim(rs_warehouse_master!wh_code)
+        cmbbox_warehouse.List(i, 0) = Trim(rs_warehouse_master!WH_Code)
         cmbbox_warehouse.List(i, 1) = Trim(rs_warehouse_master!WH_Name)
         rs_warehouse_master.MoveNext
         i = i + 1
@@ -5545,6 +5549,20 @@ If Trim(txt_item_code.Text) = "" Then
     txt_item_code.SetFocus: validasi2 = False: Exit Function
 End If
 
+If txt_item_code.Text <> LTrim(txt_item_code.Text) _
+   Or Asc(Left(txt_item_code.Text, 1)) = 160 Then
+
+    lbl_pesan.Caption = DisplayMsg(1009)
+    
+    If txt_item_code.Enabled = True Then
+        txt_item_code.SetFocus
+    End If
+    
+    validasi2 = False
+    Exit Function
+End If
+
+
 If Trim(txt_item_name.Text) = "" Then
     lbl_pesan.Caption = DisplayMsg(1006) '"Please insert description !"
     txt_item_name.SetFocus: validasi2 = False: Exit Function
@@ -5588,7 +5606,7 @@ If Trim(cmbbox_warehouse.Text) = "" Then
     Exit Function
 End If
 '======================================================================================================================================
-If cmbbox_warehouse.MatchFound = False Then
+If cmbbox_warehouse.matchFound = False Then
     lbl_warehouse.Caption = ""
     lbl_pesan.Caption = DisplayMsg("4023")
     cmbbox_warehouse.SetFocus
@@ -6562,7 +6580,7 @@ Private Sub isi_field()
             rs_item_master!item_name = Trim(txt_item_name.Text)
             rs_item_master!finishgoodpart_cls = Trim(cmb_finish_good.Text)
             rs_item_master!Drawing_Number = Trim(txt_drawingCode)
-            rs_item_master!wh_code = Trim(cmbbox_warehouse.Text)
+            rs_item_master!WH_Code = Trim(cmbbox_warehouse.Text)
             rs_item_master!Address = Trim(Text1.Text)
             rs_item_master!Supplier_Code = Trim(cmbox_suplier.Text): rs_item_master!delivery_place = Trim(cmb_delivery.Text)
             rs_item_master!HS_Code = Trim(cmb_hs.Text)
@@ -7056,8 +7074,8 @@ Label63 = ""
 Label65 = ""
 
 Dim ctr As CtrlMenu
-txtMenu.FormName = Me.Name
-Me.Caption = Me.Caption & " (Menu ID : " & txtMenu.MenuText & ")"
+txtmenu.FormName = Me.Name
+Me.Caption = Me.Caption & " (Menu ID : " & txtmenu.MenuText & ")"
 Call koneksi
 Call setting
 Call cmd_clear_Click
@@ -7379,7 +7397,7 @@ Private Sub data_tampil()
     
     txt_item_code.Text = Trim(rs_item_master!Item_Code): txt_item_name.Text = Trim(rs_item_master!item_name)
     
-    cmbbox_warehouse.Text = Trim(IIf(IsNull(rs_item_master!wh_code), "", rs_item_master!wh_code))
+    cmbbox_warehouse.Text = Trim(IIf(IsNull(rs_item_master!WH_Code), "", rs_item_master!WH_Code))
            
     If Trim(rs_item_master!Drawing_Number) <> "null" Then
         txt_drawingCode = Trim(rs_item_master!Drawing_Number)

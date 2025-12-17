@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmLogin 
-   BackColor       =   &H00000000&
+   BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "EZ Runner ver.3"
    ClientHeight    =   7350
@@ -16,6 +16,7 @@ Begin VB.Form frmLogin
       Italic          =   -1  'True
       Strikethrough   =   0   'False
    EndProperty
+   ForeColor       =   &H00000000&
    Icon            =   "frmLogin.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
@@ -38,11 +39,11 @@ Begin VB.Form frmLogin
       EndProperty
       Height          =   285
       IMEMode         =   3  'DISABLE
-      Left            =   7065
+      Left            =   4440
       MaxLength       =   6
       TabIndex        =   2
-      Top             =   5115
-      Width           =   840
+      Top             =   5475
+      Width           =   2220
    End
    Begin VB.TextBox txtUser 
       BackColor       =   &H00FFFFFF&
@@ -56,12 +57,12 @@ Begin VB.Form frmLogin
          Strikethrough   =   0   'False
       EndProperty
       Height          =   285
-      Left            =   7065
+      Left            =   4440
       MaxLength       =   15
       TabIndex        =   0
       Text            =   "Admin"
-      Top             =   4275
-      Width           =   1500
+      Top             =   4680
+      Width           =   2220
    End
    Begin VB.TextBox txtPass 
       BackColor       =   &H00FFFFFF&
@@ -76,16 +77,17 @@ Begin VB.Form frmLogin
       EndProperty
       Height          =   285
       IMEMode         =   3  'DISABLE
-      Left            =   7065
+      Left            =   4425
       MaxLength       =   15
       PasswordChar    =   "*"
       TabIndex        =   1
       Text            =   "adm"
-      Top             =   4695
-      Width           =   1500
+      Top             =   5055
+      Width           =   2220
    End
    Begin VB.CommandButton cmdLogin 
       BackColor       =   &H00C0E0FF&
+      Cancel          =   -1  'True
       Caption         =   "&Login"
       Default         =   -1  'True
       BeginProperty Font 
@@ -98,15 +100,14 @@ Begin VB.Form frmLogin
          Strikethrough   =   0   'False
       EndProperty
       Height          =   390
-      Left            =   6450
+      Left            =   4440
       Style           =   1  'Graphical
       TabIndex        =   3
-      Top             =   5655
+      Top             =   5880
       Width           =   1005
    End
    Begin VB.CommandButton cmdExit 
       BackColor       =   &H00C0E0FF&
-      Cancel          =   -1  'True
       Caption         =   "&Exit"
       BeginProperty Font 
          Name            =   "Verdana"
@@ -117,19 +118,12 @@ Begin VB.Form frmLogin
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   375
-      Left            =   7565
+      Height          =   390
+      Left            =   5520
       Style           =   1  'Graphical
       TabIndex        =   4
-      Top             =   5670
+      Top             =   5880
       Width           =   1000
-   End
-   Begin VB.Image Image1 
-      Height          =   3630
-      Left            =   735
-      Picture         =   "frmLogin.frx":114C
-      Top             =   405
-      Width           =   7335
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
@@ -139,18 +133,18 @@ Begin VB.Form frmLogin
          Name            =   "Times New Roman"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
-         Italic          =   -1  'True
+         Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   225
+      ForeColor       =   &H00000000&
+      Height          =   195
       Index           =   4
       Left            =   885
       TabIndex        =   10
       Top             =   6285
-      Width           =   435
+      Width           =   420
    End
    Begin VB.Label Label3 
       Alignment       =   1  'Right Justify
@@ -166,7 +160,7 @@ Begin VB.Form frmLogin
          Italic          =   -1  'True
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   225
       Index           =   3
       Left            =   8115
@@ -174,15 +168,10 @@ Begin VB.Form frmLogin
       Top             =   6285
       Width           =   435
    End
-   Begin VB.Image Image2 
-      Height          =   1305
-      Left            =   705
-      Picture         =   "frmLogin.frx":57D46
-      Top             =   4995
-      Width           =   4920
-   End
    Begin VB.Label LblErrMsg 
       Alignment       =   2  'Center
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000005&
       BackStyle       =   0  'Transparent
       BorderStyle     =   1  'Fixed Single
       BeginProperty Font 
@@ -194,9 +183,9 @@ Begin VB.Form frmLogin
          Italic          =   -1  'True
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FF00FF&
+      ForeColor       =   &H80000008&
       Height          =   450
-      Left            =   825
+      Left            =   840
       TabIndex        =   8
       Top             =   6555
       Width           =   7740
@@ -205,67 +194,82 @@ Begin VB.Form frmLogin
       Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Menu ID   :"
+      Caption         =   "Menu ID"
       BeginProperty Font 
          Name            =   "Times New Roman"
-         Size            =   12
+         Size            =   11.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
-         Italic          =   -1  'True
+         Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   285
+      ForeColor       =   &H00000000&
+      Height          =   255
       Index           =   2
-      Left            =   5835
+      Left            =   3240
       TabIndex        =   7
-      Top             =   5115
-      Width           =   1095
+      Top             =   5475
+      Width           =   900
    End
    Begin VB.Label Label3 
       Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "User Id     :"
+      Caption         =   "User Id"
       BeginProperty Font 
          Name            =   "Times New Roman"
-         Size            =   12
+         Size            =   11.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
-         Italic          =   -1  'True
+         Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   285
+      ForeColor       =   &H00000000&
+      Height          =   255
       Index           =   0
-      Left            =   5835
+      Left            =   3240
       TabIndex        =   6
-      Top             =   4275
-      Width           =   1095
+      Top             =   4635
+      Width           =   750
    End
    Begin VB.Label Label3 
       Alignment       =   1  'Right Justify
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
-      Caption         =   "Password :"
+      Caption         =   "Password"
       BeginProperty Font 
          Name            =   "Times New Roman"
-         Size            =   12
+         Size            =   11.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
-         Italic          =   -1  'True
+         Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   285
+      ForeColor       =   &H00000000&
+      Height          =   255
       Index           =   1
-      Left            =   5835
+      Left            =   3255
       TabIndex        =   5
-      Top             =   4695
-      Width           =   1095
+      Top             =   5040
+      Width           =   930
+   End
+   Begin VB.Image Image3 
+      Height          =   4335
+      Left            =   120
+      Picture         =   "frmLogin.frx":114C
+      Stretch         =   -1  'True
+      Top             =   120
+      Width           =   9000
+   End
+   Begin VB.Image Image1 
+      Height          =   3630
+      Left            =   735
+      Picture         =   "frmLogin.frx":B443
+      Top             =   405
+      Width           =   7335
    End
 End
 Attribute VB_Name = "frmLogin"
@@ -293,7 +297,7 @@ Public NeedFactorySelection As Boolean
 Sub Kosong()
     txtUser.Text = ""
     txtPass.Text = ""
-    txtMenu.Text = ""
+    txtmenu.Text = ""
     LblErrMsg = ""
 End Sub
 
@@ -474,7 +478,7 @@ Dim passLogin As String
 '                        LblErrMsg = DisplayMsg(3006)
 '                    End If
 '                End If
-            If txtMenu = "" Then
+            If txtmenu = "" Then
                 DoEvents
             
                 If CheckFactoryPrivilege() Then
@@ -482,7 +486,7 @@ Dim passLogin As String
                 End If
             
             Else
-                If panggilForm(txtMenu) = 0 Then
+                If panggilForm(txtmenu) = 0 Then
                     DoEvents: Me.Hide
                 Else
                     LblErrMsg = DisplayMsg(3006)

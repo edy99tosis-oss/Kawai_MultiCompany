@@ -447,7 +447,7 @@ Begin VB.Form frmPOCorrection
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   293535747
+         Format          =   141033475
          UpDown          =   -1  'True
          CurrentDate     =   37868
       End
@@ -470,7 +470,7 @@ Begin VB.Form frmPOCorrection
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   293535747
+         Format          =   141033475
          UpDown          =   -1  'True
          CurrentDate     =   37868
       End
@@ -830,7 +830,7 @@ Call cboPacking_Click
 End Sub
 
 Private Sub cboPacking_Click()
-If CboPacking.MatchFound = True Then
+If CboPacking.matchFound = True Then
    TxtPacking.Text = Trim(CboPacking.Column(1))
 Else
    TxtPacking.Text = ""
@@ -842,7 +842,7 @@ Call cbopayment_Click
 End Sub
 
 Private Sub cbopayment_Click()
-If cboPayment.MatchFound = True Then
+If cboPayment.matchFound = True Then
     TxtPayment.Text = Trim(cboPayment.Column(1))
 Else
     TxtPayment.Text = ""
@@ -851,43 +851,43 @@ End Sub
 
 Private Sub CboPOC_Click()
 
-If CboPOC.MatchFound = True Then
-    CboPOnO.Text = Trim(CboPOC.Column(2))
+If CboPOC.matchFound = True Then
+    cboPONo.Text = Trim(CboPOC.Column(2))
 Else
-    CboPOnO.Text = ""
+    cboPONo.Text = ""
 End If
 
-If CboPOC.MatchFound = True Then
+If CboPOC.matchFound = True Then
    cboSupp.Text = Trim(CboPOC.Column(1))
 Else
     cboSupp.Text = ""
 End If
 
-If CboPOC.MatchFound = True Then
+If CboPOC.matchFound = True Then
     cboPayment.Text = Trim(CboPOC.Column(4))
 Else
     cboPayment.Text = ""
 End If
 
-If CboPOC.MatchFound = True Then
+If CboPOC.matchFound = True Then
     cboPriceCondition.Text = Trim(CboPOC.Column(5))
 Else
     cboPriceCondition.Text = ""
 End If
 
-If CboPOC.MatchFound = True Then
+If CboPOC.matchFound = True Then
     CboPacking.Text = Trim(CboPOC.Column(6))
 Else
     CboPacking.Text = ""
 End If
 
-If CboPOC.MatchFound = True Then
+If CboPOC.matchFound = True Then
     cboTransport.Text = Trim(CboPOC.Column(7))
 Else
     cboTransport.Text = ""
 End If
 
-If CboPOC.MatchFound = True Then
+If CboPOC.matchFound = True Then
     TxtReason.Text = Trim(CboPOC.Column(8))
 Else
     TxtReason.Text = ""
@@ -905,10 +905,10 @@ Call cbopricecondition_Click
 End Sub
 
 Private Sub cbopricecondition_Click()
-If cboPriceCondition.MatchFound = True Then
-    TxtPrice.Text = Trim(cboPriceCondition.Column(1))
+If cboPriceCondition.matchFound = True Then
+    txtprice.Text = Trim(cboPriceCondition.Column(1))
 Else
-    TxtPrice.Text = ""
+    txtprice.Text = ""
 End If
 End Sub
 
@@ -917,7 +917,7 @@ Call cbotransport_Click
 End Sub
  
 Private Sub cbotransport_Click()
-If cboTransport.MatchFound = True Then
+If cboTransport.matchFound = True Then
     TxtTransport.Text = Trim(cboTransport.Column(1))
 Else
     TxtTransport.Text = ""
@@ -950,7 +950,7 @@ End Sub
 
 Private Sub CboSupp_Click()
 Call adtocbopono
-If cboSupp.MatchFound = True Then
+If cboSupp.matchFound = True Then
     txtName.Text = Trim(cboSupp.Column(1))
 Else
     txtName.Text = ""
@@ -1008,8 +1008,8 @@ Sub uf_Validate()
 If cboSupp.Text = "" Then
     cboSupp.SetFocus
     LblErr.Caption = DisplayMsg("1054")
-ElseIf CboPOnO.Text = "" Then
-    CboPOnO.SetFocus
+ElseIf cboPONo.Text = "" Then
+    cboPONo.SetFocus
     LblErr.Caption = DisplayMsg("1048")
 End If
 End Sub
@@ -1024,6 +1024,8 @@ CboSupp_Click
 End Sub
 
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
+
   CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 Call Header
@@ -1085,7 +1087,7 @@ If Trim(txtName.Text) = "" Then Exit Sub
                             IIf(cboSupp.Text = "ALL", "", "and  Supplier_Code='" & cboSupp.Text & "' ") & vbCrLf & _
                            ""
     Set rsno = Db.Execute(sqlno)
-    With CboPOnO
+    With cboPONo
         .clear
         Do While Not rsno.EOF
             .AddItem Trim(rsno("PO_No"))
@@ -1105,7 +1107,7 @@ If Trim(txtName.Text) = "" Then Exit Sub
                     sqlno = " select * from Purchaseorder_master" & vbCrLf & _
                            "Where period>='" & Format(SDate, "yyyymm") & "' And period<='" & Format(EDate, "yyyymm") & "' " & vbCrLf & _
                             IIf(cboSupp.Text = "ALL", "", "and  Supplier_Code='" & cboSupp.Text & "' ") & vbCrLf & _
-                           "and PO_no='" & CboPOnO.Text & "' " & vbCrLf & _
+                           "and PO_no='" & cboPONo.Text & "' " & vbCrLf & _
                            ""
     Set rsno = Db.Execute(sqlno)
     
@@ -1210,13 +1212,13 @@ Sub blank()
     SDate.Value = Format(Now, "dd MMM YYYY")
     EDate.Value = Format(Now, "dd MMM YYYY")
     CboPOC.Text = ""
-    CboPOnO.Text = ""
+    cboPONo.Text = ""
     cboPayment.Text = ""
     cboPriceCondition.Text = ""
     CboPacking.Text = ""
     cboTransport.Text = ""
     TxtPayment.Text = ""
-    TxtPrice.Text = ""
+    txtprice.Text = ""
     TxtPacking.Text = ""
     TxtTransport.Text = ""
     LblTotal.Caption = ""
@@ -1322,7 +1324,7 @@ Dim X As Double
 If OptCreate.Value = True Then
     ls_sql = " insert into PurchaseOrder_Master_History " & vbCrLf & _
                       " select  '" & Trim(CboPOC.Text) & "',*,'" & Trim(TxtReason.Text) & "',NULL,NULL,NULL From PurchaseOrder_Master " & vbCrLf & _
-                      " where po_no='" & Trim(CboPOnO.Text) & "' " & vbCrLf & _
+                      " where po_no='" & Trim(cboPONo.Text) & "' " & vbCrLf & _
                       " update PurchaseOrder_Master_History " & vbCrLf & _
                       " set PaymentTerm_Cls='" & Trim(cboPayment.Text) & "',PriceCondition_Cls='" & Trim(cboPriceCondition.Text) & "',POPacking_Cls='" & Trim(CboPacking.Text) & "',Transportation_Cls='" & Trim(cboTransport.Text) & "' " & vbCrLf & _
                       " where PO_Correction_no='" & Trim(CboPOC.Text) & "' " & vbCrLf & _
@@ -1332,7 +1334,7 @@ If OptCreate.Value = True Then
     
     ls_sql = " insert into PurchaseOrder_Detail_History  " & vbCrLf & _
                       " select  '" & Trim(CboPOC.Text) & "',* From PurchaseOrder_Detail " & vbCrLf & _
-                      " where po_no='" & CboPOnO.Text & "' " & vbCrLf
+                      " where po_no='" & cboPONo.Text & "' " & vbCrLf
     Db.Execute ls_sql
     
     For X = 1 To grid.Rows - 1
@@ -1341,7 +1343,7 @@ If OptCreate.Value = True Then
                   " update PurchaseOrder_Detail_History " & vbCrLf & _
                   " set price=" & CDbl(grid.TextMatrix(X, bteColPrice)) & ", " & vbCrLf & _
                   " Amount=" & CDbl(grid.TextMatrix(X, bteColAmount)) & " " & vbCrLf & _
-                  " where PO_Correction_no='" & Trim(CboPOC.Text) & "' and PO_No='" & CboPOnO.Text & "' and Item_Code='" & Trim(grid.TextMatrix(X, bteColItemCode)) & "' " & vbCrLf & _
+                  " where PO_Correction_no='" & Trim(CboPOC.Text) & "' and PO_No='" & cboPONo.Text & "' and Item_Code='" & Trim(grid.TextMatrix(X, bteColItemCode)) & "' " & vbCrLf & _
                   " "
     Db.Execute ls_sql
     Next X
@@ -1358,7 +1360,7 @@ ElseIf OptUpdate.Value = True Then
     ls_sql = " update PurchaseOrder_Detail_History " & vbCrLf & _
                   " set price=" & CDbl(grid.TextMatrix(X, bteColPrice)) & ", " & vbCrLf & _
                   " Amount=" & CDbl(grid.TextMatrix(X, bteColAmount)) & " " & vbCrLf & _
-                  " where PO_Correction_no='" & Trim(CboPOC.Text) & "' and PO_No='" & CboPOnO.Text & "' and Item_Code='" & Trim(grid.TextMatrix(X, bteColItemCode)) & "' " & vbCrLf & _
+                  " where PO_Correction_no='" & Trim(CboPOC.Text) & "' and PO_No='" & cboPONo.Text & "' and Item_Code='" & Trim(grid.TextMatrix(X, bteColItemCode)) & "' " & vbCrLf & _
                   " "
         Db.Execute (ls_sql)
     Next X
@@ -1369,10 +1371,10 @@ End Sub
 
 Private Function uf_SQLSearch() As String
 uf_SQLSearch = " Select * from PurchaseOrder_Detail left join Item_Master on PurchaseOrder_Detail.item_code=Item_Master.item_code  " & vbCrLf & _
-               " where PurchaseOrder_Detail.PO_No='" & CboPOnO.Text & "' "
+               " where PurchaseOrder_Detail.PO_No='" & cboPONo.Text & "' "
 End Function
  
 Private Function uf_SQLSearchUpdate() As String
 uf_SQLSearchUpdate = " Select * from PurchaseOrder_Detail_History left join Item_Master on PurchaseOrder_Detail_History.item_code=Item_Master.item_code  " & vbCrLf & _
-                     " where PurchaseOrder_Detail_History.PO_No='" & CboPOnO.Text & "' "
+                     " where PurchaseOrder_Detail_History.PO_No='" & cboPONo.Text & "' "
 End Function
