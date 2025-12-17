@@ -1201,7 +1201,7 @@ Me.MousePointer = vbHourglass
                         
                        '1. Cek WH Code
                        'rs_DB.Open "SELECT WH_Code FROM WareHouse_Master WHERE WH_Code='" & Trim(.Cells(i, 1)) & "'", Db, adOpenKeyset, adLockOptimistic
-                       rs_DB.Open "SELECT WH_Code FROM WareHouse_Master WHERE WH_Code = '" & Trim(.Cells(i, 1)) & "' AND Company_Code IN (SELECT Factory_Code FROM dbo.App_FactoryPrivilege WHERE UserID = '" & userLogin & "' AND Show = '1')", Db, adOpenKeyset, adLockOptimistic
+                       rs_DB.Open "SELECT WH_Code FROM WareHouse_Master WHERE WH_Code = '" & Trim(.Cells(i, 1)) & "' AND Company_Code IN (SELECT TOP 1 Factory_Code FROM dbo.App_FactoryPrivilege WHERE UserID = '" & userLogin & "' AND Show = '1' ORDER BY UpdateDate DESC)", Db, adOpenKeyset, adLockOptimistic
                        
                        If rs_DB.EOF = True Then
                             IInvalidWHCode = IInvalidWHCode + 1

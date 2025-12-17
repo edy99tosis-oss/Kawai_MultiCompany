@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form F_StockInquiry 
    BackColor       =   &H00FDDFE3&
@@ -172,7 +172,7 @@ Begin VB.Form F_StockInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   141230083
+      Format          =   60817411
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -293,7 +293,7 @@ Begin VB.Form F_StockInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   141230083
+      Format          =   60817411
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -436,7 +436,7 @@ Private Sub Header()
 End Sub
 
 Private Sub CboItemCD_Change()
-    If CboItemCD.MatchFound Then
+    If CboItemCD.matchFound Then
         lbldesc = CboItemCD.List(CboItemCD.ListIndex, 1)
         LblPesan = ""
     Else
@@ -559,8 +559,8 @@ Private Sub SettingGrid()
     With grid
         If RsLast.State <> adStateClosed Then RsLast.Close
         sql = " select isnull(wh_name,'')wh_name,stock_master.* From stock_master " & _
-        " left join  " & _
-        " (select wh_code,wh_name from warehouse_master union all  " & _
+        " INNER join  " & _
+        " (select wh_code,wh_name from warehouse_master WHERE Company_Code = (SELECT TOP 1 Factory_Code FROM dbo.App_FactoryPrivilege WHERE UserID = '" & userLogin & "' ORDER BY UpdateDate DESC ) union all  " & _
         " select trade_code wh_code,trade_name wh_name from trade_master )warehouse_master " & _
         " on stock_master.warehouse_code=warehouse_master.wh_code " & _
         " where stock_master.item_code='" & Trim(CboItemCD) & "'"

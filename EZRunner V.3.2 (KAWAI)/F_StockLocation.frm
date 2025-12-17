@@ -57,8 +57,8 @@ Begin VB.Form F_StockLocation
       TabIndex        =   15
       Top             =   405
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VB.CommandButton Cmd_Save 
       BackColor       =   &H0080FFFF&
@@ -153,7 +153,7 @@ Begin VB.Form F_StockLocation
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   60030979
+      Format          =   60096515
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -274,7 +274,7 @@ Begin VB.Form F_StockLocation
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   60620803
+      Format          =   60096515
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -385,35 +385,35 @@ Private Sub Header()
     bteColLossReject = 6
     bteColCurrent = 7
     
-    Grid.Rows = 1
-    Grid.ColS = 8
+    grid.Rows = 1
+    grid.ColS = 8
     
-    Grid.TextMatrix(0, bteColProduct) = "Product Code"
-    Grid.TextMatrix(0, bteColDesc) = "Description"
-    Grid.TextMatrix(0, bteColAddress) = "Address"
-    Grid.TextMatrix(0, bteColPreMonth) = "Pre Month"
-    Grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
-    Grid.TextMatrix(0, bteColSupply) = "Supply Total"
-    Grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
-    Grid.TextMatrix(0, bteColCurrent) = "Current Stock"
+    grid.TextMatrix(0, bteColProduct) = "Product Code"
+    grid.TextMatrix(0, bteColDesc) = "Description"
+    grid.TextMatrix(0, bteColAddress) = "Address"
+    grid.TextMatrix(0, bteColPreMonth) = "Pre Month"
+    grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
+    grid.TextMatrix(0, bteColSupply) = "Supply Total"
+    grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
+    grid.TextMatrix(0, bteColCurrent) = "Current Stock"
     
-    Grid.ColWidth(bteColProduct) = 2000
-    Grid.ColWidth(bteColDesc) = 2500
-    Grid.ColWidth(bteColAddress) = 800
-    Grid.ColWidth(bteColPreMonth) = 1500
-    Grid.ColWidth(bteColReceipt) = 1500
-    Grid.ColWidth(bteColSupply) = 1500
-    Grid.ColWidth(bteColLossReject) = 1500
-    Grid.ColWidth(bteColCurrent) = 1300
+    grid.ColWidth(bteColProduct) = 2000
+    grid.ColWidth(bteColDesc) = 2500
+    grid.ColWidth(bteColAddress) = 800
+    grid.ColWidth(bteColPreMonth) = 1500
+    grid.ColWidth(bteColReceipt) = 1500
+    grid.ColWidth(bteColSupply) = 1500
+    grid.ColWidth(bteColLossReject) = 1500
+    grid.ColWidth(bteColCurrent) = 1300
     
-    Grid.ColAlignment(bteColProduct) = flexAlignLeftCenter
-    Grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
-    Grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
-    Grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
-    Grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
-    Grid.ColAlignment(bteColSupply) = flexAlignRightCenter
-    Grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
-    Grid.ColAlignment(bteColCurrent) = flexAlignRightCenter
+    grid.ColAlignment(bteColProduct) = flexAlignLeftCenter
+    grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
+    grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
+    grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
+    grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
+    grid.ColAlignment(bteColSupply) = flexAlignRightCenter
+    grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
+    grid.ColAlignment(bteColCurrent) = flexAlignRightCenter
 End Sub
 
 Private Sub CboLocationCD_Change()
@@ -532,7 +532,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-    If Grid.Col >= bteColProduct Then Cancel = True
+    If grid.Col >= bteColProduct Then Cancel = True
 End Sub
 
 Private Sub SettingGrid()
@@ -552,7 +552,7 @@ Private Sub SettingGrid()
     If Trim(LblErrMsg) <> "" Then Exit Sub
     LblErrMsg = ""
     
-    With Grid
+    With grid
         If RsLast.State <> adStateClosed Then RsLast.Close
         sql = " select address,item_name,stock_master.* From stock_master left join item_master " & _
             " on stock_master.item_code=item_master.item_code " & _
@@ -566,15 +566,15 @@ Private Sub SettingGrid()
                 i = 0
                 Do While Not .EOF
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColProduct) = Trim(!Item_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!item_name)
-                    Grid.TextMatrix(i, bteColAddress) = IIf(IsNull(!Address), "", Trim(!Address))
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!lm_premonth), "0.00", Format(!lm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!lm_receipt), "0.00", Format(!lm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!lm_supply), "0.00", Format(!lm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!lm_lossreject), "0.00", Format(!lm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!lm_inventory), "0.00", Format(!lm_inventory, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColProduct) = Trim(!Item_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!item_name)
+                    grid.TextMatrix(i, bteColAddress) = IIf(IsNull(!Address), "", Trim(!Address))
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!lm_premonth), "0.00", Format(!lm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!lm_receipt), "0.00", Format(!lm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!lm_supply), "0.00", Format(!lm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!lm_lossreject), "0.00", Format(!lm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!lm_inventory), "0.00", Format(!lm_inventory, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -584,15 +584,15 @@ Private Sub SettingGrid()
                 i = 0
                 Do While Not .EOF
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColProduct) = Trim(!Item_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!item_name)
-                    Grid.TextMatrix(i, bteColAddress) = IIf(IsNull(!Address), "", Trim(!Address))
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!tm_premonth), "0.00", Format(!tm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!tm_receipt), "0.00", Format(!tm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!tm_supply), "0.00", Format(!tm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!tm_lossreject), "0.00", Format(!tm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!tm_current), "0.00", Format(!tm_current, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColProduct) = Trim(!Item_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!item_name)
+                    grid.TextMatrix(i, bteColAddress) = IIf(IsNull(!Address), "", Trim(!Address))
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!tm_premonth), "0.00", Format(!tm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!tm_receipt), "0.00", Format(!tm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!tm_supply), "0.00", Format(!tm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!tm_lossreject), "0.00", Format(!tm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!tm_current), "0.00", Format(!tm_current, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -602,15 +602,15 @@ Private Sub SettingGrid()
                 i = 0
                 Do While Not .EOF
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColProduct) = Trim(!Item_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!item_name)
-                    Grid.TextMatrix(i, bteColAddress) = IIf(IsNull(!Address), "", Trim(!Address))
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!nm_premonth), "0.00", Format(!nm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!nm_receipt), "0.00", Format(!nm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!nm_supply), "0.00", Format(!nm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!nm_lossreject), "0.00", Format(!nm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!nm_current), "0.00", Format(!nm_current, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColProduct) = Trim(!Item_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!item_name)
+                    grid.TextMatrix(i, bteColAddress) = IIf(IsNull(!Address), "", Trim(!Address))
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!nm_premonth), "0.00", Format(!nm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!nm_receipt), "0.00", Format(!nm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!nm_supply), "0.00", Format(!nm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!nm_lossreject), "0.00", Format(!nm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!nm_current), "0.00", Format(!nm_current, gs_formatQty))
                     .MoveNext
                 Loop
             End With
