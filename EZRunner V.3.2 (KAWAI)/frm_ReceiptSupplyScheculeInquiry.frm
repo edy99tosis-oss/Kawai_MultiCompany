@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_ReceiptSupplyScheculeInquiry 
    BackColor       =   &H00FDDFE3&
@@ -26,6 +26,14 @@ Begin VB.Form frm_ReceiptSupplyScheculeInquiry
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    WindowState     =   2  'Maximized
+   Begin VB.TextBox Text1 
+      Height          =   600
+      Left            =   720
+      TabIndex        =   20
+      Text            =   "Text1"
+      Top             =   675
+      Width           =   2850
+   End
    Begin VB.CommandButton Command4 
       Caption         =   "..."
       Height          =   300
@@ -123,7 +131,7 @@ Begin VB.Form frm_ReceiptSupplyScheculeInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   152633347
+      Format          =   60096515
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -244,7 +252,7 @@ Begin VB.Form frm_ReceiptSupplyScheculeInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   152633347
+      Format          =   60096515
       CurrentDate     =   37798
    End
    Begin VB.Label Label6 
@@ -469,7 +477,7 @@ Private Sub Header()
     bteColBalAmount = 22
     bteColBalEffective = 23
         
-    With grid
+    With Grid
         .Rows = 2
         .ColS = 24
         
@@ -596,9 +604,792 @@ Private Sub SettingGrid()
     Dim dblBalanceOrder As Double
     Dim dblBalanceEffective As Double
     
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
-    LblPesan.Caption = ""
+    Lblpesan.Caption = ""
+    
+sql = " DECLARE @item_code CHAR(15)  " & vbCrLf & _
+            " DECLARE @start_date DATETIME  " & vbCrLf & _
+            " DECLARE @end_date DATETIME  " & vbCrLf & _
+            " DECLARE @closing_date AS DATETIME  " & vbCrLf & _
+            "  " & vbCrLf & _
+            " DECLARE @Factory_Code VARCHAR(50);     " & vbCrLf & _
+            " SELECT TOP 1 " & vbCrLf & _
+            "         @Factory_Code = Factory_Code " & vbCrLf & _
+            " FROM    dbo.App_FactoryPrivilege " & vbCrLf & _
+            " WHERE   UserID = '" & userLogin & "' " & vbCrLf & _
+            " ORDER BY UpdateDate DESC; "
+
+sql = sql + "  " & vbCrLf & _
+            " SET @item_code  = '" & Trim(CboItemCD.Text) & "' " & vbCrLf & _
+            " SET @start_date = '" & Format(DMonth(0).Value, "yyyy-MM-dd") & "' " & vbCrLf & _
+            " SET @end_date = '" & Format(DMonth(1).Value, "yyyy-MM-dd") & "' " & vbCrLf & _
+            " SET @closing_date = ( SELECT TOP 1 " & vbCrLf & _
+            "                                 CAST(Inventory_Year AS NVARCHAR(4)) + '-' " & vbCrLf & _
+            "                                 + CAST(Inventory_Month AS NVARCHAR(2)) + '-1' " & vbCrLf & _
+            "                       FROM      Inventory_Control " & vbCrLf & _
+            "                       ORDER BY  Inventory_Year DESC , " & vbCrLf & _
+            "                                 Inventory_Month DESC " & vbCrLf & _
+            "                     ); "
+
+sql = sql + " WITH    AllowedWarehouses " & vbCrLf & _
+            "           AS ( SELECT   WH_Code " & vbCrLf & _
+            "                FROM     WareHouse_Master " & vbCrLf & _
+            "                WHERE    Company_Code = @Factory_Code " & vbCrLf & _
+            "              ) " & vbCrLf & _
+            "     SELECT  ISNULL(stock_begin.stock_begin, 0) stock_begin , " & vbCrLf & _
+            "             ISNULL(stock_in.stock_in, 0) stock_in , " & vbCrLf & _
+            "             ISNULL(stock_out.stock_out, 0) stock_out , " & vbCrLf & _
+            "             ISNULL(po.po_qty, 0) po_qty , " & vbCrLf & _
+            "             ISNULL(po_receipt.po_receipt, 0) po_receipt , " & vbCrLf & _
+            "             ISNULL(po_return.po_return, 0) po_return , "
+
+sql = sql + "             ISNULL(po_cancel.po_cancel, 0) po_cancel , " & vbCrLf & _
+            "             ISNULL(pro.pro_qty, 0) pro_qty , " & vbCrLf & _
+            "             ISNULL(pro_result.pro_result, 0) pro_result , " & vbCrLf & _
+            "             ISNULL(pro_cancel.pro_cancel, 0) pro_cancel , " & vbCrLf & _
+            "             ISNULL(req.req_qty, 0) req_qty , " & vbCrLf & _
+            "             ISNULL(req.req_result, 0) req_result , " & vbCrLf & _
+            "             ISNULL(req.req_off, 0) req_off , " & vbCrLf & _
+            "             trans.* , " & vbCrLf & _
+            "             ISNULL(mrp_set, '0') mrp_set , " & vbCrLf & _
+            "             RTRIM(cp.Company_Name) company_name , " & vbCrLf & _
+            "             RTRIM(cp.Address1) address1 , "
+
+sql = sql + "             RTRIM(cp.Address2) address2 , " & vbCrLf & _
+            "             RTRIM(cp.Phone1) phone1 , " & vbCrLf & _
+            "             RTRIM(cp.Phone2) phone2 , " & vbCrLf & _
+            "             RTRIM(cp.Fax) fax " & vbCrLf & _
+            "     FROM    ( SELECT    Item_Code , " & vbCrLf & _
+            "                         SUM(ISNULL(bg.PreMonth, 0)) stock_begin " & vbCrLf & _
+            "               FROM      ( SELECT    Stock_Year , " & vbCrLf & _
+            "                                     Stock_Month , " & vbCrLf & _
+            "                                     Warehouse_Code , " & vbCrLf & _
+            "                                     Item_Code , " & vbCrLf & _
+            "                                     PreMonth "
+
+sql = sql + "                           FROM      Stock_History " & vbCrLf & _
+            "                           UNION " & vbCrLf & _
+            "                           SELECT    YEAR(@closing_date) stock_year , " & vbCrLf & _
+            "                                     MONTH(@closing_date) stock_month , " & vbCrLf & _
+            "                                     Warehouse_Code , " & vbCrLf & _
+            "                                     Item_Code , " & vbCrLf & _
+            "                                     LM_PreMonth " & vbCrLf & _
+            "                           FROM      Stock_Master " & vbCrLf & _
+            "                           WHERE     Warehouse_Code IN ( " & vbCrLf & _
+            "                                     SELECT  WH_Code " & vbCrLf & _
+            "                                     FROM    AllowedWarehouses ) "
+
+sql = sql + "                           UNION " & vbCrLf & _
+            "                           SELECT    YEAR(DATEADD(m, 1, @closing_date)) stock_year , " & vbCrLf & _
+            "                                     MONTH(DATEADD(m, 1, @closing_date)) stock_month , " & vbCrLf & _
+            "                                     Warehouse_Code , " & vbCrLf & _
+            "                                     Item_Code , " & vbCrLf & _
+            "                                     TM_PreMonth " & vbCrLf & _
+            "                           FROM      Stock_Master " & vbCrLf & _
+            "                           WHERE     Warehouse_Code IN ( " & vbCrLf & _
+            "                                     SELECT  WH_Code " & vbCrLf & _
+            "                                     FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                           UNION "
+
+sql = sql + "                           SELECT    YEAR(DATEADD(m, 2, @closing_date)) stock_year , " & vbCrLf & _
+            "                                     MONTH(DATEADD(m, 2, @closing_date)) stock_month , " & vbCrLf & _
+            "                                     Warehouse_Code , " & vbCrLf & _
+            "                                     Item_Code , " & vbCrLf & _
+            "                                     NM_PreMonth " & vbCrLf & _
+            "                           FROM      Stock_Master " & vbCrLf & _
+            "                           WHERE     Warehouse_Code IN ( " & vbCrLf & _
+            "                                     SELECT  WH_Code " & vbCrLf & _
+            "                                     FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                           UNION " & vbCrLf & _
+            "                           SELECT    YEAR(@start_date) stock_year , "
+
+sql = sql + "                                     MONTH(@start_date) stock_month , " & vbCrLf & _
+            "                                     Warehouse_Code , " & vbCrLf & _
+            "                                     Item_Code , " & vbCrLf & _
+            "                                     NM_Current " & vbCrLf & _
+            "                           FROM      Stock_Master " & vbCrLf & _
+            "                           WHERE     Warehouse_Code IN ( " & vbCrLf & _
+            "                                     SELECT  WH_Code " & vbCrLf & _
+            "                                     FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                                     AND DATEDIFF(m, @closing_date, @start_date) > 2 " & vbCrLf & _
+            "                         ) bg " & vbCrLf & _
+            "               WHERE     bg.Stock_Year = YEAR(@start_date) "
+
+sql = sql + "                         AND bg.Stock_Month = MONTH(@start_date) " & vbCrLf & _
+            "               GROUP BY  Item_Code " & vbCrLf & _
+            "             ) stock_begin " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  Item_Code , " & vbCrLf & _
+            "                                 SUM(Qty) stock_in " & vbCrLf & _
+            "                         FROM    ( SELECT    Receipt_Date , " & vbCrLf & _
+            "                                             Item_Code , " & vbCrLf & _
+            "                                             Qty " & vbCrLf & _
+            "                                   FROM      Part_Receipt " & vbCrLf & _
+            "                                   WHERE     Receipt_Cls NOT IN ( 'R1' ) " & vbCrLf & _
+            "                                             AND Part_Receipt.Warehouse_Code IN ( "
+
+sql = sql + "                                             SELECT  WH_Code " & vbCrLf & _
+            "                                             FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                                   UNION ALL " & vbCrLf & _
+            "                                   SELECT    Receipt_Date , " & vbCrLf & _
+            "                                             Item_Code , " & vbCrLf & _
+            "                                             -Qty " & vbCrLf & _
+            "                                   FROM      Part_Receipt " & vbCrLf & _
+            "                                   WHERE     Receipt_Cls IN ( 'R1' ) " & vbCrLf & _
+            "                                             AND Part_Receipt.Warehouse_Code IN ( " & vbCrLf & _
+            "                                             SELECT  WH_Code " & vbCrLf & _
+            "                                             FROM    AllowedWarehouses ) "
+
+sql = sql + "                                 ) stock_in " & vbCrLf & _
+            "                         WHERE   Receipt_Date >= @start_date " & vbCrLf & _
+            "                                 - ( DAY(@start_date) - 1 ) " & vbCrLf & _
+            "                                 AND Receipt_Date < @start_date " & vbCrLf & _
+            "                         GROUP BY Item_Code " & vbCrLf & _
+            "                       ) stock_in ON stock_begin.Item_Code = stock_in.Item_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  ChildItem_Code , " & vbCrLf & _
+            "                                 SUM(ChildRequirement_Qty) stock_out " & vbCrLf & _
+            "                         FROM    Part_Supply " & vbCrLf & _
+            "                         WHERE   Supply_Cls NOT IN ( 'S1' ) " & vbCrLf & _
+            "                                 AND Part_Supply.FromWarehouse_Code IN ( "
+
+sql = sql + "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                                 AND ChildSupply_date >= @start_date " & vbCrLf & _
+            "                                 - ( DAY(@start_date) - 1 ) " & vbCrLf & _
+            "                                 AND ChildSupply_date < @start_date " & vbCrLf & _
+            "                         GROUP BY ChildItem_Code " & vbCrLf & _
+            "                       ) stock_out ON stock_begin.Item_Code = stock_out.ChildItem_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  pd.Item_Code , " & vbCrLf & _
+            "                                 SUM(pd.Qty) po_qty " & vbCrLf & _
+            "                         FROM    PurchaseOrder_Master pm " & vbCrLf & _
+            "                                 INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No "
+
+sql = sql + "                         WHERE   ISNULL(pm.Fix_Cls, '0') = '1' " & vbCrLf & _
+            "                                 AND pm.WHTo IN ( SELECT WH_Code " & vbCrLf & _
+            "                                                  FROM   AllowedWarehouses ) " & vbCrLf & _
+            "                                 AND pm.Delivery_Date < @start_date " & vbCrLf & _
+            "                         GROUP BY pd.Item_Code " & vbCrLf & _
+            "                       ) po ON stock_begin.Item_Code = po.Item_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  pr.Item_Code , " & vbCrLf & _
+            "                                 SUM(pr.Qty) po_receipt " & vbCrLf & _
+            "                         FROM    PurchaseOrder_Master pm " & vbCrLf & _
+            "                                 INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No " & vbCrLf & _
+            "                                 INNER JOIN Part_Receipt pr ON pm.Supplier_Code = pr.Supplier_Code "
+
+sql = sql + "                                                               AND pm.PO_No = pr.PO_No " & vbCrLf & _
+            "                                                               AND pd.Item_Code = pr.Item_Code " & vbCrLf & _
+            "                         WHERE   pr.Receipt_Cls = 'R' " & vbCrLf & _
+            "                                 AND pr.Warehouse_Code IN ( " & vbCrLf & _
+            "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                                 AND pm.WHTo IN ( SELECT WH_Code " & vbCrLf & _
+            "                                                  FROM   AllowedWarehouses ) " & vbCrLf & _
+            "                                 AND pr.Receipt_Date < @start_date " & vbCrLf & _
+            "                         GROUP BY pr.Item_Code " & vbCrLf & _
+            "                       ) po_receipt ON stock_begin.Item_Code = po_receipt.Item_Code "
+
+sql = sql + "             LEFT JOIN ( SELECT  pr.Item_Code , " & vbCrLf & _
+            "                                 SUM(pr.Qty) po_return " & vbCrLf & _
+            "                         FROM    PurchaseOrder_Master pm " & vbCrLf & _
+            "                                 INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No " & vbCrLf & _
+            "                                 INNER JOIN Part_Receipt pr ON pm.Supplier_Code = pr.Supplier_Code " & vbCrLf & _
+            "                                                               AND pm.PO_No = pr.PO_No " & vbCrLf & _
+            "                                                               AND pd.Item_Code = pr.Item_Code " & vbCrLf & _
+            "                         WHERE   pr.Receipt_Cls = 'R1' " & vbCrLf & _
+            "                                 AND pr.Warehouse_Code IN ( " & vbCrLf & _
+            "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) "
+
+sql = sql + "                                 AND pm.WHTo IN ( SELECT WH_Code " & vbCrLf & _
+            "                                                  FROM   AllowedWarehouses ) " & vbCrLf & _
+            "                                 AND pr.Receipt_Date < @start_date " & vbCrLf & _
+            "                         GROUP BY pr.Item_Code " & vbCrLf & _
+            "                       ) po_return ON stock_begin.Item_Code = po_return.Item_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  Item_Code , " & vbCrLf & _
+            "                                 SUM(po_cancel) po_cancel " & vbCrLf & _
+            "                         FROM    ( SELECT    pd.Item_Code , " & vbCrLf & _
+            "                                             po_cancel = CASE WHEN ISNULL(pd.Qty, " & vbCrLf & _
+            "                                                               0) " & vbCrLf & _
+            "                                                               - ISNULL(rc.qty, "
+
+sql = sql + "                                                               0) > 0 " & vbCrLf & _
+            "                                                              THEN ISNULL(pd.Qty, " & vbCrLf & _
+            "                                                               0) " & vbCrLf & _
+            "                                                               - ISNULL(rc.qty, " & vbCrLf & _
+            "                                                               0) " & vbCrLf & _
+            "                                                              ELSE 0 " & vbCrLf & _
+            "                                                         END " & vbCrLf & _
+            "                                   FROM      PurchaseOrder_Master pm " & vbCrLf & _
+            "                                             INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No " & vbCrLf & _
+            "                                             LEFT JOIN ( SELECT " & vbCrLf & _
+            "                                                               PO_No , "
+
+sql = sql + "                                                               Supplier_Code , " & vbCrLf & _
+            "                                                               Item_Code , " & vbCrLf & _
+            "                                                               SUM(Qty) qty " & vbCrLf & _
+            "                                                         FROM  Part_Receipt " & vbCrLf & _
+            "                                                         WHERE Receipt_Cls = 'R' " & vbCrLf & _
+            "                                                               AND Part_Receipt.Warehouse_Code IN ( " & vbCrLf & _
+            "                                                               SELECT " & vbCrLf & _
+            "                                                               WH_Code " & vbCrLf & _
+            "                                                               FROM " & vbCrLf & _
+            "                                                               AllowedWarehouses ) " & vbCrLf & _
+            "                                                         GROUP BY PO_No , "
+
+sql = sql + "                                                               Supplier_Code , " & vbCrLf & _
+            "                                                               Item_Code " & vbCrLf & _
+            "                                                       ) rc ON pd.PO_No = rc.PO_No " & vbCrLf & _
+            "                                                               AND pm.Supplier_Code = rc.Supplier_Code " & vbCrLf & _
+            "                                                               AND pd.Item_Code = rc.Item_Code " & vbCrLf & _
+            "                                   WHERE     ISNULL(pd.Complete_Cls, '0') = '1' " & vbCrLf & _
+            "                                             AND pm.WHTo IN ( " & vbCrLf & _
+            "                                             SELECT  WH_Code " & vbCrLf & _
+            "                                             FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                                             AND pm.Delivery_Date < @start_date " & vbCrLf & _
+            "                                 ) po_cancel "
+
+sql = sql + "                         GROUP BY Item_Code " & vbCrLf & _
+            "                       ) po_cancel ON stock_begin.Item_Code = po_cancel.Item_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  dp.Item_code , " & vbCrLf & _
+            "                                 SUM(dp.Qty) pro_qty " & vbCrLf & _
+            "                         FROM    Daily_Production dp " & vbCrLf & _
+            "                         WHERE   dp.Schedule_Date < @start_date " & vbCrLf & _
+            "                         GROUP BY dp.Item_code " & vbCrLf & _
+            "                       ) pro ON stock_begin.Item_Code = pro.Item_code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  Item_Code , " & vbCrLf & _
+            "                                 SUM(Qty) pro_result " & vbCrLf & _
+            "                         FROM    Part_Receipt "
+
+sql = sql + "                         WHERE   Receipt_Cls = 'P1' " & vbCrLf & _
+            "                                 AND Part_Receipt.Warehouse_Code IN ( " & vbCrLf & _
+            "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                                 AND Receipt_Date < @start_date " & vbCrLf & _
+            "                         GROUP BY Item_Code " & vbCrLf & _
+            "                       ) pro_result ON stock_begin.Item_Code = pro_result.Item_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  Item_code , " & vbCrLf & _
+            "                                 SUM(pro_cancel) pro_cancel " & vbCrLf & _
+            "                         FROM    ( SELECT    dp.Item_code , " & vbCrLf & _
+            "                                             pro_cancel = CASE WHEN ISNULL(dp.Qty, "
+
+sql = sql + "                                                               0) " & vbCrLf & _
+            "                                                               - ISNULL(rs.qty, " & vbCrLf & _
+            "                                                               0) > 0 " & vbCrLf & _
+            "                                                               THEN ISNULL(dp.Qty, " & vbCrLf & _
+            "                                                               0) " & vbCrLf & _
+            "                                                               - ISNULL(rs.qty, " & vbCrLf & _
+            "                                                               0) " & vbCrLf & _
+            "                                                               ELSE 0 " & vbCrLf & _
+            "                                                          END " & vbCrLf & _
+            "                                   FROM      Daily_Production dp " & vbCrLf & _
+            "                                             LEFT JOIN ( SELECT "
+
+sql = sql + "                                                               Supplier_Code , " & vbCrLf & _
+            "                                                               PO_No , " & vbCrLf & _
+            "                                                               Item_Code , " & vbCrLf & _
+            "                                                               SuratJalan_No , " & vbCrLf & _
+            "                                                               DailySeq_No , " & vbCrLf & _
+            "                                                               SUM(Qty) qty " & vbCrLf & _
+            "                                                         FROM  Part_Receipt " & vbCrLf & _
+            "                                                         WHERE Receipt_Cls = 'P1' " & vbCrLf & _
+            "                                                         GROUP BY Supplier_Code , " & vbCrLf & _
+            "                                                               PO_No , " & vbCrLf & _
+            "                                                               Item_Code , "
+
+sql = sql + "                                                               SuratJalan_No , " & vbCrLf & _
+            "                                                               DailySeq_No " & vbCrLf & _
+            "                                                       ) rs ON dp.Factory_code = rs.Supplier_Code " & vbCrLf & _
+            "                                                               AND dp.Line_Code = rs.PO_No " & vbCrLf & _
+            "                                                               AND dp.Item_code = rs.Item_Code " & vbCrLf & _
+            "                                                               AND dp.Lot_No = rs.SuratJalan_No " & vbCrLf & _
+            "                                                               AND dp.Seq_No = rs.DailySeq_No " & vbCrLf & _
+            "                                   WHERE     ISNULL(dp.Complete_Cls, '0') = '1' " & vbCrLf & _
+            "                                             AND dp.Schedule_Date < @start_date " & vbCrLf & _
+            "                                 ) pro_cancel " & vbCrLf & _
+            "                         GROUP BY Item_code "
+
+sql = sql + "                       ) pro_cancel ON stock_begin.Item_Code = pro_cancel.Item_code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  ChildItem_Code , " & vbCrLf & _
+            "                                 SUM(ChildRequirement_Qty) req_qty , " & vbCrLf & _
+            "                                 SUM(ChildRequirementResult_Qty) req_result , " & vbCrLf & _
+            "                                 SUM(OffChildRequirement_Qty) req_off " & vbCrLf & _
+            "                         FROM    Requirement " & vbCrLf & _
+            "                         WHERE   Production_Date < @start_date " & vbCrLf & _
+            "                         GROUP BY ChildItem_Code " & vbCrLf & _
+            "                       ) req ON stock_begin.Item_Code = req.ChildItem_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  0 idx , " & vbCrLf & _
+            "                                 'adj' status , "
+
+sql = sql + "                                 'ADJ' cls , " & vbCrLf & _
+            "                                 adj.Item_Code , " & vbCrLf & _
+            "                                 adj.date , " & vbCrLf & _
+            "                                 NULL od_qty , " & vbCrLf & _
+            "                                 NULL od_incoming , " & vbCrLf & _
+            "                                 NULL od_pono , " & vbCrLf & _
+            "                                 NULL od_dono , " & vbCrLf & _
+            "                                 NULL od_curr , " & vbCrLf & _
+            "                                 NULL od_price , " & vbCrLf & _
+            "                                 NULL in_qty , " & vbCrLf & _
+            "                                 NULL in_curr , "
+
+sql = sql + "                                 NULL in_price , " & vbCrLf & _
+            "                                 NULL in_amount , " & vbCrLf & _
+            "                                 adj.qty_adj out_qty , " & vbCrLf & _
+            "                                 NULL out_curr , " & vbCrLf & _
+            "                                 NULL out_price , " & vbCrLf & _
+            "                                 NULL out_amount " & vbCrLf & _
+            "                         FROM    ( SELECT    DATEADD(d, -1, " & vbCrLf & _
+            "                                                     DATEADD(m, 1, " & vbCrLf & _
+            "                                                             CAST(Stock_Year " & vbCrLf & _
+            "                                                             + '-' " & vbCrLf & _
+            "                                                             + Stock_Month "
+
+sql = sql + "                                                             + '-1' AS DATETIME))) date , " & vbCrLf & _
+            "                                             Item_Code , " & vbCrLf & _
+            "                                             SUM([Current]) - SUM(Inventory) qty_adj " & vbCrLf & _
+            "                                   FROM      Stock_History " & vbCrLf & _
+            "                                   WHERE     [Current] <> ISNULL(Inventory, " & vbCrLf & _
+            "                                                               [Current]) " & vbCrLf & _
+            "                                   GROUP BY  Stock_Year , " & vbCrLf & _
+            "                                             Stock_Month , " & vbCrLf & _
+            "                                             Item_Code " & vbCrLf & _
+            "                                   UNION ALL " & vbCrLf & _
+            "                                   SELECT    DATEADD(d, -1, "
+
+sql = sql + "                                                     DATEADD(m, 1, " & vbCrLf & _
+            "                                                             @closing_date)) date , " & vbCrLf & _
+            "                                             Item_Code , " & vbCrLf & _
+            "                                             SUM(LM_Current) " & vbCrLf & _
+            "                                             - SUM(ISNULL(LM_Inventory, " & vbCrLf & _
+            "                                                          LM_Current)) qty_ad " & vbCrLf & _
+            "                                   FROM      Stock_Master " & vbCrLf & _
+            "                                   WHERE     LM_Current <> ISNULL(LM_Inventory, " & vbCrLf & _
+            "                                                               LM_Current) " & vbCrLf & _
+            "                                   GROUP BY  Item_Code " & vbCrLf & _
+            "                                 ) adj "
+
+sql = sql + "                         UNION ALL " & vbCrLf & _
+            "                         SELECT  1 idx , " & vbCrLf & _
+            "                                 'po' status , " & vbCrLf & _
+            "                                 '' cls , " & vbCrLf & _
+            "                                 pd.Item_Code , " & vbCrLf & _
+            "                                 pm.Delivery_Date date , " & vbCrLf & _
+            "                                 pd.Qty od_qty , " & vbCrLf & _
+            "                                 NULL od_incoming , " & vbCrLf & _
+            "                                 RTRIM(pd.PO_No) " & vbCrLf & _
+            "                                 + CASE WHEN ISNULL(po_cancel, 0) > 0 " & vbCrLf & _
+            "                                        THEN ' (Completed by user)' "
+
+sql = sql + "                                        ELSE '' " & vbCrLf & _
+            "                                   END od_pono , " & vbCrLf & _
+            "                                 NULL od_dono , " & vbCrLf & _
+            "                                 RTRIM(cc.Description) od_curr , " & vbCrLf & _
+            "                                 pd.Price + ISNULL(pd.Price_Service, 0) od_price , " & vbCrLf & _
+            "                                 NULL in_qty , " & vbCrLf & _
+            "                                 NULL in_curr , " & vbCrLf & _
+            "                                 NULL in_price , " & vbCrLf & _
+            "                                 NULL in_amount , " & vbCrLf & _
+            "                                 ISNULL(po_cancel, 0) out_qty , " & vbCrLf & _
+            "                                 NULL out_curr , "
+
+sql = sql + "                                 NULL out_price , " & vbCrLf & _
+            "                                 NULL out_amount " & vbCrLf & _
+            "                         FROM    PurchaseOrder_Master pm " & vbCrLf & _
+            "                                 INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No " & vbCrLf & _
+            "                                 LEFT JOIN Curr_Cls cc ON pd.Currency_Code = cc.Curr_Cls " & vbCrLf & _
+            "                                 LEFT JOIN ( SELECT  pm.Supplier_Code , " & vbCrLf & _
+            "                                                     pm.PO_No , " & vbCrLf & _
+            "                                                     pd.Item_Code , " & vbCrLf & _
+            "                                                     pd.Qty - ISNULL(rc.qty, 0) po_cancel " & vbCrLf & _
+            "                                             FROM    PurchaseOrder_Master pm " & vbCrLf & _
+            "                                                     INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No "
+
+sql = sql + "                                                     LEFT JOIN ( SELECT " & vbCrLf & _
+            "                                                               Supplier_Code , " & vbCrLf & _
+            "                                                               PO_No , " & vbCrLf & _
+            "                                                               Item_Code , " & vbCrLf & _
+            "                                                               SUM(Qty) qty " & vbCrLf & _
+            "                                                               FROM " & vbCrLf & _
+            "                                                               Part_Receipt pr " & vbCrLf & _
+            "                                                               WHERE " & vbCrLf & _
+            "                                                               pr.Warehouse_Code IN ( " & vbCrLf & _
+            "                                                               SELECT " & vbCrLf & _
+            "                                                               WH_Code "
+
+sql = sql + "                                                               FROM " & vbCrLf & _
+            "                                                               AllowedWarehouses ) " & vbCrLf & _
+            "                                                               GROUP BY Supplier_Code , " & vbCrLf & _
+            "                                                               PO_No , " & vbCrLf & _
+            "                                                               Item_Code " & vbCrLf & _
+            "                                                               ) rc ON pm.Supplier_Code = rc.Supplier_Code " & vbCrLf & _
+            "                                                               AND pm.PO_No = rc.PO_No " & vbCrLf & _
+            "                                                               AND pd.Item_Code = rc.Item_Code " & vbCrLf & _
+            "                                             WHERE   pd.Complete_Cls = '1' " & vbCrLf & _
+            "                                           ) po_cancel ON pm.Supplier_Code = po_cancel.Supplier_Code " & vbCrLf & _
+            "                                                          AND pm.PO_No = po_cancel.PO_No "
+
+sql = sql + "                                                          AND pd.Item_Code = po_cancel.Item_Code " & vbCrLf & _
+            "                         WHERE   ISNULL(pm.Fix_Cls, '0') = '1' " & vbCrLf & _
+            "                                 AND pm.WHTo IN ( SELECT WH_Code " & vbCrLf & _
+            "                                                  FROM   AllowedWarehouses ) " & vbCrLf & _
+            "                         UNION ALL " & vbCrLf & _
+            "                         SELECT  1 idx , " & vbCrLf & _
+            "                                 'pro' status , " & vbCrLf & _
+            "                                 '' cls , " & vbCrLf & _
+            "                                 dp.Item_code , " & vbCrLf & _
+            "                                 Schedule_Date date , " & vbCrLf & _
+            "                                 dp.Qty od_qty , "
+
+sql = sql + "                                 NULL od_incoming , " & vbCrLf & _
+            "                                 RTRIM(dp.Lot_No) " & vbCrLf & _
+            "                                 + CASE WHEN ISNULL(pro_cancel, 0) > 0 " & vbCrLf & _
+            "                                        THEN ' (Completed by user)' " & vbCrLf & _
+            "                                        ELSE '' " & vbCrLf & _
+            "                                   END od_pono , " & vbCrLf & _
+            "                                 NULL od_dono , " & vbCrLf & _
+            "                                 NULL od_curr , " & vbCrLf & _
+            "                                 0 od_price , " & vbCrLf & _
+            "                                 NULL in_qty , " & vbCrLf & _
+            "                                 NULL in_curr , "
+
+sql = sql + "                                 NULL in_price , " & vbCrLf & _
+            "                                 NULL in_amount , " & vbCrLf & _
+            "                                 ISNULL(pro_cancel, 0) out_qty , " & vbCrLf & _
+            "                                 NULL out_curr , " & vbCrLf & _
+            "                                 NULL out_price , " & vbCrLf & _
+            "                                 NULL out_amount " & vbCrLf & _
+            "                         FROM    Daily_Production dp " & vbCrLf & _
+            "                                 LEFT JOIN ( SELECT  dp.Factory_code , " & vbCrLf & _
+            "                                                     dp.Line_Code , " & vbCrLf & _
+            "                                                     dp.Item_code , " & vbCrLf & _
+            "                                                     dp.Lot_No , "
+
+sql = sql + "                                                     dp.Seq_No , " & vbCrLf & _
+            "                                                     dp.Qty , " & vbCrLf & _
+            "                                                     dp.Qty - ISNULL(rs.qty, 0) pro_cancel " & vbCrLf & _
+            "                                             FROM    Daily_Production dp " & vbCrLf & _
+            "                                                     LEFT JOIN ( SELECT " & vbCrLf & _
+            "                                                               Supplier_Code , " & vbCrLf & _
+            "                                                               PO_No , " & vbCrLf & _
+            "                                                               Item_Code , " & vbCrLf & _
+            "                                                               SuratJalan_No , " & vbCrLf & _
+            "                                                               DailySeq_No , " & vbCrLf & _
+            "                                                               SUM(Qty) qty "
+
+sql = sql + "                                                               FROM " & vbCrLf & _
+            "                                                               Part_Receipt " & vbCrLf & _
+            "                                                               WHERE " & vbCrLf & _
+            "                                                               Part_Receipt.Warehouse_Code IN ( " & vbCrLf & _
+            "                                                               SELECT " & vbCrLf & _
+            "                                                               WH_Code " & vbCrLf & _
+            "                                                               FROM " & vbCrLf & _
+            "                                                               AllowedWarehouses ) " & vbCrLf & _
+            "                                                               GROUP BY Supplier_Code , " & vbCrLf & _
+            "                                                               PO_No , " & vbCrLf & _
+            "                                                               Item_Code , "
+
+sql = sql + "                                                               SuratJalan_No , " & vbCrLf & _
+            "                                                               DailySeq_No " & vbCrLf & _
+            "                                                               ) rs ON dp.Factory_code = rs.Supplier_Code " & vbCrLf & _
+            "                                                               AND dp.Line_Code = rs.PO_No " & vbCrLf & _
+            "                                                               AND dp.Item_code = rs.Item_Code " & vbCrLf & _
+            "                                                               AND dp.Lot_No = rs.SuratJalan_No " & vbCrLf & _
+            "                                                               AND dp.Seq_No = rs.DailySeq_No " & vbCrLf & _
+            "                                             WHERE   Complete_Cls = '1' " & vbCrLf & _
+            "                                                     AND dp.Qty > rs.qty " & vbCrLf & _
+            "                                           ) pro_cancel ON dp.Factory_code = pro_cancel.Factory_code " & vbCrLf & _
+            "                                                           AND dp.Line_Code = pro_cancel.Line_Code "
+
+sql = sql + "                                                           AND dp.Item_code = pro_cancel.Item_code " & vbCrLf & _
+            "                                                           AND dp.Lot_No = pro_cancel.Lot_No " & vbCrLf & _
+            "                                                           AND dp.Seq_No = pro_cancel.Seq_No " & vbCrLf & _
+            "                         UNION ALL " & vbCrLf & _
+            "                         SELECT  2 idx , " & vbCrLf & _
+            "                                 'rec' status , " & vbCrLf & _
+            "                                 pr.Receipt_Cls cls , " & vbCrLf & _
+            "                                 pr.Item_Code , " & vbCrLf & _
+            "                                 pr.Receipt_Date date , " & vbCrLf & _
+            "                                 NULL od_qty , " & vbCrLf & _
+            "                                 CASE WHEN po.PO_No IS NULL THEN NULL "
+
+sql = sql + "                                      ELSE pr.Qty " & vbCrLf & _
+            "                                 END od_incoming , " & vbCrLf & _
+            "                                 ISNULL(RTRIM(po.PO_No), 'Receipt Unscheduled') od_pono , " & vbCrLf & _
+            "                                 RTRIM(pr.SuratJalan_No) od_dono , " & vbCrLf & _
+            "                                 RTRIM(cc.Description) od_curr , " & vbCrLf & _
+            "                                 pr.Price od_price , " & vbCrLf & _
+            "                                 pr.Qty in_qty , " & vbCrLf & _
+            "                                 RTRIM(cc.Description) in_curr , " & vbCrLf & _
+            "                                 pr.Price in_price , " & vbCrLf & _
+            "                                 pr.Qty * pr.Price in_amount , " & vbCrLf & _
+            "                                 NULL out_qty , "
+
+sql = sql + "                                 NULL out_curr , " & vbCrLf & _
+            "                                 NULL out_price , " & vbCrLf & _
+            "                                 NULL out_amount " & vbCrLf & _
+            "                         FROM    Part_Receipt pr " & vbCrLf & _
+            "                                 LEFT JOIN Curr_Cls cc ON pr.Currency_Code = cc.Curr_Cls " & vbCrLf & _
+            "                                 LEFT JOIN ( SELECT  pm.Supplier_Code , " & vbCrLf & _
+            "                                                     pm.PO_No , " & vbCrLf & _
+            "                                                     pd.Item_Code " & vbCrLf & _
+            "                                             FROM    PurchaseOrder_Master pm " & vbCrLf & _
+            "                                                     INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No " & vbCrLf & _
+            "                                           ) po ON pr.Supplier_Code = po.Supplier_Code "
+
+sql = sql + "                                                   AND pr.PO_No = po.PO_No " & vbCrLf & _
+            "                                                   AND pr.Item_Code = po.Item_Code " & vbCrLf & _
+            "                         WHERE   pr.Receipt_Cls = 'R' " & vbCrLf & _
+            "                                 AND pr.Warehouse_Code IN ( " & vbCrLf & _
+            "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                         UNION ALL " & vbCrLf & _
+            "                         SELECT  2 idx , " & vbCrLf & _
+            "                                 'res' status , " & vbCrLf & _
+            "                                 pr.Receipt_Cls cls , " & vbCrLf & _
+            "                                 pr.Item_Code , "
+
+sql = sql + "                                 pr.Receipt_Date date , " & vbCrLf & _
+            "                                 NULL od_qty , " & vbCrLf & _
+            "                                 pr.Qty od_incoming , " & vbCrLf & _
+            "                                 '' od_pono , " & vbCrLf & _
+            "                                 RTRIM(pr.SuratJalan_No) od_dono , " & vbCrLf & _
+            "                                 RTRIM(cc.Description) od_curr , " & vbCrLf & _
+            "                                 pr.Price od_price , " & vbCrLf & _
+            "                                 pr.Qty in_qty , " & vbCrLf & _
+            "                                 RTRIM(cc.Description) in_curr , " & vbCrLf & _
+            "                                 pr.Price in_price , " & vbCrLf & _
+            "                                 pr.Qty * pr.Price in_amount , "
+
+sql = sql + "                                 NULL out_qty , " & vbCrLf & _
+            "                                 NULL out_curr , " & vbCrLf & _
+            "                                 NULL out_price , " & vbCrLf & _
+            "                                 NULL out_amount " & vbCrLf & _
+            "                         FROM    Part_Receipt pr " & vbCrLf & _
+            "                                 LEFT JOIN Curr_Cls cc ON pr.Currency_Code = cc.Curr_Cls " & vbCrLf & _
+            "                         WHERE   pr.Receipt_Cls = 'P1' " & vbCrLf & _
+            "                                 AND pr.Warehouse_Code IN ( " & vbCrLf & _
+            "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                         UNION ALL "
+
+sql = sql + "                         SELECT  3 idx , " & vbCrLf & _
+            "                                 'ret' status , " & vbCrLf & _
+            "                                 pr.Receipt_Cls cls , " & vbCrLf & _
+            "                                 pr.Item_Code , " & vbCrLf & _
+            "                                 pr.Receipt_Date date , " & vbCrLf & _
+            "                                 NULL od_qty , " & vbCrLf & _
+            "                                 CASE WHEN po.PO_No IS NULL THEN NULL " & vbCrLf & _
+            "                                      ELSE -pr.Qty " & vbCrLf & _
+            "                                 END od_incoming , " & vbCrLf & _
+            "                                 ISNULL(RTRIM(po.PO_No), 'Return Unscheduled') od_pono , " & vbCrLf & _
+            "                                 RTRIM(pr.SuratJalan_No) od_dono , "
+
+sql = sql + "                                 RTRIM(cc.Description) od_curr , " & vbCrLf & _
+            "                                 pr.Price od_price , " & vbCrLf & _
+            "                                 -pr.Qty in_qty , " & vbCrLf & _
+            "                                 RTRIM(cc.Description) in_curr , " & vbCrLf & _
+            "                                 pr.Price in_price , " & vbCrLf & _
+            "                                 -pr.Qty * pr.Price in_amount , " & vbCrLf & _
+            "                                 NULL out_qty , " & vbCrLf & _
+            "                                 NULL out_curr , " & vbCrLf & _
+            "                                 NULL out_price , " & vbCrLf & _
+            "                                 NULL out_amount " & vbCrLf & _
+            "                         FROM    Part_Receipt pr "
+
+sql = sql + "                                 LEFT JOIN Curr_Cls cc ON pr.Currency_Code = cc.Curr_Cls " & vbCrLf & _
+            "                                 LEFT JOIN ( SELECT  pm.Supplier_Code , " & vbCrLf & _
+            "                                                     pm.PO_No , " & vbCrLf & _
+            "                                                     pd.Item_Code " & vbCrLf & _
+            "                                             FROM    PurchaseOrder_Master pm " & vbCrLf & _
+            "                                                     INNER JOIN PurchaseOrder_Detail pd ON pm.PO_No = pd.PO_No " & vbCrLf & _
+            "                                           ) po ON pr.Supplier_Code = po.Supplier_Code " & vbCrLf & _
+            "                                                   AND pr.PO_No = po.PO_No " & vbCrLf & _
+            "                                                   AND pr.Item_Code = po.Item_Code " & vbCrLf & _
+            "                         WHERE   pr.Receipt_Cls = 'R1' " & vbCrLf & _
+            "                                 AND pr.Warehouse_Code IN ( "
+
+sql = sql + "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                         UNION ALL " & vbCrLf & _
+            "                         SELECT  3 idx , " & vbCrLf & _
+            "                                 'out' status , " & vbCrLf & _
+            "                                 ps.Supply_Cls cls , " & vbCrLf & _
+            "                                 ps.ChildItem_Code item_code , " & vbCrLf & _
+            "                                 ps.ChildSupply_date date , " & vbCrLf & _
+            "                                 NULL od_qty , " & vbCrLf & _
+            "                                 NULL od_incoming , " & vbCrLf & _
+            "                                 NULL od_pono , "
+
+sql = sql + "                                 NULL od_dono , " & vbCrLf & _
+            "                                 NULL od_curr , " & vbCrLf & _
+            "                                 NULL od_price , " & vbCrLf & _
+            "                                 NULL in_qty , " & vbCrLf & _
+            "                                 NULL in_curr , " & vbCrLf & _
+            "                                 NULL in_price , " & vbCrLf & _
+            "                                 NULL in_amount , " & vbCrLf & _
+            "                                 ps.ChildRequirement_Qty out_qty , " & vbCrLf & _
+            "                                 RTRIM(cc.Description) out_curr , " & vbCrLf & _
+            "                                 ps.Price out_price , " & vbCrLf & _
+            "                                 ps.Amount out_amount "
+
+sql = sql + "                         FROM    Part_Supply ps " & vbCrLf & _
+            "                                 LEFT JOIN Curr_Cls cc ON ps.Currency_Code = cc.Curr_Cls " & vbCrLf & _
+            "                         WHERE   ps.Supply_Cls <> 'S1' " & vbCrLf & _
+            "                                 AND ps.FromWarehouse_Code IN ( " & vbCrLf & _
+            "                                 SELECT  WH_Code " & vbCrLf & _
+            "                                 FROM    AllowedWarehouses ) " & vbCrLf & _
+            "                         UNION ALL " & vbCrLf & _
+            "                         SELECT  4 idx , " & vbCrLf & _
+            "                                 'req' status , " & vbCrLf & _
+            "                                 'Req' status , " & vbCrLf & _
+            "                                 rq.ChildItem_Code item_code , "
+
+sql = sql + "                                 Production_Date date , " & vbCrLf & _
+            "                                 NULL od_qty , " & vbCrLf & _
+            "                                 NULL od_incoming , " & vbCrLf & _
+            "                                 NULL od_pono , " & vbCrLf & _
+            "                                 NULL od_dono , " & vbCrLf & _
+            "                                 NULL od_curr , " & vbCrLf & _
+            "                                 NULL od_price , " & vbCrLf & _
+            "                                 NULL in_qty , " & vbCrLf & _
+            "                                 NULL in_curr , " & vbCrLf & _
+            "                                 NULL in_price , " & vbCrLf & _
+            "                                 NULL in_amount , "
+
+sql = sql + "                                 SUM(rq.ChildRequirement_Qty) " & vbCrLf & _
+            "                                 - SUM(rq.ChildRequirementResult_Qty) " & vbCrLf & _
+            "                                 - SUM(rq.OffChildRequirement_Qty) out_qty , " & vbCrLf & _
+            "                                 NULL out_curr , " & vbCrLf & _
+            "                                 NULL out_price , " & vbCrLf & _
+            "                                 NULL out_amount " & vbCrLf & _
+            "                         FROM    Requirement rq " & vbCrLf & _
+            "                         GROUP BY rq.ChildItem_Code , " & vbCrLf & _
+            "                                 Production_Date " & vbCrLf & _
+            "                       ) trans ON stock_begin.Item_Code = trans.Item_Code " & vbCrLf & _
+            "             LEFT JOIN ( SELECT  CAST(MRP_Year + '-' + MRP_Month + '-01' AS DATETIME) mrp_date , "
+
+sql = sql + "                                 '1' mrp_set " & vbCrLf & _
+            "                         FROM    MRP_Setting " & vbCrLf & _
+            "                       ) mrp_set ON YEAR(trans.date) = YEAR(mrp_date) " & vbCrLf & _
+            "                                    AND MONTH(trans.date) = MONTH(mrp_date) , " & vbCrLf & _
+            "             ( SELECT    * " & vbCrLf & _
+            "               FROM      Company_Profile " & vbCrLf & _
+            "               WHERE     Company_Code = @Factory_Code " & vbCrLf & _
+            "             ) cp " & vbCrLf & _
+            "     WHERE   stock_begin.Item_Code = @item_code " & vbCrLf & _
+            "             AND trans.date >= @start_date " & vbCrLf & _
+            "             AND trans.date <= @end_date "
+
+sql = sql + "     ORDER BY trans.Item_Code , " & vbCrLf & _
+            "             trans.date , " & vbCrLf & _
+            "             trans.idx , " & vbCrLf & _
+            "             trans.od_pono "
+
+                
+    Text1.Text = sql
+     Text1.Visible = False
+            
+    Header
+    
+    adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly, adCmdText
+    If Not adoRs.EOF Then
+    
+        dblBalanceOrder = CDbl(Format(adoRs.Fields("po_qty") - adoRs.Fields("po_receipt") + adoRs.Fields("po_return") - adoRs.Fields("po_cancel") + _
+            adoRs.Fields("pro_qty") - adoRs.Fields("pro_result") - adoRs.Fields("pro_cancel"), gs_formatQty))
+        dblBalance = CDbl(Format(adoRs.Fields("stock_begin") + adoRs.Fields("stock_in") - adoRs.Fields("stock_out"), gs_formatQty))
+        dblBalanceEffective = dblBalanceOrder + dblBalance
+       
+        With Grid
+            .AddItem ""
+            .TextMatrix(.Rows - 1, bteColDate) = "Beginning"
+            .TextMatrix(.Rows - 1, bteColOrderBal) = Format(dblBalanceOrder, gs_formatQty)
+            .TextMatrix(.Rows - 1, bteColBalQty) = Format(dblBalance, gs_formatQty)
+            .TextMatrix(.Rows - 1, bteColBalEffective) = Format(dblBalanceEffective, gs_formatQty)
+                      
+            While Not adoRs.EOF
+                dblBalanceOrder = dblBalanceOrder + CDbl(Format(Val(adoRs.Fields("od_qty") & "") - Val(adoRs.Fields("od_incoming") & ""), gs_formatQty))
+                If adoRs.Fields("status") = "po" Or adoRs.Fields("status") = "pro" Then dblBalanceOrder = dblBalanceOrder - CDbl(Format(Val(adoRs.Fields("out_qty") & ""), gs_formatQty))
+                
+                dblBalance = dblBalance + CDbl(Format(Val(adoRs.Fields("in_qty") & ""), gs_formatQty))
+                If adoRs.Fields("status") <> "po" And adoRs.Fields("status") <> "pro" And adoRs.Fields("status") <> "req" Then dblBalance = dblBalance - CDbl(Format(Val(adoRs.Fields("out_qty") & ""), gs_formatQty))
+                
+                dblBalanceEffective = dblBalanceEffective + CDbl(Format(Val(adoRs.Fields("od_qty") & "") - Val(adoRs.Fields("od_incoming") & "") + Val(adoRs.Fields("in_qty") & ""), gs_formatQty))
+                If adoRs.Fields("mrp_set") & "" = "0" Then
+                    If adoRs.Fields("status") <> "req" Then
+                        dblBalanceEffective = dblBalanceEffective - CDbl(Format(Val(adoRs.Fields("out_qty") & ""), gs_formatQty))
+                    End If
+                Else
+                    If adoRs.Fields("status") = "req" Or adoRs.Fields("status") = "po" Or adoRs.Fields("status") = "pro" Then
+                        dblBalanceEffective = dblBalanceEffective - CDbl(Format(Val(adoRs.Fields("out_qty") & ""), gs_formatQty))
+                    End If
+                End If
+                
+                .AddItem ""
+                .TextMatrix(.Rows - 1, bteColDate) = Format(adoRs.Fields("date"), "dd-MMM-yyyy")
+                .TextMatrix(.Rows - 1, bteColOrderQty) = IIf(IsNull(adoRs.Fields("od_qty")), "", Format(adoRs.Fields("od_qty"), gs_formatQty))
+                .TextMatrix(.Rows - 1, bteColOrderIn) = IIf(IsNull(adoRs.Fields("od_incoming")), "", Format(adoRs.Fields("od_incoming"), gs_formatQty))
+                .TextMatrix(.Rows - 1, bteColOrderPONo) = Trim(adoRs.Fields("od_pono") & "")
+                .TextMatrix(.Rows - 1, bteColOrderDONo) = Trim(adoRs.Fields("od_dono") & "")
+                .TextMatrix(.Rows - 1, bteColOrderCurr) = Trim(adoRs.Fields("od_curr") & "")
+                .TextMatrix(.Rows - 1, bteColOrderPrice) = IIf(IsNull(adoRs.Fields("od_price")), "", Format(adoRs.Fields("od_price"), gs_formatPrice))
+                .TextMatrix(.Rows - 1, bteColOrderBal) = Format(dblBalanceOrder, gs_formatQty)
+                If adoRs.Fields("in_qty") <> 0 Then
+                    .TextMatrix(.Rows - 1, bteColInCls) = Trim(adoRs.Fields("cls") & "")
+                End If
+                .TextMatrix(.Rows - 1, bteColInQty) = IIf(IsNull(adoRs.Fields("in_qty")), "", Format(adoRs.Fields("in_qty"), gs_formatQty))
+                .TextMatrix(.Rows - 1, bteColInCurr) = Trim(adoRs.Fields("in_curr") & "")
+                .TextMatrix(.Rows - 1, bteColInPrice) = IIf(IsNull(adoRs.Fields("in_price")), "", Format(adoRs.Fields("in_price"), gs_formatPrice))
+                .TextMatrix(.Rows - 1, bteColInAmount) = IIf(IsNull(adoRs.Fields("in_amount")), "", Format(adoRs.Fields("in_amount"), gs_formatPrice))
+                If adoRs.Fields("out_qty") <> 0 Then
+                    .TextMatrix(.Rows - 1, bteColOutCls) = Trim(adoRs.Fields("cls") & "")
+                End If
+                If adoRs.Fields("status") = "req" Then
+                    .TextMatrix(.Rows - 1, bteColOutReq) = IIf(IsNull(adoRs.Fields("out_qty")), "", Format(adoRs.Fields("out_qty"), gs_formatQty))
+                ElseIf adoRs.Fields("out_qty") <> 0 Then
+                    .TextMatrix(.Rows - 1, bteColOutQty) = IIf(IsNull(adoRs.Fields("out_qty")), "", Format(adoRs.Fields("out_qty"), gs_formatQty))
+                End If
+                .TextMatrix(.Rows - 1, bteColOutCurr) = Trim(adoRs.Fields("out_curr") & "")
+                .TextMatrix(.Rows - 1, bteColOutPrice) = IIf(IsNull(adoRs.Fields("out_price")), "", Format(adoRs.Fields("out_price"), gs_formatPrice))
+                .TextMatrix(.Rows - 1, bteColOutAmount) = IIf(IsNull(adoRs.Fields("out_amount")), "", Format(adoRs.Fields("out_amount"), gs_formatPrice))
+                .TextMatrix(.Rows - 1, bteColBalQty) = Format(dblBalance, gs_formatQty)
+                If Not IsNull(adoRs.Fields("in_curr")) Then
+                    .TextMatrix(.Rows - 1, bteColBalCurr) = Trim(adoRs.Fields("in_curr") & "")
+                    .TextMatrix(.Rows - 1, bteColBalPrice) = IIf(IsNull(adoRs.Fields("in_price")), "", Format(adoRs.Fields("in_price"), gs_formatPrice))
+                    .TextMatrix(.Rows - 1, bteColBalAmount) = IIf(IsNull(adoRs.Fields("in_amount")), "", Format(adoRs.Fields("in_amount"), gs_formatPrice))
+                ElseIf Not IsNull(adoRs.Fields("out_curr")) Then
+                    .TextMatrix(.Rows - 1, bteColBalCurr) = Trim(adoRs.Fields("out_curr") & "")
+                    .TextMatrix(.Rows - 1, bteColBalPrice) = IIf(IsNull(adoRs.Fields("out_price")), "", Format(adoRs.Fields("out_price"), gs_formatPrice))
+                    .TextMatrix(.Rows - 1, bteColBalAmount) = IIf(IsNull(adoRs.Fields("out_amount")), "", Format(adoRs.Fields("out_amount"), gs_formatPrice))
+                End If
+                .TextMatrix(.Rows - 1, bteColBalEffective) = Format(dblBalanceEffective, gs_formatQty)
+                    
+                adoRs.MoveNext
+            Wend
+        End With
+    End If
+    adoRs.Close
+
+ErrExit:
+    Me.MousePointer = vbDefault
+    Set adoRs = Nothing
+    Exit Sub
+ErrHandler:
+    Lblpesan.Caption = err.Description
+    err.clear
+    Resume ErrExit
+End Sub
+
+
+Private Sub SettingGrid_Old()
+    Dim adoRs As New ADODB.Recordset
+    
+    Dim dblBalance As Double
+    Dim dblBalanceOrder As Double
+    Dim dblBalanceEffective As Double
+    
+    On Error GoTo ErrHandler
+    Me.MousePointer = vbHourglass
+    Lblpesan.Caption = ""
     
     sql = " declare @item_code char(15) " & vbCrLf & _
                 " declare @start_date datetime " & vbCrLf & _
@@ -843,6 +1634,8 @@ Private Sub SettingGrid()
                 " and trans.date >= @start_date  " & vbCrLf & _
                 " and trans.date <= @end_date  " & vbCrLf & _
                 " order by trans.item_code, trans.date, trans.idx, trans.od_pono "
+                
+    Text1.Text = sql
             
     Header
     
@@ -854,7 +1647,7 @@ Private Sub SettingGrid()
         dblBalance = CDbl(Format(adoRs.Fields("stock_begin") + adoRs.Fields("stock_in") - adoRs.Fields("stock_out"), gs_formatQty))
         dblBalanceEffective = dblBalanceOrder + dblBalance
        
-        With grid
+        With Grid
             .AddItem ""
             .TextMatrix(.Rows - 1, bteColDate) = "Beginning"
             .TextMatrix(.Rows - 1, bteColOrderBal) = Format(dblBalanceOrder, gs_formatQty)
@@ -928,40 +1721,41 @@ ErrExit:
     Me.MousePointer = vbDefault
     Set adoRs = Nothing
     Exit Sub
-errHandler:
-    LblPesan.Caption = err.Description
+ErrHandler:
+    Lblpesan.Caption = err.Description
     err.clear
     Resume ErrExit
 End Sub
+
 
 Public Sub ClickSearch()
     Call Cmd_Save_Click(9)
 End Sub
 
 Private Sub CboItemCD_Change()
-    LblPesan = ""
+    Lblpesan = ""
     Call Header
-    If CboItemCD.MatchFound Then
-        lbldesc = CboItemCD.List(CboItemCD.ListIndex, 1)
+    If CboItemCD.matchFound Then
+        LblDesc = CboItemCD.List(CboItemCD.ListIndex, 1)
         Lbl_UnitDesc = CboItemCD.List(CboItemCD.ListIndex, 2)
     Else
-        lbldesc = ""
+        LblDesc = ""
         Lbl_UnitDesc = ""
-        LblPesan = DisplayMsg(4003)
+        Lblpesan = DisplayMsg(4003)
     End If
 End Sub
 
 Private Sub CboItemCD_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
     If KeyCode = 13 Then
-        LblPesan = ""
+        Lblpesan = ""
         Call Header
-        If CboItemCD.MatchFound Then
-            lbldesc = CboItemCD.List(CboItemCD.ListIndex, 1)
+        If CboItemCD.matchFound Then
+            LblDesc = CboItemCD.List(CboItemCD.ListIndex, 1)
             Lbl_UnitDesc = CboItemCD.List(CboItemCD.ListIndex, 2)
         Else
-            lbldesc = ""
+            LblDesc = ""
             Lbl_UnitDesc = ""
-            LblPesan = DisplayMsg(4003)
+            Lblpesan = DisplayMsg(4003)
         End If
     End If
 End Sub
@@ -976,13 +1770,13 @@ Private Sub cmd_preview_Click()
     Dim frmRpt As New FrmRpt3
     Dim adoRs As New ADODB.Recordset
     
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     Me.MousePointer = vbHourglass
-    LblPesan.Caption = ""
+    Lblpesan.Caption = ""
     
     adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly
     If adoRs.EOF Then
-        LblPesan.Caption = DisplayMsg(4006)
+        Lblpesan.Caption = DisplayMsg(4006)
         GoTo ErrExit
     End If
     
@@ -994,7 +1788,7 @@ Private Sub cmd_preview_Click()
     With crRpt
         .Database.Tables(1).SetDataSource adoRs
         .ReportTitle = "Receipt Supply Schedule Inquiry"
-        .FormulaFields(2).Text = "'" & Trim(CboItemCD.Text) & "  " & Trim(lbldesc.Caption) & "'"
+        .FormulaFields(2).Text = "'" & Trim(CboItemCD.Text) & "  " & Trim(LblDesc.Caption) & "'"
         .FormulaFields(3).Text = "'" & Trim(Lbl_UnitDesc.Caption) & "'"
         .FormulaFields(4).Text = "'" & Format(DMonth(0).Value, "dd-MMM-yyyy") & " to " & Format(DMonth(1).Value, "dd-MMM-yyyy") & "'"
         .FormulaFields(11).Text = "" & gi_decimalDigitQty & ""
@@ -1017,8 +1811,8 @@ ErrExit:
     Set frmRpt = Nothing
     Set adoRs = Nothing
     Exit Sub
-errHandler:
-    LblPesan.Caption = err.Description
+ErrHandler:
+    Lblpesan.Caption = err.Description
     err.clear
     Resume ErrExit
 End Sub
@@ -1026,20 +1820,20 @@ End Sub
 Private Sub Cmd_Save_Click(Index As Integer)
     Select Case Index
     Case 8
-        If Cmd_save(8).Caption = "&Back" And frmPOParts.popanggil = "poparts" Then
-            Cmd_save(8).Caption = "Sub &Menu"
+        If Cmd_Save(8).Caption = "&Back" And frmPOParts.popanggil = "poparts" Then
+            Cmd_Save(8).Caption = "Sub &Menu"
             frmPOParts.popanggil = ""
             frmPOParts.Show
             Unload Me
             Exit Sub
-        ElseIf Cmd_save(8).Caption = "&Back" And frmPOSteelCoil.popanggil = "posteelcoil" Then
-            Cmd_save(8).Caption = "Sub &Menu"
+        ElseIf Cmd_Save(8).Caption = "&Back" And frmPOSteelCoil.popanggil = "posteelcoil" Then
+            Cmd_Save(8).Caption = "Sub &Menu"
             frmPOSteelCoil.popanggil = ""
             frmPOSteelCoil.Show
             Unload Me
             Exit Sub
-        ElseIf Cmd_save(8).Caption = "&Back" And frmPOSubcon.popanggil = "posubcon" Then
-            Cmd_save(8).Caption = "Sub &Menu"
+        ElseIf Cmd_Save(8).Caption = "&Back" And frmPOSubcon.popanggil = "posubcon" Then
+            Cmd_Save(8).Caption = "Sub &Menu"
             frmPOSubcon.popanggil = ""
             frmPOSubcon.Show
             Unload Me
@@ -1049,7 +1843,7 @@ Private Sub Cmd_Save_Click(Index As Integer)
         Unload Me
     Case 9
         If CboItemCD.Text = "" Then
-            LblPesan = DisplayMsg(1009)
+            Lblpesan = DisplayMsg(1009)
         Else
             Call SettingGrid
         End If
@@ -1069,15 +1863,15 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
     If ErrMsg = "" Then
         Unload Me
     Else
-        LblPesan.Caption = ErrMsg
+        Lblpesan.Caption = ErrMsg
     End If
 End Sub
 
 Private Sub DMonth_Change(Index As Integer)
-    LblPesan.Caption = ""
+    Lblpesan.Caption = ""
     If Index = 0 Then
         If DMonth(0).Value > dteMRP Then
-            LblPesan.Caption = "[0000] Date start must be lower than MRP setting !"
+            Lblpesan.Caption = "[0000] Date start must be lower than MRP setting !"
             DMonth(0).Value = dteMRP
         End If
     End If
