@@ -175,7 +175,7 @@ Begin VB.Form FrmAPListReport
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   137953283
+         Format          =   132382723
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker dtAkhir 
@@ -197,7 +197,7 @@ Begin VB.Form FrmAPListReport
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   137953283
+         Format          =   132382723
          CurrentDate     =   37810
       End
       Begin VB.Line Line1 
@@ -393,9 +393,9 @@ End Sub
 Private Sub cbosupplier_Click()
     If cboSupplier.ListIndex < 0 Then
         cboSupplier.ListIndex = 0
-        lblcust = strAll
+        lblCust = strAll
     Else
-        lblcust = cboSupplier.Column(1)
+        lblCust = cboSupplier.Column(1)
     End If
 End Sub
 
@@ -724,6 +724,8 @@ ErrExcel:
 End Sub
 
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
+
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
 

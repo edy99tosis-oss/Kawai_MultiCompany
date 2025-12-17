@@ -312,7 +312,7 @@ Begin VB.Form frmDNReturnUnscheduled
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61538307
+         Format          =   141033475
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtEnd 
@@ -334,7 +334,7 @@ Begin VB.Form frmDNReturnUnscheduled
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61538307
+         Format          =   141033475
          CurrentDate     =   37798
       End
       Begin VB.Label lblCust 
@@ -635,7 +635,7 @@ Begin VB.Form frmDNReturnUnscheduled
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61538307
+         Format          =   141033475
          CurrentDate     =   37859
       End
    End
@@ -658,7 +658,7 @@ Begin VB.Form frmDNReturnUnscheduled
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   61538307
+      Format          =   141033475
       CurrentDate     =   37859
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -1168,6 +1168,8 @@ End Sub
 
 '-------------- Initial -------------------
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
+
 nilKosong = True
     'CtrlMenu1.FormName = Me.Name
     
@@ -1186,25 +1188,25 @@ Call up_FillCombo(cbocurr, "Curr_Cls")
     cbocurr.TextColumn = 2
 End Sub
 Sub Load_Combo()
-    Call isiCbo(CboCust, "Trade_Master", "Trade_Code", "Trade_Name", 75, 200, "Trade_Code,Trade_Name", , , "(Trade_Cls = 2  or Trade_Cls = 4)", , 0)
+    Call isiCbo(cboCust, "Trade_Master", "Trade_Code", "Trade_Name", 75, 200, "Trade_Code,Trade_Name", , , "(Trade_Cls = 2  or Trade_Cls = 4)", , 0)
     Call isiCbo(cboWhCode, "Warehouse_Master", "WH_Code", "WH_Name ", 60, 150, "WH_Code", , , "StockControl_Cls=1")
-    Call isiCbo(cboProduct, "Item_Master", "Item_Code", "Item_name", 120, 160, "Item_Code", , 1)
+    Call isiCbo(CboProduct, "Item_Master", "Item_Code", "Item_name", 120, 160, "Item_Code", , 1)
     AdToCur
     
     
     
-    cboType.AddItem
-    cboType.columnCount = 1
-    cboType.List(0, 0) = "DN Return"
-    cboType.List(0, 1) = "D1"
-    cboType.AddItem
-    cboType.List(1, 0) = "Sales Return"
-    cboType.List(1, 1) = "D2"
+    CboType.AddItem
+    CboType.columnCount = 1
+    CboType.List(0, 0) = "DN Return"
+    CboType.List(0, 1) = "D1"
+    CboType.AddItem
+    CboType.List(1, 0) = "Sales Return"
+    CboType.List(1, 1) = "D2"
     
     cboWhCode.Enabled = True
     
-    dtEnd = Now()
-    dtStart = Now()
+    DtEnd = Now()
+    DtStart = Now()
 End Sub
 
 Sub SetCol()
@@ -1244,7 +1246,7 @@ Private Sub headerGrid()
     KolRetCls = 7: KolUnit = 8: KolCurr = 9: KolPrice = 10: kolService = 11: kolAmount = 12: kolReff = 13
     KolRemark = 14: KolRetSeq_NO = 15
 
-With Grid
+With grid
     .clear
     .ColS = 16: .Rows = 1
     .TextMatrix(0, ColS) = ""
@@ -1311,7 +1313,7 @@ Dim sqlQ
     Dim rsGridDet As New ADODB.Recordset
     dtReturn.Enabled = True
     Call KosongBawah
-    With Grid
+    With grid
         Call headerGrid
         sqlQ = "select ISNULL(Return_Date,'')as return_date ,Item_Code," & vbCrLf
         sqlQ = sqlQ & " (SELECT Item_Name FROM Item_Master WHERE Item_Code=A.Item_Code) as Descr" & vbCrLf
@@ -1321,14 +1323,14 @@ Dim sqlQ
         sqlQ = sqlQ & ",ISNULL((select Description FROM curr_Cls WHERE Curr_CLS=a.Curr_code),'') As Curr," & vbCrLf
         sqlQ = sqlQ & "isnull(Price,0)as price,isnull(Service,0)as service,ISNULL(Amount,0)Amount, ISNULL(Reference,1)Reference," & vbCrLf
         sqlQ = sqlQ & " ISNULL(DO_NO,'')DO_NO,isnull(Remarks,'')Remarks,ReturnSeq_No"
-        sqlQ = sqlQ & " FROM delivery_Return A  WHERE Cust_Code='" & CboCust & "'"
-        sqlQ = sqlQ & " AND Seq_no=0 AND Return_Date Between '" & Format(dtStart, "yyyy-mm-dd") & "' AND '" & Format(dtEnd, "yyyy-mm-dd") & "'"
+        sqlQ = sqlQ & " FROM delivery_Return A  WHERE Cust_Code='" & cboCust & "'"
+        sqlQ = sqlQ & " AND Seq_no=0 AND Return_Date Between '" & Format(DtStart, "yyyy-mm-dd") & "' AND '" & Format(DtEnd, "yyyy-mm-dd") & "'"
         
         Set rsGrid = Db.Execute(sqlQ)
         If rsGrid.EOF Or rsGrid.BOF Then
             Set rsGrid = Nothing
-            lblErrMsg.Caption = DisplayMsg(4006)
-            Grid.clear
+            LblErrMsg.Caption = DisplayMsg(4006)
+            grid.clear
             headerGrid
             Me.MousePointer = vbDefault
             Exit Sub
@@ -1343,7 +1345,7 @@ Dim sqlQ
             .TextMatrix(.Rows - 1, Koldesc) = Trim(rsGrid!Descr)
             .TextMatrix(.Rows - 1, KolLot) = Trim(rsGrid!Lot_no)
             .TextMatrix(.Rows - 1, KolRetQty) = Trim(rsGrid!Return_Qty)
-            .TextMatrix(.Rows - 1, KolWHCode) = Trim(rsGrid!wh_code)
+            .TextMatrix(.Rows - 1, KolWHCode) = Trim(rsGrid!WH_Code)
             .TextMatrix(.Rows - 1, KolRetCls) = Trim(rsGrid!Return_Cls)
             .TextMatrix(.Rows - 1, KolUnit) = Trim(rsGrid!unit)
             .TextMatrix(.Rows - 1, KolCurr) = Trim(rsGrid!Curr)
@@ -1375,7 +1377,7 @@ Dim sqlQ
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-With Grid
+With grid
 If .TextMatrix(Row, ColS) = "d" Then .TextMatrix(Row, ColS) = "D"
     If Col = ColS Then RemoveES (Row)
     'If .Cell(flexcpBackColor, Row, 0) <> vbWhite Then Cancel = True
@@ -1385,8 +1387,8 @@ End Sub
 
 Private Sub grid_Click()
     nilKosong = True
-    With Grid
-        lblErrMsg = ""
+    With grid
+        LblErrMsg = ""
         
         If .Row > 0 Then
             If .Cell(flexcpBackColor, .Row, .Col) = vbWhite Then .FocusRect = flexFocusInset Else .FocusRect = flexFocusNone
@@ -1413,25 +1415,25 @@ End Sub
 
 Private Sub Grid_KeyDownEdit(ByVal Row As Long, ByVal Col As Long, KeyCode As Integer, ByVal Shift As Integer)
 
-With Grid
+With grid
 If .TextMatrix(Row, ColS) = "d" Then .TextMatrix(Row, ColS) = "D"
 If KeyCode = 13 Then
 
 
     If UCase(.TextMatrix(Row, ColS)) = "S" Then
-                cboProduct.Text = .TextMatrix(Row, KolItemCOde)
+                CboProduct.Text = .TextMatrix(Row, KolItemCOde)
                 txtDesc = .TextMatrix(Row, Koldesc)
                 cboWhCode = .TextMatrix(Row, KolWHCode)
                 lblUnit(13).Caption = .TextMatrix(Row, KolUnit)
                 txtReturnSeq_No = .TextMatrix(Row, KolRetSeq_NO)
                 txtRemark = .TextMatrix(Row, KolRemark)
-                TxtQty = .TextMatrix(Row, KolRetQty)
-                txtPrice = .TextMatrix(Row, KolPrice)
-                txtService = .TextMatrix(Row, kolService)
-                txtAmount = .TextMatrix(Row, kolAmount)
+                txtQty = .TextMatrix(Row, KolRetQty)
+                txtprice = .TextMatrix(Row, KolPrice)
+                TxtService = .TextMatrix(Row, kolService)
+                txtamount = .TextMatrix(Row, kolAmount)
                 cbocurr.Text = .TextMatrix(Row, KolCurr)  '  Get_Field("select Curr_Cls FROM CUrr_Cls WHERE Description='" & .TextMatrix(Row, kolCurr) & "'", 0)
                 cboWhCode.Text = .TextMatrix(Row, KolWHCode)  'Get_Field("select wh_code From warehouse_master WHERE WH_Name='" & .TextMatrix(Row, KolWhCode) & "'", 0)
-                cboType.Text = .TextMatrix(Row, KolRetCls)
+                CboType.Text = .TextMatrix(Row, KolRetCls)
                 txtRef = .TextMatrix(Row, kolReff)
                 'TxtDoNo = .TextMatrix(Row, KolDNNo)
                 txtReturnSeq_No = .TextMatrix(Row, KolRetSeq_NO)
@@ -1444,9 +1446,9 @@ End With
 End Sub
 
 Private Sub grid_KeyPress(KeyAscii As Integer)
-If Grid.ColSel = 0 Then
+If grid.ColSel = 0 Then
     If KeyAscii = 100 Then KeyAscii = 90 'Grid.TextMatrix(Grid.RowSel, .ColSel) = ""
-    If KeyAscii = 8 Then Grid.TextMatrix(Grid.RowSel, 0) = ""
+    If KeyAscii = 8 Then grid.TextMatrix(grid.RowSel, 0) = ""
 End If
 End Sub
 
@@ -1459,9 +1461,9 @@ Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As 
    End If
     If Col = ColS Then
         If (KeyAscii = 83 Or KeyAscii = 115 Or KeyAscii = 100 Or KeyAscii = 13 Or KeyAscii = 8 Or KeyAscii = 68) Then
-        If KeyAscii = 100 Then Grid.TextMatrix(Row, ColS) = "D"
+        If KeyAscii = 100 Then grid.TextMatrix(Row, ColS) = "D"
         If KeyAscii = 13 Then 'Jika teken enter..
-            If txtReturnSeq_No <> Grid.TextMatrix(Row, KolRetSeq_NO) Then
+            If txtReturnSeq_No <> grid.TextMatrix(Row, KolRetSeq_NO) Then
                 Call Grid_KeyDownEdit(Row, Col, KeyAscii, 0)
             End If
         End If
@@ -1475,7 +1477,7 @@ Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As 
     
 End Sub
 Sub RemoveES(Baris)
-With Grid
+With grid
 For i = 1 To .Rows - 1
 If i <> Baris Then
     .TextMatrix(i, 0) = ""
@@ -1488,7 +1490,7 @@ Public Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
     Dim setRow As Integer, ClosedStock As String
     If nilKosong Then Exit Sub
     
-    With Grid
+    With grid
     
             If Col = ColS Then
             Call RemoveES(Row)
@@ -1497,27 +1499,27 @@ Public Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
                 
             If UCase(.TextMatrix(Row, ColS)) = "S" Then
                 MousePointer = vbHourglass
-                cboProduct.Text = .TextMatrix(Row, KolItemCOde)
+                CboProduct.Text = .TextMatrix(Row, KolItemCOde)
                 txtDesc = .TextMatrix(Row, Koldesc)
                 cboWhCode = .TextMatrix(Row, KolWHCode)
                 lblUnit(13).Caption = .TextMatrix(Row, KolUnit)
                 txtReturnSeq_No = .TextMatrix(Row, KolRetSeq_NO)
                 txtRemark = .TextMatrix(Row, KolRemark)
-                TxtQty = .TextMatrix(Row, KolRetQty)
+                txtQty = .TextMatrix(Row, KolRetQty)
                 
-                txtPrice = .TextMatrix(Row, KolPrice)
-                txtService = .TextMatrix(Row, kolService)
-                txtAmount = .TextMatrix(Row, kolAmount)
+                txtprice = .TextMatrix(Row, KolPrice)
+                TxtService = .TextMatrix(Row, kolService)
+                txtamount = .TextMatrix(Row, kolAmount)
                 cbocurr.Text = .TextMatrix(Row, KolCurr)  '  Get_Field("select Curr_Cls FROM CUrr_Cls WHERE Description='" & .TextMatrix(Row, kolCurr) & "'", 0)
                 cboWhCode = .TextMatrix(Row, KolWHCode)  ' Get_Field("select wh_code From warehouse_master WHERE WH_Name='" & .TextMatrix(Row, KolWhCode) & "'", 0)
-                cboType.Text = .TextMatrix(Row, KolRetCls)
+                CboType.Text = .TextMatrix(Row, KolRetCls)
                 txtRef = .TextMatrix(Row, kolReff)
                 'eTxtDoNo = .TextMatrix(Row, KolDNNo)
                 txtReturnSeq_No = .TextMatrix(Row, KolRetSeq_NO)
                 TxtLotNo = .TextMatrix(Row, KolLot)
                 dtReturn = .TextMatrix(Row, kolRetDate)
-                                txtPrice = .TextMatrix(Row, KolPrice)
-                txtService = .TextMatrix(Row, kolService)
+                                txtprice = .TextMatrix(Row, KolPrice)
+                TxtService = .TextMatrix(Row, kolService)
                 MousePointer = vbDefault
 
                 
@@ -1529,7 +1531,7 @@ Public Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 End Sub
 
 Private Sub kosongColGrid(Row As Integer, Optional Kolom As String, Optional Kolom2 As String)
-    With Grid
+    With grid
         .Col = 0
         If Kolom <> "" Then
             If Kolom2 <> "" Then
@@ -1561,16 +1563,16 @@ Dim rsCheck As New ADODB.Recordset
 
 chkSave = False
     
-    If HakU = 0 Then lblErrMsg = DisplayMsg(3008): Exit Function 'You don't have an access for Update
+    If HakU = 0 Then LblErrMsg = DisplayMsg(3008): Exit Function 'You don't have an access for Update
         
-    If Trim(CboCust) = "" Then
-        lblErrMsg = DisplayMsg(1033) 'Please Input Customer Code
-        CboCust.SetFocus: Exit Function
-    ElseIf CboCust.matchFound = False Then
-        lblErrMsg = DisplayMsg(4072) 'Customer code not found!
-        CboCust.SetFocus: Exit Function
-    ElseIf Format(dtStart, "yyyy-MM-dd") > Format(dtEnd, "yyyy-MM-dd") Then
-        lblErrMsg = DisplayMsg(4025) 'Start Date must be lower than
+    If Trim(cboCust) = "" Then
+        LblErrMsg = DisplayMsg(1033) 'Please Input Customer Code
+        cboCust.SetFocus: Exit Function
+    ElseIf cboCust.matchFound = False Then
+        LblErrMsg = DisplayMsg(4072) 'Customer code not found!
+        cboCust.SetFocus: Exit Function
+    ElseIf Format(DtStart, "yyyy-MM-dd") > Format(DtEnd, "yyyy-MM-dd") Then
+        LblErrMsg = DisplayMsg(4025) 'Start Date must be lower than
     End If
     
 chkSave = True
@@ -1578,7 +1580,7 @@ End Function
 
 Private Sub cmdSearch_Click()
     Call Kosong
-    cboType.Enabled = True
+    CboType.Enabled = True
     If chkSave Then
         MousePointer = vbHourglass
         Call IsiGrid
@@ -1598,7 +1600,7 @@ Select Case Index
         Call Kosong: Call IsiGrid
         
     Case 2:  'Clear
-        Call Kosong(1): Call headerGrid: CboCust.SetFocus
+        Call Kosong(1): Call headerGrid: cboCust.SetFocus
 End Select
 Me.MousePointer = vbDefault
 End Sub
@@ -1630,7 +1632,7 @@ Function DeleteData()
 Dim sDel As String
 Dim LblInput As String
 
-With Grid
+With grid
 For i = 1 To .Rows - 1
     If UCase(.TextMatrix(i, 0)) = "D" Then
         LblInput = MsgBox("Do you really to delete  ?", _
@@ -1673,92 +1675,92 @@ Function TidakLengkap()
 
 
 TidakLengkap = False
-If CboCust = "" Then
-    lblErrMsg = DisplayMsg(1033)
+If cboCust = "" Then
+    LblErrMsg = DisplayMsg(1033)
     TidakLengkap = True
-    CboCust.SetFocus
+    cboCust.SetFocus
 Exit Function
 End If
 
-If cboProduct.Text = "" Then
-    lblErrMsg = DisplayMsg(1009)
+If CboProduct.Text = "" Then
+    LblErrMsg = DisplayMsg(1009)
     TidakLengkap = True
-    cboProduct.SetFocus
+    CboProduct.SetFocus
     Exit Function
-ElseIf cboProduct.matchFound = False Then
-    lblErrMsg = DisplayMsg(4003)
+ElseIf CboProduct.matchFound = False Then
+    LblErrMsg = DisplayMsg(4003)
     TidakLengkap = True
-    cboProduct.SetFocus
+    CboProduct.SetFocus
     Exit Function
 End If
 
 If cboWhCode = "" Then
-    lblErrMsg = DisplayMsg(1042)
+    LblErrMsg = DisplayMsg(1042)
     TidakLengkap = True
     cboWhCode.SetFocus
     Exit Function
 End If
 
-If TxtQty = "" Then
-    lblErrMsg = DisplayMsg(1012)
+If txtQty = "" Then
+    LblErrMsg = DisplayMsg(1012)
     TidakLengkap = True
-    TxtQty.SetFocus
+    txtQty.SetFocus
     Exit Function
 End If
 If TxtLotNo.Text = "" Then
-    lblErrMsg = DisplayMsg(1044)
+    LblErrMsg = DisplayMsg(1044)
     TidakLengkap = True
     TxtLotNo.SetFocus
     Exit Function
 End If
-If cboType.Text = "" Then
-    lblErrMsg = DisplayMsg(8116)
+If CboType.Text = "" Then
+    LblErrMsg = DisplayMsg(8116)
     TidakLengkap = True
-    cboType.SetFocus
+    CboType.SetFocus
     Exit Function
-ElseIf cboType.matchFound = False Then
-    lblErrMsg = DisplayMsg(8070)
+ElseIf CboType.matchFound = False Then
+    LblErrMsg = DisplayMsg(8070)
     TidakLengkap = True
-    cboType.SetFocus
+    CboType.SetFocus
     Exit Function
 End If
 
 If cbocurr.Text = "" Then
-    lblErrMsg = DisplayMsg(1011)
+    LblErrMsg = DisplayMsg(1011)
     TidakLengkap = True
     cbocurr.SetFocus
     Exit Function
 ElseIf cbocurr.matchFound = False Then
-    lblErrMsg = DisplayMsg(4005)
+    LblErrMsg = DisplayMsg(4005)
     TidakLengkap = True
     cbocurr.SetFocus
     Exit Function
 End If
 
-If txtPrice = "" Then
-    lblErrMsg = DisplayMsg(1029)
+If txtprice = "" Then
+    LblErrMsg = DisplayMsg(1029)
     TidakLengkap = True
-    txtPrice.SetFocus
+    txtprice.SetFocus
     Exit Function
 End If
-If CDbl(txtPrice) > gd_MaxPrice Then
-    lblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice
+If CDbl(txtprice) > gd_MaxPrice Then
+    LblErrMsg = DisplayMsg(4048) & " " & gd_MaxPrice
     TidakLengkap = True
-    txtPrice.SetFocus
-    Exit Function
-End If
-
-If txtService = "" Then
-    lblErrMsg = DisplayMsg(8117)
-    TidakLengkap = True
-    txtService.SetFocus
+    txtprice.SetFocus
     Exit Function
 End If
 
-If CDbl(txtService) > gd_MaxPrice Then
-    lblErrMsg = DisplayMsg(8118) & " " & gd_MaxPrice
+If TxtService = "" Then
+    LblErrMsg = DisplayMsg(8117)
     TidakLengkap = True
-    txtService.SetFocus
+    TxtService.SetFocus
+    Exit Function
+End If
+
+If CDbl(TxtService) > gd_MaxPrice Then
+    LblErrMsg = DisplayMsg(8118) & " " & gd_MaxPrice
+    TidakLengkap = True
+    TxtService.SetFocus
     Exit Function
 End If
 
@@ -1774,7 +1776,7 @@ If DeleteData() Then 'berarti melakukan proses hapus...
     
     IsiGrid 'tampilkan perubahan setelah menghapus
     
-    lblErrMsg = DisplayMsg(1201)
+    LblErrMsg = DisplayMsg(1201)
     Exit Sub
 End If
 ''----akan berkahir disini jika menghapus data
@@ -1818,7 +1820,7 @@ Else
     'Untuk Update
     'Apus stok dulu baru di isi yang baru
     
-     tmpQty = Get_Field("SELECT return_Qty FROM delivery_return WHERE returnSeq_no=" & txtReturnSeq_No & " AND Item_Code='" & cboProduct & "' AND WH_COde='" & cboWhCode & "' AND Lot_No='" & TxtLotNo & "'", 0) 'query nya diambil dengan kondisi item code,wh dan lot harus sama ...
+     tmpQty = Get_Field("SELECT return_Qty FROM delivery_return WHERE returnSeq_no=" & txtReturnSeq_No & " AND Item_Code='" & CboProduct & "' AND WH_COde='" & cboWhCode & "' AND Lot_No='" & TxtLotNo & "'", 0) 'query nya diambil dengan kondisi item code,wh dan lot harus sama ...
     
 '    ''Update remark 20250901 Input Return tidak ada hubungannya dengan stock
 '    If tmpQty <> 0 Then
@@ -1831,22 +1833,22 @@ Else
 '        Call newCls.updateStock(cboWhCode, CboProduct, txtQty, TxtLotNo, Format(dtReturn, "yyyy-mm-dd"), blnFix, thnFix, Db, "Supply", 0, 1)
 End If
 
-    Rdata!Return_Qty = TxtQty
-    Rdata!Cust_CodE = CboCust
+    Rdata!Return_Qty = txtQty
+    Rdata!Cust_CodE = cboCust
     Rdata!do_no = ""
     Rdata!Seq_no = 0
     Rdata!DOSeq_No = 0
-    Rdata!Item_Code = cboProduct
+    Rdata!Item_Code = CboProduct
     Rdata!po_no = "PO"
     Rdata!Reference = txtRef
-    Rdata!Price = IIf(txtPrice = "", 0, txtPrice)
-    Rdata!service = txtService
+    Rdata!Price = IIf(txtprice = "", 0, txtprice)
+    Rdata!service = TxtService
     Rdata!Lot_no = TxtLotNo
     Rdata!Unit_cls = Get_Field("select Unit_cls FROM unit_cls WHERE Description='" & lblUnit(13).Caption & "'", 0)
     Rdata!curr_code = Get_Field("select Curr_Cls FROM Curr_cls WHERE Description='" & cbocurr.Text & "'", 0)
-    Rdata!Amount = txtAmount
-    Rdata!Return_Cls = cboType.Text
-    Rdata!wh_code = cboWhCode.Text
+    Rdata!Amount = txtamount
+    Rdata!Return_Cls = CboType.Text
+    Rdata!WH_Code = cboWhCode.Text
     Rdata!Last_Update = Now()
     Rdata!last_user = "SA"
     Rdata!Remarks = txtRemark
@@ -1875,7 +1877,7 @@ End If
     
     
     
-    lblErrMsg = DisplayMsg(8005)
+    LblErrMsg = DisplayMsg(8005)
     KosongBawah
 
 
@@ -1927,9 +1929,9 @@ End Sub
 
 Private Sub cmdPopItem_Click()
     Me.MousePointer = vbHourglass
-    frm_BrowseItem.getItemCode = cboProduct.Text
+    frm_BrowseItem.getItemCode = CboProduct.Text
     frm_BrowseItem.Show 1
-    cboProduct.Text = frm_BrowseItem.getItemCode
+    CboProduct.Text = frm_BrowseItem.getItemCode
     Me.MousePointer = vbDefault
 End Sub
 
@@ -1942,9 +1944,9 @@ Private Sub CboCust_Change()
 
 
     Call headerGrid
-    CboCust = CboCust
-    If CboCust.matchFound Then
-        lblCust = CboCust.Column(1)
+    cboCust = cboCust
+    If cboCust.matchFound Then
+        lblCust = cboCust.Column(1)
     Else
         lblCust = ""
     End If
@@ -1953,18 +1955,18 @@ Private Sub CboCust_Change()
 End Sub
 
 Private Sub dtStart_Change()
-    lblErrMsg.Caption = ""
-    If CDate(dtStart.Value) > CDate(dtEnd.Value) Then
-       lblErrMsg.Caption = DisplayMsg(4025) & " " & Format(dtEnd, "dd MMM yyyy") '"Start Date must be lower than "
+    LblErrMsg.Caption = ""
+    If CDate(DtStart.Value) > CDate(DtEnd.Value) Then
+       LblErrMsg.Caption = DisplayMsg(4025) & " " & Format(DtEnd, "dd MMM yyyy") '"Start Date must be lower than "
        Exit Sub
     End If
     Call CboCust_Change
 End Sub
 
 Private Sub dtEnd_Change()
-    lblErrMsg.Caption = ""
-    If CDate(dtEnd) < CDate(dtStart) Then
-       lblErrMsg.Caption = DisplayMsg(4024) & " " & Format(dtStart, "dd MMM yyyy") '"End Date must be higher than "
+    LblErrMsg.Caption = ""
+    If CDate(DtEnd) < CDate(DtStart) Then
+       LblErrMsg.Caption = DisplayMsg(4024) & " " & Format(DtStart, "dd MMM yyyy") '"End Date must be higher than "
        Exit Sub
     End If
     Call CboCust_Change
@@ -1973,7 +1975,7 @@ End Sub
 Private Sub dtReturn2_Change()
 If nilKosong Then Exit Sub
 
-With Grid
+With grid
     If tempRow > 0 Then
         .TextMatrix(tempRow, ColChildSupDate) = Format(dtReturn2, "dd MMM yyyy")
         .TextMatrix(tempRow, ColHUpdate) = "1"
@@ -1988,7 +1990,7 @@ End Sub
 
 
 Private Sub CboProduct_Change()
-    lblErrMsg = ""
+    LblErrMsg = ""
     txtDesc.Text = ""
     lblUnit(13).Caption = ""
 End Sub
@@ -2012,49 +2014,49 @@ End Function
 
 Private Sub CboProduct_Click()
 Dim ss As String
-    lblErrMsg = ""
-    If cboProduct.ListIndex <> -1 Then
-        txtDesc.Text = cboProduct.Column(1)
+    LblErrMsg = ""
+    If CboProduct.ListIndex <> -1 Then
+        txtDesc.Text = CboProduct.Column(1)
         
-        txtService.locked = False: txtPrice.locked = False 'Price dan service di Lock, karena prubahan price dan service hanya bisa di price master '202305 Pak Toha Minta lock nya dibuka
+        TxtService.locked = False: txtprice.locked = False 'Price dan service di Lock, karena prubahan price dan service hanya bisa di price master '202305 Pak Toha Minta lock nya dibuka
         
         'query ambil data price and service berdasar tipe price dan customer code
-        ss = " select isnull(Price,0),currency_code,(select Description FROM Curr_Cls WHERE Curr_Cls=Currency_Code)Des  from price_master where  item_code='" & cboProduct & "'"
+        ss = " select isnull(Price,0),currency_code,(select Description FROM Curr_Cls WHERE Curr_Cls=Currency_Code)Des  from price_master where  item_code='" & CboProduct & "'"
         ss = ss & " AND (convert(char(8)," & Format(dtReturn, "yyyymmdd") & " , 112) between  start_date and end_date)" ' and price_cls='01'"
-        If CboCust <> "" Then
-        ss = ss & " AND (Trade_Code='" & CboCust & "' OR Trade_Code='000000')"
+        If cboCust <> "" Then
+        ss = ss & " AND (Trade_Code='" & cboCust & "' OR Trade_Code='000000')"
         End If
         If cbocurr.ListIndex <> -1 Then
         ss = ss & " AND Currency_Code='" & cbocurr & "'"
         End If
         If getCount(ss & " AND Price_CLS='01'") <> 0 Then
                 If cbocurr.Text = "IDR" Then
-                    txtPrice = Format(Get_Field(ss & " AND Price_CLS='01'", 0), gs_formatPriceIDR)
+                    txtprice = Format(Get_Field(ss & " AND Price_CLS='01'", 0), gs_formatPriceIDR)
                 Else
-                    txtPrice = Format(Get_Field(ss & " AND Price_CLS='01'", 0), gs_formatPrice)
+                    txtprice = Format(Get_Field(ss & " AND Price_CLS='01'", 0), gs_formatPrice)
                 End If
             Else
-            txtService = "": txtPrice = "":
+            TxtService = "": txtprice = "":
             
         End If
         If getCount(ss & " AND Price_CLS='05'") <> 0 Then
                 If cbocurr.Text = "IDR" Then
-                    txtService = Format(Get_Field(ss & " AND Price_CLS='05'", 0), gs_formatPriceIDR)
+                    TxtService = Format(Get_Field(ss & " AND Price_CLS='05'", 0), gs_formatPriceIDR)
                 Else
-                    txtService = Format(Get_Field(ss & " AND Price_CLS='05'", 0), gs_formatPrice)
+                    TxtService = Format(Get_Field(ss & " AND Price_CLS='05'", 0), gs_formatPrice)
                 End If
             
             Else
-            txtService = "": txtPrice = "":
+            TxtService = "": txtprice = "":
         End If
         If getCount(ss & " AND Price_CLS='02'") <> 0 Then
                 If cbocurr.Text = "IDR" Then
-                    txtPrice = Format(Get_Field(ss & " AND Price_CLS='02'", 0), gs_formatPriceIDR)
+                    txtprice = Format(Get_Field(ss & " AND Price_CLS='02'", 0), gs_formatPriceIDR)
                 Else
-                    txtPrice = Format(Get_Field(ss & " AND Price_CLS='02'", 0), gs_formatPrice)
+                    txtprice = Format(Get_Field(ss & " AND Price_CLS='02'", 0), gs_formatPrice)
                 End If
             Else
-            txtService = "": txtPrice = "":
+            TxtService = "": txtprice = "":
             
         End If
         'Call isiCbo(cbocurr, "Curr_CLS", "Description", "Curr_Cls", 50, 20, "Curr_Cls", , 1)
@@ -2062,22 +2064,22 @@ Dim ss As String
         'AdToCur
         cbocurr = Get_Field(ss, 1)
         Else
-        txtService = "": txtPrice = "":
+        TxtService = "": txtprice = "":
         End If
-            lblUnit(13).Caption = Get_Field("select a.description FROM UNIT_CLS a  INNER JOIN Item_Master b ON a.Unit_cls=b.Unit_Cls WHERE b.ITem_Code='" & cboProduct & "'", 0)
+            lblUnit(13).Caption = Get_Field("select a.description FROM UNIT_CLS a  INNER JOIN Item_Master b ON a.Unit_cls=b.Unit_Cls WHERE b.ITem_Code='" & CboProduct & "'", 0)
             'ambil Default dari WH Code pada Setting Item  tersebut
-            cboWhCode = Get_Field("SELECT WH_Code FROM Item_master WHERE Item_Code='" & cboProduct & "'", 0)
+            cboWhCode = Get_Field("SELECT WH_Code FROM Item_master WHERE Item_Code='" & CboProduct & "'", 0)
             'cbocurr.locked = False
             ''harga di lock
-            txtService.locked = False
-            txtPrice.locked = False
+            TxtService.locked = False
+            txtprice.locked = False
             cbocurr.locked = True
         
     Else
-    txtService = "": txtPrice = "": cbocurr.Text = ""
+    TxtService = "": txtprice = "": cbocurr.Text = ""
     ''harga di lock
-    txtService.locked = False
-    txtPrice.locked = False
+    TxtService.locked = False
+    txtprice.locked = False
     cbocurr.locked = True
     'cbocurr.locked = False
     End If
@@ -2106,11 +2108,11 @@ Private Sub CboWHCode_Change()
 End Sub
 
 Private Sub Grid_Validate(Cancel As Boolean)
-If Grid.TextMatrix(Grid.RowSel, 0) = "d" Then Grid.TextMatrix(Grid.RowSel, 0) = "D"
+If grid.TextMatrix(grid.RowSel, 0) = "d" Then grid.TextMatrix(grid.RowSel, 0) = "D"
 End Sub
 
 Private Sub Grid_ValidateEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-If Grid.TextMatrix(Row, ColS) = "d" Then Grid.TextMatrix(Grid.RowSel, 0) = "D"
+If grid.TextMatrix(Row, ColS) = "d" Then grid.TextMatrix(grid.RowSel, 0) = "D"
 End Sub
 
 Private Sub txtPrice_Change()
@@ -2119,16 +2121,16 @@ End Sub
 
 Private Sub txtPrice_LostFocus()
     Dim z As Double
-    If txtPrice <> "" Then
-        z = CDbl(txtPrice.Text)
-        If z > (1E+16) Then txtPrice = Left(z, 16)
+    If txtprice <> "" Then
+        z = CDbl(txtprice.Text)
+        If z > (1E+16) Then txtprice = Left(z, 16)
     End If
       
             If cbocurr = "IDR" Then
-                txtPrice.Text = Format(txtPrice.Text, gs_formatPriceIDR)
+                txtprice.Text = Format(txtprice.Text, gs_formatPriceIDR)
                 
             Else
-                txtPrice.Text = Format(txtPrice.Text, gs_formatPrice)
+                txtprice.Text = Format(txtprice.Text, gs_formatPrice)
             End If
 
     
@@ -2140,15 +2142,15 @@ End Sub
 Private Sub txtQty_KeyPress(KeyAscii As Integer)
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> Asc(".") And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then _
           KeyAscii = 0
-    If (TxtQty.Text & Chr(KeyAscii)) > 1E+16 And KeyAscii <> vbKeyBack Then KeyAscii = 0
+    If (txtQty.Text & Chr(KeyAscii)) > 1E+16 And KeyAscii <> vbKeyBack Then KeyAscii = 0
 End Sub
 
 Private Sub txtQty_LostFocus()
     Dim z As Double
     
-    If TxtQty <> "" Then
-        z = CDbl(TxtQty.Text)
-        If z > (1E+16) Then TxtQty = Left(z, 16)
+    If txtQty <> "" Then
+        z = CDbl(txtQty.Text)
+        If z > (1E+16) Then txtQty = Left(z, 16)
     End If
 End Sub
 
@@ -2159,7 +2161,7 @@ End Sub
 Private Sub txtPrice_KeyPress(KeyAscii As Integer)
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> Asc(".") And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then _
           KeyAscii = 0
-    If (txtPrice.Text & Chr(KeyAscii)) > 1E+16 And KeyAscii <> vbKeyBack Then KeyAscii = 0
+    If (txtprice.Text & Chr(KeyAscii)) > 1E+16 And KeyAscii <> vbKeyBack Then KeyAscii = 0
 End Sub
 
 '--------------------------------------------
@@ -2167,7 +2169,7 @@ End Sub
 
 '-------------- Out -----------------------
 Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
-    If ErrMsg = "" Then Unload Me Else lblErrMsg.Caption = ErrMsg
+    If ErrMsg = "" Then Unload Me Else LblErrMsg.Caption = ErrMsg
 End Sub
 
 Private Sub CmdSubMenu_Click()
@@ -2184,22 +2186,22 @@ End Sub
 Sub Kosong(Optional stAwal As Byte)
 nilKosong = True
     If stAwal = 1 Then
-        CboCust = "": lblCust = ""
-        dtStart = Format(DateValue(Year(Now) & "/" & Month(Now) & "/01"), "dd MMM YYYY")
-        dtEnd = Format(Now, "dd MMM YYYY")
+        cboCust = "": lblCust = ""
+        DtStart = Format(DateValue(Year(Now) & "/" & Month(Now) & "/01"), "dd MMM YYYY")
+        DtEnd = Format(Now, "dd MMM YYYY")
          
         Call KosongBawah
     End If
-    txtService = ""
+    TxtService = ""
     'TxtDoNo = ""
     txtRemark = ""
     txtRef = ""
     cboWhCode.Enabled = True
     cboWhCode = ""
-    lblErrMsg = ""
-    cboType = ""
+    LblErrMsg = ""
+    CboType = ""
     txtDesc = ""
-    cboProduct.locked = False
+    CboProduct.locked = False
     cmdPopItem.Enabled = True
 nilKosong = False
 End Sub
@@ -2208,18 +2210,18 @@ Sub KosongBawah()
 
    
     dtReturn = Format(Now, "dd MMM yyyy")
-    cboProduct = "": txtDesc = ""
+    CboProduct = "": txtDesc = ""
     TxtLotNo = ""
-    TxtQty = ""
+    txtQty = ""
     lblUnit(13).Caption = ""
     cbocurr = ""
-    txtPrice = ""
-    txtAmount = ""
+    txtprice = ""
+    txtamount = ""
     txtRemark = ""
     txtRef = ""
     'TxtDoNo = ""
-    cboType = ""
-    txtService = ""
+    CboType = ""
+    TxtService = ""
     txtReturnSeq_No = 0
     cboWhCode = ""
 End Sub
@@ -2228,15 +2230,15 @@ Sub Ammount()
 
 
         
-If Not IsNumeric(Trim(txtPrice)) Or Trim(txtPrice) = "" Or Not IsNumeric(Trim(TxtQty.Text)) Or TxtQty.Text = "" Or Not IsNumeric(Trim(txtService)) Or Trim(txtService) = "" Then
-        txtAmount.Text = 0
+If Not IsNumeric(Trim(txtprice)) Or Trim(txtprice) = "" Or Not IsNumeric(Trim(txtQty.Text)) Or txtQty.Text = "" Or Not IsNumeric(Trim(TxtService)) Or Trim(TxtService) = "" Then
+        txtamount.Text = 0
     Else
-        txtAmount.Text = CDbl(Trim(TxtQty.Text)) * (CDbl(Trim(txtPrice.Text) + CDbl(Trim(txtService.Text))))
+        txtamount.Text = CDbl(Trim(txtQty.Text)) * (CDbl(Trim(txtprice.Text) + CDbl(Trim(TxtService.Text))))
     End If
     If cbocurr.Text = "IDR" Then
-            txtAmount = Format(txtAmount, gs_formatPriceIDR)
+            txtamount = Format(txtamount, gs_formatPriceIDR)
     Else
-            txtAmount = Format(txtAmount, gs_formatPrice)
+            txtamount = Format(txtamount, gs_formatPrice)
     End If
     
     
@@ -2250,20 +2252,20 @@ End Sub
 Private Sub txtService_KeyPress(KeyAscii As Integer)
     If Not (KeyAscii >= Asc("0") And KeyAscii <= Asc("9")) And KeyAscii <> Asc(".") And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyReturn Then _
           KeyAscii = 0
-    If (txtPrice.Text & Chr(KeyAscii)) > 1E+16 And KeyAscii <> vbKeyBack Then KeyAscii = 0
+    If (txtprice.Text & Chr(KeyAscii)) > 1E+16 And KeyAscii <> vbKeyBack Then KeyAscii = 0
 
 End Sub
 
 Private Sub TxtService_LostFocus()
  Dim z As Double
-    If txtService <> "" Then
-        z = CDbl(txtService.Text)
-        If z > (1E+16) Then txtService = Left(z, 16)
+    If TxtService <> "" Then
+        z = CDbl(TxtService.Text)
+        If z > (1E+16) Then TxtService = Left(z, 16)
     End If
     If cbocurr.Text = "IDR" Then
-    txtService.Text = Format(txtService.Text, gs_formatPriceIDR)
+    TxtService.Text = Format(TxtService.Text, gs_formatPriceIDR)
     Else
-    txtService.Text = Format(txtService.Text, gs_formatPrice)
+    TxtService.Text = Format(TxtService.Text, gs_formatPrice)
     
     End If
 End Sub

@@ -215,8 +215,8 @@ Begin VB.Form frmLotTraceInquiry
       TabStop         =   0   'False
       Top             =   270
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
@@ -441,8 +441,8 @@ Private Sub headerGrid()
 End Sub
 
 Sub Kosong()
-    Cbo(0) = ""
-    Cbo(1) = ""
+    cbo(0) = ""
+    cbo(1) = ""
     lblNm(0) = ""
     Text1 = ""
     cboExplosion.ListIndex = 0
@@ -458,21 +458,21 @@ Dim rscbo As New ADODB.Recordset
          "order by Item_Code"
     Set rscbo = Db.Execute(sql)
     
-    Cbo(0).clear
-    Cbo(0).columnCount = 2
-    Cbo(0).TextColumn = 1
+    cbo(0).clear
+    cbo(0).columnCount = 2
+    cbo(0).TextColumn = 1
     
     i = 0
     Do While Not (rscbo.EOF)
-        Cbo(0).AddItem ""
-        Cbo(0).List(i, 0) = Trim(rscbo("Item_Code"))
-        Cbo(0).List(i, 1) = Trim(rscbo("Item_Name"))
+        cbo(0).AddItem ""
+        cbo(0).List(i, 0) = Trim(rscbo("Item_Code"))
+        cbo(0).List(i, 1) = Trim(rscbo("Item_Name"))
         i = i + 1
         rscbo.MoveNext
     Loop
-    Cbo(0).ListWidth = 300
-    Cbo(0).ColumnWidths = "100 pt;200 pt"
-    Cbo(0).ListRows = 15
+    cbo(0).ListWidth = 300
+    cbo(0).ColumnWidths = "100 pt;200 pt"
+    cbo(0).ListRows = 15
     Set rscbo = Nothing
     '************************
 End Sub
@@ -489,9 +489,9 @@ End Sub
 
 Private Sub cmdBrowser_Click()
  Me.MousePointer = vbHourglass
- frm_BrowseItem.getItemCode = Cbo(0).Text
+ frm_BrowseItem.getItemCode = cbo(0).Text
  frm_BrowseItem.Show 1
- Cbo(0).Text = frm_BrowseItem.getItemCode
+ cbo(0).Text = frm_BrowseItem.getItemCode
  Me.MousePointer = vbDefault
 End Sub
 
@@ -507,15 +507,15 @@ Dim rsIbu As New ADODB.Recordset
 Select Case Index
 
 Case Is = 0
-If Cbo(0) <> "" Then
-    Cbo(0) = Cbo(0)
-    If Cbo(0).MatchFound = False Then
+If cbo(0) <> "" Then
+    cbo(0) = cbo(0)
+    If cbo(0).matchFound = False Then
         lblNm(0) = ""
         lblNm(1) = ""
         LblErrMsg = DisplayMsg(4002)
         Call headerGrid
     Else
-        lblNm(0) = Cbo(0).Column(1)
+        lblNm(0) = cbo(0).Column(1)
         LblErrMsg = ""
         Call headerGrid
         Call isiCboLot
@@ -526,14 +526,14 @@ Else
 End If
 
 Case Else
-If Cbo(1) <> "" Then
-    Cbo(1) = Cbo(1)
-    If Cbo(1).MatchFound = False Then
+If cbo(1) <> "" Then
+    cbo(1) = cbo(1)
+    If cbo(1).matchFound = False Then
         Text1 = ""
         LblErrMsg = DisplayMsg(4002)
         Call headerGrid
     Else
-        Text1 = Cbo(1).Column(1)
+        Text1 = cbo(1).Column(1)
         LblErrMsg = ""
         Call headerGrid
     End If
@@ -557,11 +557,11 @@ Call headerGrid
 dsn = IIf(Trim(Text1) = "", 0, Val(Trim(Text1)))
 
 If cboExplosion = 0 Then 'cari anak
-    Call IsiGrid(Cbo(0), 0, "ParentItem_Code", Cbo(1), dsn)
+    Call IsiGrid(cbo(0), 0, "ParentItem_Code", cbo(1), dsn)
 ElseIf cboExplosion = 1 Then 'cari parent
-    Call IsiGrid(Cbo(0), 0, "ChildItem_Code", Cbo(1), dsn)
+    Call IsiGrid(cbo(0), 0, "ChildItem_Code", cbo(1), dsn)
 ElseIf cboExplosion = 2 Then 'cari anak tp 1 level
-    Call IsiGrid(Cbo(0), 0, "ParentItem_Code", Cbo(1), dsn, 1)
+    Call IsiGrid(cbo(0), 0, "ParentItem_Code", cbo(1), dsn, 1)
 End If
 
 If grid.Rows <= 1 Then
@@ -602,34 +602,34 @@ If cboExplosion = 1 Then
 sql = " select distinct ps.childitem_code,ps.remarks lot_no,pr.dailyseq_no From part_supply ps " & _
         " inner join part_receipt pr " & _
         " on ps.parentitem_code=pr.item_code " & _
-        "where ps.childitem_code='" & Cbo(0) & _
+        "where ps.childitem_code='" & cbo(0) & _
         "' and ps.remarks<>'' order by ps.remarks"
 Else
 sql = "select distinct item_code,lot_no,dailyseq_no from " & _
         "(select item_code, lot_no, seq_no dailyseq_no from daily_production " & _
         " Union All " & _
         " select item_code,suratjalan_no lot_no,dailyseq_no from part_receipt)n " & _
-        "where Item_Code='" & Cbo(0) & _
+        "where Item_Code='" & cbo(0) & _
         "' and Lot_No<>'' order by Lot_No"
 End If
 
     Set rscbo = Db.Execute(sql)
     
-    Cbo(1).clear
-    Cbo(1).columnCount = 2
-    Cbo(1).TextColumn = 1
+    cbo(1).clear
+    cbo(1).columnCount = 2
+    cbo(1).TextColumn = 1
     
     i = 0
     Do While Not (rscbo.EOF)
-        Cbo(1).AddItem ""
-        Cbo(1).List(i, 0) = Trim(rscbo("Lot_No"))
-        Cbo(1).List(i, 1) = Trim(rscbo("dailyseq_no"))
+        cbo(1).AddItem ""
+        cbo(1).List(i, 0) = Trim(rscbo("Lot_No"))
+        cbo(1).List(i, 1) = Trim(rscbo("dailyseq_no"))
         i = i + 1
         rscbo.MoveNext
     Loop
-    Cbo(1).ListWidth = 100
-    Cbo(1).ColumnWidths = "100 pt;0 pt"
-    Cbo(1).ListRows = 15
+    cbo(1).ListWidth = 100
+    cbo(1).ColumnWidths = "100 pt;0 pt"
+    cbo(1).ListRows = 15
     Set rscbo = Nothing
 
     

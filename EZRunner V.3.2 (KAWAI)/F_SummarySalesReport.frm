@@ -146,7 +146,7 @@ Begin VB.Form F_SummarySalesReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   141230083
+      Format          =   141033475
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker MDate1 
@@ -177,7 +177,7 @@ Begin VB.Form F_SummarySalesReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   141230083
+      Format          =   141033475
       CurrentDate     =   37798
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -329,12 +329,12 @@ Dim idx_Cust As Double, idx_curr As Double
 Dim bteHakPrice As Byte
 
 Private Sub CboCust_Change()
-    If cboCust.MatchFound Then
-        lblcust = cboCust.List(cboCust.ListIndex, 1)
+    If cboCust.matchFound Then
+        lblCust = cboCust.List(cboCust.ListIndex, 1)
         Text1 = cboCust.List(cboCust.ListIndex, 1)
         LblPesan = ""
     Else
-        lblcust = ""
+        lblCust = ""
         Text1 = ""
         LblPesan = DisplayMsg(4072)
     End If
@@ -356,11 +356,11 @@ Private Sub Command1_Click()
     
     If Trim(cboCust) = "" Then LblPesan = DisplayMsg(1045): Exit Sub
     cboCust = Trim(cboCust)
-    If Not cboCust.MatchFound Then LblPesan = DisplayMsg(4072): Exit Sub
+    If Not cboCust.matchFound Then LblPesan = DisplayMsg(4072): Exit Sub
     
     rate = tax("PPn")
     
-    If lblcust = strAll Then
+    If lblCust = strAll Then
         sql = " select (invoice_master.cust_code)as sebango,trade_name,invoice_master.invoice_no,invoice_master.invoice_date, " & _
             " invoice_detail.po_no , invoice_detail.item_code , item_name, qty, price, invoice_detail.amount,  " & _
             " trade_master.country_cls,case trade_master.country_cls when '1' then  0 else  ppn end ppn, " & _
@@ -446,7 +446,7 @@ Private Sub Command1_Click()
                 If Idx <> 10 And tempi <> Trim(rsCek!Invoice_No) Then
                     Call TotalInvoice(xlapp, posawal, Idx, "f", "e", rsCek!country_cls, rsCek!ppnrate)
                     bolinv = True
-                    If lblcust = strAll Then
+                    If lblCust = strAll Then
                         CustTotal(idx_Cust) = "f" & Idx
                         idx_Cust = idx_Cust + 1
                     Else
@@ -455,7 +455,7 @@ Private Sub Command1_Click()
                     End If
                 End If
                 
-                If lblcust = strAll Then
+                If lblCust = strAll Then
                     If Idx <> 10 And tempcust <> Trim(rsCek!sebango) Then
                         Idx = Idx + 3
                         Call TotalCust(xlapp, Idx, "f", "e", "d", rsCek!country_cls, rsCek!ppnrate)
@@ -538,7 +538,7 @@ Private Sub Command1_Click()
             
             If bteHakPrice = 1 Then
                 Call TotalInvoice(xlapp, posawal, Idx, "f", "e", rsCek!country_cls, rsCek!ppnrate)
-                If lblcust = strAll Then
+                If lblCust = strAll Then
                     CustTotal(idx_Cust) = "f" & Idx
                     idx_Cust = idx_Cust + 1
                 Else
@@ -546,7 +546,7 @@ Private Sub Command1_Click()
                     idx_curr = idx_curr + 1
                 End If
                 Idx = Idx + 3
-                If lblcust = strAll Then
+                If lblCust = strAll Then
                     Call TotalCust(xlapp, Idx, "f", "e", "d", rsCek!country_cls, rsCek!ppnrate)
                     CurrTotal(idx_curr) = "f" & Idx
                     idx_curr = idx_curr + 1
@@ -672,7 +672,7 @@ Private Sub command2_Click()
     LblPesan = ""
     If Trim(cboCust) = "" Then LblPesan = DisplayMsg(1045): Exit Sub
     cboCust = Trim(cboCust)
-    If Not cboCust.MatchFound Then LblPesan = DisplayMsg(4072): Exit Sub
+    If Not cboCust.matchFound Then LblPesan = DisplayMsg(4072): Exit Sub
     
     Me.MousePointer = vbHourglass
 
@@ -727,7 +727,7 @@ Private Sub command2_Click()
           vbLf & "a.company_name , a.address1, a.address2, a.province, a.city, a.postal_code, a.phone1, " & _
           vbLf & "a.phone2 , a.fax, a.pebno, a.pebdate "
 
-    If lblcust <> strAll Then
+    If lblCust <> strAll Then
       sql = sql & _
             vbLf & "having a.cust_code = '" & cboCust & "' "
     End If
@@ -807,6 +807,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 End Sub
 
 Private Sub Form_Load()
+    If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
     If gb_Simulation = True Then Call up_InitSimulation(F_DetailSalesReport)
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"

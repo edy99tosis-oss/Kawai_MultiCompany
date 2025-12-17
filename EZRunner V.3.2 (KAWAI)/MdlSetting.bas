@@ -5,7 +5,7 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 'Setting System
 '========================================================================================
 'System
-            Public Const gb_Simulation = False
+            Public Const gb_Simulation = True
             
 'Part Supply [Unschedule]
             Public Const gb_AllowClearInputArea_PartSupplyUnschedule = False
@@ -55,11 +55,11 @@ Public Const LOCALE_SMONTHOUSANDSEP = &H17
 Public Const LOCALE_SMONDECIMALSEP = &H16
 Public LightGreen As ColorConstants
         
-Public Sub up_InitSimulation(frm As Form)
+Public Sub up_InitSimulation(Frm As Form)
 LightGreen = RGB(204, 255, 204)
 Dim obj
-frm.BackColor = LightGreen
-For Each obj In frm.Controls
+Frm.BackColor = LightGreen
+For Each obj In Frm.Controls
     
    If TypeOf obj Is Frame Then
         If obj.BackColor = &HFDDFE3 Then obj.BackColor = LightGreen

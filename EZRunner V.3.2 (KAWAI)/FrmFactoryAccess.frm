@@ -277,8 +277,13 @@ Private Sub tmrNext_Timer()
 End Sub
 
 Private Sub Form_Load()
+ If gb_Simulation = True Then Call up_InitSimulation(Me)
+ If gb_Simulation = True Then OBFactory1.BackColor = RGB(204, 255, 204)
+ If gb_Simulation = True Then OBFactory2.BackColor = RGB(204, 255, 204)
+ 
+ 
    Dim ctl As Control
-
+   
     ' Reset semua OptionButton
     For Each ctl In Me.Controls
         If TypeOf ctl Is OptionButton Then ctl.Value = False

@@ -471,7 +471,7 @@ Private Sub CmdSubMenu_Click()
     
     ls_Answer = MsgBox("Are you sure want to close this menu ?", vbQuestion + vbYesNo + vbDefaultButton2, "Confirmation")
     If ls_Answer = vbYes Then
-        If cmdsubmenu.Caption = "Sub &Menu" Then
+        If CmdSubMenu.Caption = "Sub &Menu" Then
             DoEvents
             frmMainMenu.Show
             DoEvents
@@ -493,7 +493,7 @@ Me.MousePointer = vbDefault
 End Sub
 
 Private Sub Form_Load()
-  
+  If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
 
   Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
 '  kosong
@@ -702,7 +702,7 @@ Private Sub up_SendEmail()
     
     Dim ls_desc As String
     
-    On Local Error GoTo errHandler
+    On Local Error GoTo ErrHandler
     
         'Set Timer
     ls_sql = " select smtp_server, port_number, smtp_timeout, email_address, user_email, pass_email, timer, subject, " & vbCrLf & _
@@ -756,7 +756,7 @@ Private Sub up_SendEmail()
     
 ErrExit:
     Exit Sub
-errHandler:
+ErrHandler:
     'Call SaveToTxt("SendEmail_ErrorLog", " Ticket No : " & ls_TicketNo & " ( " & ls_ticketdate & " ) " & err.Description, CurrDate)
     err.clear
     Resume ErrExit
@@ -775,7 +775,7 @@ Public Sub up_cdoSendEmail(ByVal ls_smtpserver As String, ByVal li_smtpport As D
     Dim Flds
     Dim attachment
    
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     Set Flds = cdoConf.Fields
        
@@ -826,7 +826,7 @@ ErrExit:
     
     Exit Sub
 
-errHandler:
+ErrHandler:
 LblErrMsg.Caption = err.Description
 'Call SaveToTxt("SendEmail_ErrorLog", "SEND MAIL - " & err.number & " : " & err.Description, CurrDate)
 GoTo ErrExit

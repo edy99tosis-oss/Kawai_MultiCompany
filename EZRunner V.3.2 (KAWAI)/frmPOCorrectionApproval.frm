@@ -196,7 +196,7 @@ Begin VB.Form FrmPOCorrectionApproval
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   294256643
+         Format          =   141033475
          CurrentDate     =   37868
       End
       Begin MSComCtl2.DTPicker EDate 
@@ -218,7 +218,7 @@ Begin VB.Form FrmPOCorrectionApproval
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   294256643
+         Format          =   141033475
          CurrentDate     =   37868
       End
       Begin MSForms.ComboBox CboStatus 
@@ -483,11 +483,11 @@ Dim bteColHstatus As Byte
 Dim bytSort As Byte
 
 Private Sub cbostatus_Change()
-If CboStatus.Text = "Yes" Then
+If cboStatus.Text = "Yes" Then
     Label6.Text = "APPROVE"
-ElseIf CboStatus.Text = "No" Then
+ElseIf cboStatus.Text = "No" Then
     Label6.Text = "UNAPPROVE"
-ElseIf CboStatus.Text = "ALL" Then
+ElseIf cboStatus.Text = "ALL" Then
     Label6.Text = "ALL"
 End If
 Call Header
@@ -524,6 +524,8 @@ Private Sub CmdMenu_Click()
 End Sub
 
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
+
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 Call adtocombo
@@ -547,7 +549,7 @@ End Sub
 
 Sub blank()
 cboSupp.Value = "ALL"
-CboStatus.Text = "ALL"
+cboStatus.Text = "ALL"
 'txtName.Text = ""
 SDate.Value = Format(Now, "dd MMM yyyy")
 EDate.Value = Format(Now, "dd MMM yyyy")
@@ -746,7 +748,7 @@ Loop
 .ListIndex = 0
 End With
 
-    With CboStatus
+    With cboStatus
         .AddItem ("ALL")
         .AddItem ("Yes")
         .AddItem ("No")
@@ -755,7 +757,7 @@ End With
 End Sub
 
 Private Sub CboSupp_Change()
-If cboSupp.MatchFound = True Then
+If cboSupp.matchFound = True Then
     txtName.Text = Trim(cboSupp.Column(1))
 Else
     txtName.Text = ""
@@ -883,17 +885,17 @@ Dim rsCek As New ADODB.Recordset
 End Sub
 
 Private Function uf_SQLSearch() As String
-Dim status As String
-If CboStatus.Text = "Yes" Then
-    status = 1
-    ElseIf CboStatus.Text = "No" Then
-    status = 0
+Dim Status As String
+If cboStatus.Text = "Yes" Then
+    Status = 1
+    ElseIf cboStatus.Text = "No" Then
+    Status = 0
 End If
 
 uf_SQLSearch = " Select * From (select * from PurchaseOrder_Master_History " & vbCrLf & _
                 " where PO_Date >= '" & Format(SDate.Value, "yyyy-mm-dd") & "' and PO_Date <= '" & Format(EDate.Value, "yyyy-mm-dd") & "' " & vbCrLf & _
                 IIf(cboSupp.Text = "ALL", "", " and supplier_code='" & Trim(cboSupp.Text) & "' ") & vbCrLf & _
-                IIf(CboStatus.Text = "ALL", "", "and Coalesce(Approved_Cls,'0')='" & status & "'  ") & vbCrLf & _
+                IIf(cboStatus.Text = "ALL", "", "and Coalesce(Approved_Cls,'0')='" & Status & "'  ") & vbCrLf & _
                 " ) pomh " & vbCrLf & _
                 " inner join trade_master tm on pomh.supplier_code=tm.trade_code " & vbCrLf & _
                 ""

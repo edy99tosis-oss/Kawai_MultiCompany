@@ -1,9 +1,9 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
 Object = "{6BF52A50-394A-11D3-B153-00C04F79FAA6}#1.0#0"; "wmp.dll"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form FrmSupplyBySerialNo 
    BackColor       =   &H00FDDFE3&
    Caption         =   "Supply By Serial No"
@@ -305,7 +305,7 @@ Begin VB.Form FrmSupplyBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61014019
+         Format          =   141819907
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtpTo 
@@ -328,7 +328,7 @@ Begin VB.Form FrmSupplyBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61014019
+         Format          =   141819907
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpBCDate 
@@ -351,7 +351,7 @@ Begin VB.Form FrmSupplyBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   61014019
+         Format          =   141819907
          CurrentDate     =   37798
       End
       Begin VB.Label Label19 
@@ -1061,6 +1061,7 @@ Private Sub DtpTo_Change()
 End Sub
 
 Private Sub Form_Load()
+If gb_Simulation = True Then Call up_InitSimulation(Me)
 
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
@@ -1089,7 +1090,7 @@ Private Sub up_Header()
     bteColQty = 6
     btecolDNNo = 7
     
-    With Grid
+    With grid
         .ColS = 8
         .Rows = 1
         
@@ -1139,8 +1140,8 @@ Private Sub up_Clear()
     lblFromWH(0) = ""
     lblToWH(2) = ""
     
-    DtpFrom.Value = DateSerial(Year(Now), Month(Now), 1)
-    DtpTo.Value = Now()
+    DTPFrom.Value = DateSerial(Year(Now), Month(Now), 1)
+    DTPTo.Value = Now()
     dtpBCDate.Value = Now()
     
     If OptWithoutSerialNo.Value = True Then
@@ -1314,8 +1315,8 @@ Dim cmd As ADODB.Command
     
     cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
     cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH))
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDate, adParamInput, , Format(DtpFrom.Value, "YYYY-MM-DD"))
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDate, adParamInput, , Format(DtpTo.Value, "YYYY-MM-DD"))
+    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDate, adParamInput, , Format(DTPFrom.Value, "YYYY-MM-DD"))
+    cmd.Parameters.append cmd.CreateParameter("DateTo", adDate, adParamInput, , Format(DTPTo.Value, "YYYY-MM-DD"))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "1")
     If OptSerialNo.Value = True Then
         cmd.Parameters.append cmd.CreateParameter("SerialNo", adVarChar, adParamInput, 1, "1")
@@ -1575,15 +1576,15 @@ up_Header
     
     cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
     cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH))
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DtpFrom.Value)
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DtpTo.Value)
+    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DTPFrom.Value)
+    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DTPTo.Value)
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "1")
     
     Set RS = cmd.Execute
         
         i = 1
-        With Grid
+        With grid
             If RS.EOF = False Then
                 While Not RS.EOF
                     .Rows = .Rows + 1
@@ -1711,8 +1712,8 @@ Set cmd = New ADODB.Command
     
     cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
     cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH))
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DtpFrom.Value)
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DtpTo.Value)
+    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DTPFrom.Value)
+    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DTPTo.Value)
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "1")
     
@@ -1901,8 +1902,8 @@ Set cmd = New ADODB.Command
     
     cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
     cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH))
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DtpFrom.Value)
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DtpTo.Value)
+    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DTPFrom.Value)
+    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DTPTo.Value)
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "2")
     
@@ -2474,14 +2475,14 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim cek As Integer
 
     If Col = bteColSelect Then
-        If Grid.Cell(flexcpChecked, Row, Col) = flexChecked Then
+        If grid.Cell(flexcpChecked, Row, Col) = flexChecked Then
             cek = 1
         Else
             cek = 2
         End If
         
-        For i = 1 To Grid.Rows - 1
-            Grid.Cell(flexcpChecked, i, 0) = flexUnchecked
+        For i = 1 To grid.Rows - 1
+            grid.Cell(flexcpChecked, i, 0) = flexUnchecked
             txtBarcode.Text = ""
             txtSerialNo.Text = ""
             txtDescription.Text = ""
@@ -2489,7 +2490,7 @@ Dim cek As Integer
             'cboDNo.Text = ""
         Next i
         
-        Grid.Cell(flexcpChecked, Row, Col) = cek
+        grid.Cell(flexcpChecked, Row, Col) = cek
     End If
 End Sub
 
@@ -2497,18 +2498,18 @@ Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Bool
     If Col <> bteColSelect Then
         Cancel = True
     Else
-        For i = 1 To Grid.Rows - 1
-            If Grid.Cell(flexcpChecked, i, Col) = flexChecked Then
-                Grid.Cell(flexcpChecked, i, 0) = flexChecked
-                txtBarcode.Text = Grid.TextMatrix(Grid.RowSel, bteColBarcodeNo)
-                txtSerialNo.Text = Grid.TextMatrix(Grid.RowSel, bteColSerialNo)
-                txtItemCode.Text = Grid.TextMatrix(Grid.RowSel, bteColItemCode)
-                txtDescription.Text = Grid.TextMatrix(Grid.RowSel, bteColDescription)
-                txtQty.Text = Grid.TextMatrix(Grid.RowSel, bteColQty)
-                cboDNo.Text = Grid.TextMatrix(Grid.RowSel, btecolDNNo)
+        For i = 1 To grid.Rows - 1
+            If grid.Cell(flexcpChecked, i, Col) = flexChecked Then
+                grid.Cell(flexcpChecked, i, 0) = flexChecked
+                txtBarcode.Text = grid.TextMatrix(grid.RowSel, bteColBarcodeNo)
+                txtSerialNo.Text = grid.TextMatrix(grid.RowSel, bteColSerialNo)
+                txtItemCode.Text = grid.TextMatrix(grid.RowSel, bteColItemCode)
+                txtDescription.Text = grid.TextMatrix(grid.RowSel, bteColDescription)
+                txtQty.Text = grid.TextMatrix(grid.RowSel, bteColQty)
+                cboDNo.Text = grid.TextMatrix(grid.RowSel, btecolDNNo)
                 lbl_pesan.Caption = ""
             Else
-                Grid.Cell(flexcpChecked, i, 0) = flexUnchecked
+                grid.Cell(flexcpChecked, i, 0) = flexUnchecked
                 
             End If
         Next i

@@ -498,7 +498,7 @@ Begin VB.Form frmPartsRecSupInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   96206851
+      Format          =   141819907
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -1833,6 +1833,7 @@ pass:
 End Sub
 
 Private Sub Form_Load()
+
     Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
     CtrlMenu1.FormName = Me.Name
     

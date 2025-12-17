@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
 Begin VB.Form frmMainMenu 
-   BackColor       =   &H00000000&
+   BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "EZ Runner ver.3 - Main Menu"
    ClientHeight    =   9105
@@ -15,6 +15,12 @@ Begin VB.Form frmMainMenu
    ScaleHeight     =   9105
    ScaleWidth      =   12240
    StartUpPosition =   2  'CenterScreen
+   Begin EZRunnerv3.Anchor Anchor1 
+      Left            =   5520
+      Top             =   120
+      _extentx        =   847
+      _extenty        =   820
+   End
    Begin MSComctlLib.ImageList ImageList2 
       Left            =   4995
       Top             =   3960
@@ -45,6 +51,7 @@ Begin VB.Form frmMainMenu
       Height          =   9105
       Left            =   0
       TabIndex        =   6
+      Tag             =   "TTFT*/"
       Top             =   0
       Width           =   5415
       _ExtentX        =   9551
@@ -72,6 +79,7 @@ Begin VB.Form frmMainMenu
       ScaleHeight     =   420
       ScaleWidth      =   1140
       TabIndex        =   7
+      Tag             =   "TTFF*/"
       Top             =   4560
       Width           =   1200
    End
@@ -97,15 +105,17 @@ Begin VB.Form frmMainMenu
       MaskColor       =   &H00FFFFFF&
       Style           =   1  'Graphical
       TabIndex        =   2
+      Tag             =   "FFTT*/"
       Top             =   8415
       UseMaskColor    =   -1  'True
       Width           =   1000
    End
    Begin VB.Frame Frame1 
-      BackColor       =   &H80000012&
+      BackColor       =   &H00E0E0E0&
       Height          =   600
       Left            =   5670
       TabIndex        =   0
+      Tag             =   "TFTT*/"
       Top             =   7740
       Width           =   6210
       Begin VB.Label lblErrMsg 
@@ -124,6 +134,7 @@ Begin VB.Form frmMainMenu
          Height          =   240
          Left            =   60
          TabIndex        =   1
+         Tag             =   "TTFF*/"
          Top             =   240
          Width           =   6090
       End
@@ -150,6 +161,15 @@ Begin VB.Form frmMainMenu
          EndProperty
       EndProperty
    End
+   Begin VB.Image Image1 
+      Height          =   5535
+      Left            =   5640
+      Picture         =   "frmMainMenu.frx":4DAE
+      Stretch         =   -1  'True
+      Tag             =   "TTTT*/"
+      Top             =   1560
+      Width           =   6405
+   End
    Begin VB.Label lblSim 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -167,6 +187,7 @@ Begin VB.Form frmMainMenu
       Height          =   525
       Left            =   6420
       TabIndex        =   8
+      Tag             =   "TTFF*/"
       Top             =   4965
       Width           =   2010
    End
@@ -183,28 +204,13 @@ Begin VB.Form frmMainMenu
          Italic          =   -1  'True
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H80000014&
+      ForeColor       =   &H00000000&
       Height          =   225
       Left            =   11430
       TabIndex        =   3
+      Tag             =   "FFTT*/"
       Top             =   7560
       Width           =   435
-   End
-   Begin VB.Image Image2 
-      Height          =   1110
-      Index           =   0
-      Left            =   5400
-      Picture         =   "frmMainMenu.frx":4DAE
-      Top             =   6480
-      Width           =   4200
-   End
-   Begin VB.Image Image2 
-      Height          =   3135
-      Index           =   1
-      Left            =   5640
-      Picture         =   "frmMainMenu.frx":140C0
-      Top             =   1830
-      Width           =   6270
    End
    Begin VB.Label Label1 
       Alignment       =   2  'Center
@@ -220,12 +226,13 @@ Begin VB.Form frmMainMenu
          Italic          =   -1  'True
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   480
       Index           =   1
       Left            =   7830
       TabIndex        =   5
-      Top             =   1050
+      Tag             =   "TTTF*/"
+      Top             =   690
       Width           =   1830
    End
    Begin VB.Label Label1 
@@ -242,13 +249,13 @@ Begin VB.Form frmMainMenu
          Italic          =   -1  'True
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00FFFFFF&
+      ForeColor       =   &H00000000&
       Height          =   375
       Index           =   0
       Left            =   6510
       TabIndex        =   4
-      Top             =   690
-      Visible         =   0   'False
+      Tag             =   "TTTF*/"
+      Top             =   330
       Width           =   4485
    End
    Begin VB.Shape Shape2 
@@ -256,6 +263,7 @@ Begin VB.Form frmMainMenu
       BackStyle       =   1  'Opaque
       Height          =   795
       Left            =   90
+      Tag             =   "TTFF*/"
       Top             =   2760
       Width           =   495
    End
@@ -264,6 +272,7 @@ Begin VB.Form frmMainMenu
       BackStyle       =   1  'Opaque
       Height          =   855
       Left            =   120
+      Tag             =   "TTFF*/"
       Top             =   1560
       Width           =   375
    End
@@ -283,9 +292,18 @@ Sub NoAkses()
 End Sub
 
 Private Sub Form_Load()
+    If gb_Simulation = True Then Call up_InitSimulation(Me)
+    
+    If gb_Simulation = True Then Frame1.BackColor = RGB(204, 255, 204)
+     
     LblErrMsg = ""
     bolshow = True
     lblSim.Visible = gb_Simulation
+    
+    With Anchor1
+      .RegString = "AnchorCtrl,Positions," & Me.Name & "0|0"
+      .DoInit
+    End With
 End Sub
 
 Private Sub cmdLogout_Click()
@@ -307,46 +325,46 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     If UnloadMode = 0 Then Cancel = 1
 End Sub
 
-Private Sub Form_Resize()
-    Tree.Height = Me.Height - 350
-    If Me.WindowState = vbMaximized Then
-        Label1(0).Left = Me.Width - 7400
-        Label1(1).Left = Me.Width - 6100
-        Image1.Left = Me.Width - 7300
-        Frame1.Left = Me.Width - 8100
-        Image4.Left = Me.Width - 2700
-        cmdLogout.Left = Me.Width - 2900
-        Image2(0).Left = Me.Width - 8400
-        Image2(1).Left = Me.Width - 8400
-        Label1(0).top = Me.Height - 10500
-        Label1(1).top = Me.Height - 10000
-        Image1.top = Me.Height - 8300
-        Frame1.top = Me.Height - 2500
-        Image2(0).top = Me.Height - 3400
-        Image2(1).top = Me.Height - 9000
-        cmdLogout.top = Me.Height - 1500
-        Copyright.Left = Me.Width - 2300
-        Copyright.top = Me.Height - 2700
-    Else
-        Label1(0).Left = Me.Width - 5800
-        Label1(1).Left = Me.Width - 4200
-        Image1.Left = Me.Width - 5800
-        Image2(0).Left = Me.Width - 6900
-        Image2(1).Left = Me.Width - 6800
-        Image4.Left = Me.Width - 1300
-        Frame1.Left = Me.Width - 6600
-        cmdLogout.Left = Me.Width - 1400
-        Label1(0).top = Me.Height - 8700
-        Label1(1).top = Me.Height - 8200
-        Image1.top = Me.Height - 7100
-        Frame1.top = Me.Height - 2000
-        Image2(0).top = Me.Height - 2900
-        Image2(1).top = Me.Height - 7600
-        cmdLogout.top = Me.Height - 1300
-        Copyright.Left = Me.Width - 820
-        Copyright.top = Me.Height - 2180
-    End If
-End Sub
+'Private Sub Form_Resize()
+'    Tree.Height = Me.Height - 350
+'    If Me.WindowState = vbMaximized Then
+'        Label1(0).Left = Me.Width - 7400
+'        Label1(1).Left = Me.Width - 6100
+'        Image1.Left = Me.Width - 7300
+'        Frame1.Left = Me.Width - 8100
+''        Image4.Left = Me.Width - 2700
+'        cmdLogout.Left = Me.Width - 2900
+''        Image2(0).Left = Me.Width - 8400
+''        Image2(1).Left = Me.Width - 8400
+'        Label1(0).top = Me.Height - 10500
+'        Label1(1).top = Me.Height - 10000
+''        Image1.top = Me.Height - 8300
+''        Frame1.top = Me.Height - 2500
+''        Image2(0).top = Me.Height - 3400
+'        Image1.top = Me.Height - 9000
+'        cmdLogout.top = Me.Height - 1500
+'        Copyright.Left = Me.Width - 2300
+'        Copyright.top = Me.Height - 2700
+'    Else
+'        Label1(0).Left = Me.Width - 5800
+'        Label1(1).Left = Me.Width - 4200
+'        Image1.Left = Me.Width - 5800
+''        Image2(0).Left = Me.Width - 6900
+''        Image2(1).Left = Me.Width - 6800
+''        Image4.Left = Me.Width - 1300
+'        Frame1.Left = Me.Width - 6600
+'        cmdLogout.Left = Me.Width - 1400
+'        Label1(0).top = Me.Height - 8700
+'        Label1(1).top = Me.Height - 8200
+'        Image1.top = Me.Height - 7100
+'        Frame1.top = Me.Height - 2000
+''        Image2(0).top = Me.Height - 2900
+''        Image2(1).top = Me.Height - 7600
+'        cmdLogout.top = Me.Height - 1300
+'        Copyright.Left = Me.Width - 820
+'        Copyright.top = Me.Height - 2180
+'    End If
+'End Sub
 
 Private Sub Tree_Click()
     bolshow = True
