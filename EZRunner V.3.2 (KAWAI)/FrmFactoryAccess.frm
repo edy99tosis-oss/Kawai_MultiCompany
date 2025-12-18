@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Begin VB.Form FrmFactoryAccess 
    BackColor       =   &H00FDDFE3&
    Caption         =   "Factory Access"
@@ -163,7 +163,7 @@ Begin VB.Form FrmFactoryAccess
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "PT KAWAI INDONESIA PLANT-3 BASELAND"
+         Caption         =   "PT KAWAI INDONESIA PLANT-3 NEW"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -178,7 +178,7 @@ Begin VB.Form FrmFactoryAccess
          Left            =   840
          TabIndex        =   6
          Top             =   720
-         Width           =   3705
+         Width           =   3165
       End
    End
    Begin VB.Label Label15 
@@ -222,14 +222,17 @@ Private Sub CmdSubmit_Click()
     Dim sql As String
     Dim selectedFactory As String
     Dim userID As String
+    Dim FrmMainMenuCaption As String
 
     userID = Trim(frmLogin.txtUser.Text)
 
     ' === Tentukan Factory_Code berdasarkan pilihan ===
     If OBFactory1.Value = True Then
         selectedFactory = "00000"
+        FrmMainMenuCaption = "PT KAWAI INDONESIA PLANT-3"
     ElseIf OBFactory2.Value = True Then
         selectedFactory = "11111"
+        FrmMainMenuCaption = "PT KAWAI INDONESIA PLANT-3 NEW"
     Else
         MsgBox "Silakan pilih salah satu company terlebih dahulu.", vbExclamation, "Peringatan"
         Exit Sub
@@ -253,6 +256,7 @@ Private Sub CmdSubmit_Click()
 
     ' === Lanjut ke Main Menu ===
     pCompanyCode = selectedFactory
+    frmMainMenu.Caption = "EZ Runner ver.3 - Main Menu | " & FrmMainMenuCaption
     frmMainMenu.loadtree
     frmMainMenu.Show
     DoEvents
