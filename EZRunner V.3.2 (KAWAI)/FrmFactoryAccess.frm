@@ -214,13 +214,13 @@ Private selectedFactory As String
 
 Private Sub cmdCancel_Click()
     frmLogin.Show
+    Unload Me
 End Sub
 
 Private Sub CmdSubmit_Click()
      On Error GoTo ErrHandler
 
     Dim sql As String
-    Dim selectedFactory As String
     Dim userID As String
     Dim FrmMainMenuCaption As String
 
@@ -228,13 +228,13 @@ Private Sub CmdSubmit_Click()
 
     ' === Tentukan Factory_Code berdasarkan pilihan ===
     If OBFactory1.Value = True Then
-        selectedFactory = "00000"
-        FrmMainMenuCaption = "PT KAWAI INDONESIA PLANT-3"
+        selectedFactory = OBFactory1.Tag
+        FrmMainMenuCaption = Label1(0).Caption
     ElseIf OBFactory2.Value = True Then
-        selectedFactory = "11111"
-        FrmMainMenuCaption = "PT KAWAI INDONESIA PLANT-3 NEW"
+        selectedFactory = OBFactory2.Tag
+        FrmMainMenuCaption = Label1(1).Caption
     Else
-        MsgBox "Silakan pilih salah satu company terlebih dahulu.", vbExclamation, "Peringatan"
+        MsgBox "Silakan pilih salah satu company.", vbExclamation, "Peringatan"
         Exit Sub
     End If
 
@@ -260,7 +260,7 @@ Private Sub CmdSubmit_Click()
     frmMainMenu.loadtree
     frmMainMenu.Show
     DoEvents
-    Me.Hide
+    Unload Me
 
     Exit Sub
 
@@ -277,14 +277,41 @@ Private Sub tmrNext_Timer()
     frmMainMenu.loadtree
     frmMainMenu.Show
     DoEvents
-    Me.Hide
+    Unload Me
 End Sub
 
 Private Sub Form_Load()
- If gb_Simulation = True Then Call up_InitSimulation(Me)
- If gb_Simulation = True Then OBFactory1.BackColor = RGB(204, 255, 204)
- If gb_Simulation = True Then OBFactory2.BackColor = RGB(204, 255, 204)
+    Dim rs As ADODB.Recordset
+    Dim sql As String
  
+    If gb_Simulation = True Then Call up_InitSimulation(Me)
+    If gb_Simulation = True Then OBFactory1.BackColor = RGB(204, 255, 204)
+    If gb_Simulation = True Then OBFactory2.BackColor = RGB(204, 255, 204)
+
+    Set rs = New ADODB.Recordset
+    sql = "SELECT TOP 2 Company_Code, Company_Name FROM Company_Profile ORDER BY Company_Name"
+    rs.Open sql, Db, adOpenStatic, adLockReadOnly
+
+    ' Isi Factory pertama
+    If Not rs.EOF Then
+        OBFactory1.Tag = rs!Company_Code
+        Label1(0).Caption = rs!Company_Name
+        OBFactory1.Visible = True
+        Label1(0).Visible = True
+    End If
+    
+    rs.MoveNext
+    
+    ' Isi Factory kedua
+    If Not rs.EOF Then
+        OBFactory2.Tag = rs!Company_Code
+        Label1(1).Caption = rs!Company_Name
+        OBFactory2.Visible = True
+        Label1(1).Visible = True
+    End If
+
+    rs.Close
+    Set rs = Nothing
  
    Dim ctl As Control
    
