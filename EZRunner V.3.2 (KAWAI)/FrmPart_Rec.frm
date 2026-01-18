@@ -305,7 +305,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128188419
+         Format          =   119865347
          CurrentDate     =   37868
       End
       Begin MSComCtl2.DTPicker Tgl2 
@@ -327,7 +327,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128188419
+         Format          =   119865347
          CurrentDate     =   37868
       End
       Begin VB.Label LblPart 
@@ -979,7 +979,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128188419
+      Format          =   119865347
       CurrentDate     =   37868
    End
    Begin VB.CheckBox ChkComplete 
@@ -1020,7 +1020,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128188419
+      Format          =   119865347
       CurrentDate     =   37868
    End
    Begin VB.Label Label17 
@@ -2049,7 +2049,7 @@ Private Sub CboItem_Change()
         Lbladdress = ""
         Set RsI2 = Db.Execute("Select WH_code,unit_cls from Item_master where item_code='" & Trim(cboitem) & "'")
         If Not RsI2.EOF Then
-            cboWhCode = Trim$(RsI2!wh_code)
+            cboWhCode = Trim$(RsI2!WH_Code)
             CboWHCode_Click
             Set RSX = Db.Execute("Select unit_cls UC,Currency_code CC, Coalesce(Price,0) PC from Price_master where item_code='" & Trim$(cboitem) & "'")
             If Not RSX.EOF Then
@@ -2071,39 +2071,39 @@ X:
 End Sub
 
 Private Sub GetSubConWarehouseCode()
-Dim RS As New ADODB.Recordset
+Dim rs As New ADODB.Recordset
 With cmbbox_warehouse
     .clear
     .columnCount = 3
     .ListWidth = "360"
     .ColumnWidths = "60pt;300pt;0pt"
     .Text = ""
-    RS.Open "select wh_code, wh_name, stockcontrol_cls from warehouse_master where adm_group = '" & Trim(CboPart(0)) & "' ", Db, adOpenForwardOnly, adLockReadOnly, adCmdText
-    If Not RS.EOF Then
-        While Not RS.EOF
+    rs.Open "select wh_code, wh_name, stockcontrol_cls from warehouse_master where adm_group = '" & Trim(CboPart(0)) & "' ", Db, adOpenForwardOnly, adLockReadOnly, adCmdText
+    If Not rs.EOF Then
+        While Not rs.EOF
             .AddItem ""
-            .Column(0, .ListCount - 1) = Trim(RS.Fields("wh_code"))
-            .Column(1, .ListCount - 1) = Trim(RS.Fields("wh_name"))
-            .Column(2, .ListCount - 1) = Trim(RS.Fields("stockcontrol_cls"))
-            RS.MoveNext
+            .Column(0, .ListCount - 1) = Trim(rs.Fields("wh_code"))
+            .Column(1, .ListCount - 1) = Trim(rs.Fields("wh_name"))
+            .Column(2, .ListCount - 1) = Trim(rs.Fields("stockcontrol_cls"))
+            rs.MoveNext
         Wend
         .ListIndex = 0
     End If
-    RS.Close
+    rs.Close
 End With
 End Sub
 
 Private Function uf_GetSubConStatus(ls_TradeCode As String) As String
-Dim RS As New ADODB.Recordset
-If RS.State = 1 Then RS.Close
-RS.CursorLocation = adUseClient
-RS.Open "select trade_cls from trade_master where trade_code='" & Trim(ls_TradeCode) & "'", Db, adOpenKeyset, adLockOptimistic
-If RS.EOF = False Then
-    uf_GetSubConStatus = Trim(RS!trade_cls & "")
+Dim rs As New ADODB.Recordset
+If rs.State = 1 Then rs.Close
+rs.CursorLocation = adUseClient
+rs.Open "select trade_cls from trade_master where trade_code='" & Trim(ls_TradeCode) & "'", Db, adOpenKeyset, adLockOptimistic
+If rs.EOF = False Then
+    uf_GetSubConStatus = Trim(rs!trade_cls & "")
 Else
     uf_GetSubConStatus = ""
 End If
-If RS.State = 1 Then RS.Close
+If rs.State = 1 Then rs.Close
 End Function
 
 Private Sub cboPackage_Change()
@@ -2479,7 +2479,7 @@ Private Sub CmdSubmit_Click()
     blnFix = Split(tampungBln, ",")(0)
     thnFix = Split(tampungBln, ",")(1)
     
-    Db.BeginTrans
+'    Db.BeginTrans
     For icg = 1 To grid.Rows - 1
         If Trim$(grid.Cell(flexcpChecked, icg, bteColProdCod)) <> "" Or Trim$(grid.Cell(flexcpChecked, icg, bteColPartNo)) <> "" Then
          If grid.Cell(flexcpChecked, icg, bteColComplete) <> Val(grid.TextMatrix(icg, bteColComplteCls)) Then
@@ -2496,9 +2496,9 @@ Private Sub CmdSubmit_Click()
     Next
     
     If err.number = 0 Then
-        Db.CommitTrans
+'        Db.CommitTrans
     Else
-        Db.RollbackTrans
+'        Db.RollbackTrans
         err.clear
     End If
     
@@ -2638,7 +2638,7 @@ Private Sub CmdSubmit_Click()
                 Trim$(TxtSj) & "','0',null,'" & Trim$(txtremarks) & "', getdate(), '" & userLogin & "', '" & Trim(txtBCNo) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "', '" & Trim(CbotypeBC.Text) & "',  '" & Trim(cboTransport) & "', " & CDbl(txtPackage) & ", '" & Trim(cboPackage) & "' , '" & Trim(txtRec_Status.Text) & "', '" & Trim(txtRegisterNo.Text) & "', '" & Trim(txtNoSeri.Text) & "')"
 
             Dim rsc As Recordset
-            Db.BeginTrans
+'            Db.BeginTrans
             
             'On Error GoTo Errhandle
             Db.Execute SqlU
@@ -2685,11 +2685,11 @@ Errhandle:
                     ProsesStock 1, Trim$(cboitem), Trim$(cboWhCode), Trim$(cboWhCode), Format(TglReceipt, "YYYYMM"), Trim$(txtQty), ""
                 End If
                 
-                Db.CommitTrans
+'                Db.CommitTrans
             
             Else
                 
-                Db.RollbackTrans
+'                Db.RollbackTrans
                 LblErr = err.Description
                 err.clear
                 Me.MousePointer = vbDefault
@@ -2697,7 +2697,7 @@ Errhandle:
             
             End If
                 
-            Db.BeginTrans
+'            Db.BeginTrans
 '            If CDbl(txtqty) + QTYRec >= OrderQty Then
 '                Db.Execute "Update Purchaseorder_detail with (updlock) set Complete_cls='1', Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
 '                    "where PO_no='" & Trim$(CboPart(1)) & "' and item_code='" & Trim$(CboItem) & "'"
@@ -2712,10 +2712,10 @@ Errhandle:
 
             If err.number = 0 Then
                 LblErr = DisplayMsg(1000)
-                Db.CommitTrans
+'                Db.CommitTrans
             Else
                 LblErr = err.Description
-                Db.RollbackTrans
+'                Db.RollbackTrans
                 err.clear
             End If
             
@@ -3172,7 +3172,7 @@ While Not RsD.EOF
         .Cell(flexcpAlignment, ig, bteColRecStatus) = flexAlignLeftCenter
         
         If Trim(RsD!WHTo & "") = "" Then
-            .TextMatrix(ig, bteColRecWHCode) = RsD!wh_code
+            .TextMatrix(ig, bteColRecWHCode) = RsD!WH_Code
         Else
             .TextMatrix(ig, bteColRecWHCode) = RsD!WHTo
         End If
@@ -4782,12 +4782,12 @@ Dim RsCekItem As New ADODB.Recordset
 End Function
 
 Private Sub GetBCType()
-Dim RS As New ADODB.Recordset
-    RS.Open "select Type_BC from Trade_Master where Trade_Code = '" & CboPart(0).Text & "' ", Db, adOpenForwardOnly, adLockReadOnly, adCmdText
-    If RS.EOF = False Then
-        CbotypeBC.Text = IIf(IsNull(Trim(RS!Type_BC)), "", Trim(RS!Type_BC))
+Dim rs As New ADODB.Recordset
+    rs.Open "select Type_BC from Trade_Master where Trade_Code = '" & CboPart(0).Text & "' ", Db, adOpenForwardOnly, adLockReadOnly, adCmdText
+    If rs.EOF = False Then
+        CbotypeBC.Text = IIf(IsNull(Trim(rs!Type_BC)), "", Trim(rs!Type_BC))
     End If
-    RS.Close
+    rs.Close
 End Sub
 
 Public Function up_ValidateSuratJalan() As Boolean

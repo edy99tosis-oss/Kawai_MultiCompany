@@ -5,11 +5,11 @@ Begin VB.Form FrmRpt3
    ClientHeight    =   3150
    ClientLeft      =   60
    ClientTop       =   390
-   ClientWidth     =   4680
+   ClientWidth     =   4875
    Icon            =   "FrmRpt3.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   3150
-   ScaleWidth      =   4680
+   ScaleWidth      =   4875
    StartUpPosition =   3  'Windows Default
    Begin CRVIEWER9LibCtl.CRViewer9 CRViewer1 
       Height          =   3135

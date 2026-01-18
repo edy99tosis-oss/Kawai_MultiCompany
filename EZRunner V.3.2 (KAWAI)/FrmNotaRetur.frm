@@ -143,7 +143,7 @@ Begin VB.Form FrmNotaRetur
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   334036995
+         Format          =   128647171
          CurrentDate     =   38991
       End
       Begin MSComCtl2.DTPicker dtTo 
@@ -156,7 +156,7 @@ Begin VB.Form FrmNotaRetur
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   334036995
+         Format          =   128647171
          CurrentDate     =   38991
       End
       Begin VB.Label lblCaption 
@@ -574,8 +574,8 @@ Begin VB.Form FrmNotaRetur
       TabStop         =   0   'False
       Top             =   270
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
       Height          =   4530
@@ -684,7 +684,7 @@ Begin VB.Form FrmNotaRetur
       _ExtentY        =   556
       _Version        =   393216
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   334036995
+      Format          =   128647171
       CurrentDate     =   38991
    End
    Begin MSForms.ComboBox cb1 
@@ -880,7 +880,7 @@ Private Sub cb1_Change()
         cbNota.Enabled = False
         Call addNo
         Call Header
-        dtDate.Value = Format(Now, "dd MMM yyyy"): txtRemarks = ""
+        dtDate.Value = Format(Now, "dd MMM yyyy"): txtremarks = ""
         nomeR = Trim$(txtNota.Text)
     Else
         cmdAtas.Caption = "Update"
@@ -898,11 +898,11 @@ Private Sub cb1_Click()
 End Sub
 
 Private Sub cbCust_Change()
-    If cbCust.MatchFound Then
-        lblcust = cbCust.Column(1)
+    If cbCust.matchFound Then
+        lblCust = cbCust.Column(1)
         If cbType.ListIndex <> -1 Then addCbPajak: Call Header: KosongBawah: cbNota.clear: txtNota = "": cbProd.clear
     Else
-        lblcust = ""
+        lblCust = ""
         cbPajak.clear
     End If
     LblErr = ""
@@ -914,7 +914,7 @@ End Sub
 
 Private Sub cbNota_Change()
 Dim rstgl As New ADODB.Recordset
-    If cbNota.MatchFound Then
+    If cbNota.matchFound Then
         txtNota = cbNota.Column(0)
         Call Header
         sql = "select * from notaretur_master where notaretur_no='" & txtNota.Text & "' "
@@ -922,7 +922,7 @@ Dim rstgl As New ADODB.Recordset
     
         If Not (rstgl.BOF And rstgl.EOF) Then
             dtDate.Value = Format(rstgl!notaretur_Date, "dd MMM yyyy")
-            txtRemarks = Trim$(rstgl!Remarks)
+            txtremarks = Trim$(rstgl!Remarks)
 '            p = IIf(IsNull(rs("notaretur_date")), " ", Left(Trim(rs("notaretur_date")), 4) & "-" & Right(Trim(rs("notaretur_date")), 2) & "-01")
 '            Period.Value = Format(p, "MMM yyyy")
 '            temptgl = Period.month
@@ -942,7 +942,7 @@ End Sub
 
 Private Sub cbPajak_Change()
     If cbPajak.ListCount < 1 Then Exit Sub
-    If cbPajak.MatchFound Then
+    If cbPajak.matchFound Then
         addCbProd
         If grid.Rows > 1 Then
             If cbType.ListIndex = 0 Then
@@ -973,7 +973,7 @@ Private Sub cbPajak_Click()
 End Sub
 
 Private Sub cbProd_Change()
-    If cbProd.MatchFound Then
+    If cbProd.matchFound Then
         lblProd = cbProd.Column(1)
         If cbProd.ListIndex = 0 Then sqlprod = "" Else sqlprod = " and sjr.item_code = '" & Trim$(cbProd.List(cbProd.ListIndex, 0)) & "' ": nomeR = Trim$(txtNota.Text): Call addCbNota: cbNota.Text = nomeR
     Else
@@ -1042,7 +1042,7 @@ Private Sub Form_Load()
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
     Call addCbCust
-    DtFrom = Format(Now, "1 MMM yyyy")
+    DTFrom = Format(Now, "1 MMM yyyy")
     dtyo = Format(Now, "dd MMM yyyy")
 End Sub
 
@@ -1051,7 +1051,7 @@ Private Sub addCbCust()
     Dim intCount As Integer
     
     Me.MousePointer = vbHourglass
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     With cbCust
         .clear
@@ -1077,7 +1077,7 @@ ErrExit:
     Set adoRs = Nothing
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
+ErrHandler:
     LblErr.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -1089,20 +1089,20 @@ End Sub
 
 Private Sub Kosong()
     sqlprod = ""
-    DtFrom = Format(Now, "1 MMM yyyy")
-    dtTo = Format(Now, "dd MMM yyyy")
+    DTFrom = Format(Now, "1 MMM yyyy")
+    DTTo = Format(Now, "dd MMM yyyy")
     cbPajak.clear
     cbProd.clear
     lblProd = ""
     cbCust.ListIndex = -1
     cbType.ListIndex = -1
-    lblcust = ""
+    lblCust = ""
     LblErr = ""
     cb1.ListIndex = 1
     cbNota.clear
     txtNota = ""
     dtDate = Format(Now, "dd MMM yyyy")
-    txtRemarks = ""
+    txtremarks = ""
     cmdAtas.Caption = "Update"
     Call KosongBawah
 End Sub
@@ -1127,8 +1127,8 @@ cbPajak.ListRows = 15
 rspajak.Open " select distinct fpm.fakturpajak_no, fpd.currency_code from fakturpajak_Master fpm " + _
             " inner join fakturpajak_Detail fpd on fpm.fakturpajak_no =fpd.fakturpajak_no " + _
             " where fpm.cust_Code = '" & Trim$(cbCust.List(cbCust.ListIndex, 0)) & "' " + _
-            " and fpm.fakturpajak_Date<= '" & Format(dtTo.Value, "yyyy-mm-dd") & "' " + _
-            " and fpm.fakturpajak_Date >='" & Format(DtFrom.Value, "yyyy-mm-dd") & "' ", Db, adOpenForwardOnly, adLockReadOnly
+            " and fpm.fakturpajak_Date<= '" & Format(DTTo.Value, "yyyy-mm-dd") & "' " + _
+            " and fpm.fakturpajak_Date >='" & Format(DTFrom.Value, "yyyy-mm-dd") & "' ", Db, adOpenForwardOnly, adLockReadOnly
 
 If Not (rspajak.EOF Or rspajak.BOF) Then
     Q = 0
@@ -1219,8 +1219,8 @@ End If
 RSA.Open " select distinct nrm.NotaRetur_No from notaretur_master nrm " + _
         " left join notaretur_detail nrd on nrd.notaretur_no = nrm.notaretur_no " + _
         " where nrm.cust_Code = '" & Trim$(cbCust.List(cbCust.ListIndex, 0)) & "' " + _
-        "     and nrm.notaretur_Date <= '" & Format(dtTo.Value, "yyyy-mm-dd") & "' " + _
-        "     and nrm.notaretur_Date >= '" & Format(DtFrom.Value, "yyyy-mm-dd") & "' " + sqlNota, Db, 1, 3  '+ _ 'sqlProd, Db, 1, 3
+        "     and nrm.notaretur_Date <= '" & Format(DTTo.Value, "yyyy-mm-dd") & "' " + _
+        "     and nrm.notaretur_Date >= '" & Format(DTFrom.Value, "yyyy-mm-dd") & "' " + sqlNota, Db, 1, 3  '+ _ 'sqlProd, Db, 1, 3
         
     If Not (RSA.EOF Or RSA.BOF) Then
         While Not RSA.EOF
@@ -1249,22 +1249,22 @@ Dim rsno As New ADODB.Recordset, rsS As New Recordset
 End Sub
 
 Private Function cekAtas() As Boolean
-    If cbCust.ListIndex < 0 Or cbCust.MatchFound = False Then
+    If cbCust.ListIndex < 0 Or cbCust.matchFound = False Then
         LblErr = DisplayMsg("1045")
         cbCust.SetFocus
         GoTo salaH
     End If
-    If cbType.ListIndex < 0 Or cbType.MatchFound = False Then
+    If cbType.ListIndex < 0 Or cbType.matchFound = False Then
         LblErr = DisplayMsg("5464")
         cbType.SetFocus
         GoTo salaH
     End If
-    If cbPajak.ListIndex < 0 Or cbPajak.MatchFound = False Then
+    If cbPajak.ListIndex < 0 Or cbPajak.matchFound = False Then
         LblErr = DisplayMsg("5413")
         cbPajak.SetFocus
         GoTo salaH
     End If
-    If cbProd.ListIndex < 0 Or cbProd.MatchFound = False Then
+    If cbProd.ListIndex < 0 Or cbProd.matchFound = False Then
         LblErr = DisplayMsg("1024")
         cbProd.SetFocus
         GoTo salaH
@@ -1458,8 +1458,8 @@ If cbType.ListIndex = 0 Then
     sqlCari = sqlCari & "           SJR.DO_NO,SJR.reference,SJR.ReturnSeq_no from fakturPajak_Detail fpd " + _
             "           left join item_Master im  on fpd.item_Code = im.item_Code " + _
             "           left join Delivery_return sjr on fpd.item_Code = sjr.item_Code" + _
-            "           where sjr.return_date<= '" & Format(dtTo.Value, "yyyy-mm-dd") & "' " & vbCrLf
-    sqlCari = sqlCari & "               and sjr.return_Date>= '" & Format(DtFrom.Value, "yyyy-mm-dd") & "' " + _
+            "           where sjr.return_date<= '" & Format(DTTo.Value, "yyyy-mm-dd") & "' " & vbCrLf
+    sqlCari = sqlCari & "               and sjr.return_Date>= '" & Format(DTFrom.Value, "yyyy-mm-dd") & "' " + _
             "               and sjr.return_Cls = 'D2' and  ReturnSeq_NO NOT IN (SELECT ReturnSeq_No From notaretur_Detail) " + _
             "               and sjr.Cust_Code = '" & Trim$(cbCust.List(cbCust.ListIndex, 0)) & "' " + _
             "               and fpd.fakturpajak_No = '" & Trim(cbPajak.List(cbPajak.ListIndex, 0)) & "' "
@@ -1488,8 +1488,8 @@ Else
             "           from fakturPajak_Detail fpd " & _
             "           left join fakturpajak_Master fpm on fpd.fakturpajak_No =  fpm.fakturpajak_no " & _
             "           left join item_Master im  on fpd.item_Code = im.item_Code   " & _
-            "           where fpm.fakturpajak_date <= '" & Format(dtTo.Value, "yyyy-mm-dd") & "'       " & _
-            "               and fpm.fakturpajak_date >= '" & Format(DtFrom.Value, "yyyy-mm-dd") & "'       " & _
+            "           where fpm.fakturpajak_date <= '" & Format(DTTo.Value, "yyyy-mm-dd") & "'       " & _
+            "               and fpm.fakturpajak_date >= '" & Format(DTFrom.Value, "yyyy-mm-dd") & "'       " & _
             "               and fpm.Cust_Code = '" & Trim$(cbCust.List(cbCust.ListIndex, 0)) & "'       " & _
             "               and fpm.fakturpajak_No = '" & Trim(cbPajak.List(cbPajak.ListIndex, 0)) & "'  "
     
@@ -1659,35 +1659,35 @@ End If
 End Sub
 
 Private Sub savemaster(bool As Boolean)
-Dim RS As New ADODB.Recordset
+Dim rs As New ADODB.Recordset
     If bool Then
-        RS.Open " select * from notaretur_Master ", Db, 1, 3
-        RS.AddNew
-        RS!notaretur_no = Trim$(nomeR)
-        RS!notaretur_type = Trim$(cbType.ListIndex)
-        RS!Cust_CodE = Trim$(cbCust.List(cbCust.ListIndex, 0))
-        RS!user_Entry = userLogin
-        RS!date_entry = Now
+        rs.Open " select * from notaretur_Master ", Db, 1, 3
+        rs.AddNew
+        rs!notaretur_no = Trim$(nomeR)
+        rs!notaretur_type = Trim$(cbType.ListIndex)
+        rs!Cust_CodE = Trim$(cbCust.List(cbCust.ListIndex, 0))
+        rs!user_Entry = userLogin
+        rs!date_entry = Now
     Else
-        RS.Open " select * from notaretur_Master where notaretur_No = '" & Trim$(txtNota.Text) & "' ", Db, 1, 3
-        If RS.EOF Or RS.BOF Then RS.Close: LblErr = "No Data with this Nota Retur No !": Exit Sub
-        RS!user_update = userLogin
-        RS!date_update = Now
+        rs.Open " select * from notaretur_Master where notaretur_No = '" & Trim$(txtNota.Text) & "' ", Db, 1, 3
+        If rs.EOF Or rs.BOF Then rs.Close: LblErr = "No Data with this Nota Retur No !": Exit Sub
+        rs!user_update = userLogin
+        rs!date_update = Now
     End If
-        RS!notaretur_Date = Format(dtDate.Value, "yyyy-mm-dd")
-        RS!Remarks = Trim$(txtRemarks.Text)
-        RS!total_Qty = CDbl(0) 'hitungTotal
-        If Trim$(txtBwhAmo.Text) = "" Then RS!Amount = CDbl(0) Else RS!Amount = CDbl(txtBwhAmo.Text)
-        If Trim$(txtBwhPPn.Text) = "" Then RS!ppn = CDbl(0) Else RS!ppn = CDbl(txtBwhPPn.Text)
-        If Trim$(txtBwhTotal.Text) = "" Then RS!total_amount = CDbl(0) Else RS!total_amount = CDbl(txtBwhTotal.Text)
-        If Trim$(txtBwhAmoIdr.Text) = "" Then RS!amount_IDR = CDbl(0) Else RS!amount_IDR = CDbl(txtBwhAmoIdr.Text)
-        If Trim$(txtBwhPPnIdr.Text) = "" Then RS!ppn_IDR = CDbl(0) Else RS!ppn_IDR = CDbl(txtBwhPPnIdr.Text)
+        rs!notaretur_Date = Format(dtDate.Value, "yyyy-mm-dd")
+        rs!Remarks = Trim$(txtremarks.Text)
+        rs!total_Qty = CDbl(0) 'hitungTotal
+        If Trim$(txtBwhAmo.Text) = "" Then rs!Amount = CDbl(0) Else rs!Amount = CDbl(txtBwhAmo.Text)
+        If Trim$(txtBwhPPn.Text) = "" Then rs!ppn = CDbl(0) Else rs!ppn = CDbl(txtBwhPPn.Text)
+        If Trim$(txtBwhTotal.Text) = "" Then rs!total_amount = CDbl(0) Else rs!total_amount = CDbl(txtBwhTotal.Text)
+        If Trim$(txtBwhAmoIdr.Text) = "" Then rs!amount_IDR = CDbl(0) Else rs!amount_IDR = CDbl(txtBwhAmoIdr.Text)
+        If Trim$(txtBwhPPnIdr.Text) = "" Then rs!ppn_IDR = CDbl(0) Else rs!ppn_IDR = CDbl(txtBwhPPnIdr.Text)
 '        rs!ppn = CDbl(0) 'IIf(Trim$(txtBwhPPn.Text) = "", 0, CDbl(txtBwhPPn.Text))
 '        rs!total_amount = CDbl(0) 'IIf(Trim$(txtBwhTotal.Text) = "", 0, CDbl(txtBwhTotal.Text))
 '        rs!amount_IDR = CDbl(0) 'IIf(Trim$(txtBwhAmoIdr.Text) = "", 0, CDbl(txtBwhAmoIdr.Text))
 '        rs!ppn_IDR = CDbl(0) 'IIf(Trim$(txtBwhPPnIdr.Text) = "", 0, CDbl(txtBwhPPnIdr.Text))
-    RS.update
-    RS.Close
+    rs.update
+    rs.Close
 End Sub
 
 Private Sub CmdSubmit_Click()
@@ -1872,7 +1872,7 @@ Dim rsCP As New ADODB.Recordset, rsSp As New ADODB.Recordset, rsPom As New ADODB
                 " npwp_Address=rtrim(tm.NPWP_address), npwp_City=rtrim(tm.NPWP_city), isnull(tm.postal_code,'') zip,  " & _
                 " npwp_No=rtrim(tm.NPWP_No), country_Cls, item_Code=rtrim(nrd.item_Code), item_Name=rtrim(im.item_Name), makeritem_Code=rtrim(im.makeritem_Code), " & _
                 " nrd.Qty, nrd.currency_Code, nrd.price, nrd.adj_Price, nrd.amount, nrm.notaretur_Date, " & _
-                " (select tax_Position from company_Profile) as Tax_Position, " + _
+                " (select tax_Position from company_Profile ) as Tax_Position, " + _
                 " (select tax_Person from company_Profile) as Tax_Person " + _
                 " from notaretur_Detail nrd  " & _
                 " left join item_Master im on nrd.item_Code = im.item_Code " & _

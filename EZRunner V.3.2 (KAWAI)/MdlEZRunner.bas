@@ -135,22 +135,22 @@ Public Const strAll As String = "ALL"
 
 Public Function DisplayMsg(n As String)
     Dim StrErr
-    Dim RS As New ADODB.Recordset
+    Dim rs As New ADODB.Recordset
     Dim sql
 
     sql = "select * from message where MsgId=" & n
-    Set RS = Db.Execute(sql)
-    If Not (RS.EOF And RS.BOF) Then
-        StrErr = "[" & CStr(Trim(RS("MsgId"))) & "]  " & Trim(RS("MsgDesc"))
+    Set rs = Db.Execute(sql)
+    If Not (rs.EOF And rs.BOF) Then
+        StrErr = "[" & CStr(Trim(rs("MsgId"))) & "]  " & Trim(rs("MsgDesc"))
         DisplayMsg = StrErr
-        Set RS = Nothing
+        Set rs = Nothing
         ErrSt = True
     End If
 End Function
 
 Public Function hakAkses(mn As String, Optional desc As String) As Integer
     Dim sql As String
-    Dim RS As New ADODB.Recordset
+    Dim rs As New ADODB.Recordset
     
     sql = "select status from user_Privilege where App_ID = 'P01' " & _
         "and Menu_ID = (select Menu_ID from User_Menu where Menu_Name ='" & mn & "'"
@@ -161,15 +161,15 @@ Public Function hakAkses(mn As String, Optional desc As String) As Integer
     
     sql = sql & ") and userName ='" & userLogin & "'"
     
-    Set RS = Db.Execute(sql)
-    If Not (RS.EOF And RS.BOF) Then
-        hakAkses = RS("status")
+    Set rs = Db.Execute(sql)
+    If Not (rs.EOF And rs.BOF) Then
+        hakAkses = rs("status")
     End If
 End Function
 
 Public Function hakUpdate(mn As String, Optional desc As String) As Integer
     Dim sql As String
-    Dim RS As New ADODB.Recordset
+    Dim rs As New ADODB.Recordset
     
     sql = "select Allow_Update from user_Privilege where App_ID = 'P01' " & _
         "and Menu_ID = (select Menu_ID from User_Menu where Menu_Name ='" & mn & "'"
@@ -180,15 +180,15 @@ Public Function hakUpdate(mn As String, Optional desc As String) As Integer
     
     sql = sql & ") and userName ='" & userLogin & "'"
     
-    Set RS = Db.Execute(sql)
-    If Not (RS.EOF And RS.BOF) Then
-        hakUpdate = RS("Allow_Update")
+    Set rs = Db.Execute(sql)
+    If Not (rs.EOF And rs.BOF) Then
+        hakUpdate = rs("Allow_Update")
     End If
 End Function
 
 Public Function hakPrice(mn As String, Optional desc As String) As Integer
     Dim sql As String
-    Dim RS As New ADODB.Recordset
+    Dim rs As New ADODB.Recordset
     
     sql = "select ISNULL(Allow_Price,0) Allow_Price from user_Privilege where App_ID = 'P01' " & _
         "and Menu_ID = (select Menu_ID from User_Menu where Menu_Name ='" & mn & "'"
@@ -199,9 +199,9 @@ Public Function hakPrice(mn As String, Optional desc As String) As Integer
     
     sql = sql & ") and userName ='" & userLogin & "'"
     
-    Set RS = Db.Execute(sql)
-    If Not (RS.EOF And RS.BOF) Then
-        hakPrice = RS("Allow_Price")
+    Set rs = Db.Execute(sql)
+    If Not (rs.EOF And rs.BOF) Then
+        hakPrice = rs("Allow_Price")
     End If
 End Function
 
@@ -218,7 +218,7 @@ Public Function frmcode(frmName$, Optional Ket As String)
 End Function
 
 Public Function panggilForm(nmMenu As String, Optional nmForm As String) As Integer
-Dim RS As New Recordset
+Dim rs As New Recordset
 
     
     sql = " Select A.* From  " & vbCrLf & _
@@ -226,17 +226,17 @@ Dim RS As New Recordset
                 " select Menu_Name,Menu_Desc from user_menu where menu_ID='" & nmMenu & "'  " & vbCrLf & _
                 " )a Inner join User_Privilege b on B.Menu_ID='" & nmMenu & "' and b.UserName='" & userLogin & "' " & vbCrLf & _
                 "  "
-    Set RS = Db.Execute(sql)
+    Set rs = Db.Execute(sql)
     
-    If RS.EOF And RS.BOF Then
+    If rs.EOF And rs.BOF Then
         panggilForm = 1 'msg Error "Menu ID not Found"
         Exit Function
     Else
-        If (LCase(Trim(RS(0))) = LCase(Trim(nmForm))) Then panggilForm = 2: Exit Function
+        If (LCase(Trim(rs(0))) = LCase(Trim(nmForm))) Then panggilForm = 2: Exit Function
         If Trim(nmForm) <> "" Then Call hideThisForm(nmForm)
         If frmMainMenu.Tree.Nodes.Count < 1 Then frmMainMenu.loadtree
         If frmLogin.Visible = True Then frmLogin.Hide
-        LoadDynamicForm (Trim$(RS("menu_Name") & ""))
+        LoadDynamicForm (Trim$(rs("menu_Name") & ""))
     End If
 End Function
 
@@ -261,7 +261,7 @@ Public Sub filterCboUnit(UnitCls As String, nmCombo, Optional textKol As Integer
     
 End Sub
 
-Function InvReport() As String
+Function InvReport(vFactory As String) As String
 Dim application As New CRAXDDRT.application
 Dim report As New CRAXDDRT.report
 Dim rs1 As Recordset, rs2 As Recordset, xdo As String
@@ -318,7 +318,7 @@ sql = sql & _
       vbLf & "on dm.cust_code = tm.trade_code " & _
       vbLf & "inner join Item_Master im " & _
       vbLf & "on im.item_code = ivd.item_code, " & _
-      vbLf & "company_profile cp " & _
+      vbLf & "(Select * from Company_Profile WHERE Company_Code = '" & vFactory & "') cp " & _
       vbLf & "Where ivd.invoice_no in (" & inv_no & " ) " & _
       vbLf & "Group By tm.trade_code,tm.trade_name ,tm.address1 ,tm.address2,tm.city, tm.postal_code, " & _
       vbLf & "ivd.invoice_no,ivm.invoice_date,ivm.delivery_date,ivd.price, ivd.item_code, ivd.makeritem_code,im.item_name, " & _
@@ -1032,12 +1032,12 @@ SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls
 End Sub
 
 Public Function GetLastMonthStock() As String 'YYYYMM
-Dim sql As String, RS As New Recordset
+Dim sql As String, rs As New Recordset
 
 sql = "Select * from Inventory_Control Order By Inventory_Year desc,Inventory_Month desc"
-RS.Open sql, Db
-If Not RS.EOF Then
-    GetLastMonthStock = Format(RS!Inventory_Year, "0000") & Format(RS!Inventory_Month, "00")
+rs.Open sql, Db
+If Not rs.EOF Then
+    GetLastMonthStock = Format(rs!Inventory_Year, "0000") & Format(rs!Inventory_Month, "00")
 Else
     GetLastMonthStock = ""
 End If
@@ -1334,12 +1334,12 @@ End Function
 
 Public Sub FillCompanyCombo(cbo As Object)
     Dim sql As String
-    Dim RS As ADODB.Recordset
+    Dim rs As ADODB.Recordset
     Dim i As Integer
 
     ' admin
     sql = "EXEC dbo.SP_UserSetup_Get_CompanyCode @UserID = '" & userLogin & "', @Type = '1' "
-    Set RS = Db.Execute(sql)
+    Set rs = Db.Execute(sql)
 
     With cbo
         .clear
@@ -1349,19 +1349,19 @@ Public Sub FillCompanyCombo(cbo As Object)
         .ListRows = 15
         
         i = 0
-        Do While Not RS.EOF
+        Do While Not rs.EOF
             .AddItem
-            .List(i, 0) = Trim(RS("Company_Code"))
-            .List(i, 1) = IIf(IsNull(RS("Company_Name")), "", Trim(RS("Company_Name")))
-            RS.MoveNext
+            .List(i, 0) = Trim(rs("Company_Code"))
+            .List(i, 1) = IIf(IsNull(rs("Company_Name")), "", Trim(rs("Company_Name")))
+            rs.MoveNext
             i = i + 1
         Loop
         
         .ListIndex = 0
     End With
 
-    RS.Close
-    Set RS = Nothing
+    rs.Close
+    Set rs = Nothing
 End Sub
 
 Public Sub Delay(ByVal seconds As Single)
@@ -1371,3 +1371,25 @@ Public Sub Delay(ByVal seconds As Single)
         DoEvents
     Loop
 End Sub
+
+Public Function uf_GetCompany() As String
+    Dim sql As String
+    Dim rs As ADODB.Recordset
+
+    sql = "EXEC dbo.SP_UserSetup_Get_CompanyCode " & _
+          "@UserID = '" & userLogin & "', @Type = '5'"
+
+    Set rs = Db.Execute(sql)
+
+    If Not rs.EOF Then
+        uf_GetCompany = Trim(rs("Company_Code"))
+    Else
+        uf_GetCompany = ""
+    End If
+
+    rs.Close
+    Set rs = Nothing
+End Function
+
+
+

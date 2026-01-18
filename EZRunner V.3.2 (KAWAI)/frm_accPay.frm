@@ -82,8 +82,8 @@ Begin VB.Form frm_accPay
       TabStop         =   0   'False
       Top             =   285
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VB.CommandButton Cmd_Save 
       BackColor       =   &H00C0E0FF&
@@ -172,7 +172,7 @@ Begin VB.Form frm_accPay
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   145227779
+      Format          =   127795203
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker Dmonth2 
@@ -194,7 +194,7 @@ Begin VB.Form frm_accPay
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   145227779
+      Format          =   127795203
       CurrentDate     =   37798
    End
    Begin VB.Line Line2 
@@ -352,11 +352,12 @@ Option Explicit
 Dim Amounti As Double
 Dim PPni As Double
 Dim grandI As Double
+Dim vFactoryCode As String
 
 Dim bteHakPrice As Byte
 
 Private Sub CboLocationCD_Change()
-If CboLocationCD.MatchFound Then
+If CboLocationCD.matchFound Then
    LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
    LblErrMsg = ""
 Else
@@ -390,8 +391,8 @@ Private Sub CboLocationCD_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub CboWHCode_Change()
-If cboWhCode.MatchFound Then
-    lblWHName = cboWhCode.Column(1)
+If CboWHCode.matchFound Then
+    lblWHName = CboWHCode.Column(1)
 Else
     lblWHName = ""
 End If
@@ -449,12 +450,12 @@ Select Case Index
                 "left outer join warehouse_master wh on pr.warehouse_code = wh.wh_code " & _
                 "left outer join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls " & _
                 "left outer join unit_cls uc on pr.unit_cls = uc.unit_cls " & _
-                "left outer join curr_cls cc on pr.currency_code = cc.curr_cls, company_profile cp " & _
+                "left outer join curr_cls cc on pr.currency_code = cc.curr_cls, (Select * from Company_Profile WHERE Company_Code = '" & vFactoryCode & "') cp " & _
                 "where (receipt_cls = 'R' or receipt_cls = 'R1') " & sqlcd & "" & _
                 "and receipt_date >= '" & Format(DMonth, "yyyy-MM-dd") & "' " & _
                 "and receipt_date <= '" & Format(Dmonth2, "yyyy-MM-dd") & "' "
                 
-                If cboWhCode <> strAll Then sql = sql & "and pr.warehouse_code = '" & Trim(cboWhCode) & "' "
+                If CboWHCode <> strAll Then sql = sql & "and pr.warehouse_code = '" & Trim(CboWHCode) & "' "
                 sql = sql & "order by pr.receipt_date, pr.item_code"
                                   
               If rsRpt.State <> adStateClosed Then rsRpt.Close
@@ -517,11 +518,12 @@ Private Sub Command1_Click() 'EXCEL
                     " currDesc= (select description from curr_cls b where b.curr_cls= pr.currency_code ), " & _
                 " price,amount,rtrim(company_name) company_name, company_code, rtrim(cp.address1) address1, rtrim(cp.address2) address2, rtrim(cp.phone1) phone1, rtrim(cp.phone2) phone2, rtrim(cp.fax) fax  " & _
                 "from part_receipt pr join item_master im on pr.item_code=im.item_code join Trade_master tm on pr.supplier_code=tm.trade_code " & _
-                " left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,company_profile cp " & _
+                " left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls , (Select * from Company_Profile WHERE Company_Code = '" & vFactoryCode & "') cp " & _
                 " where pr.supplier_code='" & Trim(CboLocationCD) & "' and " & _
                 " receipt_date>='" & Format(DMonth, "yyyy-MM-dd") & "' and " & _
                 " receipt_date<='" & Format(Dmonth2, "yyyy-MM-dd") & "' and (receipt_cls ='R' or receipt_cls ='R1')" & _
                 "order by pr.Receipt_Cls, currency_code "
+                
     If rsCek.State <> adStateClosed Then rsCek.Close
     'rsCek.CursorLocation = adUseClient
     rsCek.Open sql, Db, adOpenDynamic, adLockOptimistic
@@ -532,7 +534,7 @@ Private Sub Command1_Click() 'EXCEL
             
         With xlapp
             
-            sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile "
+            sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From (Select * from Company_Profile where WHERE Company_Code = '" & vFactoryCode & "') "
             If rsCompany.State <> adStateClosed Then rsCompany.Close
             rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
             If rsCompany.EOF Then MousePointer = vbDefault: Exit Sub
@@ -608,7 +610,7 @@ Private Sub Command1_Click() 'EXCEL
                     .Range("b" & Idx) = ": " & Trim(rsCek!CurrDesc)
         
                     Idx = Idx + 1
-                    .Range("a" & Idx).HorizontalAlignment = xlCenter
+                    .Range("a" & Idx).horizontalAlignment = xlCenter
                     .Range("a" & Idx) = "Delivery Date"
                     .Range("b" & Idx) = "Product Code"
                     .Range("c" & Idx) = "Description"
@@ -626,7 +628,7 @@ Private Sub Command1_Click() 'EXCEL
         
                 Idx = Idx
                 'Content
-                .Range("a" & Idx).HorizontalAlignment = xlCenter
+                .Range("a" & Idx).horizontalAlignment = xlCenter
                 .Range("a" & Idx) = Format(rsCek!DeliveryDate, "DD-MMM-YYYY")
                 .Range("b" & Idx) = Trim(rsCek!partNumber)
                 .Range("c" & Idx) = Trim(rsCek!PartName)
@@ -676,7 +678,7 @@ Private Sub Command1_Click() 'EXCEL
             .Range("a2", "j2").Columns.Font.Name = "Arial"
             .Range("a2", "j2").Columns.Font.Size = "10"
             .Range("a2", "j2").Columns.Font.Bold = True
-            .Range("a2", "j2").HorizontalAlignment = xlCenter
+            .Range("a2", "j2").horizontalAlignment = xlCenter
             
             .Range("a1", "j" & Idx + 3).Columns.AutoFit
             .Range("A1").Select
@@ -754,24 +756,27 @@ Dmonth2 = Format(Date, "dd MMM yyyy")
 '##Tampilkan Warehouse code dari warehouse_master
 sql = "Select rtrim(wh_code) as WC,wh_name as WN from warehouse_master order by wh_code"
 RsW.Open sql, Db, adOpenKeyset, adLockOptimistic
-cboWhCode.clear
-cboWhCode.columnCount = 2
-cboWhCode.TextColumn = 1
-cboWhCode.AddItem ""
-cboWhCode.List(0, 0) = strAll
-cboWhCode.List(0, 1) = strAll
+CboWHCode.clear
+CboWHCode.columnCount = 2
+CboWHCode.TextColumn = 1
+CboWHCode.AddItem ""
+CboWHCode.List(0, 0) = strAll
+CboWHCode.List(0, 1) = strAll
 ir = 1
 While Not RsW.EOF
-    cboWhCode.AddItem ""
-    cboWhCode.List(ir, 0) = RsW!wC
-    cboWhCode.List(ir, 1) = Trim$(RsW!wn)
+    CboWHCode.AddItem ""
+    CboWHCode.List(ir, 0) = RsW!wC
+    CboWHCode.List(ir, 1) = Trim$(RsW!wn)
     ir = ir + 1
     RsW.MoveNext
 Wend
-cboWhCode.ColumnWidths = "80 pt; 180 pt"
-cboWhCode.ListWidth = 260
-cboWhCode.ListRows = 15
-cboWhCode.ListIndex = 0
+CboWHCode.ColumnWidths = "80 pt; 180 pt"
+CboWHCode.ListWidth = 260
+CboWHCode.ListRows = 15
+CboWHCode.ListIndex = 0
+
+vFactoryCode = uf_GetCompany()
+
 End Sub
 
 

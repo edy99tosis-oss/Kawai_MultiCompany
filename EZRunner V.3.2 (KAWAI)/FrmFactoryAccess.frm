@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Begin VB.Form FrmFactoryAccess 
    BackColor       =   &H00FDDFE3&
    Caption         =   "Factory Access"
@@ -228,13 +228,13 @@ Private Sub CmdSubmit_Click()
 
     ' === Tentukan Factory_Code berdasarkan pilihan ===
     If OBFactory1.Value = True Then
-        selectedFactory = OBFactory1.Tag
+        selectedFactory = "00000"
         FrmMainMenuCaption = Label1(0).Caption
     ElseIf OBFactory2.Value = True Then
-        selectedFactory = OBFactory2.Tag
+        selectedFactory = "11111"
         FrmMainMenuCaption = Label1(1).Caption
     Else
-        MsgBox "Silakan pilih salah satu company.", vbExclamation, "Peringatan"
+        MsgBox "Silakan pilih salah satu Factory.", vbExclamation, "Peringatan"
         Exit Sub
     End If
 
@@ -288,30 +288,30 @@ Private Sub Form_Load()
     If gb_Simulation = True Then OBFactory1.BackColor = RGB(204, 255, 204)
     If gb_Simulation = True Then OBFactory2.BackColor = RGB(204, 255, 204)
 
-    Set rs = New ADODB.Recordset
-    sql = "SELECT TOP 2 Company_Code, Company_Name FROM Company_Profile ORDER BY Company_Name"
-    rs.Open sql, Db, adOpenStatic, adLockReadOnly
-
-    ' Isi Factory pertama
-    If Not rs.EOF Then
-        OBFactory1.Tag = rs!Company_Code
-        Label1(0).Caption = rs!Company_Name
-        OBFactory1.Visible = True
-        Label1(0).Visible = True
-    End If
-    
-    rs.MoveNext
-    
-    ' Isi Factory kedua
-    If Not rs.EOF Then
-        OBFactory2.Tag = rs!Company_Code
-        Label1(1).Caption = rs!Company_Name
-        OBFactory2.Visible = True
-        Label1(1).Visible = True
-    End If
-
-    rs.Close
-    Set rs = Nothing
+'    Set rs = New ADODB.Recordset
+'    sql = "SELECT TOP 2 Company_Code, Company_Name FROM Company_Profile ORDER BY Company_Name"
+'    rs.Open sql, Db, adOpenStatic, adLockReadOnly
+'
+'    ' Isi Factory pertama
+'    If Not rs.EOF Then
+'        OBFactory1.Tag = rs!Company_Code
+'        Label1(0).Caption = rs!Company_Name
+'        OBFactory1.Visible = True
+'        Label1(0).Visible = True
+'    End If
+'
+'    rs.MoveNext
+'
+'    ' Isi Factory kedua
+'    If Not rs.EOF Then
+'        OBFactory2.Tag = rs!Company_Code
+'        Label1(1).Caption = rs!Company_Name
+'        OBFactory2.Visible = True
+'        Label1(1).Visible = True
+'    End If
+'
+'    rs.Close
+'    Set rs = Nothing
  
    Dim ctl As Control
    

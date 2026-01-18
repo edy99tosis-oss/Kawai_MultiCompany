@@ -303,7 +303,7 @@ Begin VB.Form frm_part_supplyAuto
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   137232387
+      Format          =   95682563
       CurrentDate     =   37867
    End
    Begin VB.Frame Frame1 

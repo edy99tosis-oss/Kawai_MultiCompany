@@ -384,7 +384,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   137232387
+      Format          =   127795203
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -407,7 +407,7 @@ Begin VB.Form frm_ProdResultAutoRequest
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   137232387
+      Format          =   127795203
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -1847,7 +1847,7 @@ tempRowBom = RsSearch("RowsData")
 
 Do While Not RsSearch.EOF
     
-    SqlChild = "Select * From BOM_Master Where Parent_ItemCode ='" & RsSearch("Item_Code") & "'"
+    SqlChild = "Select * From BOM_Master Where Parent_ItemCode ='" & RsSearch("Item_Code") & "'  "
     rsChild.Open SqlChild, Db, adOpenForwardOnly, adLockReadOnly
     
     If Not rsChild.EOF Then

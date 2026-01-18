@@ -206,7 +206,7 @@ Begin VB.Form Frm_invoice_Create
       Left            =   8550
       Style           =   1  'Graphical
       TabIndex        =   15
-      Top             =   10230
+      Top             =   10200
       Width           =   1320
    End
    Begin VB.TextBox Txtdisplay 
@@ -346,7 +346,7 @@ Begin VB.Form Frm_invoice_Create
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   151650307
+      Format          =   129695747
       CurrentDate     =   37802
    End
    Begin MSComCtl2.DTPicker DDate 
@@ -368,7 +368,7 @@ Begin VB.Form Frm_invoice_Create
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   151650307
+      Format          =   129695747
       UpDown          =   -1  'True
       CurrentDate     =   37802
    End
@@ -513,7 +513,7 @@ Begin VB.Form Frm_invoice_Create
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   151650307
+      Format          =   129695747
       CurrentDate     =   37802
    End
    Begin VB.Frame Frame1 
@@ -561,7 +561,7 @@ Begin VB.Form Frm_invoice_Create
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   151650307
+         Format          =   129695747
          CurrentDate     =   37802
       End
       Begin MSComCtl2.DTPicker EDate 
@@ -583,7 +583,7 @@ Begin VB.Form Frm_invoice_Create
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   151650307
+         Format          =   129695747
          CurrentDate     =   37802
       End
       Begin MSForms.ComboBox cboDO 
@@ -798,8 +798,8 @@ Begin VB.Form Frm_invoice_Create
       TabIndex        =   46
       Top             =   330
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin MSComCtl2.DTPicker dtpPEBDate 
       Height          =   315
@@ -821,7 +821,7 @@ Begin VB.Form Frm_invoice_Create
       EndProperty
       CheckBox        =   -1  'True
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   151715843
+      Format          =   129695747
       CurrentDate     =   39346
    End
    Begin MSForms.ComboBox ComboBox1 
@@ -1209,6 +1209,8 @@ Dim bteHakPrice As Byte
 Dim strTempPackingNo As String
 Dim listPODate As String
 Dim InvDate As Date
+Dim vFactoryCode As String
+
 
 Private Sub Header()
 With Grid
@@ -1301,11 +1303,11 @@ End With
 End Sub
 
 Private Sub cbocls_Change()
-cboCls = Trim(cboCls)
-If cboCls.MatchFound Then
-    TxtDesc.Text = cboCls.Column(1)
+cbocls = Trim(cbocls)
+If cbocls.matchFound Then
+    txtdesc.Text = cbocls.Column(1)
 Else
-    TxtDesc.Text = ""
+    txtdesc.Text = ""
 End If
 End Sub
 
@@ -1316,8 +1318,8 @@ Private Sub cbodealer_Click()
     rstcust.Requery
     rstcust.Find "Cust_code ='" & cbodealer & "'"
     If Not rstcust.EOF Then
-        LblDesc(0).Caption = rstcust!Cust_Name
-        LblDesc(1).Caption = rstcust!Address
+        lbldesc(0).Caption = rstcust!Cust_Name
+        lbldesc(1).Caption = rstcust!Address
         Overseas_Cls = rstcust!country_cls
     rstcust.Requery
     End If
@@ -1334,7 +1336,7 @@ Private Sub cbodealer_Click()
         
     End If
     
-    If combo1.Text = "Create" Then
+    If Combo1.Text = "Create" Then
         
         'delete
         If Trim(ComboBox1) <> "" Then
@@ -1369,7 +1371,7 @@ Private Sub cbodealer_Click()
         If CekSql(s) Then
             nomorinvoice
         Else
-            lblFix = ""
+            lblfix = ""
             Grid.Rows = 1
             ComboBox1.clear
             ComboBox1.locked = True
@@ -1416,7 +1418,7 @@ Private Sub CboDo_Change()
     
     Dim strInvoice As String
     
-    If cboDO.MatchFound And gb_InvoiceReferToDO_InvoiceCreate And Not gb_AllowMultipleDO_InvoiceCreate Then
+    If cboDO.matchFound And gb_InvoiceReferToDO_InvoiceCreate And Not gb_AllowMultipleDO_InvoiceCreate Then
         If Trim(ComboBox1) <> "" Then
             sql = "select * from Invoice_detail where invoice_no = '" & ComboBox1 & "'"
             Set RsDel = New Recordset
@@ -1454,7 +1456,7 @@ Select Case Index
                 
                 frm_invoice_inquiry.ComboBox1 = Me.cbodealer
                 frm_invoice_inquiry.set_tgl Tgl1, Tgl2
-                frm_invoice_inquiry.combo1 = ComboBox1
+                frm_invoice_inquiry.Combo1 = ComboBox1
                 
                 Unload Me
                 frm_invoice_inquiry.Show
@@ -1480,7 +1482,7 @@ Select Case Index
             lblerror = ""
             CtrlMenu1.MenuText = ""
             cmdAction(5).Caption = "Update"
-            combo1.Text = "Update"
+            Combo1.Text = "Update"
             MousePointer = vbDefault
     Case 2
             MousePointer = vbHourglass
@@ -1503,7 +1505,7 @@ Select Case Index
             MousePointer = vbHourglass
             If Trim(ComboBox1) <> "" Then
                 ComboBox1 = ComboBox1
-                If ComboBox1.MatchFound Then
+                If ComboBox1.matchFound Then
                     sql = "select distinct do_no from invoice_detail where invoice_no ='" & ComboBox1 & "'"
                     Set xdo = New Recordset
                     xdo.Open sql, Db, adOpenDynamic, adLockOptimistic
@@ -1513,7 +1515,7 @@ Select Case Index
                         Exit Sub
                     Else
                         inv_no = "'" & ComboBox1 & "'"
-                        Call InvReport
+                        Call InvReport(vFactoryCode)
                     End If
                 Else
                     lblerror = DisplayMsg(4071)
@@ -1559,13 +1561,13 @@ Select Case Index
                 If lblerror <> "" Then Me.MousePointer = vbDefault: Exit Sub
                 
                 cbodealer = cbodealer
-                If cbodealer.MatchFound = False Then
+                If cbodealer.matchFound = False Then
                     lblerror = DisplayMsg(4072)
                     cbodealer.SetFocus
                     MousePointer = vbDefault
                     Exit Sub
                 End If
-                If Not gb_AllowMultipleDO_InvoiceCreate And (cboDO = "" Or Not cboDO.MatchFound) Then
+                If Not gb_AllowMultipleDO_InvoiceCreate And (cboDO = "" Or Not cboDO.matchFound) Then
                     lblerror = DisplayMsg("4101")
                     cboDO.SetFocus
                     MousePointer = vbDefault
@@ -1578,7 +1580,7 @@ Select Case Index
                     blndisplay = True
                     cmdAction(5).Caption = "Update"
                     bsave = True
-                    combo1 = "Update"
+                    Combo1 = "Update"
                     Grid.Editable = True
                     cbodealer.locked = False
                     ComboBox1.locked = False
@@ -1601,7 +1603,7 @@ Select Case Index
                 End If
                 If Trim(ComboBox1) <> "" Then
                     ComboBox1 = ComboBox1
-                    If ComboBox1.MatchFound Then
+                    If ComboBox1.matchFound Then
                         tppn = tax("ppn")
                         If notfix Then updateMaster
                         inquiry
@@ -1618,16 +1620,16 @@ Select Case Index
                     lblerror = ""
                 End If
             End If
-            If lblFix <> "" Then
+            If lblfix <> "" Then
                 Grid.Editable = False
             Else
                 Grid.Editable = True
             End If
             MousePointer = vbDefault
     Case 6
-        If Trim(ComboBox1) <> "" And combo1.Text = "Update" And Grid.Rows <> 1 Then
+        If Trim(ComboBox1) <> "" And Combo1.Text = "Update" And Grid.Rows <> 1 Then
             ComboBox1 = ComboBox1
-            If ComboBox1.MatchFound Then
+            If ComboBox1.matchFound Then
                 inquiryupdate
                 lblerror = ""
             Else
@@ -1642,7 +1644,7 @@ End Sub
 
 Private Sub Combo1_Click()
 Dim strInvoice As String
-If combo1.Text = "Create" Then
+If Combo1.Text = "Create" Then
     
     If Trim(ComboBox1) <> "" Then
         sql = "select * from Invoice_detail where invoice_no = '" & ComboBox1 & "'"
@@ -1674,7 +1676,7 @@ If combo1.Text = "Create" Then
     bsave = False
     blntotal = False
     clear2
-    txtRemarks = ""
+    txtremarks = ""
     
     cmdAction(5).Caption = "Create"
     cmdAction(2).Enabled = False
@@ -1708,7 +1710,7 @@ rst.Open sql, Db, adOpenDynamic, adLockOptimistic
 If Not rst.EOF Then
 
 
-    If Trim(combo1.Text) = "Create" Then
+    If Trim(Combo1.Text) = "Create" Then
     
         lblerror.Caption = "Invoice No" & " " & Trim(ComboBox1.Text) & " Has been Create"
         cmdAction(5).Enabled = False
@@ -1747,18 +1749,18 @@ If Not rst.EOF Then
           End If
               
               
-          txtRemarks = Trim(rst!Remarks)
-          cboCls = Trim(rst!tradeterms_cls)
+          txtremarks = Trim(rst!Remarks)
+          cbocls = Trim(rst!tradeterms_cls)
           txtPEBNo = Trim(rst!PEBNo & "")
           If Not IsNull(rst!PEBDate) Then dtpPEBDate = rst!PEBDate Else dtpPEBDate = Null
           
           If IsNull(rst!fix_cls) Then
-              lblFix = ""
+              lblfix = ""
               notfix = True
               cmdAction(2).Enabled = True
               cmdAction(4).Enabled = True 'baru
           Else
-              lblFix = "Status : Fix"
+              lblfix = "Status : Fix"
               notfix = False
               cmdAction(2).Enabled = False
               cmdAction(4).Enabled = False 'baru
@@ -1770,7 +1772,7 @@ If Not rst.EOF Then
           
      End If
 Else
-        lblFix = ""
+        lblfix = ""
         notfix = True
         If Trim(ComboBox1) <> "" Then
             If blndisplay = False Or xno <> ComboBox1 Then Grid.Rows = 1
@@ -1818,7 +1820,7 @@ rstcust.Find "cust_code = '" & cbodealer.Text & "'"
 If Not rstcust.EOF Then
     rstcust.Requery
     isiCboDO
-    If combo1.Text = "Create" Then
+    If Combo1.Text = "Create" Then
         clear2
         Grid.Editable = False
     Else
@@ -1831,7 +1833,7 @@ If Not rstcust.EOF Then
         If CekSql(s) Then
             nomorinvoice
         Else
-            lblFix = ""
+            lblfix = ""
             Grid.Rows = 1
             ComboBox1.clear
             ComboBox1.locked = True
@@ -1870,12 +1872,14 @@ cmdAction(4).Enabled = False 'baru
 
 CtrlMenu1.FormName = Me.Name
 Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
-combo1.ListIndex = 1
+Combo1.ListIndex = 1
 clear
 cmdAction(5).Caption = "Update"
 blndisplay = False
 tgl_sb = Month(Date)
 MyDuedate.Value = Format(Date, "dd mmm yyyy")
+vFactoryCode = uf_GetCompany()
+
 End Sub
 
 Sub adtocombo()
@@ -1906,7 +1910,7 @@ End With
 sql = "select * from priceCondition_cls order by priceCondition_cls"
 If rstcls.State <> adStateClosed Then rstcls.Close
 rstcls.Open sql, Db, adOpenStatic, adLockOptimistic
-With cboCls
+With cbocls
     .clear
     .columnCount = 2
     .ColumnWidths = "50 pt;200 pt"
@@ -1924,79 +1928,79 @@ End With
  
 End Sub
 
-Sub DisplayData(RS As Recordset, i As Long, Model As String, DDate As Date)
+Sub DisplayData(rs As Recordset, i As Long, Model As String, DDate As Date)
 With Grid
     
     .Cell(flexcpBackColor, i, bteColSelect) = vbWhite
     .Cell(flexcpBackColor, i, bteColQty) = vbWhite
-    .TextMatrix(i, bteColSJNo) = Trim(RS.Fields("DO_no").Value)
-    If IsNull(RS.Fields("Part_no").Value) Then
+    .TextMatrix(i, bteColSJNo) = Trim(rs.Fields("DO_no").Value)
+    If IsNull(rs.Fields("Part_no").Value) Then
         .TextMatrix(i, bteColPartNo) = ""
     Else
-        .TextMatrix(i, bteColPartNo) = Trim(RS.Fields("Part_no").Value)
+        .TextMatrix(i, bteColPartNo) = Trim(rs.Fields("Part_no").Value)
     End If
-    .TextMatrix(i, bteColDesc) = Trim(RS.Fields("Item_name").Value)
+    .TextMatrix(i, bteColDesc) = Trim(rs.Fields("Item_name").Value)
     
     '**** lihat detail untuk qty
-    sql = "select *,isnull(service,0) as services from invoice_detail where invoice_no = '" & ComboBox1 & "' and Item_code= '" & Model & "' and delivery_date = '" & Format(DDate, "yyyy-mm-dd") & "' and do_no = '" & RS!do_no & "' and po_no = '" & RS!po_no & "' and seq_no = '" & RS!Seq_no & "' and doseq_no = '" & RS!DOSeq_No & "' "
+    sql = "select *,isnull(service,0) as services from invoice_detail where invoice_no = '" & ComboBox1 & "' and Item_code= '" & Model & "' and delivery_date = '" & Format(DDate, "yyyy-mm-dd") & "' and do_no = '" & rs!do_no & "' and po_no = '" & rs!po_no & "' and seq_no = '" & rs!Seq_no & "' and doseq_no = '" & rs!DOSeq_No & "' "
     Set rsdetail = New Recordset
     rsdetail.Open sql, Db, adOpenDynamic, adLockOptimistic
     If Not rsdetail.EOF Then
-        If combo1.Text = "Create" Then
+        If Combo1.Text = "Create" Then
             If gb_InvoiceReferToDO_InvoiceCreate And Not gb_AllowMultipleDO_InvoiceCreate Then
                 .Cell(flexcpChecked, i, bteColSelect) = flexChecked
             Else
                 .Cell(flexcpChecked, i, bteColSelect) = flexUnchecked
             End If
-            .TextMatrix(i, bteColPONo) = Trim(RS!po_no)
-            .TextMatrix(i, bteColQty) = Format(RS.Fields("qtyresult"), gs_formatQty)
+            .TextMatrix(i, bteColPONo) = Trim(rs!po_no)
+            .TextMatrix(i, bteColQty) = Format(rs.Fields("qtyresult"), gs_formatQty)
             .TextMatrix(i, bteColQtyRem) = Format(0, gs_formatQty)
-            .TextMatrix(i, bteColUnit) = uf_GetUnitDescription(Trim(RS!Unit_cls))
-            .TextMatrix(i, bteColSJDate) = Format(RS.Fields("do_date").Value, "dd Mmm YYYY")
-            If Trim(RS!currency_code) <> "" Then .TextMatrix(i, bteColCurr) = uf_GetCurrencyDescription(Trim(RS!currency_code))
-            If Trim(RS!currency_code) = "03" Then
-                .TextMatrix(i, bteColPrice) = Format(RS.Fields("Price").Value, gs_formatPriceIDR)
-                .TextMatrix(i, bteColService) = Format(RS.Fields("service").Value, gs_formatPriceIDR)
+            .TextMatrix(i, bteColUnit) = uf_GetUnitDescription(Trim(rs!Unit_cls))
+            .TextMatrix(i, bteColSJDate) = Format(rs.Fields("do_date").Value, "dd Mmm YYYY")
+            If Trim(rs!currency_code) <> "" Then .TextMatrix(i, bteColCurr) = uf_GetCurrencyDescription(Trim(rs!currency_code))
+            If Trim(rs!currency_code) = "03" Then
+                .TextMatrix(i, bteColPrice) = Format(rs.Fields("Price").Value, gs_formatPriceIDR)
+                .TextMatrix(i, bteColService) = Format(rs.Fields("service").Value, gs_formatPriceIDR)
             Else
-                .TextMatrix(i, bteColPrice) = Format(RS.Fields("Price").Value, gs_formatPrice)
-                .TextMatrix(i, bteColService) = Format(RS.Fields("Service").Value, gs_formatPrice)
+                .TextMatrix(i, bteColPrice) = Format(rs.Fields("Price").Value, gs_formatPrice)
+                .TextMatrix(i, bteColService) = Format(rs.Fields("Service").Value, gs_formatPrice)
             End If
-            .TextMatrix(i, bteColAmount) = Format(RS.Fields("Amount").Value, gs_formatAmountIDR)
-            .TextMatrix(i, bteColRefQty) = Format(RS.Fields("Qtyresult").Value, gs_formatQty)
+            .TextMatrix(i, bteColAmount) = Format(rs.Fields("Amount").Value, gs_formatAmountIDR)
+            .TextMatrix(i, bteColRefQty) = Format(rs.Fields("Qtyresult").Value, gs_formatQty)
         Else
             .Cell(flexcpChecked, i, bteColSelect) = flexChecked
-            .TextMatrix(i, bteColPONo) = Trim(RS!po_no)
-            .TextMatrix(i, bteColQty) = Format(Trim(RS.Fields("IQTy").Value), gs_formatQty)
+            .TextMatrix(i, bteColPONo) = Trim(rs!po_no)
+            .TextMatrix(i, bteColQty) = Format(Trim(rs.Fields("IQTy").Value), gs_formatQty)
             
-            sql = "select DO_No,item_code,sum(qty ) totqty ,delivery_date,PO_NO,seq_no,isnull(service,0)as services  from invoice_detail where do_no = '" & RS!do_no & "' and item_code = '" & Model & "' and delivery_date ='" & Format(DDate, "YYYY-MM-DD") & "' and po_no = '" & RS!po_no & "' and seq_no =  '" & RS!Seq_no & "' and doseq_no = '" & RS!DOSeq_No & "' "
+            sql = "select DO_No,item_code,sum(qty ) totqty ,delivery_date,PO_NO,seq_no,isnull(service,0)as services  from invoice_detail where do_no = '" & rs!do_no & "' and item_code = '" & Model & "' and delivery_date ='" & Format(DDate, "YYYY-MM-DD") & "' and po_no = '" & rs!po_no & "' and seq_no =  '" & rs!Seq_no & "' and doseq_no = '" & rs!DOSeq_No & "' "
             sql = sql & " group by do_no,item_code,delivery_date,Po_no,seq_no,Service "
             Set rssumqty = New Recordset
             rssumqty.Open sql, Db, adOpenDynamic, adLockOptimistic
             
             If Not rssumqty.EOF Then
-                   .TextMatrix(i, bteColQtyRem) = Format(RS!DQty - rssumqty.Fields("totqty").Value, gs_formatQty)
+                   .TextMatrix(i, bteColQtyRem) = Format(rs!DQty - rssumqty.Fields("totqty").Value, gs_formatQty)
                     If Val(.TextMatrix(i, bteColQtyRem)) <> 0 Then
-                        .TextMatrix(i, bteColRefQty) = RS!IQTY + .TextMatrix(i, bteColQtyRem) 'rs!iqty + rssumqty.Fields("totqty").Value
+                        .TextMatrix(i, bteColRefQty) = rs!IQTY + .TextMatrix(i, bteColQtyRem) 'rs!iqty + rssumqty.Fields("totqty").Value
                     Else
-                        .TextMatrix(i, bteColRefQty) = RS.Fields("iqty").Value
+                        .TextMatrix(i, bteColRefQty) = rs.Fields("iqty").Value
                     End If
             Else
-               .TextMatrix(i, bteColRefQty) = Format(RS.Fields("Qtyresult").Value, gs_formatQty)
-               .TextMatrix(i, bteColQtyRem) = Format(Trim(RS.Fields("Qtyresult").Value), gs_formatQty)
+               .TextMatrix(i, bteColRefQty) = Format(rs.Fields("Qtyresult").Value, gs_formatQty)
+               .TextMatrix(i, bteColQtyRem) = Format(Trim(rs.Fields("Qtyresult").Value), gs_formatQty)
             End If
             
-            .TextMatrix(i, bteColUnit) = uf_GetUnitDescription(Trim(RS!Unit_cls))
-            .TextMatrix(i, bteColSJDate) = Format(RS.Fields("do_date").Value, "dd Mmm YYYY")
-            If Trim(RS!currency_code) <> "" Then .TextMatrix(i, bteColCurr) = uf_GetCurrencyDescription(Trim(RS!currency_code))
-            If Trim(RS!currency_code) = "03" Then
-                .TextMatrix(i, bteColPrice) = Format(RS.Fields("Price").Value, gs_formatPriceIDR)
-                .TextMatrix(i, bteColService) = Format(RS.Fields("Service").Value, gs_formatPriceIDR)
+            .TextMatrix(i, bteColUnit) = uf_GetUnitDescription(Trim(rs!Unit_cls))
+            .TextMatrix(i, bteColSJDate) = Format(rs.Fields("do_date").Value, "dd Mmm YYYY")
+            If Trim(rs!currency_code) <> "" Then .TextMatrix(i, bteColCurr) = uf_GetCurrencyDescription(Trim(rs!currency_code))
+            If Trim(rs!currency_code) = "03" Then
+                .TextMatrix(i, bteColPrice) = Format(rs.Fields("Price").Value, gs_formatPriceIDR)
+                .TextMatrix(i, bteColService) = Format(rs.Fields("Service").Value, gs_formatPriceIDR)
             Else
-                .TextMatrix(i, bteColPrice) = Format(RS.Fields("Price").Value, gs_formatPrice)
-                .TextMatrix(i, bteColService) = Format(RS.Fields("Service").Value, gs_formatPriceIDR)
+                .TextMatrix(i, bteColPrice) = Format(rs.Fields("Price").Value, gs_formatPrice)
+                .TextMatrix(i, bteColService) = Format(rs.Fields("Service").Value, gs_formatPriceIDR)
             End If
-            .TextMatrix(i, bteColAmount) = Format(RS.Fields("Amount").Value, gs_formatAmountIDR)
-            currCode = Trim(RS!currency_code)
+            .TextMatrix(i, bteColAmount) = Format(rs.Fields("Amount").Value, gs_formatAmountIDR)
+            currCode = Trim(rs!currency_code)
        End If
     Else
         
@@ -2005,33 +2009,33 @@ With Grid
         Else
                 .Cell(flexcpChecked, i, bteColSelect) = flexUnchecked
         End If
-        .TextMatrix(i, bteColPONo) = Trim(RS!po_no)
-        .TextMatrix(i, bteColQty) = Format(RS.Fields("Qtyresult").Value, gs_formatQty)
+        .TextMatrix(i, bteColPONo) = Trim(rs!po_no)
+        .TextMatrix(i, bteColQty) = Format(rs.Fields("Qtyresult").Value, gs_formatQty)
         .TextMatrix(i, bteColQtyRem) = Format(0, gs_formatQty)
-        .TextMatrix(i, bteColUnit) = uf_GetUnitDescription(Trim(RS!Unit_cls))
-        .TextMatrix(i, bteColSJDate) = Format(RS.Fields("do_date").Value, "dd Mmm YYYY")
-        If Trim(RS!currency_code) <> "" Then .TextMatrix(i, bteColCurr) = uf_GetCurrencyDescription(Trim(RS!currency_code))
-        If Trim(RS!currency_code) = "03" Then
-            .TextMatrix(i, bteColPrice) = Format(RS.Fields("Price").Value, gs_formatPriceIDR)
-            .TextMatrix(i, bteColService) = Format(RS.Fields("Service").Value, gs_formatPriceIDR)
+        .TextMatrix(i, bteColUnit) = uf_GetUnitDescription(Trim(rs!Unit_cls))
+        .TextMatrix(i, bteColSJDate) = Format(rs.Fields("do_date").Value, "dd Mmm YYYY")
+        If Trim(rs!currency_code) <> "" Then .TextMatrix(i, bteColCurr) = uf_GetCurrencyDescription(Trim(rs!currency_code))
+        If Trim(rs!currency_code) = "03" Then
+            .TextMatrix(i, bteColPrice) = Format(rs.Fields("Price").Value, gs_formatPriceIDR)
+            .TextMatrix(i, bteColService) = Format(rs.Fields("Service").Value, gs_formatPriceIDR)
         Else
-            .TextMatrix(i, bteColPrice) = Format(RS.Fields("Price").Value, gs_formatPrice)
-            .TextMatrix(i, bteColService) = Format(RS.Fields("service").Value, gs_formatPrice)
+            .TextMatrix(i, bteColPrice) = Format(rs.Fields("Price").Value, gs_formatPrice)
+            .TextMatrix(i, bteColService) = Format(rs.Fields("service").Value, gs_formatPrice)
         End If
-        .TextMatrix(i, bteColAmount) = Format(RS.Fields("Amount").Value, gs_formatAmountIDR)
-        .TextMatrix(i, bteColRefQty) = Format(RS.Fields("Qtyresult").Value, gs_formatQty)
+        .TextMatrix(i, bteColAmount) = Format(rs.Fields("Amount").Value, gs_formatAmountIDR)
+        .TextMatrix(i, bteColRefQty) = Format(rs.Fields("Qtyresult").Value, gs_formatQty)
     End If
-    .TextMatrix(i, bteColRefUnit) = RS.Fields("unit_Cls").Value
-    If Trim(RS!currency_code) <> "" Then .TextMatrix(i, bteColRefCurr) = RS.Fields("currency_code").Value
-    .TextMatrix(i, bteColItemCode) = RS.Fields("item_code").Value
+    .TextMatrix(i, bteColRefUnit) = rs.Fields("unit_Cls").Value
+    If Trim(rs!currency_code) <> "" Then .TextMatrix(i, bteColRefCurr) = rs.Fields("currency_code").Value
+    .TextMatrix(i, bteColItemCode) = rs.Fields("item_code").Value
     If gb_InvoiceReferToDO_InvoiceCreate And Not gb_AllowMultipleDO_InvoiceCreate Then
         .TextMatrix(i, bteColStatus) = "1"
     Else
         .TextMatrix(i, bteColStatus) = "0"
     End If
-    .TextMatrix(i, bteColDelDate) = Format(RS!delivery_Date, "dd mmm yyyy")
-    .TextMatrix(i, bteColSeqNo) = RS!Seq_no
-    .TextMatrix(i, bteColDOSeqNo) = RS!DOSeq_No
+    .TextMatrix(i, bteColDelDate) = Format(rs!delivery_Date, "dd mmm yyyy")
+    .TextMatrix(i, bteColSeqNo) = rs!Seq_no
+    .TextMatrix(i, bteColDOSeqNo) = rs!DOSeq_No
     
 '    If (IsNull(rs!NoCommercial_Cls)) = False Then
 '     If rs!NoCommercial_Cls = 0 Then
@@ -2262,7 +2266,7 @@ If Not rst.EOF Then
         Txtdisplay(3) = Format(CDbl(Txtdisplay(1)) + CDbl(Txtdisplay(2)), gs_formatAmountIDR)
     End If
     
-    txtRemarks = Trim(rst!Remarks)
+    txtremarks = Trim(rst!Remarks)
 End If
 End Sub
 
@@ -2389,7 +2393,7 @@ KeyAscii = Asc(UCase(Chr(KeyAscii)))
 End Sub
 
 Private Sub IDate_Change()
-If UCase(combo1.Text) = "CREATE" Then createnumber
+If UCase(Combo1.Text) = "CREATE" Then createnumber
 End Sub
 
 Private Sub IDate_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -2397,7 +2401,7 @@ If KeyCode = 13 Then SendKeys vbTab
 End Sub
 
 Private Sub lbldesc_Change(Index As Integer)
-If Index = 0 Then Text1 = LblDesc(0)
+If Index = 0 Then Text1 = lbldesc(0)
 End Sub
 
 Private Sub MEDuedate_Change()
@@ -2427,7 +2431,7 @@ rstcust.Find "cust_code = '" & cbodealer.Text & "'"
 If Not rstcust.EOF Then
     rstcust.Requery
     isiCboDO
-    If combo1.Text = "Create" Then
+    If Combo1.Text = "Create" Then
         clear2
         Grid.Editable = False
     Else
@@ -2440,7 +2444,7 @@ If Not rstcust.EOF Then
         If CekSql(s) Then
             nomorinvoice
         Else
-            lblFix = ""
+            lblfix = ""
             Grid.Rows = 1
             ComboBox1.clear
             ComboBox1.locked = True
@@ -2491,7 +2495,7 @@ If Not rsmaster.EOF Then
     .Fields("Amount") = CDbl(Txtdisplay(1))
     .Fields("PPN") = CDbl(Txtdisplay(2))
     .Fields("Total_Amount") = CDbl(Txtdisplay(3))
-    .Fields("Remarks") = Trim(txtRemarks)
+    .Fields("Remarks") = Trim(txtremarks)
     .Fields("Exchange_rate") = 0
     .Fields("Exchange_amount") = 0
 
@@ -2501,7 +2505,7 @@ If Not rsmaster.EOF Then
         .Fields("Due_date") = xduedate
     End If
    
-    .Fields("TradeTerms_Cls") = Trim(cboCls.Text)
+    .Fields("TradeTerms_Cls") = Trim(cbocls.Text)
     .Fields("PEBDate") = Format(dtpPEBDate.Value, "YYYY-MM-dd")
     .Fields("PEBNo") = Trim(txtPEBNo)
     
@@ -2519,7 +2523,7 @@ Else
     .Fields("Amount") = Val(Txtdisplay(1))
     .Fields("PPN") = Val(Txtdisplay(2))
     .Fields("Total_Amount") = Val(Txtdisplay(3))
-    .Fields("Remarks") = txtRemarks
+    .Fields("Remarks") = txtremarks
     .Fields("Exchange_rate") = 0
     .Fields("Exchange_amount") = 0
     If xduedate = "" Then
@@ -2544,7 +2548,7 @@ HandleError:
         .Fields("Amount") = Val(Txtdisplay(1))
         .Fields("PPN") = Val(Txtdisplay(2))
         .Fields("Total_Amount") = Val(Txtdisplay(3))
-        .Fields("Remarks") = txtRemarks
+        .Fields("Remarks") = txtremarks
         .Fields("Exchange_rate") = 0
         .Fields("Exchange_amount") = 0
         
@@ -2688,13 +2692,13 @@ EDate = Format(Date, "dd mmm yyyy")
 IDate = Format(Date, "dd mmm yyyy")
 DDate = Format(Date, "dd mmm yyyy")
 ComboBox1 = ""
-txtRemarks = ""
+txtremarks = ""
 Txtdisplay(0) = ""
 Txtdisplay(1) = Format(0, gs_formatAmountIDR)
 Txtdisplay(2) = Format(0, gs_formatAmountIDR)
 Txtdisplay(3) = Format(0, gs_formatAmountIDR)
-LblDesc(0).Caption = ""
-LblDesc(1).Caption = ""
+lbldesc(0).Caption = ""
+lbldesc(1).Caption = ""
 MEDuedate.Text = "99/99/9999"
 Header
 cmdAction(2).Enabled = False
@@ -2706,7 +2710,7 @@ ComboBox1 = ""
 ComboBox1.clear
 bsave = False
 currCode = ""
-cboCls.Text = ""
+cbocls.Text = ""
 txtPEBNo.Text = ""
 
 End Sub
@@ -2746,7 +2750,7 @@ If Not .EOF Then
     !Amount = CDbl(Txtdisplay(1))
     !ppn = CDbl(Txtdisplay(2))  'tppn * CDbl(Txtdisplay(1)) / 100
     !total_amount = CDbl(Txtdisplay(1)) + CDbl(Txtdisplay(2))
-    !Remarks = Trim(txtRemarks.Text)
+    !Remarks = Trim(txtremarks.Text)
     !Invoice_Date = Format(IDate, "yyyy-MM-dd")
     !delivery_Date = Format(DDate, "yyyy-MM-dd")
     If MEDuedate.Text = "99/99/9999" Then

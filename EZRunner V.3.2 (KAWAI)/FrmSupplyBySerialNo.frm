@@ -305,7 +305,7 @@ Begin VB.Form FrmSupplyBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141819907
+         Format          =   128647171
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtpTo 
@@ -328,7 +328,7 @@ Begin VB.Form FrmSupplyBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141819907
+         Format          =   128647171
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpBCDate 
@@ -351,7 +351,7 @@ Begin VB.Form FrmSupplyBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   141819907
+         Format          =   128647171
          CurrentDate     =   37798
       End
       Begin VB.Label Label19 
@@ -732,8 +732,8 @@ Begin VB.Form FrmSupplyBySerialNo
       Tag             =   "FTTF*/"
       Top             =   120
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   767
+      _ExtentX        =   3254
+      _ExtentY        =   767
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   4725
@@ -1162,7 +1162,7 @@ End Sub
 
 Private Sub Old_up_FillComboWH()
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 Dim cmd As ADODB.Command
 
     Set cmd = New ADODB.Command
@@ -1171,7 +1171,7 @@ Dim cmd As ADODB.Command
     cmd.ActiveConnection = Db
     cmd.CommandText = "sp_WH_Sel"
     
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
 
     With cboFromWH
         .clear
@@ -1182,12 +1182,12 @@ Dim cmd As ADODB.Command
     
         i = 0
         
-        Do While Not RS.EOF
+        Do While Not rs.EOF
             .AddItem
-            .List(i, 0) = Trim(RS("WH_Code") & "")
-            .List(i, 1) = Trim(RS("WH_Name") & "")
+            .List(i, 0) = Trim(rs("WH_Code") & "")
+            .List(i, 1) = Trim(rs("WH_Name") & "")
             
-            RS.MoveNext
+            rs.MoveNext
             i = i + 1
         Loop
         
@@ -1200,7 +1200,7 @@ Dim cmd As ADODB.Command
     cmd.ActiveConnection = Db
     cmd.CommandText = "sp_WH_Sel"
     
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
 
     With cboToWH
         .clear
@@ -1211,12 +1211,12 @@ Dim cmd As ADODB.Command
     
         i = 0
         
-        Do While Not RS.EOF
+        Do While Not rs.EOF
             .AddItem
-            .List(i, 0) = Trim(RS("WH_Code") & "")
-            .List(i, 1) = Trim(RS("WH_Name") & "")
+            .List(i, 0) = Trim(rs("WH_Code") & "")
+            .List(i, 1) = Trim(rs("WH_Name") & "")
             
-            RS.MoveNext
+            rs.MoveNext
             i = i + 1
         Loop
         
@@ -1226,8 +1226,10 @@ Dim cmd As ADODB.Command
 End Sub
 
 Private Sub up_FillComboWH()
-    Dim RS As New ADODB.Recordset
+    Dim rs As New ADODB.Recordset
+    Dim rsTo As New ADODB.Recordset
     Dim cmd As ADODB.Command
+    Dim cmdTo As ADODB.Command
     Dim i As Integer
     
     On Error GoTo ErrHandler
@@ -1241,8 +1243,8 @@ Private Sub up_FillComboWH()
         .Parameters.append .CreateParameter("@UserID", adVarChar, adParamInput, 50, userLogin)
     End With
 
-    RS.CursorLocation = adUseClient
-    RS.Open cmd, , adOpenStatic, adLockReadOnly
+    rs.CursorLocation = adUseClient
+    rs.Open cmd, , adOpenStatic, adLockReadOnly
 
     ' --- Isi Combo Box Pertama (cboFromWH) ---
     With cboFromWH
@@ -1253,22 +1255,33 @@ Private Sub up_FillComboWH()
         .ListRows = 15
         
         i = 0
-        Do While Not RS.EOF
+        Do While Not rs.EOF
             .AddItem
-            .List(i, 0) = Trim(RS("WH_Code") & "")
-            .List(i, 1) = Trim(RS("WH_Name") & "")
-            RS.MoveNext
+            .List(i, 0) = Trim(rs("WH_Code") & "")
+            .List(i, 1) = Trim(rs("WH_Name") & "")
+            rs.MoveNext
             i = i + 1
         Loop
         
         If .ListCount > 0 Then .ListIndex = 0
     End With
+'
+'    ' --- KEMBALI KE AWAL RECORDSET ---
+'    If rs.RecordCount > 0 Then
+'        rs.MoveFirst
+'    End If
     
-    ' --- KEMBALI KE AWAL RECORDSET ---
-    If RS.RecordCount > 0 Then
-        RS.MoveFirst
-    End If
+    Set cmdTo = New ADODB.Command
+    With cmdTo
+        .ActiveConnection = Db
+        .CommandType = adCmdStoredProc
+        .CommandTimeout = 0
+        .CommandText = "sp_WH_Sel"
+    End With
 
+    rsTo.CursorLocation = adUseClient
+    rsTo.Open cmdTo, , adOpenStatic, adLockReadOnly
+    
     ' --- Isi Combo Box Kedua (cboToWH) ---
     With cboToWH
         .clear
@@ -1278,11 +1291,11 @@ Private Sub up_FillComboWH()
         .ListRows = 15
         
         i = 0
-        Do While Not RS.EOF
+        Do While Not rsTo.EOF
             .AddItem
-            .List(i, 0) = Trim(RS("WH_Code") & "")
-            .List(i, 1) = Trim(RS("WH_Name") & "")
-            RS.MoveNext
+            .List(i, 0) = Trim(rsTo("WH_Code") & "")
+            .List(i, 1) = Trim(rsTo("WH_Name") & "")
+            rsTo.MoveNext
             i = i + 1
         Loop
         
@@ -1290,11 +1303,18 @@ Private Sub up_FillComboWH()
     End With
     
 Cleanup:
-    If Not RS Is Nothing Then
-        If RS.State = adStateOpen Then RS.Close
-        Set RS = Nothing
+    If Not rs Is Nothing Then
+        If rs.State = adStateOpen Then rs.Close
+        Set rs = Nothing
     End If
     Set cmd = Nothing
+    
+    If Not rsTo Is Nothing Then
+        If rsTo.State = adStateOpen Then rsTo.Close
+        Set rsTo = Nothing
+    End If
+    Set cmdTo = Nothing
+    
     Exit Sub
 
 ErrHandler:
@@ -1304,7 +1324,7 @@ End Sub
 
 Private Sub up_FillComboDNNo()
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 Dim cmd As ADODB.Command
 
     Set cmd = New ADODB.Command
@@ -1327,9 +1347,9 @@ Dim cmd As ADODB.Command
         Exit Sub
     End If
 
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
     
-    If RS.EOF = False Then
+    If rs.EOF = False Then
 
         With cboDNo
             .clear
@@ -1340,11 +1360,11 @@ Dim cmd As ADODB.Command
         
             i = 0
             
-            Do While Not RS.EOF
+            Do While Not rs.EOF
                 .AddItem
-                .List(i, 0) = Trim(RS("SJ_No") & "")
+                .List(i, 0) = Trim(rs("SJ_No") & "")
                 
-                RS.MoveNext
+                rs.MoveNext
                 i = i + 1
             Loop
             
@@ -1357,7 +1377,7 @@ End Sub
 
 Private Sub up_FillBC()
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 Dim cmd As ADODB.Command
 
     Set cmd = New ADODB.Command
@@ -1368,19 +1388,19 @@ Dim cmd As ADODB.Command
     
     cmd.Parameters.append cmd.CreateParameter("SJNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
     
-    If RS.EOF = False Then
-        cboBCType.Text = Trim(RS("BC_Type") & "")
-        txtBCNo.Text = Trim(RS("BC40_No") & "")
-        dtpBCDate.Value = IIf(IsNull(Trim(RS("BC40_Date"))) = True, Now, Trim(RS("BC40_Date")))
+    If rs.EOF = False Then
+        cboBCType.Text = Trim(rs("BC_Type") & "")
+        txtBCNo.Text = Trim(rs("BC40_No") & "")
+        dtpBCDate.Value = IIf(IsNull(Trim(rs("BC40_Date"))) = True, Now, Trim(rs("BC40_Date")))
         'IIf(IsNull(Trim(RS("BC40_Date"))) = True, Now, Trim(RS("BC40_Date")))
     End If
 End Sub
 
 Private Sub up_GetSerialNo()
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 Dim cmd As ADODB.Command
 
 MousePointer = vbHourglass
@@ -1393,13 +1413,13 @@ MousePointer = vbHourglass
     
     cmd.Parameters.append cmd.CreateParameter("BarcodeNo", adVarChar, adParamInput, 100, RTrim(txtBarcode.Text))
          
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
     
-    If Trim(RS("Item_Code")) <> "NULL" Then
-        If RS.EOF = False Then
-            txtSerialNo.Text = Trim(RS("SerialNo"))
-            txtItemCode.Text = IIf(IsNull(Trim(RS("Item_Code"))) = True, "", Trim(RS("Item_Code")))
-            txtDescription.Text = IIf(IsNull(Trim(RS("Description"))) = True, "", Trim(RS("Description")))
+    If Trim(rs("Item_Code")) <> "NULL" Then
+        If rs.EOF = False Then
+            txtSerialNo.Text = Trim(rs("SerialNo"))
+            txtItemCode.Text = IIf(IsNull(Trim(rs("Item_Code"))) = True, "", Trim(rs("Item_Code")))
+            txtDescription.Text = IIf(IsNull(Trim(rs("Description"))) = True, "", Trim(rs("Description")))
         End If
         
         save_Load
@@ -1420,7 +1440,7 @@ End Sub
 
 Private Sub up_GetItemNo()
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 Dim cmd As ADODB.Command
 
 MousePointer = vbHourglass
@@ -1433,11 +1453,11 @@ MousePointer = vbHourglass
     
     cmd.Parameters.append cmd.CreateParameter("ItemCode", adVarChar, adParamInput, 25, RTrim(txtItemCode.Text))
          
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
     
     'If Trim(RS("Item_Code")) <> "NULL" Then
-        If RS.EOF = False Then
-            txtDescription.Text = IIf(IsNull(Trim(RS("Item_Name"))) = True, "", Trim(RS("Item_Name")))
+        If rs.EOF = False Then
+            txtDescription.Text = IIf(IsNull(Trim(rs("Item_Name"))) = True, "", Trim(rs("Item_Name")))
             
             If OptSerialNo.Value = True Then
                 save_Load
@@ -1474,12 +1494,12 @@ End Sub
 
 Private Sub cek_SerialNo()
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 
     sql = "select * from Supply_Scan_Detail WHERE Barcode_No='" & txtBarcode.Text & "'  AND Serial_No= '" & txtSerialNo.Text & "'"
-    Set RS = Db.Execute(sql)
+    Set rs = Db.Execute(sql)
     
-    If RS.EOF = False Then
+    If rs.EOF = False Then
         lbl_pesan.Caption = DisplayMsg(71)
         
         wmp.URL = (App.path & "\Incorrect.mp3")
@@ -1489,7 +1509,7 @@ End Sub
 
 Private Sub up_Save()
 Dim strSQL As String
-Dim RS As ADODB.Recordset
+Dim rs As ADODB.Recordset
 Dim cmd As ADODB.Command
 Dim prm As ADODB.Parameter
 
@@ -1509,7 +1529,7 @@ Qty = 1 'Set Qty
             cmd.Parameters.append cmd.CreateParameter("BC40Date", adDBTime, adParamInput, , Format(dtpBCDate.Value, "dd-mmm-yy"))
             cmd.Parameters.append cmd.CreateParameter("RegisterUser", adVarChar, adParamInput, 50, userLogin)
                     
-            Set RS = cmd.Execute
+            Set rs = cmd.Execute
     End If
     
     If OptWithoutSerialNo.Value = True Then
@@ -1535,13 +1555,13 @@ Qty = 1 'Set Qty
         cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 50, RTrim(cboDNo.Text))
         cmd.Parameters.append cmd.CreateParameter("RegisterUser", adVarChar, adParamInput, 50, userLogin)
                 
-        Set RS = cmd.Execute
+        Set rs = cmd.Execute
         
 End Sub
 
 Private Sub up_Delete()
 Dim strSQL As String
-Dim RS As ADODB.Recordset
+Dim rs As ADODB.Recordset
 Dim cmd As ADODB.Command
 Dim prm As ADODB.Parameter
 
@@ -1557,7 +1577,7 @@ Qty = 1
         cmd.Parameters.append cmd.CreateParameter("BarcodeNo", adVarChar, adParamInput, 100, RTrim(txtBarcode.Text))
         cmd.Parameters.append cmd.CreateParameter("ItemCode", adVarChar, adParamInput, 25, RTrim(txtItemCode.Text))
                 
-        Set RS = cmd.Execute
+        Set rs = cmd.Execute
         
 End Sub
 
@@ -1581,32 +1601,32 @@ up_Header
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "1")
     
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
         
         i = 1
         With grid
-            If RS.EOF = False Then
-                While Not RS.EOF
+            If rs.EOF = False Then
+                While Not rs.EOF
                     .Rows = .Rows + 1
                     
                     .Cell(flexcpChecked, i, ColCheck) = flexUnchecked
                     .Cell(flexcpBackColor, i, ColCheck) = vbWhite
                     .TextMatrix(i, bteColSelect) = ""
-                    .TextMatrix(i, bteColSupplydate) = Trim(RS("SupplyDate"))
-                    .TextMatrix(i, bteColBarcodeNo) = IIf(IsNull(Trim(RS("Barcode_No"))) = True, "", Trim(RS("Barcode_No")))
-                    .TextMatrix(i, bteColSerialNo) = IIf(IsNull(Trim(RS("Serial_No"))) = True, "", Trim(RS("Serial_No")))
-                    .TextMatrix(i, bteColItemCode) = IIf(IsNull(Trim(RS("Item_Code"))) = True, "", Trim(RS("Item_Code")))
-                    .TextMatrix(i, bteColDescription) = IIf(IsNull(Trim(RS("Description"))) = True, "", Trim(RS("Description")))
-                    .TextMatrix(i, bteColQty) = IIf(IsNull(Trim(RS("Qty"))) = True, 0, Trim(RS("Qty")))
-                    .TextMatrix(i, btecolDNNo) = Trim(RS("DNNo"))
+                    .TextMatrix(i, bteColSupplydate) = Trim(rs("SupplyDate"))
+                    .TextMatrix(i, bteColBarcodeNo) = IIf(IsNull(Trim(rs("Barcode_No"))) = True, "", Trim(rs("Barcode_No")))
+                    .TextMatrix(i, bteColSerialNo) = IIf(IsNull(Trim(rs("Serial_No"))) = True, "", Trim(rs("Serial_No")))
+                    .TextMatrix(i, bteColItemCode) = IIf(IsNull(Trim(rs("Item_Code"))) = True, "", Trim(rs("Item_Code")))
+                    .TextMatrix(i, bteColDescription) = IIf(IsNull(Trim(rs("Description"))) = True, "", Trim(rs("Description")))
+                    .TextMatrix(i, bteColQty) = IIf(IsNull(Trim(rs("Qty"))) = True, 0, Trim(rs("Qty")))
+                    .TextMatrix(i, btecolDNNo) = Trim(rs("DNNo"))
                     
-                    cboBCType.Text = IIf(IsNull(Trim(RS("BC_Type"))) = True, "", Trim(RS("BC_Type")))
-                    txtBCNo.Text = IIf(IsNull(Trim(RS("BC40_No"))) = True, "", Trim(RS("BC40_No")))
-                    dtpBCDate.Value = IIf(IsNull(Trim(RS("BC40_Date"))) = True, Now, Trim(RS("BC40_Date")))
+                    cboBCType.Text = IIf(IsNull(Trim(rs("BC_Type"))) = True, "", Trim(rs("BC_Type")))
+                    txtBCNo.Text = IIf(IsNull(Trim(rs("BC40_No"))) = True, "", Trim(rs("BC40_No")))
+                    dtpBCDate.Value = IIf(IsNull(Trim(rs("BC40_Date"))) = True, Now, Trim(rs("BC40_Date")))
                     
                     .Cell(flexcpAlignment, i, bteColSupplydate, i, bteColDescription) = flexAlignLeftCenter
                     i = i + 1
-                RS.MoveNext
+                rs.MoveNext
                 Wend
             Else
 '                lbl_pesan.Caption = DisplayMsg(8012)
@@ -1679,7 +1699,7 @@ Dim selisih As Double
 Dim nomor As Integer
 Dim sql_sum As String
 Dim cmd As ADODB.Command
-Dim RS As ADODB.Recordset
+Dim rs As ADODB.Recordset
 Dim li_Row As Integer
 
 Dim ls_no As String
@@ -1717,9 +1737,9 @@ Set cmd = New ADODB.Command
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "1")
     
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
 
-If Not RS.EOF Then
+If Not rs.EOF Then
 Screen.MousePointer = vbHourglass
 With xlapp
 
@@ -1745,7 +1765,7 @@ With xlapp
     .Range("A14") = "Kami Kirimkan barang-barang tersebut dibawah ini dengan kendaraan: .......................................... No: ........................"
     .Range("H1") = "Cikampek," & " " & Format(Now, "dd mmm YYYY")
     .Range("I4") = "Surat Jalan"
-    .Range("C8") = ": " & Trim(RS!DNNo)
+    .Range("C8") = ": " & Trim(rs!DNNo)
     .Range("C9") = ": " '& txtPoNo.Text
     .Range("C10") = ": " '& Trim(rsCek!BC_Type)
     .Range("C11") = ": " '& Trim(rsCek!BC40_No)
@@ -1770,7 +1790,7 @@ With xlapp
     Row = 16
 
 Dim jumlah As Double
-    Do While Not RS.EOF
+    Do While Not rs.EOF
         If Row = 16 Then
             .Range(ls_no & Row) = "No"
             .Range(ls_nama_part & Row) = "Nama Part"
@@ -1786,13 +1806,13 @@ Dim jumlah As Double
         nomor = nomor + 1
         Row = Row
         
-        jumlah = jumlah + RS!Qty
+        jumlah = jumlah + rs!Qty
         .Range(ls_no & Row) = nomor
-        .Range(ls_nama_part & Row) = Trim(RS!Name_Part)
-        .Range(ls_kode_part & Row) = "'" + Trim(RS!Kode_Part)
-        .Range(ls_qty_pengiriman & Row) = Format(RS!Qty)
-        .Range(ls_satuan & Row) = (RS!Description)
-        .Range(ls_keterangan & Row) = Format(RS!Remarks)
+        .Range(ls_nama_part & Row) = Trim(rs!Name_Part)
+        .Range(ls_kode_part & Row) = "'" + Trim(rs!Kode_Part)
+        .Range(ls_qty_pengiriman & Row) = Format(rs!Qty)
+        .Range(ls_satuan & Row) = (rs!Description)
+        .Range(ls_keterangan & Row) = Format(rs!Remarks)
         
         Row = Row + 1
         .Range(ls_no & Row - 1).horizontalAlignment = xlCenter
@@ -1802,7 +1822,7 @@ Dim jumlah As Double
         .Range(ls_kode_part & Row - 1).Borders(xlInsideVertical).LineStyle = xlContinuous
         .Range(ls_nama_part & Row - 1, ls_d & Row - 1).Merge
         
-        RS.MoveNext
+        rs.MoveNext
     Loop
     
     .Range("C12") = ": " & jumlah
@@ -1867,7 +1887,7 @@ Dim selisih As Double
 Dim nomor As Integer
 Dim sql_sum As String
 Dim cmd As ADODB.Command
-Dim RS As ADODB.Recordset
+Dim rs As ADODB.Recordset
 Dim li_Row As Integer
 
 Dim ls_a As String
@@ -1907,9 +1927,9 @@ Set cmd = New ADODB.Command
     cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
     cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "2")
     
-    Set RS = cmd.Execute
+    Set rs = cmd.Execute
 
-If Not RS.EOF Then
+If Not rs.EOF Then
 Screen.MousePointer = vbHourglass
 With xlapp
 
@@ -1939,7 +1959,7 @@ With xlapp
     .Range("A4") = "Nomor"
     .Range("A5") = "Tanggal"
     .Range("C4") = ": " & txtBCNo.Text
-    .Range("C5") = ": " & Format(Trim(RS!SJ_DATE), "dd mmm YYYY")
+    .Range("C5") = ": " & Format(Trim(rs!SJ_DATE), "dd mmm YYYY")
     .Range("A5 : J5").Borders(xlEdgeBottom).LineStyle = xlContinuous
     .Range("A4 : A5").Borders(xlEdgeLeft).LineStyle = xlContinuous
     .Range("J4 : J5").Borders(xlEdgeRight).LineStyle = xlContinuous
@@ -2040,7 +2060,7 @@ With xlapp
     RowDesc = 22
 
 Dim jumlah As Double
-    Do While Not RS.EOF
+    Do While Not rs.EOF
         nomor = nomor + 1
 
         .Range(ls_a & RowNo) = nomor
@@ -2058,26 +2078,26 @@ Dim jumlah As Double
         
         .Range(ls_j & RowNo & ":" & ls_j & RowNo + 3).Borders(xlEdgeRight).LineStyle = xlContinuous
         
-        .Range(ls_h & RowNo) = "NO DO : " & Trim(RS!DNNo)
+        .Range(ls_h & RowNo) = "NO DO : " & Trim(rs!DNNo)
         
         RowNo = RowNo + 1
         
         .Range(ls_b & RowDesc) = "Nama Barang :"
-        .Range(ls_c & RowDesc) = Trim(RS!Name_Part)
-        .Range(ls_g & RowNo - 1) = Format(RS!Qty)
+        .Range(ls_c & RowDesc) = Trim(rs!Name_Part)
+        .Range(ls_g & RowNo - 1) = Format(rs!Qty)
         .Range(ls_g & RowNo - 1 & ":" & ls_g & RowNo).Merge
-        .Range(ls_g & RowNo + 1) = Trim(RS!Description)
+        .Range(ls_g & RowNo + 1) = Trim(rs!Description)
         .Range(ls_g & RowNo - 1 & ":" & ls_g & RowNo + 2).horizontalAlignment = xlCenter
         .Range(ls_g & RowNo - 1 & ":" & ls_g & RowNo + 2).verticalAlignment = xlCenter
         
-        .Range(ls_h & RowNo) = "Tanggal : " & Format(RS!SJ_DATE, "DD-MMM-YYYY")
+        .Range(ls_h & RowNo) = "Tanggal : " & Format(rs!SJ_DATE, "DD-MMM-YYYY")
         
         
         RowNo = RowNo + 1
         RowDesc = RowDesc + 1
         
         .Range(ls_b & RowDesc) = "Kode Barang :"
-        .Range(ls_c & RowDesc) = "'" + Trim(RS!Kode_Part)
+        .Range(ls_c & RowDesc) = "'" + Trim(rs!Kode_Part)
         
 '        .Range(ls_h & RowNo) = "NO.PENDAFTARAN :"
         
@@ -2085,7 +2105,7 @@ Dim jumlah As Double
         RowDesc = RowDesc + 1
         
         .Range(ls_b & RowDesc) = "HS Code : "
-        .Range(ls_c & RowDesc) = "'" & Trim(RS!HS_Code)
+        .Range(ls_c & RowDesc) = "'" & Trim(rs!HS_Code)
 '        .Range(ls_h & RowNo) = "Tanggal : "
         .Range(ls_b & RowDesc & ":" & ls_j & RowDesc).Borders(xlEdgeBottom).LineStyle = xlContinuous
         
@@ -2093,7 +2113,7 @@ Dim jumlah As Double
         RowNo = RowNo + 1
         RowDesc = RowDesc + 2
 
-        RS.MoveNext
+        rs.MoveNext
     Loop
     
 '    RowNo = RowNo + 1
@@ -2175,7 +2195,7 @@ End Sub
 
 Private Sub save_Load()
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 Dim RsGetSJ As New Recordset
 
 up_Validate ("Input")
@@ -2207,25 +2227,25 @@ MousePointer = vbHourglass
 
             sql = "EXEC sp_SupplyBySerialNo_Validate '1', '" & Trim(cboFromWH.Text) & "', '" & Trim(cboToWH.Text) & "', '" & Trim(txtBarcode.Text) & "'"
             
-            If RS.State = adStateOpen Then RS.Close
-            RS.CursorLocation = adUseClient
-            RS.Open sql, Db, adOpenKeyset, adLockOptimistic
+            If rs.State = adStateOpen Then rs.Close
+            rs.CursorLocation = adUseClient
+            rs.Open sql, Db, adOpenKeyset, adLockOptimistic
             
             
-            If RS.EOF = False Then
+            If rs.EOF = False Then
 '                    lbl_pesan.Caption = DisplayMsg("0071")
 '                    MousePointer = vbDefault
 '
 '                    wmp.URL = (App.path & "\Incorrect.mp3")
 '                Exit Sub
-                If IIf(IsNull(Trim(RS("Receipt_Status"))) = True, "0", Trim(RS("Receipt_Status"))) <> 1 And IIf(IsNull(Trim(RS("Scan_Cls"))) = True, "0", Trim(RS("Scan_Cls"))) <> 1 Then
+                If IIf(IsNull(Trim(rs("Receipt_Status"))) = True, "0", Trim(rs("Receipt_Status"))) <> 1 And IIf(IsNull(Trim(rs("Scan_Cls"))) = True, "0", Trim(rs("Scan_Cls"))) <> 1 Then
                     lbl_pesan.Caption = DisplayMsg("0071")
                     MousePointer = vbDefault
                    
                     wmp.URL = (App.path & "\Incorrect.mp3")
                     Exit Sub
                 End If
-                RS.MoveNext
+                rs.MoveNext
                 
             End If
         End If
@@ -2242,19 +2262,19 @@ MousePointer = vbHourglass
             
             sql = "EXEC sp_SupplyBySerialNo_Validate '1', '" & Trim(cboFromWH.Text) & "', '" & Trim(cboToWH.Text) & "', '" & Trim(txtBarcode.Text) & "'"
             
-            If RS.State = adStateOpen Then RS.Close
-            RS.CursorLocation = adUseClient
-            RS.Open sql, Db, adOpenKeyset, adLockOptimistic
+            If rs.State = adStateOpen Then rs.Close
+            rs.CursorLocation = adUseClient
+            rs.Open sql, Db, adOpenKeyset, adLockOptimistic
             
-            Do While Not RS.EOF
-                If IIf(IsNull(Trim(RS("Receipt_Status"))) = True, "0", Trim(RS("Receipt_Status"))) <> 1 And IIf(IsNull(Trim(RS("Scan_Cls"))) = True, "0", Trim(RS("Scan_Cls"))) <> 1 Then
+            Do While Not rs.EOF
+                If IIf(IsNull(Trim(rs("Receipt_Status"))) = True, "0", Trim(rs("Receipt_Status"))) <> 1 And IIf(IsNull(Trim(rs("Scan_Cls"))) = True, "0", Trim(rs("Scan_Cls"))) <> 1 Then
                  lbl_pesan.Caption = DisplayMsg("0071")
                  MousePointer = vbDefault
                     
                  wmp.URL = (App.path & "\Incorrect.mp3")
                  Exit Sub
                 End If
-                RS.MoveNext
+                rs.MoveNext
             Loop
         End If
      

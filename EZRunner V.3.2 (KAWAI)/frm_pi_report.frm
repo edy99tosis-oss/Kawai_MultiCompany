@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_pi_report 
    BackColor       =   &H00FDDFE3&
@@ -292,7 +292,7 @@ Begin VB.Form frm_pi_report
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   59506691
+      Format          =   62717955
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -568,6 +568,8 @@ Dim bteColGrandTotal As Byte
 Dim bteColGrandTotal2 As Byte
 
 Dim bytSort As Byte
+Dim vFactoryCode As String
+
 
 Private Sub Header()
 
@@ -972,6 +974,8 @@ Call StockLocation
 DMonth = Format(Now, "mmmm yyyy")
 Call Header
 
+vFactoryCode = uf_GetCompany()
+
 End Sub
 
 Private Sub Old_StockLocation()
@@ -1037,7 +1041,7 @@ Private Sub StockLocation()
     CboLocationCD.ListRows = 15
 
 ' --- Tambahkan blok cleanup untuk memastikan objek dibebaskan ---
-Cleanup:
+CleanUp:
     If Not RsStock Is Nothing Then
         If RsStock.State <> adStateClosed Then RsStock.Close
         Set RsStock = Nothing
@@ -1048,7 +1052,7 @@ Cleanup:
 ErrHandler:
     ' Tampilkan pesan error jika terjadi masalah
     MsgBox "Error saat memuat lokasi stock: " & err.Description, vbCritical, "Error"
-    Resume Cleanup ' Lanjut ke blok cleanup untuk membersihkan objek
+    Resume CleanUp ' Lanjut ke blok cleanup untuk membersihkan objek
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -1408,7 +1412,7 @@ If Not rsCek.EOF Then
 Screen.MousePointer = vbHourglass
 With xlapp
 
-    sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile "
+    sql = "select rtrim(company_name) company_name, rtrim(address1) Address1, rtrim(Address2) Address2, rtrim(Province) Province, rtrim(city) City, Rtrim(Postal_Code) POstal_Code, Rtrim(phone1) Phone1, Rtrim(phone2) Phone2,rtrim(fax) Fax  From company_profile where company_code = '" & vFactoryCode & "' "
     If rsCompany.State <> adStateClosed Then rsCompany.Close
     rsCompany.Open sql, Db, adOpenDynamic, adLockOptimistic
     If rsCompany.EOF Then Screen.MousePointer = vbDefault: Exit Sub

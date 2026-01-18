@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_IncomingMaterialReport 
    BackColor       =   &H00FDDFE3&
@@ -297,7 +297,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60227587
+      Format          =   136183811
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -320,7 +320,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60227587
+      Format          =   136183811
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -680,7 +680,7 @@ Select Case Index
                 "left outer join warehouse_master wh on pr.warehouse_code = wh.wh_code " & _
                 "left outer join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls " & _
                 "left outer join unit_cls uc on pr.unit_cls = uc.unit_cls " & _
-                "left outer join curr_cls cc on pr.currency_code = cc.curr_cls, company_profile cp " & _
+                "left outer join curr_cls cc on pr.currency_code = cc.curr_cls, (Select * from Company_Profile WHERE Company_Code = '" & TxtFc.Text & "') cp " & _
                 "where (receipt_cls = 'R' or receipt_cls = 'R1') " & sqlcd & "" & _
                 " pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & _
                 " AND wh.Company_Code='" & Trim(TxtFc) & "' "

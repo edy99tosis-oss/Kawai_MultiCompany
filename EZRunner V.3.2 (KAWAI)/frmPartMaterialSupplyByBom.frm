@@ -82,7 +82,7 @@ Begin VB.Form frmPartMaterialSupplyByBom
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   136183811
          CurrentDate     =   39287
       End
       Begin MSComCtl2.DTPicker dt_from 
@@ -105,7 +105,7 @@ Begin VB.Form frmPartMaterialSupplyByBom
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   136183811
          CurrentDate     =   39105
       End
       Begin MSComCtl2.DTPicker dt_to 
@@ -128,7 +128,7 @@ Begin VB.Form frmPartMaterialSupplyByBom
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   136183811
          CurrentDate     =   39289
       End
       Begin VB.Label Label8 
@@ -494,8 +494,8 @@ Begin VB.Form frmPartMaterialSupplyByBom
       TabIndex        =   22
       Top             =   120
       Width           =   1860
-      _ExtentX        =   3281
-      _ExtentY        =   741
+      _extentx        =   3281
+      _extenty        =   741
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
       Height          =   5070
@@ -629,6 +629,8 @@ Dim sql As String
 Dim Month, Year
 Dim Db_ps As New ADODB.Connection
 Dim rsRpt As New ADODB.Recordset
+Dim vFactoryCode As String
+
 Sub Header()
     
     ColCustCd = 1
@@ -877,7 +879,7 @@ Load frmPartMaterialSuplyBomDetail
     End If
     '.txt_set = Format(TempSetQTY, gs_formatAmountIDR)
     .txt_set.Enabled = False
-    .CmdSubMenu.Caption = "&Back"
+    .cmdSubMenu.Caption = "&Back"
     .Show 1
     End With
 MousePointer = vbDefault
@@ -890,7 +892,7 @@ End Sub
 
 Private Sub cmdDelete_Click(Index As Integer)
 Dim sql As String
-Dim RS As New Recordset
+Dim rs As New Recordset
 Dim db1 As New Connection
 
 lblerror.Caption = ""
@@ -912,9 +914,9 @@ lblerror.Caption = ""
     
     If (MsgBox("Are you sure want to delete?", vbQuestion + vbDefaultButton2 + vbYesNo, "Confirmation") = vbYes) Then
         sql = "Select * from SupplyBOM_Master WHERE Supply_no = '" & Trim(cbo_supply.Text) & "'"
-        If RS.State = 1 Then RS.Close
-        RS.Open sql, Db, adOpenKeyset, adLockOptimistic
-        If RS.EOF Then
+        If rs.State = 1 Then rs.Close
+        rs.Open sql, Db, adOpenKeyset, adLockOptimistic
+        If rs.EOF Then
             lblerror.Caption = DisplayMsg(4024)
             Exit Sub
         End If
@@ -930,30 +932,30 @@ On Error GoTo ErrHandler
         
         sql = "Delete SupplyBOM_Master where Supply_no = '" & Trim(cbo_supply.Text) & "'" & vbCrLf & _
               "Delete SupplyBOM_Detail where Supply_no = '" & Trim(cbo_supply.Text) & "'"
-        If RS.State = 1 Then RS.Close
-        RS.Open sql, db1, adOpenKeyset, adLockOptimistic
+        If rs.State = 1 Then rs.Close
+        rs.Open sql, db1, adOpenKeyset, adLockOptimistic
         
         sql = "select * from part_supply where SupplyRec_no = '" & Trim(cbo_supply.Text) & "'"
-        If RS.State = 1 Then RS.Close
-        RS.Open sql, db1, adOpenKeyset, adLockOptimistic
+        If rs.State = 1 Then rs.Close
+        rs.Open sql, db1, adOpenKeyset, adLockOptimistic
         
-        If Not RS.EOF Then
-            Do While Not RS.EOF
+        If Not rs.EOF Then
+            Do While Not rs.EOF
                 FromControlCls = "01"
                 Call up_UpdateStockMaster(Format(Trim(dt_supply.Value), "yyyy-MM-dd"), _
                     uf_GetLastClosing("month"), uf_GetLastClosing("year"), _
                     Trim(cbo_warehouse.Text), Trim(cbo_location.Text), _
-                    Trim(RS!childitem_code), _
-                    0 - (RS!ChildRequirement_qty), "S1", _
+                    Trim(rs!childitem_code), _
+                    0 - (rs!ChildRequirement_qty), "S1", _
                     "01", "", "D", "", "", False, False, True, db1)
                 FromControlCls = ""
                     
-                RS.MoveNext
+                rs.MoveNext
             Loop
             
             sql = "Delete Part_supply Where SupplyRec_no = '" & Trim(cbo_supply.Text) & "'"
-            If RS.State = 1 Then RS.Close
-            RS.Open sql, db1, adOpenKeyset, adLockOptimistic
+            If rs.State = 1 Then rs.Close
+            rs.Open sql, db1, adOpenKeyset, adLockOptimistic
             
         End If
         
@@ -964,7 +966,7 @@ On Error GoTo ErrHandler
     End If
     
 ExitError:
-Set RS = Nothing
+Set rs = Nothing
 db1.Close
 
 BrowseGrid
@@ -1005,6 +1007,8 @@ Call IsiDefaultValue
 
 Call Kosong
 Call adtocombo
+
+vFactoryCode = uf_GetCompany()
 
 End Sub
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -1091,7 +1095,7 @@ End With
         rs_warehouse.MoveFirst
         While rs_warehouse.EOF = False
             .AddItem ""
-            .List(.ListCount - 1, 0) = Trim(rs_warehouse!wh_code)
+            .List(.ListCount - 1, 0) = Trim(rs_warehouse!WH_Code)
             .List(.ListCount - 1, 1) = Trim(rs_warehouse!WH_Name)
             .List(.ListCount - 1, 2) = Trim(rs_warehouse!stockcontrol_cls)
             rs_warehouse.MoveNext
@@ -1124,7 +1128,7 @@ sql_warehouse = "EXEC dbo.sp_PartSupplyByBOMLoad_WH @UserID = '" & userLogin & "
        rs_warehouse.MoveFirst
        While rs_warehouse.EOF = False
            .AddItem ""
-           .List(.ListCount - 1, 0) = Trim(rs_warehouse!wh_code)
+           .List(.ListCount - 1, 0) = Trim(rs_warehouse!WH_Code)
            .List(.ListCount - 1, 1) = Trim(rs_warehouse!WH_Name)
            .List(.ListCount - 1, 2) = Trim(rs_warehouse!stockcontrol_cls)
            rs_warehouse.MoveNext

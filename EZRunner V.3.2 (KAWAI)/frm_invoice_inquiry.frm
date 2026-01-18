@@ -23,8 +23,8 @@ Begin VB.Form frm_invoice_inquiry
       TabStop         =   0   'False
       Top             =   390
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VB.CommandButton cmdSearch 
       BackColor       =   &H0080FFFF&
@@ -184,7 +184,7 @@ Begin VB.Form frm_invoice_inquiry
          EndProperty
          CalendarBackColor=   16777215
          CustomFormat    =   "MMM yyyy"
-         Format          =   151715843
+         Format          =   128385027
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DTPicker1 
@@ -209,7 +209,7 @@ Begin VB.Form frm_invoice_inquiry
          EndProperty
          CalendarBackColor=   16777215
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   151715843
+         Format          =   128385027
          CurrentDate     =   37798
       End
       Begin VB.Label Label10 
@@ -422,7 +422,7 @@ Begin VB.Form frm_invoice_inquiry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   151715843
+         Format          =   128385027
          CurrentDate     =   37818
       End
       Begin MSComCtl2.DTPicker DTPicker3 
@@ -444,7 +444,7 @@ Begin VB.Form frm_invoice_inquiry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   151715843
+         Format          =   128385027
          CurrentDate     =   37818
       End
       Begin VB.Label lbl_name 
@@ -987,6 +987,7 @@ Dim bteColService As Byte
 Dim bteColAmount As Byte
 
 Dim bteHakPrice As Byte
+Dim vFactoryCode As String
 
 Private Sub SetCol()
     bteColItemCode = 0
@@ -1010,7 +1011,7 @@ MousePointer = vbDefault
      '   rs_invoice_master.MoveFirst
       '  rs_invoice_master.Find "invoice_no='" & Trim(combo1.Text) & "'"
     'If Not rs_invoice_master.EOF Then
-    If combo1.MatchFound Then
+    If combo1.matchFound Then
         l_fix = UCase(Trim(combo1.Column(1)))
         rs_invoice_master.Requery
         rs_invoice_master.MoveFirst
@@ -1205,7 +1206,7 @@ Set xdo = New Recordset
 xdo.Open sql, Db, adOpenDynamic, adLockOptimistic
 inv_no = "'" & Trim(combo1.Text) & "'"
 If countrycls = 0 Then
-    Call InvReport
+    Call InvReport(vFactoryCode)
 Else
     InvReportExport (bteHakPrice)
 End If

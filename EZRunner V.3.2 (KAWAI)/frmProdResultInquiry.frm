@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmProdResultInquiry 
    BackColor       =   &H00FDDFE3&
@@ -317,7 +317,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60096515
+      Format          =   62717955
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -340,7 +340,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   60096515
+      Format          =   62717955
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -578,7 +578,7 @@ Private Sub headerGrid()
     bteColCustName = 18 + 2
     bteColPONo = 19 + 2
     
-    With grid
+    With Grid
         .clear
         .ColS = 20 + 2
         .Rows = 1
@@ -692,13 +692,13 @@ Dim booCheck As Boolean
         Else
         
             strCheck = "": booCheck = False
-            For lngCount = 1 To grid.Rows - 1
-                If grid.Cell(flexcpChecked, lngCount, 0) = flexChecked Then
+            For lngCount = 1 To Grid.Rows - 1
+                If Grid.Cell(flexcpChecked, lngCount, 0) = flexChecked Then
                     If Not booCheck Then booCheck = True
                     If strCheck <> "" Then
                         strCheck = strCheck & ", "
                     End If
-                    strCheck = strCheck & grid.TextMatrix(lngCount, bteColSeqNo)
+                    strCheck = strCheck & Grid.TextMatrix(lngCount, bteColSeqNo)
                 End If
             Next
             
@@ -720,12 +720,12 @@ Dim booCheck As Boolean
                     "       a.remark, b.item_name, (select trade_name from trade_master where trade_code = '" & cbo(0) & "') factory_name,  " & _
                     "       (select line_name from manufacture_line where manufacture_code = '" & cbo(0) & "' and line_code = '" & cbo(1) & "') line_name, " & _
                     "       b.number_entering, rtrim(a.prod_barcode) prod_barcode, " & _
-                    "       (select rtrim(production_person) from company_profile) Prod_Person, " & _
-                    "       (select rtrim(production_position) from company_profile) production_Position,  " & _
-                    "       (select rtrim(QC_person) from company_profile) QC_Person, " & _
-                    "       (select rtrim(QC_position) from company_profile) QC_Position,   " & _
-                    "       (select rtrim(PPC_person) from company_profile) PPC_Person,  " & _
-                    "       (select rtrim(PPC_position) from company_profile) PPC_Position  " & _
+                    "       (select rtrim(production_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') Prod_Person, " & _
+                    "       (select rtrim(production_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') production_Position,  " & _
+                    "       (select rtrim(QC_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') QC_Person, " & _
+                    "       (select rtrim(QC_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') QC_Position,   " & _
+                    "       (select rtrim(PPC_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') PPC_Person,  " & _
+                    "       (select rtrim(PPC_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') PPC_Position  " & _
                     "       from daily_production a  " & _
                     "       left join item_master b on b.item_code=a.item_code  " & _
                     "   where a.factory_code='" & cbo(0) & "' and a.line_code='" & cbo(1) & "' and a.schedule_date>='" & Format(dtAwal, "yyyy-MM-dd") & "' and a.schedule_date<='" & Format(dtAkhir, "yyyy-MM-dd") & "'  " & _
@@ -807,12 +807,12 @@ Dim sqlResult As String
                   vbLf & "   a.remark, b.item_name, (select trade_name from trade_master where trade_code = '" & cbo(0) & "') factory_name,  " & _
                   vbLf & "   (select line_name from manufacture_line where manufacture_code = '" & cbo(0) & "' and line_code = '" & cbo(1) & "') line_name,  " & _
                   vbLf & "   c.receipt_date, b.number_entering,  a.complete_cls, c.SerialNoFrom RSerialFrom,C.SerialNoTo RSerialTo,isnull(c.Qty,0) QtyResult," & _
-                  vbLf & "   (select rtrim(production_person) from company_profile) Prod_Person, " & _
-                  vbLf & "   (select rtrim(production_position) from company_profile) production_Position,  " & _
-                  vbLf & "   (select rtrim(QC_person) from company_profile) QC_Person, " & _
-                  vbLf & "   (select rtrim(QC_position) from company_profile) QC_Position,   " & _
-                  vbLf & "   (select rtrim(PPC_person) from company_profile) PPC_Person,  " & _
-                  vbLf & "   (select rtrim(PPC_position) from company_profile) PPC_Position,  " & _
+                  vbLf & "   (select rtrim(production_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') Prod_Person, " & _
+                  vbLf & "   (select rtrim(production_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') production_Position,  " & _
+                  vbLf & "   (select rtrim(QC_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') QC_Person, " & _
+                  vbLf & "   (select rtrim(QC_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') QC_Position,   " & _
+                  vbLf & "   (select rtrim(PPC_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') PPC_Person,  " & _
+                  vbLf & "   (select rtrim(PPC_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') PPC_Position,  " & _
                   vbLf & "   (select isnull(sum(qty),0) from part_receipt where dailyseq_no = a.seq_no and receipt_cls = 'P1' and receipt_date= c.receipt_date) QtyResult1 " & _
                   vbLf & " from daily_production a  " & _
                   vbLf & "   left join item_master b on b.item_code=a.item_code  " & _
@@ -980,12 +980,12 @@ Private Sub CmdExcel_Click()
                   vbLf & "   a.remark, b.item_name, (select trade_name from trade_master where trade_code = '" & cbo(0) & "') factory_name,  " & _
                   vbLf & "   (select line_name from manufacture_line where manufacture_code = '" & cbo(0) & "' and line_code = '" & cbo(1) & "') line_name,  " & _
                   vbLf & "   c.receipt_date, b.number_entering,  a.complete_cls, c.SerialNoFrom RSerialFrom,C.SerialNoTo RSerialTo, isnull(c.Qty,0) Qtyresult," & _
-                  vbLf & "   (select rtrim(production_person) from company_profile) Prod_Person, " & _
-                  vbLf & "   (select rtrim(production_position) from company_profile) production_Position,  " & _
-                  vbLf & "   (select rtrim(QC_person) from company_profile) QC_Person, " & _
-                  vbLf & "   (select rtrim(QC_position) from company_profile) QC_Position,   " & _
-                  vbLf & "   (select rtrim(PPC_person) from company_profile) PPC_Person,  " & _
-                  vbLf & "   (select rtrim(PPC_position) from company_profile) PPC_Position,  " & _
+                  vbLf & "   (select rtrim(production_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') Prod_Person, " & _
+                  vbLf & "   (select rtrim(production_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') production_Position,  " & _
+                  vbLf & "   (select rtrim(QC_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') QC_Person, " & _
+                  vbLf & "   (select rtrim(QC_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') QC_Position,   " & _
+                  vbLf & "   (select rtrim(PPC_person) from company_profile where Company_Code = '" & cboFactory(2).Text & "') PPC_Person,  " & _
+                  vbLf & "   (select rtrim(PPC_position) from company_profile where Company_Code = '" & cboFactory(2).Text & "') PPC_Position,  " & _
                   vbLf & "   (select isnull(sum(qty),0) from part_receipt where dailyseq_no = a.seq_no and receipt_cls = 'P1' and receipt_date= c.receipt_date) QtyResult1 " & _
                   vbLf & " from daily_production a  " & _
                   vbLf & "   left join item_master b on b.item_code=a.item_code  " & _
@@ -1243,7 +1243,7 @@ Dim sqlResult As String
 Me.MousePointer = vbHourglass
 
 If nilKosong = True Then Exit Sub
-With grid
+With Grid
     Call headerGrid
     
     sql = "select a.Seq_No,Schedule_Date,a.Item_Code,a.SerialNoFrom,a.SerialNoTo, " & _
@@ -1330,7 +1330,7 @@ End Sub
 
 Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 Dim tampung As Long
-With grid
+With Grid
     If Row <> 0 And Col = bteColSelect Then
         If .Cell(flexcpChecked, Row, bteColSelect) = flexChecked Then
             tampung = Row
@@ -1363,7 +1363,7 @@ Dim rsCek As New ADODB.Recordset
             'WORKSHEET
             viewWorksheet
         Else
-            With grid
+            With Grid
                 cek = 0
                 For i = 1 To .Rows - 1
                     If .Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
