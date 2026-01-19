@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
 Begin VB.Form FrmWarehouse 
    BackColor       =   &H00FDDFE3&
    BorderStyle     =   1  'Fixed Single
@@ -278,7 +278,7 @@ Begin VB.Form FrmWarehouse
       Height          =   315
       Index           =   0
       Left            =   510
-      MaxLength       =   10
+      MaxLength       =   15
       TabIndex        =   0
       Tag             =   "WH Code"
       Top             =   7410
@@ -413,7 +413,7 @@ Begin VB.Form FrmWarehouse
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   155975683
+      Format          =   128253955
       CurrentDate     =   37818
    End
    Begin VB.Label Label3 
@@ -699,7 +699,7 @@ Begin VB.Form FrmWarehouse
       Height          =   375
       Left            =   420
       TabIndex        =   12
-      Top             =   480
+      Top             =   360
       Width           =   13155
    End
    Begin VB.Shape Shape1 

@@ -159,7 +159,7 @@ Begin VB.Form FrmPart_RecUn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   128581635
+         Format          =   128122883
          UpDown          =   -1  'True
          CurrentDate     =   37868
       End
@@ -572,7 +572,7 @@ Begin VB.Form FrmPart_RecUn
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128581635
+      Format          =   128122883
       CurrentDate     =   37868
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -701,7 +701,7 @@ Begin VB.Form FrmPart_RecUn
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128581635
+      Format          =   128122883
       CurrentDate     =   37868
    End
    Begin VB.Label Label17 
@@ -1291,6 +1291,7 @@ Begin VB.Form FrmPart_RecUn
       Left            =   7155
       TabIndex        =   41
       Top             =   7830
+      Visible         =   0   'False
       Width           =   690
    End
    Begin VB.Label LblPart 
@@ -1335,11 +1336,11 @@ Begin VB.Form FrmPart_RecUn
       Left            =   5505
       TabIndex        =   13
       Top             =   8220
-      Width           =   1245
+      Width           =   2550
       VariousPropertyBits=   612386843
       MaxLength       =   15
       DisplayStyle    =   3
-      Size            =   "2196;556"
+      Size            =   "4498;556"
       ListRows        =   15
       MatchEntry      =   1
       ShowDropButtonWhen=   2
@@ -1362,7 +1363,8 @@ Begin VB.Form FrmPart_RecUn
       Height          =   255
       Left            =   6825
       TabIndex        =   39
-      Top             =   8250
+      Top             =   8280
+      Visible         =   0   'False
       Width           =   1335
    End
    Begin VB.Line Line2 
@@ -1759,7 +1761,7 @@ On Error GoTo ErrHandler
     ' Ambil info item (warehouse & unit)
     Set RsItem = Db.Execute("SELECT WH_code, unit_cls FROM Item_master WHERE item_code='" & Trim$(cboitem) & "'")
     If Not RsItem.EOF Then
-        cboWhCode = Trim$(RsItem!wh_code)
+        cboWhCode = Trim$(RsItem!WH_Code)
         CboWHCode_Click
 
         ' Ambil harga dan mata uang

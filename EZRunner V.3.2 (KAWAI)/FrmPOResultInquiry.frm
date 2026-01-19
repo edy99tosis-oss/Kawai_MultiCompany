@@ -230,7 +230,7 @@ Begin VB.Form FrmPOResultInquiry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   150994947
+         Format          =   128843779
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker deldate1 
@@ -252,7 +252,7 @@ Begin VB.Form FrmPOResultInquiry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   150994947
+         Format          =   128843779
          CurrentDate     =   37810
       End
       Begin VB.Label Label4 
@@ -520,8 +520,8 @@ Begin VB.Form FrmPOResultInquiry
       TabStop         =   0   'False
       Top             =   360
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VB.Label Label3 
       Alignment       =   2  'Center
@@ -564,6 +564,8 @@ Dim btePlan As Byte
 Dim bteResult As Byte
 Dim bteRemain As Byte
 Dim bteComplete As Byte
+Dim vFactoryCode As String
+
 
 Sub Header()
     
@@ -619,7 +621,7 @@ Sub Header()
         
         .Cell(flexcpAlignment, 0, 0, 0, .ColS - 1) = flexAlignCenterCenter
         
-        If cboSupplier.Text = strAll Then
+        If cbosupplier.Text = strAll Then
             .ColHidden(bteSuppCode) = False
             .ColHidden(bteSuppName) = False
         Else
@@ -638,7 +640,7 @@ Sub adtocombo()
 sql = "SELECT Trade_Code, Trade_Name FROM Trade_Master where trade_cls='2' or trade_cls='3'"
 Set RS = Db.Execute(sql)
 
-With cboSupplier
+With cbosupplier
 .clear
 .columnCount = 2
 .ColumnWidths = "80 pt;300 pt"
@@ -675,15 +677,15 @@ sql = "select pm.supplier_code, tm.trade_name, pd.delivery_date, pd.item_code, "
       " Inner Join  trade_master tm  on  pm.supplier_code = tm.trade_code " & vbCrLf & _
       " Left Join item_master im on pd.item_code = im.item_code" & vbCrLf & _
       "Where 'A'='A' " & vbCrLf & _
-      "and pm.po_no like '%" & txtpo.Text & "%' " & vbCrLf
+      "and pm.po_no like '%" & txtPO.Text & "%' " & vbCrLf
 
-If cboSupplier <> strAll Then sql = sql & "and pm.supplier_code='" & Trim(cboSupplier.Text) & "' "
+If cbosupplier <> strAll Then sql = sql & "and pm.supplier_code='" & Trim(cbosupplier.Text) & "' "
 If cboremaincls.ListIndex = 0 Then
-sql = sql & " and pd.delivery_date>='" & Format(DelDate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
+sql = sql & " and pd.delivery_date>='" & Format(deldate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
       Format(deldate1.Value, "yyyy-mm-dd") & "' and (case pd.complete_cls when 1 then 0 else (isnull(pd.qty,0) - isnull((select sum(qty) from part_receipt where supplier_code=pm.supplier_code and " & _
       "po_no=pm.po_no and item_code=pd.item_code),0)) end) > 0 "
 Else
-sql = sql & " and pd.delivery_date>='" & Format(DelDate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
+sql = sql & " and pd.delivery_date>='" & Format(deldate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
       Format(deldate1.Value, "yyyy-mm-dd") & "' and (case pd.complete_cls when 1 then 0 else (isnull(pd.qty,0) - isnull((select sum(qty) from part_receipt where supplier_code=pm.supplier_code and " & _
       "po_no=pm.po_no and item_code=pd.item_code),0)) end) <= 0 "
 End If
@@ -736,7 +738,7 @@ Private Sub toExcel()
     Dim strFileName As String
     
     Me.MousePointer = vbHourglass
-    On Error GoTo errHandler
+    On Error GoTo ErrHandler
     
     LblErrMsg.Caption = ""
     
@@ -745,7 +747,7 @@ Private Sub toExcel()
                 
         Me.MousePointer = vbHourglass
                 
-        sql = "Select Company_Name, Address1, Address2, Province, City, Postal_Code, Phone1, Phone2, Fax From Company_Profile"
+        sql = "Select Company_Name, Address1, Address2, Province, City, Postal_Code, Phone1, Phone2, Fax From Company_Profile WHERE Company_Code = '" & vFactoryCode & "'"
         If adoRs.State <> adStateClosed Then adoRs.Close
         adoRs.Open sql, Db, adOpenDynamic, adLockReadOnly, adCmdText
     
@@ -759,7 +761,7 @@ Private Sub toExcel()
         .Range("A3:J3").Merge
         .Range("A4:J4").Merge
         .Range("A6:J6").Merge
-        .Range("A2:J4").HorizontalAlignment = xlHAlignCenter
+        .Range("A2:J4").horizontalAlignment = xlHAlignCenter
                              
         .Range("A2").Font.Bold = True
         .Range("A2").Font.Size = 10
@@ -772,11 +774,11 @@ Private Sub toExcel()
         .Range("A6") = "Purchase Order / Result Inquiry (Each Supplier)"
         .Range("A7") = "Supplier Code"
         .Range("B7", "J7").Merge
-        .Range("B7") = ": " & cboSupplier.Column(0) & " / " & cboSupplier.Column(1)
-        .Range("B7").HorizontalAlignment = xlLeft
+        .Range("B7") = ": " & cbosupplier.Column(0) & " / " & cbosupplier.Column(1)
+        .Range("B7").horizontalAlignment = xlLeft
         .Range("A8") = "Delivery Date"
         .Range("B8", "J8").Merge
-        .Range("B8") = ": " & Format(DelDate.Value, "[$-409]d-mmm-yyyy;@") & " to " & Format(deldate1.Value, "[$-409]d-mmm-yyyy;@")
+        .Range("B8") = ": " & Format(deldate.Value, "[$-409]d-mmm-yyyy;@") & " to " & Format(deldate1.Value, "[$-409]d-mmm-yyyy;@")
         .Range("A9") = "Remaining Cls"
         .Range("B9", "J9").Merge
         .Range("B9") = ": " & cboremaincls.Column(0)
@@ -790,7 +792,7 @@ Private Sub toExcel()
         .Range("A" & 11 + grid.Rows - 1 & ":J" & 11 + grid.Rows - 1).Borders(xlEdgeBottom).LineStyle = xlDouble
         '********************************************************************************************
         
-        .Range("A11:J11").HorizontalAlignment = xlHAlignCenter
+        .Range("A11:J11").horizontalAlignment = xlHAlignCenter
                     
         .Range("A11") = "Supplier Code"
         .Range("B11") = "Supplier Name"
@@ -832,7 +834,7 @@ Private Sub toExcel()
         .Range("A11", "J" & 11 + grid.Rows - 1).Columns.Font.Size = 8
         
         .Range("F12:F" & 11 + grid.Rows - 1).NumberFormat = "[$-409]d-mmm-yyyy;@"
-        .Range("A12:E" & 11 + grid.Rows - 1).HorizontalAlignment = xlLeft
+        .Range("A12:E" & 11 + grid.Rows - 1).horizontalAlignment = xlLeft
         .Range("g12:g" & 11 + grid.Rows - 1).NumberFormat = gs_formatQty
         .Range("h12:h" & 11 + grid.Rows - 1).NumberFormat = gs_formatQty
         .Range("i12:i" & 11 + grid.Rows - 1).NumberFormat = gs_formatQty
@@ -857,7 +859,7 @@ ErrExit:
     Set adoRs = Nothing
     Me.MousePointer = vbDefault
     Exit Sub
-errHandler:
+ErrHandler:
     LblErrMsg.Caption = "[" & err.number & "] " & err.Description
     err.clear
     Resume ErrExit
@@ -888,17 +890,20 @@ Private Sub Form_Load()
     .ListIndex = 0
   End With
   
-  DelDate.Value = Format(Now, "dd MMM yyyy")
+  deldate.Value = Format(Now, "dd MMM yyyy")
   deldate1.Value = Format(Now, "dd MMM yyyy")
-    
+  
+  
+    vFactoryCode = uf_GetCompany()
+
   'Me.Caption = Me.Caption & " (Menu ID : " & frmcode(Me.Name) & ")"
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 End Sub
 
 Private Sub cbosupplier_Click()
-  If cboSupplier.ListIndex <> -1 Then
-    LblName.Caption = cboSupplier.Column(1)
+  If cbosupplier.ListIndex <> -1 Then
+    lblname.Caption = cbosupplier.Column(1)
   End If
 End Sub
 
@@ -907,7 +912,7 @@ Private Sub cbosupplier_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integ
 End Sub
 
 Private Sub deldate_Change()
-If CDate(DelDate) > CDate(deldate1) Then
+If CDate(deldate) > CDate(deldate1) Then
   LblErrMsg.Caption = DisplayMsg(4076) & " " & Format(deldate1, "dd MMM yyyy")  '"delivery Date must be lower than "
   Exit Sub
 Else
@@ -921,8 +926,8 @@ Private Sub deldate_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub deldate1_Change()
-If CDate(deldate1) < CDate(DelDate) Then
- LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(DelDate, "dd MMM yyyy")   '"delivery Date must be higher than "
+If CDate(deldate1) < CDate(deldate) Then
+ LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(deldate, "dd MMM yyyy")   '"delivery Date must be higher than "
  Exit Sub
 Else
  LblErrMsg.Caption = ""
@@ -935,26 +940,26 @@ Private Sub deldate1_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub cmdSearch_Click()
-    If cboSupplier.Text = "" Then
+    If cbosupplier.Text = "" Then
         LblErrMsg = DisplayMsg(1054)
-        cboSupplier.SetFocus
+        cbosupplier.SetFocus
         Exit Sub
-    ElseIf CDate(deldate1) < CDate(DelDate) Then
-      LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(DelDate, "dd MMM yyyy")   '"delivery Date must be higher than "
+    ElseIf CDate(deldate1) < CDate(deldate) Then
+      LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(deldate, "dd MMM yyyy")   '"delivery Date must be higher than "
       deldate1.SetFocus
       Exit Sub
     End If
     
-    If cboSupplier.Text <> "" Then
-      cboSupplier.MatchEntry = 1
-      cboSupplier.Text = cboSupplier.Text
-      If cboSupplier.MatchFound = False Then
+    If cbosupplier.Text <> "" Then
+      cbosupplier.MatchEntry = 1
+      cbosupplier.Text = cbosupplier.Text
+      If cbosupplier.matchFound = False Then
           LblErrMsg = DisplayMsg(4050)
-          cboSupplier.SetFocus
-          cboSupplier.MatchEntry = 2
+          cbosupplier.SetFocus
+          cbosupplier.MatchEntry = 2
           Exit Sub
       End If
-      cboSupplier.MatchEntry = 2
+      cbosupplier.MatchEntry = 2
     End If
     
     Browse

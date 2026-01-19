@@ -648,8 +648,9 @@ Public Function CheckFactoryPrivilege() As Boolean
 
         ' === Kalau lebih dari 1 company privilege ===
         If companyCount > 1 Then
-            Set gCompanyList = RS  ' Simpan untuk form FrmFactoryAccess
+'            Set gCompanyList = RS  ' Simpan untuk form FrmFactoryAccess
             FrmFactoryAccess.Show
+            DoEvents
             CheckFactoryPrivilege = True   ' True = form FactoryAccess ditampilkan
         Else
             ' === Hanya 1 company ===

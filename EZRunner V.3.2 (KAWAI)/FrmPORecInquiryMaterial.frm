@@ -86,7 +86,7 @@ Begin VB.Form FrmPORecInquiryMaterial
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   151322627
+         Format          =   128843779
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker deldate1 
@@ -108,7 +108,7 @@ Begin VB.Form FrmPORecInquiryMaterial
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   151322627
+         Format          =   128843779
          CurrentDate     =   37810
       End
       Begin VB.Label Label6 
@@ -439,8 +439,8 @@ Begin VB.Form FrmPORecInquiryMaterial
       TabStop         =   0   'False
       Top             =   270
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VB.Label lblgroup 
       BackStyle       =   0  'Transparent
@@ -527,6 +527,8 @@ Dim bteColPlan As Byte
 Dim bteColResult As Byte
 Dim bteColRemain As Byte
 Dim bteColComplete As Byte
+Dim vFactoryCode As String
+
 
 Sub Header()
 
@@ -582,7 +584,7 @@ Sub Header()
         
         .Cell(flexcpAlignment, 0, 0, 0, .ColS - 1) = flexAlignCenterCenter
         
-        If cboSupplier.Text = strAll Then
+        If cbosupplier.Text = strAll Then
             .ColHidden(bteColMatCode) = False
             .ColHidden(bteColMatName) = False
         Else
@@ -615,7 +617,7 @@ sql = "select im.item_code, rtrim(im.item_name) item_Name " & _
 
 Set RS = Db.Execute(sql)
 
-With cboSupplier
+With cbosupplier
     .clear
     .columnCount = 2
     .ColumnWidths = "150 pt;270 pt"
@@ -637,10 +639,10 @@ Loop
 End With
 
 '**************Group Cls**************************
-Call up_FillCombo(cboGroup, "Group_Cls", , , True)
-cboGroup.ListWidth = 150
-cboGroup.ColumnWidths = "30 pt;120 pt"
-cboGroup.ListIndex = 0
+Call up_FillCombo(cbogroup, "Group_Cls", , , True)
+cbogroup.ListWidth = 150
+cbogroup.ColumnWidths = "30 pt;120 pt"
+cbogroup.ListIndex = 0
 '*************************************************
 
 '**************Country Cls************************
@@ -663,10 +665,10 @@ Dim sqlgr As String
 '
 ''***Supllier All*******
 Dim sqlcc As String
-If cboSupplier.Text = strAll Then
+If cbosupplier.Text = strAll Then
  sqlcc = " "
 Else
- sqlcc = " and pd.Item_code = '" & Trim(cboSupplier.Text) & "' "
+ sqlcc = " and pd.Item_code = '" & Trim(cbosupplier.Text) & "' "
 End If
 
 sql = "select  cp.company_name,cp.Address1,cp.Address2,cp.City, " & _
@@ -685,21 +687,21 @@ sql = "select  cp.company_name,cp.Address1,cp.Address2,cp.City, " & _
       "Else " & _
       "(isnull(pd.qty,0) - isnull((select sum(qty) from part_receipt where supplier_code=pm.supplier_code and po_no=pm.po_no and item_code=pd.item_code),0)) " & _
       "End     as remaining, isnull(complete_cls,0) complete_Cls " & _
-      "from purchaseorder_master pm, purchaseorder_detail pd, item_master im, trade_master tm, company_profile cp " & _
+      "from purchaseorder_master pm, purchaseorder_detail pd, item_master im, trade_master tm, (Select * from Company_Profile WHERE Company_Code = '" & vFactoryCode & "') cp " & _
       "Where pm.po_no = pd.po_no And pd.item_code = im.item_code and pm.supplier_code = tm.trade_code " & _
       " " & sqlcc & "" & _
-      "and pm.po_no like '%" & txtpo.Text & "%' "
+      "and pm.po_no like '%" & txtPO.Text & "%' "
 '      sqlgr & sqlcc
       
 If cboremaincls.ListIndex = 0 Then
-sql = sql & " and pd.delivery_date>='" & Format(DelDate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
+sql = sql & " and pd.delivery_date>='" & Format(deldate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
                     Format(deldate1.Value, "yyyy-mm-dd") & "'"
 ElseIf cboremaincls.ListIndex = 1 Then
-sql = sql & " and pd.delivery_date>='" & Format(DelDate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
+sql = sql & " and pd.delivery_date>='" & Format(deldate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
       Format(deldate1.Value, "yyyy-mm-dd") & "' and (isnull(pd.qty,0) - isnull((select sum(qty) from part_receipt where supplier_code=pm.supplier_code and " & _
       "po_no=pm.po_no and item_code=pd.item_code),0)) > 0 and (pd.complete_cls is null or pd.complete_Cls <>'1') "
 Else
-sql = sql & " and pd.delivery_date>='" & Format(DelDate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
+sql = sql & " and pd.delivery_date>='" & Format(deldate, "yyyy-mm-dd") & "' and pd.delivery_date<='" & _
       Format(deldate1.Value, "yyyy-mm-dd") & "' and ((isnull(pd.qty,0) - isnull((select sum(qty) from part_receipt where supplier_code=pm.supplier_code and " & _
       "po_no=pm.po_no and item_code=pd.item_code),0)) <= 0  or  complete_Cls = '1')"
 End If
@@ -756,26 +758,26 @@ Dim Idx As Long
 'If cbogroup = "" Then
 '   LblErrMsg = DisplayMsg(8081)
 '   cbogroup.SetFocus
-If cboSupplier = "" Then
+If cbosupplier = "" Then
    LblErrMsg = DisplayMsg(1009)
-   cboSupplier.SetFocus
-ElseIf CDate(deldate1) < CDate(DelDate) Then
-   LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(DelDate, "dd MMM yyyy")   '"delivery Date must be higher than "
+   cbosupplier.SetFocus
+ElseIf CDate(deldate1) < CDate(deldate) Then
+   LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(deldate, "dd MMM yyyy")   '"delivery Date must be higher than "
    deldate1.SetFocus
 'ElseIf cbocountry = "" Then
 '   LblErrMsg = DisplayMsg(8085)
 '   cbocountry.SetFocus
 Else
    'cbogroup = cbogroup
-   cboSupplier = cboSupplier
+   cbosupplier = cbosupplier
    'cbocountry = cbocountry
                
 '   If cbogroup.MatchFound = False Then
 '    LblErrMsg = DisplayMsg(8083)
 '    cbogroup.SetFocus
-   If cboSupplier.MatchFound = False Then
+   If cbosupplier.matchFound = False Then
     LblErrMsg = DisplayMsg(4003)
-    cboSupplier.SetFocus
+    cbosupplier.SetFocus
 '   ElseIf cbocountry.MatchFound = False Then
 '    LblErrMsg = DisplayMsg(8086)
 '    cbocountry.SetFocus
@@ -803,7 +805,7 @@ Else
      .Range("a6") = "Purchase Order / Result Inquiry (Each Material CD)"
      .Range("b6") = ""
      .Range("a6", "j6").Merge
-     .Range("a6").HorizontalAlignment = xlLeft
+     .Range("a6").horizontalAlignment = xlLeft
      
      '.Range("a7") = "Group Cls"
      '.Range("b7", "h7").Merge
@@ -811,10 +813,10 @@ Else
      '.Range("b7").HorizontalAlignment = xlLeft
      .Range("a7") = "Material Code"
      .Range("b7", "h7").Merge
-     .Range("b7") = ": " & cboSupplier.Column(0) & " / " & cboSupplier.Column(1)
+     .Range("b7") = ": " & cbosupplier.Column(0) & " / " & cbosupplier.Column(1)
      .Range("a8") = "Delivery Date"
      .Range("b8", "h8").Merge
-     .Range("b8") = ": " & Format(DelDate.Value, "[$-409]d-mmm-yyyy;@") & " to " & Format(deldate1.Value, "[$-409]d-mmm-yyyy;@")
+     .Range("b8") = ": " & Format(deldate.Value, "[$-409]d-mmm-yyyy;@") & " to " & Format(deldate1.Value, "[$-409]d-mmm-yyyy;@")
      '.Range("a10") = "Country Cls"
      '.Range("b10", "h10").Merge
      '.Range("b10") = ": " & cbocountry.Column(0)
@@ -867,10 +869,10 @@ Else
     .Range("a2", "j2").Columns.Font.Name = "Arial"
     .Range("a2", "j2").Columns.Font.Size = "10"
     .Range("a2", "j2").Columns.Font.Bold = True
-    .Range("a2", "j4").HorizontalAlignment = xlCenter
+    .Range("a2", "j4").horizontalAlignment = xlCenter
     .Range("a6", "j6").Columns.Font.Bold = True
    
-    .Range("a11:d" & Idx).HorizontalAlignment = xlLeft
+    .Range("a11:d" & Idx).horizontalAlignment = xlLeft
     .Range("f11:f" & Idx).NumberFormat = "[$-409]d-mmm-yyyy;@"
     .Range("g11:g" & Idx).NumberFormat = gs_formatQty
     .Range("h11:h" & Idx).NumberFormat = gs_formatQty
@@ -906,16 +908,20 @@ Private Sub Form_Load()
     .ListIndex = 0
   End With
   
-  DelDate.Value = Format(Now, "dd MMM yyyy")
+  deldate.Value = Format(Now, "dd MMM yyyy")
   deldate1.Value = Format(Now, "dd MMM yyyy")
+  
+  
+    vFactoryCode = uf_GetCompany()
+    
     
     CtrlMenu1.FormName = Me.Name
     Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 End Sub
 
 Private Sub cbosupplier_Click()
-  If cboSupplier.ListIndex <> -1 Then
-    LblName.Caption = cboSupplier.Column(1)
+  If cbosupplier.ListIndex <> -1 Then
+    lblname.Caption = cbosupplier.Column(1)
   End If
 End Sub
 
@@ -924,7 +930,7 @@ Private Sub cbosupplier_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integ
 End Sub
 
 Private Sub deldate_Change()
-   If CDate(DelDate) > CDate(deldate1) Then
+   If CDate(deldate) > CDate(deldate1) Then
       LblErrMsg.Caption = DisplayMsg(4076) & " " & Format(deldate1, "dd MMM yyyy")  '"delivery Date must be lower than "
       Exit Sub
    Else
@@ -937,8 +943,8 @@ Private Sub deldate_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub deldate1_Change()
-   If CDate(deldate1) < CDate(DelDate) Then
-      LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(DelDate, "dd MMM yyyy")   '"delivery Date must be higher than "
+   If CDate(deldate1) < CDate(deldate) Then
+      LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(deldate, "dd MMM yyyy")   '"delivery Date must be higher than "
       Exit Sub
    Else
       LblErrMsg.Caption = ""
@@ -975,12 +981,12 @@ Private Sub cmdSearch_Click()
 '     lblErrMsg = DisplayMsg(8081)
 '     cboGroup.SetFocus
 '     Exit Sub
-    If cboSupplier.Text = "" Then
+    If cbosupplier.Text = "" Then
      LblErrMsg = DisplayMsg(1009)
-     cboSupplier.SetFocus
+     cbosupplier.SetFocus
      Exit Sub
-    ElseIf CDate(deldate1) < CDate(DelDate) Then
-     LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(DelDate, "dd MMM yyyy")   '"delivery Date must be higher than "
+    ElseIf CDate(deldate1) < CDate(deldate) Then
+     LblErrMsg.Caption = DisplayMsg(4077) & " " & Format(deldate, "dd MMM yyyy")   '"delivery Date must be higher than "
      deldate1.SetFocus
      Exit Sub
 '    ElseIf cbocountry.Text = "" Then
@@ -1001,16 +1007,16 @@ Private Sub cmdSearch_Click()
 '      cboGroup.MatchEntry = 2
 '    End If
         
-    If cboSupplier.Text <> "" Then
-      cboSupplier.MatchEntry = 1
-      cboSupplier.Text = cboSupplier.Text
-      If cboSupplier.MatchFound = False Then
+    If cbosupplier.Text <> "" Then
+      cbosupplier.MatchEntry = 1
+      cbosupplier.Text = cbosupplier.Text
+      If cbosupplier.matchFound = False Then
           LblErrMsg = DisplayMsg(4003)
-          cboSupplier.SetFocus
-          cboSupplier.MatchEntry = 2
+          cbosupplier.SetFocus
+          cbosupplier.MatchEntry = 2
           Exit Sub
       End If
-      cboSupplier.MatchEntry = 2
+      cbosupplier.MatchEntry = 2
     End If
     
 '    If cbocountry.Text <> "" Then
@@ -1076,9 +1082,9 @@ LblErrMsg = ""
 End Sub
 
 Private Sub CboGroup_Click()
-cboGroup = cboGroup
-    If cboGroup.MatchFound Then
-        lblgroup = cboGroup.Column(1)
+cbogroup = cbogroup
+    If cbogroup.matchFound Then
+        lblgroup = cbogroup.Column(1)
         LblErrMsg = ""
     Else
         lblgroup = ""
@@ -1096,7 +1102,7 @@ End Sub
 
 Private Sub cbocountry_Click()
 cbocountry = cbocountry
-    If cbocountry.MatchFound Then
+    If cbocountry.matchFound Then
         LblErrMsg = ""
     Else
         LblErrMsg = DisplayMsg(8086)

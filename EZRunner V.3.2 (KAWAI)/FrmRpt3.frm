@@ -11,18 +11,18 @@ Begin VB.Form FrmRpt3
    ScaleHeight     =   3150
    ScaleWidth      =   4875
    StartUpPosition =   3  'Windows Default
-   Begin CRVIEWER9LibCtl.CRViewer9 CRViewer1 
+   Begin CRVIEWER9LibCtl.CRViewer9 CRViewer91 
       Height          =   3135
-      Left            =   120
+      Left            =   0
       TabIndex        =   0
       Top             =   0
-      Width           =   4215
+      Width           =   4455
       lastProp        =   500
-      _cx             =   7435
+      _cx             =   7858
       _cy             =   5530
-      DisplayGroupTree=   0   'False
+      DisplayGroupTree=   -1  'True
       DisplayToolbar  =   -1  'True
-      EnableGroupTree =   -1  'True
+      EnableGroupTree =   0   'False
       EnableNavigationControls=   -1  'True
       EnableStopButton=   -1  'True
       EnablePrintButton=   -1  'True

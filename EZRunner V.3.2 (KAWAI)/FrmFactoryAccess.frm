@@ -212,13 +212,21 @@ Option Explicit
 Public pCompanyCode As String
 Private selectedFactory As String
 
+'==================================================
+' BUTTON CANCEL
+'==================================================
 Private Sub cmdCancel_Click()
     frmLogin.Show
     Unload Me
 End Sub
 
+
+'==================================================
+' BUTTON SUBMIT
+'==================================================
 Private Sub CmdSubmit_Click()
-     On Error GoTo ErrHandler
+
+    On Error GoTo ErrHandler
 
     Dim sql As String
     Dim userID As String
@@ -226,7 +234,7 @@ Private Sub CmdSubmit_Click()
 
     userID = Trim(frmLogin.txtUser.Text)
 
-    ' === Tentukan Factory_Code berdasarkan pilihan ===
+    ' === Tentukan Factory_Code ===
     If OBFactory1.Value = True Then
         selectedFactory = "00000"
         FrmMainMenuCaption = Label1(0).Caption
@@ -238,92 +246,89 @@ Private Sub CmdSubmit_Click()
         Exit Sub
     End If
 
-    ' === Update privilege ===
-    sql = "UPDATE dbo.App_FactoryPrivilege " & _
-          "SET Show = 1, UpdateDate = GETDATE() " & _
-          "WHERE UserID = '" & userID & "' " & _
-          "AND Factory_Code = '" & selectedFactory & "'"
-          
-    Db.Execute sql
+  ' === Update privilege via Stored Procedure ===
+Dim cmd As ADODB.Command
+Set cmd = New ADODB.Command
 
-    ' === Tampilkan pesan sukses ===
+Set cmd.ActiveConnection = Db
+cmd.CommandType = adCmdStoredProc
+cmd.CommandText = "sp_UpdateFactoryPrivilege"
+
+cmd.Parameters.append cmd.CreateParameter("@UserID", adVarChar, adParamInput, 50, userID)
+cmd.Parameters.append cmd.CreateParameter("@FactoryCode", adVarChar, adParamInput, 10, selectedFactory)
+
+cmd.Execute , , adExecuteNoRecords
+
+Set cmd = Nothing
+    
+    ' === Feedback user ===
     LblErrMsg.Caption = "Factory selected successfully"
-    DoEvents
     Call Delay(1)
 
-    ' === Reset supaya login berikutnya selalu pilih factory lagi ===
+    ' === Reset login flag ===
     frmLogin.NeedFactorySelection = True
 
-    ' === Lanjut ke Main Menu ===
-    pCompanyCode = selectedFactory
-    frmMainMenu.Caption = "EZ Runner ver.3 - Main Menu | " & FrmMainMenuCaption
-    frmMainMenu.loadtree
-    frmMainMenu.Show
-    DoEvents
-    Unload Me
-
+    ' === Pindah ke Main Menu (SATU PINTU) ===
+    GoToMainMenu FrmMainMenuCaption
     Exit Sub
 
 ErrHandler:
     MsgBox "Terjadi kesalahan saat submit company: " & err.Description, vbCritical, "Error"
+
 End Sub
 
+
+'==================================================
+' TIMER (OPTIONAL FLOW)
+'==================================================
 Private Sub tmrNext_Timer()
-    ' === Timer jalan setelah 3 detik ===
     tmrNext.Enabled = False
-
-    ' === Lanjut ke Main Menu ===
-    pCompanyCode = selectedFactory
-    frmMainMenu.loadtree
-    frmMainMenu.Show
-    DoEvents
-    Unload Me
+    GoToMainMenu ""
 End Sub
 
-Private Sub Form_Load()
-    Dim rs As ADODB.Recordset
-    Dim sql As String
- 
-    If gb_Simulation = True Then Call up_InitSimulation(Me)
-    If gb_Simulation = True Then OBFactory1.BackColor = RGB(204, 255, 204)
-    If gb_Simulation = True Then OBFactory2.BackColor = RGB(204, 255, 204)
 
-'    Set rs = New ADODB.Recordset
-'    sql = "SELECT TOP 2 Company_Code, Company_Name FROM Company_Profile ORDER BY Company_Name"
-'    rs.Open sql, Db, adOpenStatic, adLockReadOnly
-'
-'    ' Isi Factory pertama
-'    If Not rs.EOF Then
-'        OBFactory1.Tag = rs!Company_Code
-'        Label1(0).Caption = rs!Company_Name
-'        OBFactory1.Visible = True
-'        Label1(0).Visible = True
-'    End If
-'
-'    rs.MoveNext
-'
-'    ' Isi Factory kedua
-'    If Not rs.EOF Then
-'        OBFactory2.Tag = rs!Company_Code
-'        Label1(1).Caption = rs!Company_Name
-'        OBFactory2.Visible = True
-'        Label1(1).Visible = True
-'    End If
-'
-'    rs.Close
-'    Set rs = Nothing
- 
-   Dim ctl As Control
-   
-    ' Reset semua OptionButton
+'==================================================
+' FORM LOAD
+'==================================================
+Private Sub Form_Load()
+
+    If gb_Simulation = True Then
+        Call up_InitSimulation(Me)
+        OBFactory1.BackColor = RGB(204, 255, 204)
+        OBFactory2.BackColor = RGB(204, 255, 204)
+    End If
+
+    Dim ctl As Control
     For Each ctl In Me.Controls
         If TypeOf ctl Is OptionButton Then ctl.Value = False
     Next ctl
 
-    ' Timer default disabled
     tmrNext.Enabled = False
-    tmrNext.Interval = 1000  ' 1 detik
-    
+    tmrNext.Interval = 1000
+
     LblErrMsg.Caption = ""
-       
+
 End Sub
+
+
+'==================================================
+' SATU-SATUNYA JALUR KE MAIN MENU
+'==================================================
+Private Sub GoToMainMenu(ByVal CaptionText As String)
+
+    On Error Resume Next   ' proteksi navigation
+
+    pCompanyCode = selectedFactory
+
+    If CaptionText <> "" Then
+        frmMainMenu.Caption = "EZ Runner ver.3 - Main Menu | " & CaptionText
+    End If
+
+    frmMainMenu.loadtree
+    frmMainMenu.Show
+
+    Unload Me   ' ? TANPA DoEvents, TANPA Hide
+
+End Sub
+
+
