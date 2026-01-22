@@ -171,3 +171,40 @@ err_handler:
    err.clear
    Resume err_exit
 End Function
+
+Public Function ParseConnectionString(ByVal strConn As String) As clsParsedCon
+    Dim objResult As New clsParsedCon
+    Dim arrParts() As String
+    Dim arrPair() As String
+    Dim i As Integer
+    Dim strKey As String
+    Dim strValue As String
+
+    ' Pisahkan berdasarkan titik koma
+    arrParts = Split(strConn, ";")
+
+    For i = LBound(arrParts) To UBound(arrParts)
+        If InStr(arrParts(i), "=") > 0 Then
+            ' Split hanya pada tanda "=" pertama
+            arrPair = Split(arrParts(i), "=", 2)
+            strKey = Trim(LCase(arrPair(0)))
+            strValue = Trim(arrPair(1))
+
+            Select Case strKey
+                Case "data source", "server"
+                    objResult.Server = strValue
+                Case "initial catalog", "database"
+                    objResult.Database = strValue
+                Case "user id", "uid"
+                    objResult.UserID = strValue
+                Case "password", "pwd"
+                    objResult.Password = strValue
+                Case "provider"
+                    objResult.Provider = strValue
+            End Select
+        End If
+    Next i
+
+    ' Mengembalikan objek (di VB6 wajib pakai SET untuk objek)
+    Set ParseConnectionString = objResult
+End Function

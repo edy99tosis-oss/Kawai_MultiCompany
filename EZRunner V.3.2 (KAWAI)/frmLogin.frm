@@ -402,6 +402,7 @@ Dim passLogin As String
         txtPass.SetFocus
         LblErrMsg = DisplayMsg(1004)
     Else
+    
         sql = "select * from user_Setup where userName = '" & txtUser & "'"
         If rsUser.State <> adStateClosed Then rsUser.Close
         rsUser.Open sql, Db, adOpenStatic, adLockOptimistic

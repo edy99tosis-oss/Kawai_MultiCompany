@@ -47,7 +47,6 @@ Begin VB.Form frmUserSetup
       TabPicture(1)   =   "frmUserSetup.frx":0E5E
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "gridFactory"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VSFlex8Ctl.VSFlexGrid Grid 
          Height          =   2955
@@ -1481,6 +1480,8 @@ Dim aItem As ListItem
     ' Terapkan filter jika combo factory tidak kosong
     If vFactory <> "" Then
         rsUser.filter = "Company_Code = '" & vFactory & "'"
+    Else
+        rsUser.filter = "Company_Code = '00000' "
     End If
 
     ' Isi data ke ListView
@@ -1730,7 +1731,23 @@ End Sub
 Private Sub Form_Load()
   If gb_Simulation = True Then Call up_InitSimulation(Me)
     
-    sql = "select * from user_Setup order by userName"
+    sql = " SELECT  App_ID , " & vbCrLf & _
+            "         Username , " & vbCrLf & _
+            "         Name , " & vbCrLf & _
+            "         Password , " & vbCrLf & _
+            "         Description , " & vbCrLf & _
+            "         Locked , " & vbCrLf & _
+            "         InvalidLogin , " & vbCrLf & _
+            "         InitPO , " & vbCrLf & _
+            "         Status_Admin ,  A.Last_Login, A.Last_Update, A.Last_User, A.Register_Date, " & vbCrLf & _
+            "         B.Factory_Code AS Company_Code " & vbCrLf & _
+            " FROM    User_Setup A "
+
+sql = sql + "         LEFT JOIN dbo.App_FactoryPrivilege B ON A.Username = B.UserID " & vbCrLf & _
+            "                                                 AND B.Show = '1' " & vbCrLf & _
+            " ORDER BY Username "
+
+    
     If rsUser.State <> adStateClosed Then rsUser.Close
     rsUser.Open sql, Db, adOpenDynamic, adLockOptimistic
     
@@ -1780,16 +1797,27 @@ Select Case Index
                 Exit Sub
             End If
             
+            ' Tutup recordset lama
+            If rsUser.State <> adStateClosed Then rsUser.Close
+            
+            ' Ambil data user sesuai username & app
+            sql = "SELECT * FROM dbo.User_Setup " & _
+                  "WHERE userName = '" & txtUser & "' AND App_ID = 'P01'"
+            
+            rsUser.Open sql, Db, adOpenKeyset, adLockOptimistic
+            
             With rsUser
-                .filter = ""
-                .Requery
-                .filter = "userName ='" & txtUser & "' and App_ID = 'P01'" '"
-                    
-                If Not (.EOF) And ubah = False Then LblErrMsg = DisplayMsg(1001): Me.MousePointer = vbDefault: Exit Sub
-                
+                ' Jika data sudah ada dan bukan mode ubah ? STOP
+                If Not .EOF And ubah = False Then
+                    LblErrMsg = DisplayMsg(1001)
+                    Me.MousePointer = vbDefault
+                    Exit Sub
+                End If
+            
+                ' Jika belum ada ? insert
                 If .EOF Then .AddNew
-                !Company_Code = TxtCC 'update company code (multi company)
-                !app_ID = "P01"
+            
+                !App_ID = "P01"
                 !userName = txtUser
                 !Name = txtName
                 !Password = fc_Encrypt(txtPass1)
@@ -1800,8 +1828,52 @@ Select Case Index
                 !InvalidLogin = 0
                 !Last_Update = Now
                 !last_user = userLogin
+            
                 .update
             End With
+            
+               sql = " SELECT  App_ID , " & vbCrLf & _
+                "         Username , " & vbCrLf & _
+                "         Name , " & vbCrLf & _
+                "         Password , " & vbCrLf & _
+                "         Description , " & vbCrLf & _
+                "         Locked , " & vbCrLf & _
+                "         InvalidLogin , " & vbCrLf & _
+                "         InitPO , " & vbCrLf & _
+                "         Status_Admin ,  A.Last_Login, A.Last_Update, A.Last_User, A.Register_Date, " & vbCrLf & _
+                "         B.Factory_Code AS Company_Code " & vbCrLf & _
+                " FROM    User_Setup A "
+    
+    sql = sql + "         LEFT JOIN dbo.App_FactoryPrivilege B ON A.Username = B.UserID " & vbCrLf & _
+                "                                                 AND B.Show = '1' " & vbCrLf & _
+                " ORDER BY Username "
+    
+        
+        If rsUser.State <> adStateClosed Then rsUser.Close
+        rsUser.Open sql, Db, adOpenDynamic, adLockOptimistic
+
+'            With rsUser
+'                .filter = ""
+'                .Requery
+'                .filter = "userName ='" & txtUser & "' and App_ID = 'P01'" '"
+'
+'                If Not (.EOF) And ubah = False Then LblErrMsg = DisplayMsg(1001): Me.MousePointer = vbDefault: Exit Sub
+'
+'                If .EOF Then .AddNew
+'                !Company_Code = TxtCC 'update company code (multi company)
+'                !app_ID = "P01"
+'                !userName = txtUser
+'                !Name = txtName
+'                !Password = fc_Encrypt(txtPass1)
+'                !Description = txtDesc
+'                !InitPO = txtpo
+'                !status_Admin = IIf(optStatus(0).Value, 1, 0)
+'                !locked = Check1.Value
+'                !InvalidLogin = 0
+'                !Last_Update = Now
+'                !last_user = userLogin
+'                .update
+'            End With
             Call simpanGrid
             Call simpanGridFactory
             

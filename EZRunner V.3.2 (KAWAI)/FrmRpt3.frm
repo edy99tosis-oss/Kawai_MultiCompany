@@ -11,7 +11,7 @@ Begin VB.Form FrmRpt3
    ScaleHeight     =   3150
    ScaleWidth      =   4875
    StartUpPosition =   3  'Windows Default
-   Begin CRVIEWER9LibCtl.CRViewer9 CRViewer91 
+   Begin CRVIEWER9LibCtl.CRViewer9 CRViewer1 
       Height          =   3135
       Left            =   0
       TabIndex        =   0

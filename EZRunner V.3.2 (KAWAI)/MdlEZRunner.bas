@@ -135,22 +135,22 @@ Public Const strAll As String = "ALL"
 
 Public Function DisplayMsg(n As String)
     Dim StrErr
-    Dim rs As New ADODB.Recordset
+    Dim RS As New ADODB.Recordset
     Dim sql
 
     sql = "select * from message where MsgId=" & n
-    Set rs = Db.Execute(sql)
-    If Not (rs.EOF And rs.BOF) Then
-        StrErr = "[" & CStr(Trim(rs("MsgId"))) & "]  " & Trim(rs("MsgDesc"))
+    Set RS = Db.Execute(sql)
+    If Not (RS.EOF And RS.BOF) Then
+        StrErr = "[" & CStr(Trim(RS("MsgId"))) & "]  " & Trim(RS("MsgDesc"))
         DisplayMsg = StrErr
-        Set rs = Nothing
+        Set RS = Nothing
         ErrSt = True
     End If
 End Function
 
 Public Function hakAkses(mn As String, Optional desc As String) As Integer
     Dim sql As String
-    Dim rs As New ADODB.Recordset
+    Dim RS As New ADODB.Recordset
     
     sql = "select status from user_Privilege where App_ID = 'P01' " & _
         "and Menu_ID = (select Menu_ID from User_Menu where Menu_Name ='" & mn & "'"
@@ -161,15 +161,15 @@ Public Function hakAkses(mn As String, Optional desc As String) As Integer
     
     sql = sql & ") and userName ='" & userLogin & "'"
     
-    Set rs = Db.Execute(sql)
-    If Not (rs.EOF And rs.BOF) Then
-        hakAkses = rs("status")
+    Set RS = Db.Execute(sql)
+    If Not (RS.EOF And RS.BOF) Then
+        hakAkses = RS("status")
     End If
 End Function
 
 Public Function hakUpdate(mn As String, Optional desc As String) As Integer
     Dim sql As String
-    Dim rs As New ADODB.Recordset
+    Dim RS As New ADODB.Recordset
     
     sql = "select Allow_Update from user_Privilege where App_ID = 'P01' " & _
         "and Menu_ID = (select Menu_ID from User_Menu where Menu_Name ='" & mn & "'"
@@ -180,15 +180,15 @@ Public Function hakUpdate(mn As String, Optional desc As String) As Integer
     
     sql = sql & ") and userName ='" & userLogin & "'"
     
-    Set rs = Db.Execute(sql)
-    If Not (rs.EOF And rs.BOF) Then
-        hakUpdate = rs("Allow_Update")
+    Set RS = Db.Execute(sql)
+    If Not (RS.EOF And RS.BOF) Then
+        hakUpdate = RS("Allow_Update")
     End If
 End Function
 
 Public Function hakPrice(mn As String, Optional desc As String) As Integer
     Dim sql As String
-    Dim rs As New ADODB.Recordset
+    Dim RS As New ADODB.Recordset
     
     sql = "select ISNULL(Allow_Price,0) Allow_Price from user_Privilege where App_ID = 'P01' " & _
         "and Menu_ID = (select Menu_ID from User_Menu where Menu_Name ='" & mn & "'"
@@ -199,9 +199,9 @@ Public Function hakPrice(mn As String, Optional desc As String) As Integer
     
     sql = sql & ") and userName ='" & userLogin & "'"
     
-    Set rs = Db.Execute(sql)
-    If Not (rs.EOF And rs.BOF) Then
-        hakPrice = rs("Allow_Price")
+    Set RS = Db.Execute(sql)
+    If Not (RS.EOF And RS.BOF) Then
+        hakPrice = RS("Allow_Price")
     End If
 End Function
 
@@ -218,7 +218,7 @@ Public Function frmcode(frmName$, Optional Ket As String)
 End Function
 
 Public Function panggilForm(nmMenu As String, Optional nmForm As String) As Integer
-Dim rs As New Recordset
+Dim RS As New Recordset
 
     
     sql = " Select A.* From  " & vbCrLf & _
@@ -226,17 +226,17 @@ Dim rs As New Recordset
                 " select Menu_Name,Menu_Desc from user_menu where menu_ID='" & nmMenu & "'  " & vbCrLf & _
                 " )a Inner join User_Privilege b on B.Menu_ID='" & nmMenu & "' and b.UserName='" & userLogin & "' " & vbCrLf & _
                 "  "
-    Set rs = Db.Execute(sql)
+    Set RS = Db.Execute(sql)
     
-    If rs.EOF And rs.BOF Then
+    If RS.EOF And RS.BOF Then
         panggilForm = 1 'msg Error "Menu ID not Found"
         Exit Function
     Else
-        If (LCase(Trim(rs(0))) = LCase(Trim(nmForm))) Then panggilForm = 2: Exit Function
+        If (LCase(Trim(RS(0))) = LCase(Trim(nmForm))) Then panggilForm = 2: Exit Function
         If Trim(nmForm) <> "" Then Call hideThisForm(nmForm)
         If frmMainMenu.Tree.Nodes.Count < 1 Then frmMainMenu.loadtree
         If frmLogin.Visible = True Then frmLogin.Hide
-        LoadDynamicForm (Trim$(rs("menu_Name") & ""))
+        LoadDynamicForm (Trim$(RS("menu_Name") & ""))
     End If
 End Function
 
@@ -607,17 +607,75 @@ Dim rs1 As Recordset
           
 ' Update report for KAWAI with change Customer Code to Location Code ( Information From OrderEntry_Master ) -- 20090420
     
-sql = " select d.trade_code,rtrim(d.trade_name) trade_name,rtrim(d.address1) address1,rtrim(d.address2) address2,  " & vbCrLf & _
-            " rtrim(d.city) city, rtrim(d.postal_code) postal_code,a.do_no,b.do_date,rtrim(a.po_no) po_no,a.delivery_date,  " & vbCrLf & _
-            " a.item_code, rtrim(c.item_name) item_name,rtrim(a.makeritem_code) makeritem_code,  " & vbCrLf & _
-            " rtrim(a.lot_no) lot_no,C.number_entering , A.qty, A.unit_cls, rtrim(A.SerialNoFrom) SFrom,rtrim(A.SerialNoTo) STo,rtrim(isnull(b.list_po,'')) list_po  " & vbCrLf & _
-            " ,rtrim(f.company_name) company_name, rtrim(f.address1) cpaddress1,  " & vbCrLf & _
-            " rtrim(f.address2) cpaddress2,rtrim(f.Province) cpProvince, rtrim(f.City) cpcity, rtrim(f.postal_code) cpPostal_code,  " & vbCrLf & _
-            " rtrim(f.phone1) cpphone1, rtrim(f.phone2) cpphone2, rtrim(f.fax) cpfax,rtrim(sj_position) sjpos, rtrim(sj_person) sjperson  " & vbCrLf & _
-            " from delivery_order a,do_master b, item_master c,trade_master d ,OrderEntry_Master P,company_profile f  " & vbCrLf & _
-            " Where B.do_no = A.do_no and a.PO_No=p.Po_No and p.location_code = d.trade_code and a.item_code = c.item_code  " & vbCrLf & _
-            " and b.do_no in (" & Dono & ") order by Delivery_Date,a.Item_Code,Lot_No,a.PO_NO,Seq_No,DOSeq_No  "
+'sql = " select d.trade_code,rtrim(d.trade_name) trade_name,rtrim(d.address1) address1,rtrim(d.address2) address2,  " & vbCrLf & _
+'            " rtrim(d.city) city, rtrim(d.postal_code) postal_code,a.do_no,b.do_date,rtrim(a.po_no) po_no,a.delivery_date,  " & vbCrLf & _
+'            " a.item_code, rtrim(c.item_name) item_name,rtrim(a.makeritem_code) makeritem_code,  " & vbCrLf & _
+'            " rtrim(a.lot_no) lot_no,C.number_entering , A.qty, A.unit_cls, rtrim(A.SerialNoFrom) SFrom,rtrim(A.SerialNoTo) STo,rtrim(isnull(b.list_po,'')) list_po  " & vbCrLf & _
+'            " ,rtrim(f.company_name) company_name, rtrim(f.address1) cpaddress1,  " & vbCrLf & _
+'            " rtrim(f.address2) cpaddress2,rtrim(f.Province) cpProvince, rtrim(f.City) cpcity, rtrim(f.postal_code) cpPostal_code,  " & vbCrLf & _
+'            " rtrim(f.phone1) cpphone1, rtrim(f.phone2) cpphone2, rtrim(f.fax) cpfax,rtrim(sj_position) sjpos, rtrim(sj_person) sjperson  " & vbCrLf & _
+'            " from delivery_order a,do_master b, item_master c,trade_master d ,OrderEntry_Master P,company_profile f  " & vbCrLf & _
+'            " Where B.do_no = A.do_no and a.PO_No=p.Po_No and p.location_code = d.trade_code and a.item_code = c.item_code  " & vbCrLf & _
+'            " and b.do_no in (" & Dono & ") order by Delivery_Date,a.Item_Code,Lot_No,a.PO_NO,Seq_No,DOSeq_No  "
     
+    sql = " SELECT d.Trade_Code , " & vbCrLf & _
+            "         RTRIM(d.Trade_Name) trade_name , " & vbCrLf & _
+            "         RTRIM(d.Address1) address1 , " & vbCrLf & _
+            "         RTRIM(d.Address2) address2 , " & vbCrLf & _
+            "         RTRIM(d.City) city , " & vbCrLf & _
+            "         RTRIM(d.Postal_Code) postal_code , " & vbCrLf & _
+            "         A.DO_No , " & vbCrLf & _
+            "         B.DO_Date , " & vbCrLf & _
+            "         RTRIM(A.PO_No) po_no , " & vbCrLf & _
+            "         A.Delivery_Date , " & vbCrLf & _
+            "         A.Item_Code , "
+
+sql = sql + "         RTRIM(c.Item_Name) item_name , " & vbCrLf & _
+            "         RTRIM(A.MakerItem_Code) makeritem_code , " & vbCrLf & _
+            "         RTRIM(A.Lot_No) lot_no , " & vbCrLf & _
+            "         c.Number_Entering , " & vbCrLf & _
+            "         A.Qty , " & vbCrLf & _
+            "         A.Unit_Cls , " & vbCrLf & _
+            "         RTRIM(A.SerialNoFrom) SFrom , " & vbCrLf & _
+            "         RTRIM(A.SerialNoto) STo , " & vbCrLf & _
+            "         RTRIM(ISNULL(B.List_PO, '')) list_po , " & vbCrLf & _
+            "         RTRIM(f.Company_Name) company_name , " & vbCrLf & _
+            "         RTRIM(f.Address1) cpaddress1 , "
+
+sql = sql + "         RTRIM(f.Address2) cpaddress2 , " & vbCrLf & _
+            "         RTRIM(f.Province) cpProvince , " & vbCrLf & _
+            "         RTRIM(f.City) cpcity , " & vbCrLf & _
+            "         RTRIM(f.Postal_Code) cpPostal_code , " & vbCrLf & _
+            "         RTRIM(f.Phone1) cpphone1 , " & vbCrLf & _
+            "         RTRIM(f.Phone2) cpphone2 , " & vbCrLf & _
+            "         RTRIM(f.Fax) cpfax , " & vbCrLf & _
+            "         RTRIM(SJ_Position) sjpos , " & vbCrLf & _
+            "         RTRIM(SJ_Person) sjperson " & vbCrLf & _
+            "  FROM   Delivery_Order A , " & vbCrLf & _
+            "         DO_Master B , "
+
+sql = sql + "         Item_Master c , " & vbCrLf & _
+            "         Trade_Master d , " & vbCrLf & _
+            "         OrderEntry_Master P , " & vbCrLf & _
+            "         ( SELECT TOP 1 " & vbCrLf & _
+            "                     A.* " & vbCrLf & _
+            "           FROM      dbo.Company_Profile A " & vbCrLf & _
+            "                     LEFT JOIN dbo.App_FactoryPrivilege B ON A.Company_Code = B.Factory_Code " & vbCrLf & _
+            "           WHERE     B.UserID = '" & userLogin & "' " & vbCrLf & _
+            "         ) f " & vbCrLf & _
+            "  WHERE  B.DO_No = A.DO_No " & vbCrLf & _
+            "         AND A.PO_No = P.PO_No "
+
+sql = sql + "         AND P.Location_Code = d.Trade_Code " & vbCrLf & _
+            "         AND A.Item_Code = c.Item_Code " & vbCrLf & _
+            "         AND B.DO_No IN (" & Dono & ") " & vbCrLf & _
+            "  ORDER BY Delivery_Date , " & vbCrLf & _
+            "         A.Item_Code , " & vbCrLf & _
+            "         lot_no , " & vbCrLf & _
+            "         A.PO_No , " & vbCrLf & _
+            "         Seq_No , " & vbCrLf & _
+            "         DOSeq_No "
+            
     
     Set rs1 = New Recordset
 
@@ -1032,12 +1090,12 @@ SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls
 End Sub
 
 Public Function GetLastMonthStock() As String 'YYYYMM
-Dim sql As String, rs As New Recordset
+Dim sql As String, RS As New Recordset
 
 sql = "Select * from Inventory_Control Order By Inventory_Year desc,Inventory_Month desc"
-rs.Open sql, Db
-If Not rs.EOF Then
-    GetLastMonthStock = Format(rs!Inventory_Year, "0000") & Format(rs!Inventory_Month, "00")
+RS.Open sql, Db
+If Not RS.EOF Then
+    GetLastMonthStock = Format(RS!Inventory_Year, "0000") & Format(RS!Inventory_Month, "00")
 Else
     GetLastMonthStock = ""
 End If
@@ -1334,12 +1392,12 @@ End Function
 
 Public Sub FillCompanyCombo(cbo As Object)
     Dim sql As String
-    Dim rs As ADODB.Recordset
+    Dim RS As ADODB.Recordset
     Dim i As Integer
 
     ' admin
     sql = "EXEC dbo.SP_UserSetup_Get_CompanyCode @UserID = '" & userLogin & "', @Type = '1' "
-    Set rs = Db.Execute(sql)
+    Set RS = Db.Execute(sql)
 
     With cbo
         .clear
@@ -1349,19 +1407,19 @@ Public Sub FillCompanyCombo(cbo As Object)
         .ListRows = 15
         
         i = 0
-        Do While Not rs.EOF
+        Do While Not RS.EOF
             .AddItem
-            .List(i, 0) = Trim(rs("Company_Code"))
-            .List(i, 1) = IIf(IsNull(rs("Company_Name")), "", Trim(rs("Company_Name")))
-            rs.MoveNext
+            .List(i, 0) = Trim(RS("Company_Code"))
+            .List(i, 1) = IIf(IsNull(RS("Company_Name")), "", Trim(RS("Company_Name")))
+            RS.MoveNext
             i = i + 1
         Loop
         
         .ListIndex = 0
     End With
 
-    rs.Close
-    Set rs = Nothing
+    RS.Close
+    Set RS = Nothing
 End Sub
 
 Public Sub Delay(ByVal seconds As Single)
@@ -1374,21 +1432,21 @@ End Sub
 
 Public Function uf_GetCompany() As String
     Dim sql As String
-    Dim rs As ADODB.Recordset
+    Dim RS As ADODB.Recordset
 
     sql = "EXEC dbo.SP_UserSetup_Get_CompanyCode " & _
           "@UserID = '" & userLogin & "', @Type = '5'"
 
-    Set rs = Db.Execute(sql)
+    Set RS = Db.Execute(sql)
 
-    If Not rs.EOF Then
-        uf_GetCompany = Trim(rs("Company_Code"))
+    If Not RS.EOF Then
+        uf_GetCompany = Trim(RS("Company_Code"))
     Else
         uf_GetCompany = ""
     End If
 
-    rs.Close
-    Set rs = Nothing
+    RS.Close
+    Set RS = Nothing
 End Function
 
 

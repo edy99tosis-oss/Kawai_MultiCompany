@@ -305,7 +305,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128843779
+         Format          =   130023427
          CurrentDate     =   37868
       End
       Begin MSComCtl2.DTPicker Tgl2 
@@ -327,7 +327,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128843779
+         Format          =   130023427
          CurrentDate     =   37868
       End
       Begin VB.Label LblPart 
@@ -979,7 +979,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128843779
+      Format          =   130023427
       CurrentDate     =   37868
    End
    Begin VB.CheckBox ChkComplete 
@@ -1020,7 +1020,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128843779
+      Format          =   130023427
       CurrentDate     =   37868
    End
    Begin VB.Label Label17 
@@ -2049,7 +2049,7 @@ Private Sub CboItem_Change()
         Lbladdress = ""
         Set RsI2 = Db.Execute("Select WH_code,unit_cls from Item_master where item_code='" & Trim(cboitem) & "'")
         If Not RsI2.EOF Then
-            cboWhCode = Trim$(RsI2!WH_Code)
+            cboWhCode = Trim$(RsI2!wh_code)
             CboWHCode_Click
             Set RSX = Db.Execute("Select unit_cls UC,Currency_code CC, Coalesce(Price,0) PC from Price_master where item_code='" & Trim$(cboitem) & "'")
             If Not RSX.EOF Then
@@ -2409,7 +2409,7 @@ Private Sub cmdsj_Click()
 With frmupdate
 
     .txtsupplier.Text = CboPart(0).Text
-    .txtPO.Text = CboPart(1).Text
+    .txtpo.Text = CboPart(1).Text
     
     .txtsjno.Text = TxtSj.Text
     .lblSJNo.Text = TxtSj.Text
@@ -3172,7 +3172,7 @@ While Not RsD.EOF
         .Cell(flexcpAlignment, ig, bteColRecStatus) = flexAlignLeftCenter
         
         If Trim(RsD!WHTo & "") = "" Then
-            .TextMatrix(ig, bteColRecWHCode) = RsD!WH_Code
+            .TextMatrix(ig, bteColRecWHCode) = RsD!wh_code
         Else
             .TextMatrix(ig, bteColRecWHCode) = RsD!WHTo
         End If
@@ -3219,7 +3219,7 @@ While Not RsD.EOF
                       "         ISNULL(pd.Price_Service, 0) price_service , " & vbCrLf & _
                       "         ISNULL(pd.Amount_Service, 0) amount_service , " & vbCrLf & _
                       "         pr.SuratJalan_No , " & vbCrLf & _
-                      "         pr.Remarks , " & vbCrLf & _
+                      "         ISNULL(pr.Remarks,'') AS Remarks , " & vbCrLf & _
                       "         po.Delivery_Date , " & vbCrLf & _
                       "         im.Provision_Cls , " & vbCrLf & _
                       "         pr.BC40_No , " & vbCrLf & _
@@ -3299,7 +3299,7 @@ While Not RsD.EOF
             .TextMatrix(ig + id, bteColItemCode) = Trim$(RsD!Item_Code) 'Hide
             .TextMatrix(ig + id, bteColDelDate) = Trim$(RsD!delivery_Date) 'Hide
             '#----
-            .TextMatrix(ig + id, bteColWHCode) = Trim$(Rsd2!Warehouse_Code) 'Hide
+            .TextMatrix(ig + id, bteColWHCode) = Trim$(Rsd2!warehouse_code) 'Hide
             .TextMatrix(ig + id, bteColAddress) = Trim$(Rsd2!Address) 'Hide
             .TextMatrix(ig + id, bteColRecCls) = Trim$(Rsd2!receipt_cls) 'Hide
             .TextMatrix(ig + id, bteColRecDate) = Trim$(Rsd2!Receipt_Date) 'Hide
@@ -4247,7 +4247,7 @@ If RsI.EOF Then
   RsI.AddNew
   'Receipt
   RsI!Item_Code = Trim$(ItemCode)
-  RsI!Warehouse_Code = Trim$(WHCode)
+  RsI!warehouse_code = Trim$(WHCode)
   RsI!lm_premonth = "0"
   RsI!tm_premonth = "0"
   RsI!nm_premonth = "0"
