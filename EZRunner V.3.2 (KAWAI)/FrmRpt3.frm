@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{8767A745-088E-4CA6-8594-073D6D2DE57A}#9.2#0"; "crviewer9.dll"
+Object = "{C4847593-972C-11D0-9567-00A0C9273C2A}#8.0#0"; "crviewer.dll"
 Begin VB.Form FrmRpt3 
    Caption         =   "Preview"
    ClientHeight    =   3150
@@ -11,15 +11,12 @@ Begin VB.Form FrmRpt3
    ScaleHeight     =   3150
    ScaleWidth      =   4875
    StartUpPosition =   3  'Windows Default
-   Begin CRVIEWER9LibCtl.CRViewer9 CRViewer1 
-      Height          =   3135
-      Left            =   0
+   Begin CRVIEWERLibCtl.CRViewer CRViewer1 
+      Height          =   3030
+      Left            =   90
       TabIndex        =   0
-      Top             =   0
-      Width           =   4455
-      lastProp        =   500
-      _cx             =   7858
-      _cy             =   5530
+      Top             =   90
+      Width           =   3795
       DisplayGroupTree=   -1  'True
       DisplayToolbar  =   -1  'True
       EnableGroupTree =   0   'False
@@ -43,7 +40,6 @@ Begin VB.Form FrmRpt3
       EnableExportButton=   -1  'True
       EnableSearchExpertButton=   0   'False
       EnableHelpButton=   0   'False
-      LaunchHTTPHyperlinksInNewBrowser=   -1  'True
    End
 End
 Attribute VB_Name = "FrmRpt3"
