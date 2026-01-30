@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_IncomingMaterialReport 
    BackColor       =   &H00FDDFE3&
@@ -297,7 +297,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   66781187
+      Format          =   60358659
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -320,7 +320,7 @@ Begin VB.Form frm_IncomingMaterialReport
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   66781187
+      Format          =   60358659
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -780,7 +780,7 @@ Private Sub Command1_Click() 'EXCEL
                     "    Left Join PurchaseOrder_Master POM on PR.PO_NO = POM.PO_No  " & vbCrLf & _
                     "    left join InvoiceSupplier_Detail isd on pr.seq_no=isd.receiptseq_no  " & vbCrLf & _
                     "    left join InvoiceSupplier_Master ism on isd.invoice_no=ism.invoice_no  " & vbCrLf & _
-                    "    left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,(select * from company_profile where Where Company_Code='" & Trim(TxtFc) & "') cp    " & vbCrLf & _
+                    "    left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls ,(select * from company_profile where Company_Code='" & Trim(TxtFc) & "') cp    " & vbCrLf & _
                     "  where pr.receipt_date>='" & Format(DFrom, "yyyy-mm-dd") & "' and pr.receipt_date<='" & Format(DTo, "yyyy-mm-dd") & "'  " & vbCrLf & _
                     "    and (pr.receipt_cls ='R' or pr.receipt_cls ='R1') " & vbCrLf & _
                     "    and wm.company_code = '" & Trim(TxtFc.Text) & "' " & vbCrLf & _

@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frm_part_supply 
    BackColor       =   &H00FDDFE3&
@@ -146,7 +146,7 @@ Begin VB.Form frm_part_supply
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   62717955
+      Format          =   59113475
       CurrentDate     =   41080
    End
    Begin VB.TextBox txtbcno 
@@ -268,7 +268,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   11640
+         Left            =   11910
          TabIndex        =   67
          Top             =   1440
          Width           =   1755
@@ -284,7 +284,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   11640
+         Left            =   11910
          TabIndex        =   66
          Top             =   675
          Width           =   1755
@@ -300,7 +300,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         Left            =   11640
+         Left            =   11925
          TabIndex        =   65
          Top             =   240
          Width           =   1755
@@ -366,7 +366,7 @@ Begin VB.Form frm_part_supply
       End
       Begin MSComCtl2.DTPicker DTPicker3 
          Height          =   330
-         Left            =   2340
+         Left            =   2070
          TabIndex        =   3
          Top             =   1485
          Width           =   1500
@@ -383,19 +383,19 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   62717955
+         Format          =   59113475
          CurrentDate     =   37867
       End
       Begin MSForms.ComboBox CboDelivery 
          Height          =   315
-         Left            =   11640
+         Left            =   11910
          TabIndex        =   68
          Top             =   1080
-         Width           =   2415
+         Width           =   2550
          VariousPropertyBits=   746604571
          MaxLength       =   35
          DisplayStyle    =   3
-         Size            =   "4260;556"
+         Size            =   "4498;556"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
@@ -417,7 +417,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   10410
+         Left            =   10680
          TabIndex        =   64
          Top             =   1560
          Width           =   570
@@ -436,7 +436,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   10410
+         Left            =   10680
          TabIndex        =   63
          Top             =   1200
          Width           =   990
@@ -455,7 +455,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   10440
+         Left            =   10665
          TabIndex        =   62
          Top             =   750
          Width           =   690
@@ -474,9 +474,9 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   10440
+         Left            =   10710
          TabIndex        =   61
-         Top             =   308
+         Top             =   315
          Width           =   225
       End
       Begin MSForms.ComboBox cbo_Replacement 
@@ -511,9 +511,9 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   7110
+         Left            =   7335
          TabIndex        =   50
-         Top             =   1005
+         Top             =   1080
          Width           =   1470
       End
       Begin VB.Line Line5 
@@ -537,7 +537,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   10410
+         Left            =   10815
          TabIndex        =   49
          Top             =   735
          Visible         =   0   'False
@@ -547,12 +547,12 @@ Begin VB.Form frm_part_supply
          Height          =   330
          Left            =   8760
          TabIndex        =   48
-         Top             =   667
-         Width           =   1500
+         Top             =   660
+         Width           =   1725
          VariousPropertyBits=   746604571
          MaxLength       =   6
          DisplayStyle    =   3
-         Size            =   "2646;582"
+         Size            =   "3043;582"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          Value           =   "cbo_ReplacementWarehouseCode"
@@ -575,7 +575,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   7110
+         Left            =   7335
          TabIndex        =   33
          Top             =   735
          Width           =   1110
@@ -594,9 +594,9 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   7110
+         Left            =   7335
          TabIndex        =   30
-         Top             =   293
+         Top             =   300
          Width           =   1110
       End
       Begin VB.Label Label3 
@@ -613,9 +613,9 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   225
+         Left            =   135
          TabIndex        =   29
-         Top             =   293
+         Top             =   300
          Width           =   1785
       End
       Begin VB.Label Label4 
@@ -632,7 +632,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   225
+         Left            =   135
          TabIndex        =   28
          Top             =   735
          Width           =   1305
@@ -651,9 +651,9 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   225
+         Left            =   135
          TabIndex        =   27
-         Top             =   1133
+         Top             =   1140
          Width           =   915
       End
       Begin VB.Label Label6 
@@ -670,21 +670,21 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   225
+         Left            =   135
          TabIndex        =   26
-         Top             =   1553
+         Top             =   1560
          Width           =   1050
       End
       Begin MSForms.ComboBox cbo_warehouse 
          Height          =   330
-         Left            =   2340
+         Left            =   2070
          TabIndex        =   0
          Top             =   225
-         Width           =   1500
+         Width           =   1860
          VariousPropertyBits=   746604571
          MaxLength       =   6
          DisplayStyle    =   3
-         Size            =   "2646;582"
+         Size            =   "3281;582"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          Value           =   "cbo_warehouse"
@@ -695,14 +695,14 @@ Begin VB.Form frm_part_supply
       End
       Begin MSForms.ComboBox cbo_location 
          Height          =   330
-         Left            =   2340
+         Left            =   2070
          TabIndex        =   1
-         Top             =   667
-         Width           =   1500
+         Top             =   660
+         Width           =   1860
          VariousPropertyBits=   746604571
          MaxLength       =   6
          DisplayStyle    =   3
-         Size            =   "2646;582"
+         Size            =   "3281;582"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          Value           =   "cbo_location"
@@ -713,7 +713,7 @@ Begin VB.Form frm_part_supply
       End
       Begin MSForms.ComboBox cbo_supply 
          Height          =   330
-         Left            =   2340
+         Left            =   2070
          TabIndex        =   2
          Top             =   1065
          Width           =   780
@@ -742,10 +742,10 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   3930
+         Left            =   4020
          TabIndex        =   25
          Top             =   315
-         Width           =   3210
+         Width           =   3075
       End
       Begin VB.Label lbl_location 
          AutoSize        =   -1  'True
@@ -761,26 +761,26 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   3930
+         Left            =   4020
          TabIndex        =   24
          Top             =   735
          Width           =   2490
       End
       Begin VB.Line Line1 
-         X1              =   3930
-         X2              =   6990
+         X1              =   4020
+         X2              =   7080
          Y1              =   540
          Y2              =   540
       End
       Begin VB.Line Line2 
-         X1              =   3930
-         X2              =   6990
+         X1              =   4020
+         X2              =   7080
          Y1              =   990
          Y2              =   990
       End
       Begin VB.Line Line3 
-         X1              =   3930
-         X2              =   6990
+         X1              =   4020
+         X2              =   7080
          Y1              =   1395
          Y2              =   1395
       End
@@ -798,7 +798,7 @@ Begin VB.Form frm_part_supply
             Strikethrough   =   0   'False
          EndProperty
          Height          =   195
-         Left            =   3930
+         Left            =   4020
          TabIndex        =   23
          Top             =   1125
          Width           =   855
@@ -2427,7 +2427,7 @@ End Sub
 Private Sub Cmd_Submit_Click()
     Dim s As Integer, d As Integer, j  As Integer
     Dim l_curr As String, sql_del As String, l_amount As String, l_qty As String, L_price As String, l_unit_cls As String, sql_prod As String
-    Dim rs As New ADODB.Recordset, ls_sql As String
+    Dim RS As New ADODB.Recordset, ls_sql As String
    ' On Error GoTo ErrHandler
     
     cmd_submit.Enabled = False
@@ -2528,15 +2528,15 @@ delete:
                 '#Check jika SupplySeq_No nya sesuai dengan Seq_No berdasarkan replacement
                 ls_sql = " SELECT * FROM Part_Supply " & vbCrLf & _
                         " WHERE SupplySeq_No = " & Val(Trim(Grid1.TextMatrix(i, bteColSeqNo))) & " "
-                If rs.State = adStateOpen Then rs.Close
-                Set rs = db2.Execute(ls_sql)
+                If RS.State = adStateOpen Then RS.Close
+                Set RS = db2.Execute(ls_sql)
                 
-                If Not rs.EOF Then
-                    ls_FromWarehouseCode = Trim(rs!FromWarehouse_Code)
-                    ls_ToWarehouseCode = Trim(rs!towarehouse_code)
+                If Not RS.EOF Then
+                    ls_FromWarehouseCode = Trim(RS!FromWarehouse_Code)
+                    ls_ToWarehouseCode = Trim(RS!towarehouse_code)
                 End If
                 
-                rs.Close
+                RS.Close
                 
                 '#Delete data in part Supply berdasarkan SupplySeq_No
                 ls_sql = " DELETE FROM   Part_Supply WITH (updlock) " & vbCrLf & _
@@ -2630,12 +2630,12 @@ update:
         '#Check jika SupplySeq_No nya sesuai dengan Seq_No berdasarkan replacement
         ls_sql = " SELECT * FROM Part_Supply " & vbCrLf & _
                 " WHERE SupplySeq_No = " & l_seqNo & " "
-        If rs.State = adStateOpen Then rs.Close
-        Set rs = db2.Execute(ls_sql)
+        If RS.State = adStateOpen Then RS.Close
+        Set RS = db2.Execute(ls_sql)
         
-        If Not rs.EOF Then
-            ls_FromWarehouseCode = Trim(rs!FromWarehouse_Code)
-            ls_ToWarehouseCode = Trim(rs!towarehouse_code)
+        If Not RS.EOF Then
+            ls_FromWarehouseCode = Trim(RS!FromWarehouse_Code)
+            ls_ToWarehouseCode = Trim(RS!towarehouse_code)
         End If
         
         '#Update data in part Supply
@@ -2787,14 +2787,14 @@ inserto:
                     " AND ToWarehouse_Code = '" & ls_ToWarehouseCode & "' " & vbCrLf & _
                     " AND ChildSupply_Date = '" & ls_SupplyDate & "' AND Supply_Cls = '" & ls_SupplyCls & "' "
                     
-            If rs.State = adStateOpen Then rs.Close
-            Set rs = db2.Execute(ls_sql)
-            If Not rs.EOF Then
-                ls_SupplySeqNo = Trim(rs!Seq_no)
+            If RS.State = adStateOpen Then RS.Close
+            Set RS = db2.Execute(ls_sql)
+            If Not RS.EOF Then
+                ls_SupplySeqNo = Trim(RS!Seq_no)
             End If
             
-            rs.Close
-            Set rs = Nothing
+            RS.Close
+            Set RS = Nothing
             
             cbo_warehouse.Text = ls_ReplacementWarehouseCode
             cbo_location.Text = ls_FromWarehouseCode
@@ -3263,21 +3263,21 @@ End Sub
 Sub delivery()
 
 
-Dim rs As New ADODB.Recordset
+Dim RS As New ADODB.Recordset
 sql = " Select Trade_name, Address1 as A from trade_master where trade_cls in ('2', '3') order by trade_code" & vbCrLf
             
-Set rs = Db.Execute(sql)
+Set RS = Db.Execute(sql)
 
 With CboDelivery
 .clear
 '.ColumnCount = 1
 .AddItem ""
 i = 1
-Do Until rs.EOF
+Do Until RS.EOF
     .AddItem ""
-    .List(i, 0) = Trim(rs!trade_name)
+    .List(i, 0) = Trim(RS!trade_name)
     i = i + 1
-    rs.MoveNext
+    RS.MoveNext
 Loop
 
 '.ColumnWidths = "60 pt; 300 pt"
@@ -3854,21 +3854,21 @@ End Sub
 Private Function GetContractNo(ByVal Remarks As String) As String
     On Error GoTo ErrHandler
     
-    Dim rs As New ADODB.Recordset
+    Dim RS As New ADODB.Recordset
     Dim sql As String
     
     GetContractNo = "" ' default kalau tidak ada hasil
     
     sql = "EXEC dbo.sp_POContractNo_Get '" & Trim(Remarks) & "'"
     
-    If rs.State <> adStateClosed Then rs.Close
-    rs.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+    If RS.State <> adStateClosed Then RS.Close
+    RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
     
-    If Not rs.EOF Then
-        GetContractNo = rs.Fields("Contract_No").Value
+    If Not RS.EOF Then
+        GetContractNo = RS.Fields("Contract_No").Value
     End If
     
-    rs.Close
+    RS.Close
     Exit Function
     
 ErrHandler:
