@@ -8,14 +8,34 @@ Begin VB.Form FrmAPInvoiceInformationEntry
    ClientHeight    =   10515
    ClientLeft      =   60
    ClientTop       =   405
-   ClientWidth     =   15240
+   ClientWidth     =   17625
    Icon            =   "FrmAPInvoiceInformationEntry.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    ScaleHeight     =   10515
-   ScaleWidth      =   15240
+   ScaleWidth      =   17625
    StartUpPosition =   2  'CenterScreen
    WindowState     =   2  'Maximized
+   Begin VB.TextBox txtAmountIDR 
+      Alignment       =   1  'Right Justify
+      Appearance      =   0  'Flat
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Left            =   10200
+      Locked          =   -1  'True
+      MaxLength       =   25
+      TabIndex        =   65
+      TabStop         =   0   'False
+      Top             =   8745
+      Width           =   2235
+   End
    Begin VB.TextBox txtrate 
       Alignment       =   1  'Right Justify
       Appearance      =   0  'Flat
@@ -29,7 +49,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Left            =   12570
+      Left            =   14970
       Locked          =   -1  'True
       MaxLength       =   25
       TabIndex        =   59
@@ -50,7 +70,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Left            =   10125
+      Left            =   12525
       Locked          =   -1  'True
       MaxLength       =   25
       TabIndex        =   58
@@ -122,10 +142,10 @@ Begin VB.Form FrmAPInvoiceInformationEntry
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   405
-      Left            =   13170
+      Left            =   15480
       TabIndex        =   29
       TabStop         =   0   'False
-      Top             =   323
+      Top             =   360
       Width           =   1875
       _ExtentX        =   3307
       _ExtentY        =   714
@@ -222,7 +242,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   12660
+      Left            =   15060
       Style           =   1  'Graphical
       TabIndex        =   13
       Top             =   10005
@@ -241,7 +261,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   11415
+      Left            =   13815
       Style           =   1  'Graphical
       TabIndex        =   12
       Top             =   10005
@@ -260,7 +280,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   13920
+      Left            =   16320
       Style           =   1  'Graphical
       TabIndex        =   11
       Top             =   10005
@@ -272,7 +292,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
       Left            =   180
       TabIndex        =   18
       Top             =   9255
-      Width           =   14865
+      Width           =   17265
       Begin VB.Label lblerror 
          Alignment       =   2  'Center
          BackColor       =   &H00FDDFE3&
@@ -290,7 +310,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Left            =   105
          TabIndex        =   19
          Top             =   195
-         Width           =   14640
+         Width           =   17040
       End
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
@@ -299,8 +319,8 @@ Begin VB.Form FrmAPInvoiceInformationEntry
       TabIndex        =   9
       TabStop         =   0   'False
       Top             =   4440
-      Width           =   14865
-      _cx             =   26220
+      Width           =   17265
+      _cx             =   30454
       _cy             =   6482
       Appearance      =   1
       BorderStyle     =   1
@@ -397,7 +417,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
       Left            =   180
       TabIndex        =   20
       Top             =   1020
-      Width           =   14835
+      Width           =   17235
       Begin VB.TextBox txtSearch 
          BeginProperty Font 
             Name            =   "Verdana"
@@ -476,7 +496,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   149553155
+         Format          =   129236995
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker InvDateSt 
@@ -498,7 +518,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   149553155
+         Format          =   129236995
          CurrentDate     =   37810
       End
       Begin VB.Label lblCaption 
@@ -683,7 +703,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
       Left            =   180
       TabIndex        =   36
       Top             =   2700
-      Width           =   14835
+      Width           =   17235
       Begin VB.TextBox TxtBlNo 
          BeginProperty Font 
             Name            =   "Verdana"
@@ -833,7 +853,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   108658691
+         Format          =   129236995
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DateBL 
@@ -856,7 +876,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   108265475
+         Format          =   129236995
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DateRecp 
@@ -878,7 +898,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   152567811
+         Format          =   129236995
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DateDue 
@@ -900,7 +920,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   54853635
+         Format          =   129236995
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtFaktur 
@@ -922,7 +942,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   152371203
+         Format          =   129236995
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -1170,6 +1190,25 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          FontPitchAndFamily=   2
       End
    End
+   Begin VB.Label Label14 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Total Amount IDR"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   195
+      Left            =   10200
+      TabIndex        =   66
+      Top             =   8355
+      Width           =   1530
+   End
    Begin VB.Label Label13 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -1184,7 +1223,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   195
-      Left            =   12600
+      Left            =   15000
       TabIndex        =   60
       Top             =   8340
       Width           =   390
@@ -1241,7 +1280,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
       Index           =   2
       Left            =   180
       Top             =   8625
-      Width           =   14865
+      Width           =   17265
    End
    Begin VB.Label Label12 
       AutoSize        =   -1  'True
@@ -1257,7 +1296,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   195
-      Left            =   10125
+      Left            =   12525
       TabIndex        =   28
       Top             =   8355
       Width           =   750
@@ -1340,7 +1379,7 @@ Begin VB.Form FrmAPInvoiceInformationEntry
       Left            =   180
       TabIndex        =   15
       Top             =   330
-      Width           =   14865
+      Width           =   17265
    End
    Begin VB.Shape Shape1 
       BackColor       =   &H00A6D2FF&
@@ -1348,8 +1387,8 @@ Begin VB.Form FrmAPInvoiceInformationEntry
       Height          =   375
       Index           =   2
       Left            =   180
-      Top             =   8265
-      Width           =   14865
+      Top             =   8280
+      Width           =   17265
    End
 End
 Attribute VB_Name = "FrmAPInvoiceInformationEntry"
@@ -1359,7 +1398,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
  
-Dim status As String
+Dim Status As String
 Dim rsSup As ADODB.Recordset
 Dim RsInv As ADODB.Recordset
 Dim RsAcc As ADODB.Recordset
@@ -1381,7 +1420,7 @@ Dim InvDate As Date
 
 Private Sub NotAlow()
 Dim rsnotalow As New ADODB.Recordset
-sql = "select * from ap_detail where supplier_code = '" & cboSupp & "' and invoice_no = '" & CboInvNo & "'"
+sql = "select * from ap_detail where supplier_code = '" & CboSupp & "' and invoice_no = '" & CboInvNo & "'"
 rsnotalow.Open sql, Db, adOpenKeyset, adLockOptimistic
 If rsnotalow.EOF And rsnotalow.BOF Then
     CtrNotAlow = 0
@@ -1397,8 +1436,8 @@ lblerror = ""
 If hakUpdate(Me.Name) = 0 Then lblerror = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
 
 
-status = ""
-status = Trim(combo1.Text)
+Status = ""
+Status = Trim(Combo1.Text)
 
 CtrNotAlow = 0
 
@@ -1406,13 +1445,13 @@ NotAlow
 
 MousePointer = vbHourglass
 'SUPPLIER CHECK
-    If cboSupp.Text = "" Then
+    If CboSupp.Text = "" Then
         lblerror = DisplayMsg(1054)
         MousePointer = Default
         Exit Sub
     Else
-        For i = 0 To cboSupp.ListCount - 1
-            If Trim(cboSupp.List(i, 0)) = Trim(cboSupp.Text) Then
+        For i = 0 To CboSupp.ListCount - 1
+            If Trim(CboSupp.List(i, 0)) = Trim(CboSupp.Text) Then
                 GoTo Okay
             End If
         Next
@@ -1466,6 +1505,7 @@ If BtnCreate.Caption = "Create" Then
     txtamount_material.Text = "0"
     txtamount_service.Text = "0"
     txtamount.Text = "0"
+    txtAmountIDR.Text = "0"
     txtPPN.Text = "0"
             
     'INVOICE NO ALREADY IN USED OR NOT
@@ -1486,16 +1526,16 @@ If BtnCreate.Caption = "Create" Then
         
     sql = " INSERT INTO InvoiceSupplier_Master (Supplier_Code, Invoice_No, Invoice_Date, InvoiceReceipt_Date, Due_Date, " & _
             "BL_Date, BL_No, AirFreight_Amount, Bank_Code, Total_Amount, FakturPajak_NO, FakturPajak_Date, PPN, Exchange_Rate, Last_Update, Last_User, Total_Amount_Mat, Total_Amount_Service,PaymentVoucher_No,VoucherDesc) " & _
-            "VALUES ('" & cboSupp.Text & "', '" & CboInvNo.Text & "', '" & Format(DateInv.Value, "yyyy-mm-dd") & "', '" & Format(DateRecp.Value, "yyyy-mm-dd") & "', " & _
+            "VALUES ('" & CboSupp.Text & "', '" & CboInvNo.Text & "', '" & Format(DateInv.Value, "yyyy-mm-dd") & "', '" & Format(DateRecp.Value, "yyyy-mm-dd") & "', " & _
             "'" & Format(DateDue.Value, "yyyy-mm-dd") & "', '" & Format(DateBL.Value, "yyyy-mm-dd") & "', '" & TxtBlNo.Text & "', " & CDbl(IIf(Trim(txtairfreight.Text) = "", 0, txtairfreight.Text)) & "," & _
-            "'" & cbocurr.Text & "', " & CDbl(IIf(Trim(txtamount.Text) = "", 0, txtamount.Text)) & ", '" & IIf(Trim(txtFakturPajakNo.Text) = "", "", txtFakturPajakNo.Text) & "', '" & Format(DtFaktur.Value, "yyyy-mm-dd") & "', " & _
+            "'" & CboCurr.Text & "', " & CDbl(IIf(Trim(txtamount.Text) = "", 0, txtamount.Text)) & ", '" & IIf(Trim(txtFakturPajakNo.Text) = "", "", txtFakturPajakNo.Text) & "', '" & Format(DtFaktur.Value, "yyyy-mm-dd") & "', " & _
             "" & CDbl(IIf(Trim(txtPPN.Text) = "", 0, txtPPN.Text)) & ", " & Tamp & ", getdate(), '" & userLogin & "', " & _
             "" & CDbl(IIf(Trim(txtamount_material.Text) = "", 0, txtamount_material.Text)) & ", " & CDbl(IIf(Trim(txtamount_service.Text) = "", 0, txtamount_service.Text)) & ",'" & Trim(TxtBlNo.Text) & "','" & Trim(TxtVoucherDesc.Text) & "')"
             
     Db.Execute sql
    
 
-    combo1.ListIndex = 1
+    Combo1.ListIndex = 1
     CboInvNo_Change
 '    If Overseas_Cls = "1" Then
 '        AddGridImport
@@ -1519,7 +1559,7 @@ End Sub
 Private Sub cbocurr_Change()
     'DONE
     RsAcc.Requery
-    RsAcc.Find "Bank_code ='" & cbocurr & "'"
+    RsAcc.Find "Bank_code ='" & CboCurr & "'"
     If Not RsAcc.EOF Then
         TxtNmBank.Text = RsAcc!bank_name
         TxtBankAcc.Text = RsAcc!bank_Account
@@ -1536,11 +1576,11 @@ End Sub
 Private Sub CboInvNo_Change()
 'PROG : FILL DATE AND ANOTHER HEAD
 lblerror = ""
-If combo1.ListIndex = 1 Then
+If Combo1.ListIndex = 1 Then
     Dim RsBank As New ADODB.Recordset
     
     Header
-    cbocurr.Text = ""
+    CboCurr.Text = ""
     TxtNmBank.Text = ""
     TxtBankAcc.Text = ""
     TxtBlNo.Text = ""
@@ -1548,10 +1588,11 @@ If combo1.ListIndex = 1 Then
     txtamount_material = ""
     txtamount_service = ""
     txtamount = ""
+    txtAmountIDR = ""
     txtFakturPajakNo = ""
     txtPPN = ""
     txtinvno = ""
-    lblFix = ""
+    LblFix = ""
     InvDate = Date
     DtFaktur = Date     ' Tambahan 20110503
     DateInv.Value = Date
@@ -1569,19 +1610,19 @@ If combo1.ListIndex = 1 Then
                 "FROM            InvoiceSupplier_Master LEFT JOIN " & _
                 "                Bank_Master ON " & _
                 "                InvoiceSupplier_Master.Bank_Code = Bank_Master.Bank_Code " & _
-                "Where           InvoiceSupplier_Master.Supplier_Code = '" & cboSupp & "' AND " & _
+                "Where           InvoiceSupplier_Master.Supplier_Code = '" & CboSupp & "' AND " & _
                 "                InvoiceSupplier_Master.Invoice_no = '" & CboInvNo & "'"
                 
     RsBank.Open sql, Db, adOpenKeyset, adLockOptimistic
     
     If Not RsBank.EOF And Not RsBank.BOF Then
-        cbocurr.Text = RsBank!bank_Code
+        CboCurr.Text = RsBank!bank_Code
         TxtNmBank.Text = RsBank!bank_name & ""
         TxtBankAcc.Text = RsBank!bank_Account & ""
         InvDate = RsBank!Invoice_Date
         DateInv.Value = RsBank!Invoice_Date
         DateRecp.Value = RsBank!InvoiceReceipt_Date
-        TxtRate.Text = Format(get_ExchangeRate("02"), gs_formatAmount)
+        txtrate.Text = Format(get_ExchangeRate("02"), gs_formatAmount)
         DateDue.Value = RsBank!due_date
         DateBL.Value = RsBank!BL_Date
         TxtBlNo.Text = Trim(RsBank!BL_no)
@@ -1592,7 +1633,7 @@ If combo1.ListIndex = 1 Then
         txtPPN.Text = Format(RsBank!ppn, gs_formatAmount)
         TxtVoucherDesc.Text = IIf(IsNull(RsBank!VoucherDesc), "", Trim(RsBank!VoucherDesc))
         If Trim(RsBank!fix_cls & "") = "1" Then
-            lblFix = "Status : Fixed"
+            LblFix = "Status : Fixed"
         End If
     End If
     RsBank.Close
@@ -1611,7 +1652,7 @@ Private Sub CboSupp_Change()
         ClearData
         CboInvNo.Text = ""
     End If
-    combo1.ListIndex = 1
+    Combo1.ListIndex = 1
     txt_name.Text = ""
     Overseas_Cls = ""
     TxtBankAcc.Text = ""
@@ -1619,7 +1660,7 @@ Private Sub CboSupp_Change()
     ComboSuppUbah
     AddtoPO
     Header
-    If cboSupp.MatchFound Then DateDue = DateAdd("d", Val(cboSupp.Column(4)), DateRecp) Else DateDue.Value = Date
+    If CboSupp.matchFound Then DateDue = DateAdd("d", Val(CboSupp.Column(4)), DateRecp) Else DateDue.Value = Date
 End Sub
 
 Private Sub CboSupp_KeyPress(KeyAscii As MSForms.ReturnInteger)
@@ -1631,12 +1672,12 @@ End Sub
 Private Sub cmdCancel_Click()
 Dim suppno, invno As String
 Dim dt1, dt2 As Date
-suppno = cboSupp.Text
+suppno = CboSupp.Text
 invno = CboInvNo.Text
 dt1 = InvDateSt.Value
 dt2 = InvDateEnd.Value
 cmdClear_Click
-cboSupp.Text = suppno
+CboSupp.Text = suppno
 InvDateSt.Value = dt1
 InvDateEnd.Value = dt2
 CboInvNo.Text = invno
@@ -1644,7 +1685,7 @@ BtnCreate_Click
 End Sub
 
 Private Sub cmdClear_Click()
-cboSupp.Text = ""
+CboSupp.Text = ""
 End Sub
 
 Private Sub cmdSearch_Click()
@@ -1731,7 +1772,7 @@ CtrEXc = 0
 
     Db.BeginTrans
     'delete dulu semua detail dari detail
-    sql = "delete from invoicesupplier_detail where supplier_code = '" & cboSupp & "' and " & _
+    sql = "delete from invoicesupplier_detail where supplier_code = '" & CboSupp & "' and " & _
         "invoice_no = '" & CboInvNo & "'"
     Db.Execute sql
     
@@ -1756,7 +1797,7 @@ JOk:
                 EX = 0
             Else
                 EX = RS.Fields("daily_exchangerate")
-                TxtRate.Text = Format(RS.Fields("daily_exchangerate"), gs_formatAmountIDR)
+                txtrate.Text = Format(RS.Fields("daily_exchangerate"), gs_formatAmountIDR)
             End If
         Else
         EX = 1
@@ -1792,7 +1833,7 @@ JOk:
                     sql = " INSERT INTO InvoiceSupplier_Detail (Supplier_Code, Invoice_No, PO_No, DO_No, BC_No, Item_Code, Qty, Unit_Cls, " & _
                         "Currency_Code, Price, Amount, Exchange_Amount, Last_Update, Last_User,ReceiptSeq_No," & _
                         "Price_Mat,Amount_Mat,Price_Service,Amount_Service) " & _
-                        "VALUES ('" & cboSupp.Text & "', '" & CboInvNo.Text & "', '" & grid.TextMatrix(i, ColPONo) & "', '" & Dono & "', '" & grid.TextMatrix(i, ColBCNO) & "', '" & grid.TextMatrix(i, colpcode) & "', " & _
+                        "VALUES ('" & CboSupp.Text & "', '" & CboInvNo.Text & "', '" & grid.TextMatrix(i, ColPONo) & "', '" & Dono & "', '" & grid.TextMatrix(i, ColBCNO) & "', '" & grid.TextMatrix(i, colpcode) & "', " & _
                         CDbl(grid.TextMatrix(i, colinvqty)) & ", '" & grid.TextMatrix(i, ColBantuUnit) & "', '" & grid.TextMatrix(i, ColBantuCurr) & "', " & CDbl(grid.TextMatrix(i, ColPrice)) & ", " & _
                         CDbl(CDbl(grid.TextMatrix(i, ColPrice)) * CDbl(grid.TextMatrix(i, colinvqty))) & ", " & _
                         CDbl((CDbl(grid.TextMatrix(i, ColPrice)) * CDbl(grid.TextMatrix(i, colinvqty))) * EX) & ", getdate(), '" & userLogin & "'," & grid.TextMatrix(i, ColReceiptSeqNo) & ", " & _
@@ -1813,6 +1854,7 @@ JOk:
     
     'save header lagi
     txtamount.Text = 0
+    txtAmountIDR.Text = 0
     txtamount_material.Text = 0
     txtamount_service.Text = 0
     For i = 0 To grid.Rows - 1
@@ -1829,7 +1871,7 @@ JOk:
             
     
     If RS.State = 1 Then RS.Close
-    RS.Open "Select * from invoicesupplier_master where supplier_code = '" & cboSupp.Text & "' and invoice_no = '" & CboInvNo & "'", Db, adOpenKeyset, adLockOptimistic
+    RS.Open "Select * from invoicesupplier_master where supplier_code = '" & CboSupp.Text & "' and invoice_no = '" & CboInvNo & "'", Db, adOpenKeyset, adLockOptimistic
     If RS.EOF And RS.BOF Then
         'imposible seh
         lblerror = lblerror = DisplayMsg("0057")
@@ -1849,7 +1891,7 @@ JOk:
         RS.Fields("FakturPajak_No") = txtFakturPajakNo.Text
         RS.Fields("FakturPajak_Date") = Format(DtFaktur, "yyyy-mm-dd")                    ' Tambahan 20110503
         RS.Fields("PPN") = CDbl(IIf(Trim(txtPPN.Text) = "", 0, txtPPN.Text))
-        RS.Fields("Bank_Code") = cbocurr.Text
+        RS.Fields("Bank_Code") = CboCurr.Text
         RS.Fields("Last_Update") = Date
         RS.Fields("Last_User") = userLogin
         RS.Fields("Total_Amount_Mat") = CDbl(IIf(Trim(txtamount_material.Text) = "", 0, txtamount_material.Text))
@@ -1887,19 +1929,20 @@ End Function
 
 Private Sub Combo1_Click()
 lblerror = ""
-If combo1.ListIndex = 1 Then
+If Combo1.ListIndex = 1 Then
     BtnCreate.Caption = "Update"
     If CtrCreate = 0 Then
         InitSave
     End If
     CboSupp_Change
-ElseIf combo1.ListIndex = 0 Then
+ElseIf Combo1.ListIndex = 0 Then
     ClearData
     BtnCreate.Caption = "Create"
     InitSave
     Header
     txtinvno.Text = ""
     txtamount.Text = ""
+    txtAmountIDR.Text = ""
     txtamount_material.Text = ""
     txtamount_service.Text = ""
     txtPPN.Text = ""
@@ -1955,7 +1998,7 @@ Private Sub DateRecp_Change()
     DateDue = Month(DateDue) & "/" & DueDate & "/" & Year(DateDue)
     
 '    If cboSupp.MatchFound Then DateDue = DateAdd("d", Val(cboSupp.Column(4)), DateRecp) Else DateDue.Value = Date
-    TxtRate.Text = Format(get_ExchangeRate("02"), gs_formatAmountIDR)
+    txtrate.Text = Format(get_ExchangeRate("02"), gs_formatAmountIDR)
 End Sub
 
 Private Sub Form_Load()
@@ -1966,13 +2009,14 @@ Private Sub Form_Load()
     bteHakPrice = hakPrice(Me.Name)
     Label2.Visible = (bteHakPrice = 1)
     txtamount.Visible = (bteHakPrice = 1)
+    txtAmountIDR.Visible = (bteHakPrice = 1)
     Label10.Visible = (bteHakPrice = 1)
     txtamount_material.Visible = (bteHakPrice = 1)
     Label11.Visible = (bteHakPrice = 1)
     txtamount_service.Visible = (bteHakPrice = 1)
 '    Label5.Visible = (bteHakPrice = 1)
 '    txtPPn.Visible = (bteHakPrice = 1)
-    lblFix = ""
+    LblFix = ""
     DateDue.Value = Date
     DtFaktur = Date
     CtrNotAlow = 0
@@ -2034,6 +2078,7 @@ grid.TextMatrix(lngRow, colinvqty) = Format(grid.TextMatrix(lngRow, colinvqty), 
     grid.TextMatrix(lngRow, ColAmountService) = Format(grid.TextMatrix(lngRow, colinvqty) * grid.TextMatrix(lngRow, colPriceService), gs_formatAmount)
     
     txtamount.Text = 0
+    txtAmountIDR.Text = 0
     txtamount_material.Text = 0
     txtamount_service.Text = 0
     For i = 0 To grid.Rows - 1
@@ -2049,8 +2094,9 @@ grid.TextMatrix(lngRow, colinvqty) = Format(grid.TextMatrix(lngRow, colinvqty), 
             txtamount_service.Text = Format(CDbl(txtamount_service.Text), gs_formatAmount)
     
     
-    If txtamount.Text > 0 And txtamount.Text <> "" And RateOri > 0 And TxtRate.Text > 0 And TxtRate.Text <> "" Then
-        txtkonversi.Text = Format((CDbl(txtamount) * CDbl(RateOri)) / CDbl(TxtRate.Text), gs_formatAmountIDR)
+    If txtamount.Text > 0 And txtamount.Text <> "" And RateOri > 0 And txtrate.Text > 0 And txtrate.Text <> "" Then
+        txtkonversi.Text = Format((CDbl(txtamount) * CDbl(RateOri)) / CDbl(txtrate.Text), gs_formatAmountIDR)
+         txtAmountIDR.Text = Format(CDec(txtamount) * CDec(txtrate.Text), gs_formatAmountIDR)
     End If
     
 End Sub
@@ -2113,20 +2159,20 @@ lblerror = ""
 End Sub
 
 Private Sub InvDateEnd_Change()
-If combo1.ListIndex <> 0 Then
+If Combo1.ListIndex <> 0 Then
     ClearData
     InvAdd
     AddtoPO
-    If CboInvNo.MatchFound = False Then CboInvNo = ""
+    If CboInvNo.matchFound = False Then CboInvNo = ""
 End If
 End Sub
 
 Private Sub InvDateSt_Change()
-If combo1.ListIndex <> 0 Then
+If Combo1.ListIndex <> 0 Then
     ClearData
     InvAdd
     AddtoPO
-    If CboInvNo.MatchFound = False Then CboInvNo = ""
+    If CboInvNo.matchFound = False Then CboInvNo = ""
 End If
 End Sub
 
@@ -2169,10 +2215,10 @@ Sub Init()
     ColReceiptSeqNo = 23 + 1
 
     CtrCreate = 0
-    combo1.clear
-    combo1.AddItem "Create"
-    combo1.AddItem "Update"
-    combo1.ListIndex = 1
+    Combo1.clear
+    Combo1.AddItem "Create"
+    Combo1.AddItem "Update"
+    Combo1.ListIndex = 1
     txt_name.Text = ""
     InvDateSt.Value = Date
     InvDateEnd.Value = Date
@@ -2180,6 +2226,7 @@ Sub Init()
     Overseas_Cls = 0
     txtinvno.Text = ""
     txtamount.Text = ""
+    txtAmountIDR.Text = ""
     txtamount_material.Text = ""
     txtamount_service.Text = ""
     txtPPN.Text = ""
@@ -2192,7 +2239,7 @@ End Sub
 Sub InitSave()
     CboInvNo = ""
     CboInvNo.clear
-    cbocurr.Text = ""
+    CboCurr.Text = ""
     TxtBankAcc.Text = ""
     TxtNmBank.Text = ""
     TxtBlNo.Text = ""
@@ -2220,7 +2267,7 @@ Sub AddGridLocal()
         "declare @StartDate as char(10) " & vbCrLf & _
         "declare @EndDate as char(10) " & vbCrLf & _
         "set @InvoiceNo = '" & CboInvNo & "' " & vbCrLf & _
-        "set @SupplierCode = '" & cboSupp & "' " & vbCrLf & _
+        "set @SupplierCode = '" & CboSupp & "' " & vbCrLf & _
         "set @StartDate = '" & Format(InvDateSt, "yyyy-MM-dd") & "' " & vbCrLf & _
         "set @EndDate = '" & Format(InvDateEnd, "yyyy-MM-dd") & "' "
     
@@ -2299,7 +2346,7 @@ Sub AddGridLocal()
         ") a "
         
     ' Add for KAWAI 20090623
-    If Trim(CboPOnO) <> strAll Then sql = sql & " Where DO_NO='" & Trim(CboPOnO) & "' "
+    If Trim(CboPoNo) <> strAll Then sql = sql & " Where DO_NO='" & Trim(CboPoNo) & "' "
     
     sql = sql & " order by Receipt_Date, PO_No, DO_No, Item_Code"
 
@@ -2334,7 +2381,7 @@ Sub AddGridLocal()
             If CDbl(.TextMatrix(i, colrem)) < 0 Then .TextMatrix(i, colrem) = Format(0, gs_formatQty)
            
            ' request jika pada saat posisi create jika sudah remaining 0 tidak usah di tampilkan  20170516
-           If status = "Create" Then
+           If Status = "Create" Then
            
                 If CDbl(.TextMatrix(i, colrem)) = 0 Then
                 
@@ -2393,6 +2440,7 @@ Sub AddGridLocal()
     grid.Cell(flexcpAlignment, 0, ColCurr, grid.Rows - 1, ColCurr) = flexAlignCenterCenter
     
     txtamount.Text = 0
+    txtAmountIDR.Text = 0
     txtamount_material.Text = 0
     txtamount_service.Text = 0
     
@@ -2410,9 +2458,10 @@ Sub AddGridLocal()
         txtamount_material.Text = Format(CDbl(txtamount_material.Text), gs_formatAmount)
         txtamount_service.Text = Format(CDbl(txtamount_service.Text), gs_formatAmount)
 
-     If txtamount.Text > 0 And txtamount.Text <> "" And RateOri > 0 And TxtRate.Text > 0 And TxtRate.Text <> "" Then
+     If txtamount.Text > 0 And txtamount.Text <> "" And RateOri > 0 And txtrate.Text > 0 And txtrate.Text <> "" Then
     
-        txtkonversi.Text = Format((CDbl(txtamount) * CDbl(RateOri)) / CDbl(TxtRate.Text), gs_formatAmountIDR)
+        txtkonversi.Text = Format((CDbl(txtamount) * CDbl(RateOri)) / CDbl(txtrate.Text), gs_formatAmountIDR)
+        txtAmountIDR.Text = Format(CDec(txtamount) * CDec(txtrate.Text), gs_formatAmountIDR)
     End If
 End Sub
 
@@ -2563,7 +2612,7 @@ Sub ComboSuppUbah()
     MousePointer = vbHourglass
     i = 0
     rsSup.Requery
-    rsSup.Find "supp_code ='" & cboSupp & "'"
+    rsSup.Find "supp_code ='" & CboSupp & "'"
     If Not rsSup.EOF Then
         txt_name.Text = Trim(rsSup!supp_name)
         Overseas_Cls = rsSup!country_cls
@@ -2572,7 +2621,7 @@ Sub ComboSuppUbah()
     
     i = 0
     BankAcc
-    If combo1.ListIndex <> 0 Then
+    If Combo1.ListIndex <> 0 Then
         i = 0
         InvAdd
     End If
@@ -2583,10 +2632,10 @@ End Sub
 Sub BankAcc()
     Dim i As Long
     
-    sql = "SELECT Bank_Code, Bank_Name, Bank_Account, currency_code from Bank_master where trade_code = '" & cboSupp & "'"
+    sql = "SELECT Bank_Code, Bank_Name, Bank_Account, currency_code from Bank_master where trade_code = '" & CboSupp & "'"
     Set RsAcc = New Recordset
     RsAcc.Open sql, Db, adOpenKeyset, adLockOptimistic
-    With cbocurr
+    With CboCurr
         .clear
         
         .columnCount = 4
@@ -2613,7 +2662,7 @@ Sub InvAdd()
     Dim i As Long
     Dim rsno As New Recordset
     
-    sql = "SELECT Invoice_no,exchange_Rate,Exchange_Amount from InvoiceSupplier_Master where Supplier_code = '" & Trim(cboSupp) & "' " & _
+    sql = "SELECT Invoice_no,exchange_Rate,Exchange_Amount from InvoiceSupplier_Master where Supplier_code = '" & Trim(CboSupp) & "' " & _
             "and invoice_date >='" & Format(InvDateSt.Value, "yyyy-mm-dd") & "' and invoice_date <='" & Format(InvDateEnd.Value, "yyyy-mm-dd") & "'"
     Set rsno = New Recordset
     rsno.Open sql, Db, adOpenKeyset, adLockOptimistic
@@ -2649,11 +2698,11 @@ Sub AddtoPO()
                       
     strSQL = " select distinct Suratjalan_no From Part_receipt " & vbCrLf & _
                       "     Where Receipt_Date>='" & Format(InvDateSt, "dd-MMM-YYYY") & "' And Receipt_Date<='" & Format(InvDateEnd, "dd-MMM-YYYY") & "' " & vbCrLf & _
-                      "         And Supplier_Code='" & Trim(cboSupp) & "' "
+                      "         And Supplier_Code='" & Trim(CboSupp) & "' "
                       
     Set AdoPo = Db.Execute(strSQL)
     
-    With CboPOnO
+    With CboPoNo
         .clear
         .columnCount = 1
         .ColumnWidths = "150 pt"
@@ -2669,14 +2718,14 @@ Sub AddtoPO()
             AdoPo.MoveNext
         Loop
     End With
-CboPOnO.ListIndex = 0
+CboPoNo.ListIndex = 0
 End Sub
 Sub adtocombo()
     sql = "SELECT  rtrim(Trade_Master.trade_Code) supp_code, rtrim(Trade_Master.Trade_Name) supp_name, " & _
         "rtrim(Trade_Master.Address1) address, country_Cls, POPayment_Day From Trade_Master where trade_cls in ('2','3')"
     Set rsSup = New Recordset
     rsSup.Open sql, Db, adOpenKeyset, adLockOptimistic
-    With cboSupp
+    With CboSupp
         .clear
         .columnCount = 4
         .ColumnWidths = "80 pt;280 pt; 0 pt; 0 pt; 0 pt"
@@ -2818,7 +2867,7 @@ Private Sub ClearData()
         "select invoice_no from InvoiceSupplier_detail " & _
         "where supplier_code = InvoiceSupplier_master.supplier_code " & _
         "and invoice_no = InvoiceSupplier_master.invoice_no) " & _
-        "and supplier_code = '" & cboSupp & "' " & _
+        "and supplier_code = '" & CboSupp & "' " & _
         "and invoice_no = '" & CboInvNo & "' "
     Db.Execute sql
     'Db.CommitTrans

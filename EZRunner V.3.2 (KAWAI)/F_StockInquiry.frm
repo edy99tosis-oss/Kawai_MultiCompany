@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsFlex8.ocx"
-Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.dll"
+Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
+Object = "{0D452EE1-E08F-101A-852E-02608C4D0BB4}#2.0#0"; "FM20.DLL"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form F_StockInquiry 
    BackColor       =   &H00FDDFE3&
@@ -20,7 +20,6 @@ Begin VB.Form F_StockInquiry
    EndProperty
    Icon            =   "F_StockInquiry.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
    ScaleHeight     =   10380
    ScaleWidth      =   14955
    StartUpPosition =   1  'CenterOwner
@@ -45,7 +44,7 @@ Begin VB.Form F_StockInquiry
       EndProperty
       Height          =   300
       Left            =   5100
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   1560
       Width           =   300
    End
@@ -53,7 +52,7 @@ Begin VB.Form F_StockInquiry
       BackColor       =   &H00FDDFE3&
       Height          =   555
       Left            =   600
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   9030
       Width           =   13965
       Begin VB.Label LblPesan 
@@ -71,7 +70,7 @@ Begin VB.Form F_StockInquiry
          ForeColor       =   &H00FF00FF&
          Height          =   240
          Left            =   135
-         TabIndex        =   17
+         TabIndex        =   16
          Top             =   210
          Width           =   13575
       End
@@ -79,11 +78,11 @@ Begin VB.Form F_StockInquiry
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
       Height          =   420
       Left            =   12690
-      TabIndex        =   15
+      TabIndex        =   14
       Top             =   360
       Width           =   1860
-      _ExtentX        =   3281
-      _ExtentY        =   741
+      _extentx        =   3281
+      _extenty        =   741
    End
    Begin VB.CommandButton Cmd_Save 
       BackColor       =   &H0080FFFF&
@@ -92,7 +91,7 @@ Begin VB.Form F_StockInquiry
       Index           =   9
       Left            =   4380
       Style           =   1  'Graphical
-      TabIndex        =   2
+      TabIndex        =   1
       Top             =   1950
       Width           =   1035
    End
@@ -103,7 +102,7 @@ Begin VB.Form F_StockInquiry
       Index           =   8
       Left            =   577
       Style           =   1  'Graphical
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   9765
       Width           =   1125
    End
@@ -115,7 +114,7 @@ Begin VB.Form F_StockInquiry
       Index           =   7
       Left            =   13440
       Style           =   1  'Graphical
-      TabIndex        =   12
+      TabIndex        =   11
       Top             =   9765
       Visible         =   0   'False
       Width           =   1125
@@ -128,7 +127,7 @@ Begin VB.Form F_StockInquiry
       Index           =   6
       Left            =   12120
       Style           =   1  'Graphical
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   9765
       Visible         =   0   'False
       Width           =   1125
@@ -141,7 +140,7 @@ Begin VB.Form F_StockInquiry
       Index           =   5
       Left            =   10830
       Style           =   1  'Graphical
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   9765
       Visible         =   0   'False
       Width           =   1125
@@ -154,7 +153,7 @@ Begin VB.Form F_StockInquiry
       Index           =   4
       Left            =   9525
       Style           =   1  'Graphical
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   9765
       Visible         =   0   'False
       Width           =   1125
@@ -162,7 +161,7 @@ Begin VB.Form F_StockInquiry
    Begin MSComCtl2.DTPicker DMonth 
       Height          =   315
       Left            =   2670
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   1950
       Width           =   1500
       _ExtentX        =   2646
@@ -178,14 +177,14 @@ Begin VB.Form F_StockInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   151322627
+      Format          =   129302531
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
       Height          =   6270
       Left            =   600
-      TabIndex        =   13
+      TabIndex        =   12
       Top             =   2610
       Width           =   13950
       _cx             =   24606
@@ -282,7 +281,7 @@ Begin VB.Form F_StockInquiry
    Begin MSComCtl2.DTPicker DTgl 
       Height          =   315
       Left            =   2670
-      TabIndex        =   14
+      TabIndex        =   13
       Top             =   1950
       Visible         =   0   'False
       Width           =   1500
@@ -299,9 +298,27 @@ Begin VB.Form F_StockInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   151322627
+      Format          =   129302531
       UpDown          =   -1  'True
       CurrentDate     =   37798
+   End
+   Begin MSForms.ComboBox CboItemCD 
+      Height          =   315
+      Left            =   2640
+      TabIndex        =   18
+      Tag             =   "TTFF*/"
+      Top             =   1560
+      Width           =   2370
+      VariousPropertyBits=   612386843
+      MaxLength       =   30
+      DisplayStyle    =   3
+      Size            =   "4180;556"
+      MatchEntry      =   1
+      ShowDropButtonWhen=   2
+      FontName        =   "Verdana"
+      FontHeight      =   165
+      FontCharSet     =   0
+      FontPitchAndFamily=   2
    End
    Begin VB.Label Label15 
       Alignment       =   2  'Center
@@ -319,7 +336,7 @@ Begin VB.Form F_StockInquiry
       ForeColor       =   &H00800000&
       Height          =   375
       Left            =   600
-      TabIndex        =   8
+      TabIndex        =   7
       Top             =   360
       Width           =   13830
    End
@@ -333,7 +350,7 @@ Begin VB.Form F_StockInquiry
       BackStyle       =   0  'Transparent
       Height          =   255
       Left            =   6930
-      TabIndex        =   7
+      TabIndex        =   6
       Top             =   1575
       Width           =   4935
    End
@@ -342,7 +359,7 @@ Begin VB.Form F_StockInquiry
       Caption         =   "Description"
       Height          =   255
       Left            =   5640
-      TabIndex        =   6
+      TabIndex        =   5
       Top             =   1575
       Width           =   1095
    End
@@ -351,7 +368,7 @@ Begin VB.Form F_StockInquiry
       Caption         =   "Month"
       Height          =   255
       Left            =   930
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   2025
       Width           =   1335
    End
@@ -360,28 +377,9 @@ Begin VB.Form F_StockInquiry
       Caption         =   "Product Code"
       Height          =   255
       Left            =   930
-      TabIndex        =   4
+      TabIndex        =   3
       Top             =   1575
       Width           =   1335
-   End
-   Begin MSForms.ComboBox CboItemCD 
-      Height          =   315
-      Left            =   2655
-      TabIndex        =   0
-      Top             =   1545
-      Width           =   2370
-      VariousPropertyBits=   612390939
-      MaxLength       =   25
-      DisplayStyle    =   3
-      Size            =   "4180;556"
-      TextColumn      =   1
-      ColumnCount     =   2
-      ListRows        =   15
-      ShowDropButtonWhen=   1
-      FontName        =   "Verdana"
-      FontHeight      =   165
-      FontCharSet     =   0
-      FontPitchAndFamily=   2
    End
 End
 Attribute VB_Name = "F_StockInquiry"
@@ -417,35 +415,35 @@ Private Sub Header()
     bteColLossReject = 6
     bteColCurrent = 7
     
-    Grid.Rows = 1
-    Grid.ColS = 8
+    grid.Rows = 1
+    grid.ColS = 8
     
-    Grid.TextMatrix(0, bteColWarehouse) = "WareHouse"
-    Grid.TextMatrix(0, bteColDesc) = "Description"
-    Grid.TextMatrix(0, bteColAddress) = "Address"
-    Grid.TextMatrix(0, bteColPreMonth) = "Pre Month"
-    Grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
-    Grid.TextMatrix(0, bteColSupply) = "Supply Total"
-    Grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
-    Grid.TextMatrix(0, bteColCurrent) = "Current Stock"
+    grid.TextMatrix(0, bteColWarehouse) = "WareHouse"
+    grid.TextMatrix(0, bteColDesc) = "Description"
+    grid.TextMatrix(0, bteColAddress) = "Address"
+    grid.TextMatrix(0, bteColPreMonth) = "Pre Month"
+    grid.TextMatrix(0, bteColReceipt) = "Receipt Total"
+    grid.TextMatrix(0, bteColSupply) = "Supply Total"
+    grid.TextMatrix(0, bteColLossReject) = "Loss/Reject"
+    grid.TextMatrix(0, bteColCurrent) = "Current Stock"
     
-    Grid.ColWidth(bteColWarehouse) = 1100
-    Grid.ColWidth(bteColDesc) = 3200
-    Grid.ColWidth(bteColAddress) = 800
-    Grid.ColWidth(bteColPreMonth) = 1500
-    Grid.ColWidth(bteColReceipt) = 1500
-    Grid.ColWidth(bteColSupply) = 1500
-    Grid.ColWidth(bteColLossReject) = 1500
-    Grid.ColWidth(bteColCurrent) = 1300
+    grid.ColWidth(bteColWarehouse) = 1100
+    grid.ColWidth(bteColDesc) = 3200
+    grid.ColWidth(bteColAddress) = 800
+    grid.ColWidth(bteColPreMonth) = 1500
+    grid.ColWidth(bteColReceipt) = 1500
+    grid.ColWidth(bteColSupply) = 1500
+    grid.ColWidth(bteColLossReject) = 1500
+    grid.ColWidth(bteColCurrent) = 1300
     
-    Grid.ColAlignment(bteColWarehouse) = flexAlignLeftCenter
-    Grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
-    Grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
-    Grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
-    Grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
-    Grid.ColAlignment(bteColSupply) = flexAlignRightCenter
-    Grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
-    Grid.ColAlignment(bteColCurrent) = flexAlignRightCenter
+    grid.ColAlignment(bteColWarehouse) = flexAlignLeftCenter
+    grid.ColAlignment(bteColDesc) = flexAlignLeftCenter
+    grid.ColAlignment(bteColAddress) = flexAlignLeftCenter
+    grid.ColAlignment(bteColPreMonth) = flexAlignRightCenter
+    grid.ColAlignment(bteColReceipt) = flexAlignRightCenter
+    grid.ColAlignment(bteColSupply) = flexAlignRightCenter
+    grid.ColAlignment(bteColLossReject) = flexAlignRightCenter
+    grid.ColAlignment(bteColCurrent) = flexAlignRightCenter
 End Sub
 
 Private Sub Cmd_Save_Click(Index As Integer)
@@ -524,7 +522,7 @@ Private Sub setting()
     Do While Not RsItem.EOF
         CboItemCD.AddItem ""
         CboItemCD.List(i, 0) = Trim(RsItem!Item_Code)
-        CboItemCD.List(i, 1) = Trim(RsItem!item_name) & " " & Trim(RsItem!wh_name)
+        CboItemCD.List(i, 1) = Trim(RsItem!item_name) & " " & Trim(RsItem!WH_Name)
         i = i + 1
         RsItem.MoveNext
     Loop
@@ -538,7 +536,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-    If Grid.Col >= bteColWarehouse Then Cancel = True
+    If grid.Col >= bteColWarehouse Then Cancel = True
 End Sub
 
 Private Sub SettingGridOld()
@@ -558,7 +556,7 @@ Private Sub SettingGridOld()
     If Trim(LblErrMsg) <> "" Then Exit Sub
     LblErrMsg = ""
     
-    With Grid
+    With grid
         If RsLast.State <> adStateClosed Then RsLast.Close
         sql = " select isnull(wh_name,'')wh_name,stock_master.* From stock_master " & _
         " INNER join  " & _
@@ -583,15 +581,15 @@ Private Sub SettingGridOld()
                     End If
                     
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!wh_name)
-                    Grid.TextMatrix(i, bteColAddress) = Simbol
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!lm_premonth), "0.00", Format(!lm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!lm_receipt), "0.00", Format(!lm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!lm_supply), "0.00", Format(!lm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!lm_lossreject), "0.00", Format(!lm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!lm_inventory), "0.00", Format(!lm_inventory, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!WH_Name)
+                    grid.TextMatrix(i, bteColAddress) = Simbol
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!lm_premonth), "0.00", Format(!lm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!lm_receipt), "0.00", Format(!lm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!lm_supply), "0.00", Format(!lm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!lm_lossreject), "0.00", Format(!lm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!lm_inventory), "0.00", Format(!lm_inventory, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -609,15 +607,15 @@ Private Sub SettingGridOld()
                     End If
                     
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!wh_name)
-                    Grid.TextMatrix(i, bteColAddress) = Simbol
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!tm_premonth), "0.00", Format(!tm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!tm_receipt), "0.00", Format(!tm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!tm_supply), "0.00", Format(!tm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!tm_lossreject), "0.00", Format(!tm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!tm_current), "0.00", Format(!tm_current, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!WH_Name)
+                    grid.TextMatrix(i, bteColAddress) = Simbol
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!tm_premonth), "0.00", Format(!tm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!tm_receipt), "0.00", Format(!tm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!tm_supply), "0.00", Format(!tm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!tm_lossreject), "0.00", Format(!tm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!tm_current), "0.00", Format(!tm_current, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -635,15 +633,15 @@ Private Sub SettingGridOld()
                     End If
                     
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!wh_name)
-                    Grid.TextMatrix(i, bteColAddress) = Simbol
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!nm_premonth), "0.00", Format(!nm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!nm_receipt), "0.00", Format(!nm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!nm_supply), "0.00", Format(!nm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!nm_lossreject), "0.00", Format(!nm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!nm_current), "0.00", Format(!nm_current, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!WH_Name)
+                    grid.TextMatrix(i, bteColAddress) = Simbol
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!nm_premonth), "0.00", Format(!nm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!nm_receipt), "0.00", Format(!nm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!nm_supply), "0.00", Format(!nm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!nm_lossreject), "0.00", Format(!nm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!nm_current), "0.00", Format(!nm_current, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -673,7 +671,7 @@ Private Sub SettingGrid()
     If Trim(LblErrMsg) <> "" Then Exit Sub
     LblErrMsg = ""
 
-    With Grid
+    With grid
         If RsLast.State <> adStateClosed Then RsLast.Close
 
         sql = " SELECT ISNULL(wh_name,'') wh_name, stock_master.* "
@@ -725,15 +723,15 @@ Private Sub SettingGrid()
                     End If
 
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!wh_name)
-                    Grid.TextMatrix(i, bteColAddress) = Simbol
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!lm_premonth), "0.00", Format(!lm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!lm_receipt), "0.00", Format(!lm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!lm_supply), "0.00", Format(!lm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!lm_lossreject), "0.00", Format(!lm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!lm_inventory), "0.00", Format(!lm_inventory, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!WH_Name)
+                    grid.TextMatrix(i, bteColAddress) = Simbol
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!lm_premonth), "0.00", Format(!lm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!lm_receipt), "0.00", Format(!lm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!lm_supply), "0.00", Format(!lm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!lm_lossreject), "0.00", Format(!lm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!lm_inventory), "0.00", Format(!lm_inventory, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -754,15 +752,15 @@ Private Sub SettingGrid()
                     End If
 
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!wh_name)
-                    Grid.TextMatrix(i, bteColAddress) = Simbol
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!tm_premonth), "0.00", Format(!tm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!tm_receipt), "0.00", Format(!tm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!tm_supply), "0.00", Format(!tm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!tm_lossreject), "0.00", Format(!tm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!tm_current), "0.00", Format(!tm_current, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!WH_Name)
+                    grid.TextMatrix(i, bteColAddress) = Simbol
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!tm_premonth), "0.00", Format(!tm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!tm_receipt), "0.00", Format(!tm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!tm_supply), "0.00", Format(!tm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!tm_lossreject), "0.00", Format(!tm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!tm_current), "0.00", Format(!tm_current, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -783,15 +781,15 @@ Private Sub SettingGrid()
                     End If
 
                     i = i + 1
-                    Grid.AddItem i
-                    Grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
-                    Grid.TextMatrix(i, bteColDesc) = Trim(!wh_name)
-                    Grid.TextMatrix(i, bteColAddress) = Simbol
-                    Grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!nm_premonth), "0.00", Format(!nm_premonth, gs_formatQty))
-                    Grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!nm_receipt), "0.00", Format(!nm_receipt, gs_formatQty))
-                    Grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!nm_supply), "0.00", Format(!nm_supply, gs_formatQty))
-                    Grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!nm_lossreject), "0.00", Format(!nm_lossreject, gs_formatQty))
-                    Grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!nm_current), "0.00", Format(!nm_current, gs_formatQty))
+                    grid.AddItem i
+                    grid.TextMatrix(i, bteColWarehouse) = Trim(!Warehouse_Code)
+                    grid.TextMatrix(i, bteColDesc) = Trim(!WH_Name)
+                    grid.TextMatrix(i, bteColAddress) = Simbol
+                    grid.TextMatrix(i, bteColPreMonth) = IIf(IsNull(!nm_premonth), "0.00", Format(!nm_premonth, gs_formatQty))
+                    grid.TextMatrix(i, bteColReceipt) = IIf(IsNull(!nm_receipt), "0.00", Format(!nm_receipt, gs_formatQty))
+                    grid.TextMatrix(i, bteColSupply) = IIf(IsNull(!nm_supply), "0.00", Format(!nm_supply, gs_formatQty))
+                    grid.TextMatrix(i, bteColLossReject) = IIf(IsNull(!nm_lossreject), "0.00", Format(!nm_lossreject, gs_formatQty))
+                    grid.TextMatrix(i, bteColCurrent) = IIf(IsNull(!nm_current), "0.00", Format(!nm_current, gs_formatQty))
                     .MoveNext
                 Loop
             End With
@@ -801,189 +799,277 @@ Private Sub SettingGrid()
     End With
 End Sub
 
+Private Sub CboItemCD_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+     Dim SqlI As String
+    Dim RsI As ADODB.Recordset
+    Dim filterText As String
+    Dim ir As Long
+    Dim oldSelStart As Long
 
-'===================================================================
-Private Sub LoadSuggestion(ByVal keyword As String)
-    Dim RS As New ADODB.Recordset
-    Dim sql As String
-    Dim cleanKeyword As String
-    
-    On Error GoTo ErrHandler
-    
-    ' Cek Koneksi
-    If Db Is Nothing Then Exit Sub
-    If Db.State = 0 Then Exit Sub
-    
-    cleanKeyword = Replace(keyword, "'", "''")
-    
-    sql = "SELECT DISTINCT TOP 15 IM.Item_Code, IM.item_name, WM.wh_name " & _
-          "FROM item_master IM " & _
-          "JOIN warehouse_master WM ON IM.wh_code = WM.wh_code " & _
-          "WHERE IM.use_endday > CONVERT(char(8), GETDATE(), 112) " & _
-          "AND (IM.Item_Code LIKE '%" & cleanKeyword & "%' " & _
-          "OR IM.item_name LIKE '%" & cleanKeyword & "%' " & _
-          "OR WM.wh_name LIKE '%" & cleanKeyword & "%')"
+    ' Simpan posisi cursor
+    oldSelStart = CboItemCD.SelStart
 
-    RS.CursorLocation = adUseClient
-    RS.Open sql, Db, adOpenStatic, adLockReadOnly
+    ' Ambil teks user
+    filterText = Trim$(CboItemCD.Text)
 
-    With CboItemCD
-        .clear
-        .columnCount = 3
-        .ColumnWidths = "70 pt;175 pt;0 pt"
-        .ListWidth = 240
-    End With
+    ' Minimal 2 karakter sebelum search
+    If Len(filterText) < 2 Then Exit Sub
 
-    If Not RS.EOF Then
-        Do While Not RS.EOF
-            CboItemCD.AddItem Trim(RS!Item_Code & "")
-            CboItemCD.List(CboItemCD.ListCount - 1, 1) = Trim(RS!item_name & "")
-            CboItemCD.List(CboItemCD.ListCount - 1, 2) = Trim(RS!wh_name & "")
-            RS.MoveNext
-        Loop
-    End If
+    SqlI = "EXEC dbo.sp_PartReceiptGetItemListByUser @UserID = '" & userLogin & "', @FilterText = '" & filterText & "'"
 
-CleanExit:
-    If RS.State = 1 Then RS.Close
-    Set RS = Nothing
-    Exit Sub
+    Set RsI = New ADODB.Recordset
+    RsI.Open SqlI, Db, adOpenKeyset, adLockReadOnly
 
-ErrHandler:
-    Debug.Print "Error LoadSuggestion: " & err.Description
-    Resume CleanExit
+    ' Build list sementara tanpa Clear
+    CboItemCD.clear
+    CboItemCD.columnCount = 2
+    CboItemCD.TextColumn = 1
+    ir = 0
+       While Not RsI.EOF
+        CboItemCD.AddItem ""
+        CboItemCD.List(ir, 0) = RsI!ICd
+        CboItemCD.List(ir, 1) = Trim$(RsI!inm)
+        ir = ir + 1
+        RsI.MoveNext
+    Wend
+    CboItemCD.ColumnWidths = "130 pt; 250 pt"
+    CboItemCD.ListWidth = 380
+    CboItemCD.ListRows = 15
+    RsI.Close
+    Set RsI = Nothing
+
+    ' Kembalikan teks dan posisi cursor
+    CboItemCD.Text = filterText
+    CboItemCD.SelStart = oldSelStart
+    CboItemCD.SelLength = 0
+
+    ' Tampilkan dropdown
+    If ir > 0 Then CboItemCD.DropDown
+End Sub
+
+Private Sub CboItemCD_KeyPress(KeyAscii As MSForms.ReturnInteger)
+    If KeyAscii = Asc("'") Then KeyAscii = 0
 End Sub
 
 Private Sub CboItemCD_Change()
-    If IsInternalChange Or IsSelecting Then Exit Sub
-    If Trim(CboItemCD.Text) = "" Then
-        LblDesc.Caption = ""
-        Exit Sub
-    End If
-    
-    If CboItemCD.ListIndex > -1 Then Exit Sub
-    
-    tmSuggest.Enabled = False
-    
-    If Len(CboItemCD.Text) >= 3 Then
-        tmSuggest.Interval = 500
-        tmSuggest.Enabled = True
-    End If
-End Sub
-
-Private Sub CboItemCD_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
-    ' 13 adalah kode ASCII untuk tombol ENTER
-    If KeyCode = 13 Then
-        KeyCode = 0
-        tmSuggest.Enabled = False
-        If Trim(CboItemCD.Text) <> "" Then
-            CheckExactItem Trim(CboItemCD.Text)
-        End If
-    End If
-End Sub
-
-Private Sub CheckExactItem(ByVal itemCode As String)
-    Dim RS As New ADODB.Recordset
-    Dim sql As String
-    Dim cleanCode As String
-    
-    On Error GoTo ErrHandler
-    
-    CboItemCD.DropDown
-    cleanCode = Replace(itemCode, "'", "''")
-    
-    sql = "SELECT IM.Item_Code, IM.item_name, WM.wh_name " & _
-          "FROM item_master IM " & _
-          "JOIN warehouse_master WM ON IM.wh_code = WM.wh_code " & _
-          "WHERE IM.Item_Code = '" & cleanCode & "' " & _
-          "AND IM.use_endday > CONVERT(char(8), GETDATE(), 112)"
-
-    RS.CursorLocation = adUseClient
-    RS.Open sql, Db, adOpenStatic, adLockReadOnly
-    
-    If Not RS.EOF Then
-        IsInternalChange = True
-        
-        CboItemCD.Text = Trim(RS!Item_Code & "")
-        LblDesc.Caption = Trim(RS!item_name & "")
-        DMonth.SetFocus
-        
-        IsInternalChange = False
-        
-        On Error Resume Next
-        Call Header
-        On Error GoTo 0
-        
-    Else
-        LblDesc.Caption = ""
-        CboItemCD.SelStart = 0
-        CboItemCD.SelLength = Len(CboItemCD.Text)
-    End If
-
-CleanExit:
-    If RS.State = 1 Then RS.Close
-    Set RS = Nothing
-    Exit Sub
-
-ErrHandler:
-    Resume CleanExit
-End Sub
-
-Private Sub tmSuggest_Timer()
-    Dim kw As String
-    Dim curPos As Long
-    
-    ' 1. Matikan Timer & Kunci
-    tmSuggest.Enabled = False
-    IsInternalChange = True
-    
-    On Error Resume Next
-    
-    kw = CboItemCD.Text
-    curPos = CboItemCD.SelStart
-    If err.number <> 0 Then curPos = Len(kw)
-    err.clear
-    
-    ' 2. Load Data (Ingat: LoadSuggestion melakukan .Clear di dalamnya)
-    LoadSuggestion kw
-    
-    ' 3. Restore Text & Cursor
-    CboItemCD.Text = kw
-    If curPos > Len(kw) Then curPos = Len(kw)
-    CboItemCD.SelStart = curPos
-    
-    If CboItemCD.ListCount > 0 Then
-        ' Hanya buka jika statusnya "Belum Terbuka"
-        If IsListOpen = False Then
-            CboItemCD.DropDown
-            IsListOpen = True ' Tandai sudah terbuka
-        End If
-    Else
-        IsListOpen = False
-    End If
-    
-    IsInternalChange = False
-    On Error GoTo 0
+    CboItemCD_Click
 End Sub
 
 Private Sub CboItemCD_Click()
-    IsSelecting = True
-    tmSuggest.Enabled = False
+On Error GoTo ErrHandler
 
-    IsListOpen = False
-    
-    If CboItemCD.ListIndex >= 0 Then
-        UpdateDescriptionFromList
-        On Error Resume Next
-        Call Header
-        On Error GoTo 0
+    Dim RsItem As ADODB.Recordset
+    Dim rsPrice As ADODB.Recordset
+
+    ' Pastikan ada match
+    If Not CboItemCD.matchFound Then
+        LblDesc.Caption = ""
+        Exit Sub
     End If
-    
-    IsSelecting = False
+    ' Ambil deskripsi item
+    LblDesc = Trim$(uf_GetItemDescription(Trim$(CboItemCD)))
+
+Cleanup:
+    ' Tutup recordset jika masih terbuka
+    If Not RsItem Is Nothing Then
+        If RsItem.State = adStateOpen Then RsItem.Close
+        Set RsItem = Nothing
+    End If
+
+    If Not rsPrice Is Nothing Then
+        If rsPrice.State = adStateOpen Then rsPrice.Close
+        Set rsPrice = Nothing
+    End If
+    Exit Sub
+
+ErrHandler:
+    ' Jika error, reset alamat
+'    Lbladdress = ""
+    Resume Cleanup
 End Sub
 
-Private Sub UpdateDescriptionFromList()
-    If CboItemCD.ListIndex > -1 Then
-        LblDesc.Caption = CboItemCD.List(CboItemCD.ListIndex, 1) & ""
-        LblPesan.Caption = ""
-    End If
-End Sub
+''===================================================================
+'Private Sub LoadSuggestion(ByVal keyword As String)
+'    Dim RS As New ADODB.Recordset
+'    Dim sql As String
+'    Dim cleanKeyword As String
+'
+'    On Error GoTo ErrHandler
+'
+'    ' Cek Koneksi
+'    If Db Is Nothing Then Exit Sub
+'    If Db.State = 0 Then Exit Sub
+'
+'    cleanKeyword = Replace(keyword, "'", "''")
+'
+'    sql = "SELECT DISTINCT TOP 15 IM.Item_Code, IM.item_name, WM.wh_name " & _
+'          "FROM item_master IM " & _
+'          "JOIN warehouse_master WM ON IM.wh_code = WM.wh_code " & _
+'          "WHERE IM.use_endday > CONVERT(char(8), GETDATE(), 112) " & _
+'          "AND (IM.Item_Code LIKE '%" & cleanKeyword & "%' " & _
+'          "OR IM.item_name LIKE '%" & cleanKeyword & "%' " & _
+'          "OR WM.wh_name LIKE '%" & cleanKeyword & "%')"
+'
+'    RS.CursorLocation = adUseClient
+'    RS.Open sql, Db, adOpenStatic, adLockReadOnly
+'
+'    With CboItemCD
+'        .clear
+'        .columnCount = 3
+'        .ColumnWidths = "70 pt;175 pt;0 pt"
+'        .ListWidth = 240
+'    End With
+'
+'    If Not RS.EOF Then
+'        Do While Not RS.EOF
+'            CboItemCD.AddItem Trim(RS!Item_Code & "")
+'            CboItemCD.List(CboItemCD.ListCount - 1, 1) = Trim(RS!item_name & "")
+'            CboItemCD.List(CboItemCD.ListCount - 1, 2) = Trim(RS!WH_Name & "")
+'            RS.MoveNext
+'        Loop
+'    End If
+'
+'CleanExit:
+'    If RS.State = 1 Then RS.Close
+'    Set RS = Nothing
+'    Exit Sub
+'
+'ErrHandler:
+'    Debug.Print "Error LoadSuggestion: " & err.Description
+'    Resume CleanExit
+'End Sub
+
+'Private Sub CboItemCD_Change()
+'    If IsInternalChange Or IsSelecting Then Exit Sub
+'    If Trim(CboItemCD.Text) = "" Then
+'        lbldesc.Caption = ""
+'        Exit Sub
+'    End If
+'
+'    If CboItemCD.ListIndex > -1 Then Exit Sub
+'
+'    tmSuggest.Enabled = False
+'
+'    If Len(CboItemCD.Text) >= 3 Then
+'        tmSuggest.Interval = 500
+'        tmSuggest.Enabled = True
+'    End If
+'End Sub
+'
+'Private Sub CboItemCD_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
+'    ' 13 adalah kode ASCII untuk tombol ENTER
+'    If KeyCode = 13 Then
+'        KeyCode = 0
+'        tmSuggest.Enabled = False
+'        If Trim(CboItemCD.Text) <> "" Then
+'            CheckExactItem Trim(CboItemCD.Text)
+'        End If
+'    End If
+'End Sub
+'
+'Private Sub CheckExactItem(ByVal ItemCode As String)
+'    Dim RS As New ADODB.Recordset
+'    Dim sql As String
+'    Dim cleanCode As String
+'
+'    On Error GoTo ErrHandler
+'
+'    CboItemCD.DropDown
+'    cleanCode = Replace(ItemCode, "'", "''")
+'
+'    sql = "SELECT IM.Item_Code, IM.item_name, WM.wh_name " & _
+'          "FROM item_master IM " & _
+'          "JOIN warehouse_master WM ON IM.wh_code = WM.wh_code " & _
+'          "WHERE IM.Item_Code = '" & cleanCode & "' " & _
+'          "AND IM.use_endday > CONVERT(char(8), GETDATE(), 112)"
+'
+'    RS.CursorLocation = adUseClient
+'    RS.Open sql, Db, adOpenStatic, adLockReadOnly
+'
+'    If Not RS.EOF Then
+'        IsInternalChange = True
+'
+'        CboItemCD.Text = Trim(RS!Item_Code & "")
+'        lbldesc.Caption = Trim(RS!item_name & "")
+'        DMonth.SetFocus
+'
+'        IsInternalChange = False
+'
+'        On Error Resume Next
+'        Call Header
+'        On Error GoTo 0
+'
+'    Else
+'        lbldesc.Caption = ""
+'        CboItemCD.SelStart = 0
+'        CboItemCD.SelLength = Len(CboItemCD.Text)
+'    End If
+'
+'CleanExit:
+'    If RS.State = 1 Then RS.Close
+'    Set RS = Nothing
+'    Exit Sub
+'
+'ErrHandler:
+'    Resume CleanExit
+'End Sub
+
+'Private Sub tmSuggest_Timer()
+'    Dim kw As String
+'    Dim curPos As Long
+'
+'    ' 1. Matikan Timer & Kunci
+'    tmSuggest.Enabled = False
+'    IsInternalChange = True
+'
+'    On Error Resume Next
+'
+'    kw = CboItemCD.Text
+'    curPos = CboItemCD.SelStart
+'    If err.number <> 0 Then curPos = Len(kw)
+'    err.clear
+'
+'    ' 2. Load Data (Ingat: LoadSuggestion melakukan .Clear di dalamnya)
+'    LoadSuggestion kw
+'
+'    ' 3. Restore Text & Cursor
+'    CboItemCD.Text = kw
+'    If curPos > Len(kw) Then curPos = Len(kw)
+'    CboItemCD.SelStart = curPos
+'
+'    If CboItemCD.ListCount > 0 Then
+'        ' Hanya buka jika statusnya "Belum Terbuka"
+'        If IsListOpen = False Then
+'            CboItemCD.DropDown
+'            IsListOpen = True ' Tandai sudah terbuka
+'        End If
+'    Else
+'        IsListOpen = False
+'    End If
+'
+'    IsInternalChange = False
+'    On Error GoTo 0
+'End Sub
+
+'Private Sub CboItemCD_Click()
+'    IsSelecting = True
+'    tmSuggest.Enabled = False
+'
+'    IsListOpen = False
+'
+'    If CboItemCD.ListIndex >= 0 Then
+'        UpdateDescriptionFromList
+'        On Error Resume Next
+'        Call Header
+'        On Error GoTo 0
+'    End If
+'
+'    IsSelecting = False
+'End Sub
+'
+'Private Sub UpdateDescriptionFromList()
+'    If CboItemCD.ListIndex > -1 Then
+'        lbldesc.Caption = CboItemCD.List(CboItemCD.ListIndex, 1) & ""
+'        LblPesan.Caption = ""
+'    End If
+'End Sub
