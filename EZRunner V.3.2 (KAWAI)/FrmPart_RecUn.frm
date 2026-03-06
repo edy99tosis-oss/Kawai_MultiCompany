@@ -159,7 +159,7 @@ Begin VB.Form FrmPart_RecUn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   128122883
+         Format          =   130613251
          UpDown          =   -1  'True
          CurrentDate     =   37868
       End
@@ -548,7 +548,7 @@ Begin VB.Form FrmPart_RecUn
       EndProperty
       Height          =   315
       Left            =   945
-      MaxLength       =   25
+      MaxLength       =   50
       TabIndex        =   5
       Top             =   7290
       Width           =   1500
@@ -572,7 +572,7 @@ Begin VB.Form FrmPart_RecUn
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128122883
+      Format          =   130613251
       CurrentDate     =   37868
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -701,7 +701,7 @@ Begin VB.Form FrmPart_RecUn
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   128122883
+      Format          =   130613251
       CurrentDate     =   37868
    End
    Begin VB.Label Label17 

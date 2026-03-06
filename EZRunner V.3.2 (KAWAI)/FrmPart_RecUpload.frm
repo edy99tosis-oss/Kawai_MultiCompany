@@ -1558,7 +1558,7 @@ Private Sub up_UploadPartReceipt()
     cmd.Parameters.append prm5
     Set prm6 = cmd.CreateParameter("Qty", adDouble, adParamInput, , Qty)
     cmd.Parameters.append prm6
-    Set prm7 = cmd.CreateParameter("SuratJalanNo", adVarChar, adParamInput, 25, SJNo)
+    Set prm7 = cmd.CreateParameter("SuratJalanNo", adVarChar, adParamInput, 50, SJNo)
     cmd.Parameters.append prm7
     Set prm8 = cmd.CreateParameter("BC40_No", adVarChar, adParamInput, 30, BC40_No)
     cmd.Parameters.append prm8
