@@ -957,7 +957,7 @@ SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT, PM.Total_amount, 
                   "     PM.Last_User,PD.Item_Code,IM.Item_Name,PD.Qty, UC.Description Unit, PD.Price, CC.Description Currency, PD.Amount,PD.Delivery_Date " & vbCrLf & _
                   "  , rtrim(CP.PPC_Person)PPC_Person,rtrim(CP.PPC_Position)PPC_Position," & _
                   " rtrim(cp.Tax_Position)PL_Postion,rtrim(cp.tax_person)PL_person"
-    SqlRpt = SqlRpt & ",rtrim(Up.Name) Name " & _
+    SqlRpt = SqlRpt & ",rtrim(Up.Name) Name, RTRIM(CP.Address1) HAddress , ( RTRIM(CP.City) + ' ' + RTRIM(CP.Postal_Code) + ' '  + RTRIM(CP.Province) ) HCity , RTRIM( CP.Phone1 ) HPhone , RTRIM( CP.Fax ) HFax " & _
                   "     From PurchaseOrder_Detail PD " & vbCrLf & _
                   "         Inner Join PurchaseOrder_Master PM on PD.PO_No=PM.Po_No " & vbCrLf & _
                   "         Inner Join Trade_Master TM on PM.Supplier_Code=TM.Trade_Code " & vbCrLf & _
@@ -1018,7 +1018,7 @@ SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls
     
 End Sub
 
-Public Sub POSubcon(strPONo As String, bteHakPrice As Byte)
+Public Sub POSubcon(strPONo As String, bteHakPrice As Byte, CompanyCode As String)
     
     Dim application As New CRAXDDRT.application
     Dim report As New CRAXDDRT.report
@@ -1032,7 +1032,7 @@ SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT,PM.Total_amount, T
                   "     PM.Last_User,PD.Item_Code,IM.Item_Name,PD.Qty, UC.Description Unit, PD.Price, CC.Description Currency, PD.Amount,PD.Delivery_Date " & vbCrLf & _
                   "  , rtrim(CP.PPC_Person)PPC_Person,rtrim(CP.PPC_Position)PPC_Position," & _
                   " rtrim(cp.Tax_Position)PL_Postion,rtrim(cp.tax_person)PL_person"
-                  SqlRpt = SqlRpt & ",rtrim(Up.Name) Name " & _
+                  SqlRpt = SqlRpt & ",rtrim(Up.Name) Name , RTRIM(CP.Address1) HAddress , ( RTRIM(CP.City) + ' ' + RTRIM(CP.Postal_Code) + ' '  + RTRIM(CP.Province) ) HCity , RTRIM( CP.Phone1 ) HPhone , RTRIM( CP.Fax ) HFax " & _
                   "     From PurchaseOrder_Detail PD " & vbCrLf & _
                   "         Inner Join PurchaseOrder_Master PM on PD.PO_No=PM.Po_No " & vbCrLf & _
                   "         Inner Join Trade_Master TM on PM.Supplier_Code=TM.Trade_Code " & vbCrLf & _
@@ -1043,7 +1043,9 @@ SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT,PM.Total_amount, T
 
 SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls " & vbCrLf & _
                   "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
-                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls,Company_Profile as cp,User_Setup UP " & vbCrLf & _
+                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls " & vbCrLf & _
+                     "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
+                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = '" & CompanyCode & "'" & vbCrLf & _
                   "     Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' " & vbCrLf & _
                   "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
 
@@ -1107,6 +1109,9 @@ Function reportrequestauto(ByVal requestno As String) As String
     Dim rsRpt As New ADODB.Recordset
     Dim SqlRpt As String
     Dim Rpt As New FrmRpt3
+    Dim vFactoryCode As String
+    
+    vFactoryCode = uf_GetCompany()
     
 '    SqlRpt = "select rtrim(pd.supplyrec_no) supplyrec_no, isnull(rtrim(pd.parentitem_code),'') parentitem_code, " & vbCrLf & _
 '        "rtrim(pim.makeritem_code) pmakercode, rtrim(pim.item_name) item_name, pd.dailyseq_no, dp.qty, pd.childlot_no, rtrim(pd.childitem_code) childitem_code, " & vbCrLf & _
@@ -1154,7 +1159,7 @@ Function reportrequestauto(ByVal requestno As String) As String
                       " inner join item_master pim on pd.parentitem_code = pim.item_code  "
     
     SqlRpt = SqlRpt + " inner join daily_production dp on dp.seq_no = pd.dailyseq_no  " & vbCrLf & _
-                      " , company_profile  " & vbCrLf & _
+                      " , (Select * from Company_Profile WHERE Company_Code = '" & vFactoryCode & "') cp  " & vbCrLf & _
                       " where pm.supplyRec_No in (" & requestno & ") And Cim.Material_Cls <> '02' "
 
 

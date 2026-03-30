@@ -248,7 +248,7 @@ Begin VB.Form FrmPajak_Create_New
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "dd MMM yyy"
-         Format          =   293666819
+         Format          =   45088771
          CurrentDate     =   37860
       End
       Begin MSComCtl2.DTPicker Tgl2 
@@ -261,7 +261,7 @@ Begin VB.Form FrmPajak_Create_New
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   293666819
+         Format          =   45088771
          CurrentDate     =   37860
       End
       Begin MSForms.ComboBox cboInvoice 
@@ -571,7 +571,7 @@ Begin VB.Form FrmPajak_Create_New
       _ExtentY        =   556
       _Version        =   393216
       CustomFormat    =   "dd MMM yyy"
-      Format          =   293666819
+      Format          =   45088771
       CurrentDate     =   37860
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -581,8 +581,8 @@ Begin VB.Form FrmPajak_Create_New
       TabStop         =   0   'False
       Top             =   349
       Width           =   1860
-      _extentx        =   3281
-      _extenty        =   741
+      _ExtentX        =   3281
+      _ExtentY        =   741
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
       Height          =   5505
@@ -1017,6 +1017,7 @@ Dim NoStart As Long, StartNo As Long
 Dim HakU As Integer
 Dim StFix As Boolean
 Dim currConv As Double
+Dim vFactoryCode As String
 
 Dim bteColSelect As Byte
 Dim bteColInvNo As Byte
@@ -1188,7 +1189,7 @@ Private Sub Cbo1_Click()
     If Cbo1.Text = "Create" Then
         
         RsP.Requery
-        RsP.filter = "TC='" & cboCust & "'"
+        RsP.filter = "TC='" & CboCust & "'"
         
         If Not RsP.EOF Then
             
@@ -1233,9 +1234,9 @@ Private Sub Cbo1_Click()
         End If
         
         CmdCreate.Caption = "Create"
-        cboCust.locked = False
+        CboCust.locked = False
         ComboBox1.locked = True
-        cmdSubmit.Enabled = False
+        CmdSubmit.Enabled = False
         RecBtn False 'untuk meng-enable/non enable cmdData
         
     Else
@@ -1245,7 +1246,7 @@ Private Sub Cbo1_Click()
         grid.Editable = flexEDKbdMouse
         If ComboBox1 <> "" Then If CekNoPajak(cboCode & Text1 & "." & Trim(ComboBox1)) = False Then ComboBox1 = "": Kosong 2: NomorFaktur
         ComboBox1.locked = False
-        cmdSubmit.Enabled = True
+        CmdSubmit.Enabled = True
         RecBtn True
     
     End If
@@ -1254,7 +1255,7 @@ End Sub
 
 Private Sub cboCode_Change()
     
-    If Not cboCode.MatchFound Then cboCode.ListIndex = 0
+    If Not cboCode.matchFound Then cboCode.ListIndex = 0
     
 End Sub
 
@@ -1269,7 +1270,7 @@ Private Sub cboCust_Click()
     '# Tampilkan Detil dari Combo Customer code
     nomorinvoice
     RsP.Requery
-    RsP.filter = "TC='" & cboCust & "'"
+    RsP.filter = "TC='" & CboCust & "'"
     LblPajak(1) = ""
     LblPajak(2) = "Address :"
     
@@ -1282,12 +1283,12 @@ Private Sub cboCust_Click()
         NomorFaktur
         LblErr = ""
         Kosong 2
-        cboCust.locked = False
+        CboCust.locked = False
     
     Else
         
         RsP.Requery
-        RsP.filter = "TC='" & cboCust & "'"
+        RsP.filter = "TC='" & CboCust & "'"
         If Not RsP.EOF Then
             ComboBox1.locked = False
             RsNF.Requery
@@ -1352,7 +1353,7 @@ End Sub
 Private Sub cmdClear_Click()
     
     Header
-    cboCust = ""
+    CboCust = ""
     ComboBox1 = ""
     Tgl1 = Date
     Tgl2 = Date
@@ -1378,10 +1379,10 @@ Private Sub CmdCreate_Click()
                 
         If cboInvoice = "" Then LblErr = DisplayMsg("0050"): cboInvoice.SetFocus: Me.MousePointer = vbDefault: Exit Sub
         
-        cboCust = cboCust
-        If cboCust.MatchFound = False Then
+        CboCust = CboCust
+        If CboCust.matchFound = False Then
             LblErr = DisplayMsg(4072)
-            cboCust.SetFocus
+            CboCust.SetFocus
             MousePointer = vbDefault
             Exit Sub
         ElseIf Trim(ComboBox1.Text) = "" Then
@@ -1399,15 +1400,15 @@ Private Sub CmdCreate_Click()
         StFix = False
         lblfix.Visible = False
         InvoiceDisplay
-        cmdSubmit.Enabled = True
+        CmdSubmit.Enabled = True
         RecBtn (True)
     
     Else
     
-        cboCust = Trim(cboCust)
-        If cboCust.MatchFound = False Then
+        CboCust = Trim(CboCust)
+        If CboCust.matchFound = False Then
             LblErr = DisplayMsg(4072)
-            cboCust.SetFocus
+            CboCust.SetFocus
             MousePointer = vbDefault: Exit Sub
         ElseIf Trim(ComboBox1.Text) = "" Then
             MousePointer = vbDefault: Exit Sub
@@ -1429,14 +1430,14 @@ Private Sub CmdCreate_Click()
                     LblErr.Caption = DisplayMsg(1101)
                     StFix = False
                     grid.Editable = flexEDKbdMouse
-                    cmdSubmit.Enabled = True
+                    CmdSubmit.Enabled = True
                 
                 Else
                     
                     LblErr = DisplayMsg("0052"): inquiry: InvoiceDisplay: MousePointer = vbDefault
                     lblfix.Visible = True
                     StFix = True
-                    cmdSubmit.Enabled = False
+                    CmdSubmit.Enabled = False
                     grid.Editable = flexEDNone
                     Exit Sub
                 
@@ -1457,7 +1458,7 @@ Private Sub CmdCreate_Click()
     
     End If
     
-    cmdSubmit.Enabled = True
+    CmdSubmit.Enabled = True
     MousePointer = vbDefault
 
 End Sub
@@ -1472,7 +1473,7 @@ Private Sub cmdDelete_Click()
     If MsgBox("Are you sure want to delete this data ?", vbQuestion + vbYesNo, "Delete Confirmation") = vbYes Then
     
         ComboBox1 = Trim(ComboBox1)
-        If ComboBox1.MatchFound = False Then LblErr = DisplayMsg("0054"): MousePointer = vbDefault: Exit Sub
+        If ComboBox1.matchFound = False Then LblErr = DisplayMsg("0054"): MousePointer = vbDefault: Exit Sub
         If StFix = False Then
             
             sql = "Delete From FakturPajak_Detail Where FakturPajak_No = '" & cboCode & Text1 & "." & Trim(ComboBox1) & "'"
@@ -1528,13 +1529,13 @@ Private Sub CmdInv_Click()
         
         .cmd_sub_menu.Caption = "&Back"
         .cmd_sub_menu.Tag = "pajak_new"
-        .ComboBox1 = cboCust
+        .ComboBox1 = CboCust
         Call .ComboBox1_Click
         
         .DTPicker3 = grid.TextMatrix(grid.Row, bteColInvDate)
         .DTPicker4 = grid.TextMatrix(grid.Row, bteColInvDate)
         .combo1 = grid.TextMatrix(grid.Row, bteColInvNo)
-        .CmdSearch(0).Value = True
+        .cmdSearch(0).Value = True
         Call .cmdSearch_Click(0)
         
         .lbl_pesan = ""
@@ -1595,7 +1596,7 @@ Private Sub CmdSubmit_Click()
     
     If HakU = 0 Then LblErr = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
     ComboBox1 = Trim(ComboBox1)
-    If ComboBox1.MatchFound = False Then LblErr = DisplayMsg("0054"): MousePointer = vbDefault: Exit Sub
+    If ComboBox1.matchFound = False Then LblErr = DisplayMsg("0054"): MousePointer = vbDefault: Exit Sub
     If StFix = False Then
         lblfix.Visible = False
         InvoiceDisplay
@@ -1612,11 +1613,11 @@ End Sub
 
 Private Sub ComboBox1_Change()
         
-    cboCust = cboCust
+    CboCust = CboCust
     
-    If cboCust.MatchFound Then
+    If CboCust.matchFound Then
         RsP.Requery
-        RsP.filter = "TC='" & cboCust & "'"
+        RsP.filter = "TC='" & CboCust & "'"
         Header
         LblErr = ""
         If RsP.EOF Then RsP.Requery: Exit Sub
@@ -1697,7 +1698,7 @@ Private Sub CmdData_Click(Index As Integer)
     End Select
     
     ComboBox1.Text = Right(Trim(RsPM!fakturpajak_no), 8)
-    cboCust = RsPM!Cust_CodE
+    CboCust = RsPM!Cust_CodE
     TglPajak = Format(RsPM!fakturpajak_date, "dd mmm yyyy")
     hitungCurr
     InvoiceDisplay
@@ -1752,23 +1753,23 @@ Private Sub Form_Load()
     '##Tampilkan Combo Customer code dari trade_master
     sqlP = "Select rtrim(trade_code) as TC,Trade_name as TN, Address1 as A from trade_master where trade_cls='4' and   isnull(country_cls,0)<>'1'  order by trade_code"
     Set RsP = Db.Execute(sqlP)
-    cboCust.clear
-    cboCust.columnCount = 2
-    cboCust.TextColumn = 1
+    CboCust.clear
+    CboCust.columnCount = 2
+    CboCust.TextColumn = 1
     ir = 0
     While Not RsP.EOF
-        cboCust.AddItem ""
-        cboCust.List(ir, 0) = RsP!TC
-        cboCust.List(ir, 1) = Trim(RsP!TN)
+        CboCust.AddItem ""
+        CboCust.List(ir, 0) = RsP!TC
+        CboCust.List(ir, 1) = Trim(RsP!TN)
         ir = ir + 1
         RsP.MoveNext
     Wend
-    cboCust.ColumnWidths = "60 pt; 300 pt"
-    cboCust.ListWidth = 360
-    cboCust.ListRows = 15
+    CboCust.ColumnWidths = "60 pt; 300 pt"
+    CboCust.ListWidth = 360
+    CboCust.ListRows = 15
     Cbo1.ListIndex = 1
     
-    cmdSubmit.Enabled = False
+    CmdSubmit.Enabled = False
     Kosong 1
     NoStart = 0
     
@@ -1778,6 +1779,8 @@ Private Sub Form_Load()
     
     Text1 = "0.000-" & Right(TglPajak.Year, 2)
     hitungCurr
+    
+    vFactoryCode = uf_GetCompany()
 
 End Sub
 
@@ -1787,11 +1790,11 @@ Sub hitungCurr()
     Dim RS As New ADODB.Recordset
     
     lblYen1.Visible = False
-    lblYEN.Visible = False
+    lblYen.Visible = False
     lblUSD1.Visible = False
     lblUSD.Visible = False
     lblEur1.Visible = False
-    lblEur.Visible = False
+    lblEUR.Visible = False
     lblSD1.Visible = False
     lblSD.Visible = False
     lblTHB1.Visible = False
@@ -1805,16 +1808,16 @@ Sub hitungCurr()
         Select Case RS("currency_code")
         Case "01"
             lblYen1.Visible = True
-            lblYEN.Visible = True
-            lblYEN.Caption = IIf(IsNull(RS("tax_exchangerate")), "0", Format(RS("tax_exchangerate"), gs_formatExchangeRate))
+            lblYen.Visible = True
+            lblYen.Caption = IIf(IsNull(RS("tax_exchangerate")), "0", Format(RS("tax_exchangerate"), gs_formatExchangeRate))
         Case "02"
             lblUSD1.Visible = True
             lblUSD.Visible = True
             lblUSD.Caption = IIf(IsNull(RS("tax_exchangerate")), "0", Format(RS("tax_exchangerate"), gs_formatExchangeRate))
         Case "04"
             lblEur1.Visible = True
-            lblEur.Visible = True
-            lblEur.Caption = IIf(IsNull(RS("tax_exchangerate")), "0", Format(RS("tax_exchangerate"), gs_formatExchangeRate))
+            lblEUR.Visible = True
+            lblEUR.Caption = IIf(IsNull(RS("tax_exchangerate")), "0", Format(RS("tax_exchangerate"), gs_formatExchangeRate))
         Case "05"
             lblSD1.Visible = True
             lblSD.Visible = True
@@ -1899,13 +1902,13 @@ Private Sub nomorinvoice()
         If LCase(Cbo1.Text) = "create" Then
         
             sql = "Select Invoice_No, 0 As Invoice_Cls From Invoice_Master " & _
-                "Where Invoice_Date >= '" & Format(Tgl1, "yyyy-mm-dd") & "' And Invoice_Date <= '" & Format(Tgl2, "yyyy-mm-dd") & "' And Cust_Code = '" & cboCust & "' And Fix_Cls = '1' " & _
+                "Where Invoice_Date >= '" & Format(Tgl1, "yyyy-mm-dd") & "' And Invoice_Date <= '" & Format(Tgl2, "yyyy-mm-dd") & "' And Cust_Code = '" & CboCust & "' And Fix_Cls = '1' " & _
                 "And Invoice_No Not In (Select Distinct Invoice_No From FakturPajak_Detail) " '& _
 
         Else
         
             sql = "Select Invoice_No, 0 As Invoice_Cls From Invoice_Master " & _
-                "Where Invoice_Date >= '" & Format(Tgl1, "yyyy-mm-dd") & "' And Invoice_Date <= '" & Format(Tgl2, "yyyy-mm-dd") & "' And Cust_Code = '" & cboCust & "' And Fix_Cls = '1' " '& _
+                "Where Invoice_Date >= '" & Format(Tgl1, "yyyy-mm-dd") & "' And Invoice_Date <= '" & Format(Tgl2, "yyyy-mm-dd") & "' And Cust_Code = '" & CboCust & "' And Fix_Cls = '1' " '& _
 
         End If
         adoRs.Open sql, Db, adOpenForwardOnly, adLockReadOnly
@@ -1927,7 +1930,7 @@ End Sub
 Sub NomorFaktur()
     
     RsPM.Requery
-    RsPM.filter = "cust_code = '" & cboCust.Text & "'"
+    RsPM.filter = "cust_code = '" & CboCust.Text & "'"
     If Not RsPM.EOF Then
         ComboBox1.clear
         ComboBox1.locked = False
@@ -1949,16 +1952,16 @@ Sub Kosong(nSection As Byte)
     
     Select Case nSection
     Case 1
-        cboCust.ListIndex = -1
+        CboCust.ListIndex = -1
         ComboBox1 = ""
         NoStart = 0
         TxtRec(0) = ""
         TxtRec(1) = ""
         TxtRec(2) = ""
         Header
-        cmdSubmit.Enabled = False
+        CmdSubmit.Enabled = False
         CmdCreate.Caption = "Create"
-        cboCust.locked = False
+        CboCust.locked = False
         ComboBox1.Text = ""
         ComboBox1.clear
         Cbo1.Text = "Update"
@@ -2001,7 +2004,7 @@ Sub InvoiceDisplay()
         "Inner Join Item_Master im On inv_d.Item_Code = im.Item_Code " & _
         "Inner Join Invoice_Master inv_m On inv_d.Invoice_No = inv_m.Invoice_No " & _
         "Left Outer Join FakturPajak_Detail fak_d On inv_d.DO_No = fak_d.DO_No And inv_d.PO_No = fak_d.PO_No And inv_d.Seq_No = fak_d.Seq_No And inv_d.DOSeq_No = fak_d.DOSeq_No And inv_d.Invoice_No = fak_d.Invoice_No " & _
-        "Where inv_m.Invoice_Date >= '" & Format(Tgl1.Value, "YYYY-MM-DD") & "' And (inv_m.Invoice_Date <= '" & Format(Tgl2.Value, "YYYY-MM-DD") & "') And inv_m.Cust_Code = '" & Trim(cboCust.Text) & "' And inv_m.Fix_Cls = '1' And inv_m.Invoice_No = '" & Trim(cboInvoice.Text) & "' " & _
+        "Where inv_m.Invoice_Date >= '" & Format(Tgl1.Value, "YYYY-MM-DD") & "' And (inv_m.Invoice_Date <= '" & Format(Tgl2.Value, "YYYY-MM-DD") & "') And inv_m.Cust_Code = '" & Trim(CboCust.Text) & "' And inv_m.Fix_Cls = '1' And inv_m.Invoice_No = '" & Trim(cboInvoice.Text) & "' " & _
         "Group By inv_d.Qty, inv_d.DO_No, inv_m.Cust_Code, im.Item_Name, inv_d.PO_No, inv_d.Unit_Cls, inv_d.Delivery_Date, inv_d.Currency_Code, inv_d.Price, " & _
         "inv_d.amount, inv_d.Item_Code, inv_d.MakerItem_Code, im.Item_Name, inv_m.Fix_Cls, inv_m.Invoice_Date, inv_d.Seq_No, inv_d.DOSeq_No, inv_d.Invoice_No, inv_m.Invoice_No " & _
         "Having inv_d.qty - Sum(IsNull(fak_d.qty, 0)) > 0 " & _
@@ -2182,7 +2185,7 @@ Sub savemaster()
             
             .Fields("FakturPajak_No") = cboCode & Text1 & "." & Trim(ComboBox1)
             .Fields("FakturPajak_date") = Format(TglPajak, "yyyy-mm-dd")
-            .Fields("Cust_code") = cboCust.Text
+            .Fields("Cust_code") = CboCust.Text
             
             If Val(TxtRec(0)) = 0 Then .Fields("Amount") = Val(TxtRec(0)) Else .Fields("Amount") = CDbl(TxtRec(0))
             If Val(TxtRec(1)) = 0 Then .Fields("PPN") = Val(TxtRec(1)) Else .Fields("PPN") = CDbl(TxtRec(1))
@@ -2197,7 +2200,7 @@ Sub savemaster()
         .AddNew
         .Fields("FakturPajak_No") = cboCode & Text1 & "." & Trim(ComboBox1)
         .Fields("FakturPajak_date") = Format(TglPajak, "yyyy-mm-dd")
-        .Fields("Cust_code") = cboCust.Text
+        .Fields("Cust_code") = CboCust.Text
         .Fields("Amount") = Val(TxtRec(0))
         .Fields("PPN") = Val(TxtRec(1))
         .Fields("Total_amount") = Val(TxtRec(2))
@@ -2264,7 +2267,7 @@ Sub inquiry()
     If Not RsInq.EOF Then
         ComboBox1 = Right(Trim(RsInq!fakturpajak_no), 8)
         TglPajak = RsInq!fakturpajak_date
-        cboCust = Trim(RsInq!Cust_CodE)
+        CboCust = Trim(RsInq!Cust_CodE)
         TxtRec(0) = IIf(InStr(1, RsInq!Amount, "."), Format(RsInq!Amount, gs_formatAmount), Format(RsInq!Amount, gs_formatAmount))
         TxtRec(1) = IIf(InStr(1, RsInq!ppn, "."), Format(RsInq!ppn, gs_formatAmount), Format(RsInq!ppn, gs_formatAmount))
         TxtRec(2) = IIf(InStr(1, RsInq!total_amount, "."), Format(RsInq!total_amount, gs_formatAmount), Format(RsInq!total_amount, gs_formatAmount))
@@ -2461,13 +2464,13 @@ Private Sub hitungKonversi()
         If grid.Cell(flexcpChecked, i, bteColSelect) = flexChecked Then
             Select Case RTrim(grid.TextMatrix(i, bteColCurr))
                 Case "YEN"
-                    currConv = IIf(lblYEN.Visible = False, 0, CDbl(lblYEN.Caption))
+                    currConv = IIf(lblYen.Visible = False, 0, CDbl(lblYen.Caption))
                 Case "US$"
                     currConv = IIf(lblUSD.Visible = False, 0, CDbl(lblUSD.Caption))
                 Case "IDR"
                     currConv = 1
                 Case "EUR"
-                    currConv = IIf(lblEur.Visible = False, 0, CDbl(lblEur.Caption))
+                    currConv = IIf(lblEUR.Visible = False, 0, CDbl(lblEUR.Caption))
                 Case "S$"
                     currConv = IIf(lblSD.Visible = False, 0, CDbl(lblSD.Caption))
                 Case "THB"
@@ -2548,7 +2551,7 @@ Sub ViewReport(NO$)
         "Ex_Rate = " & _
             "IsNull((Select Top 1 Tax_ExchangeRate From Tax_exchangerate " & _
             "Where Currency_Code = inv_d.Currency_Code And Start_Date <= inv_m.Invoice_Date And End_Date >= inv_m.Invoice_Date Order By Start_Date Desc), 1) " & _
-        "From Company_Profile cp, Trade_Master inv_to " & _
+        "From (Select * from Company_Profile WHERE Company_Code = '" & vFactoryCode & "') cp, Trade_Master inv_to " & _
         "Inner Join Trade_Master cust On  inv_to.Trade_Code = IsNull( cust.Trade_Code,cust.Invoice_To) " & _
         "Inner Join Invoice_Master inv_m On cust.Trade_Code = inv_m.Cust_Code " & _
         "Inner Join Invoice_Detail inv_d On inv_m.Invoice_No = inv_d.Invoice_No " & _
