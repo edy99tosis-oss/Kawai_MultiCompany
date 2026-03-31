@@ -951,29 +951,31 @@ Public Sub POImport(strPONo As String, bteHakPrice As Byte, PoCls As Byte, tcode
     Dim SqlRpt As String
 
 
-SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT, PM.Total_amount, TM.Trade_Name, RTrim(Tm.Address1) Address1, RTrim(isnull(Tm.Address2,'.')) Address2, RTrim(TM.City) City, RTrim(TM.Country) Country, isnull(TM.Telephone,'')Telephone, isnull(TM.Fax,'')fax, " & vbCrLf & _
-                  "     PT.Description TermOfPayment, PC.Description DeliveryTerm, TM.Epte_Cls, " & vbCrLf & _
-                  "     DT.Trade_Name DeliverTo,RTrim(DT.Address1) DTAddress1, RTrim(DT.Address2) DTAddress2,RTrim(DT.City) DTCity,RTrim(DT.Country) DTCountry, " & vbCrLf & _
-                  "     PM.Last_User,PD.Item_Code,IM.Item_Name,PD.Qty, UC.Description Unit, PD.Price, CC.Description Currency, PD.Amount,PD.Delivery_Date " & vbCrLf & _
-                  "  , rtrim(CP.PPC_Person)PPC_Person,rtrim(CP.PPC_Position)PPC_Position," & _
-                  " rtrim(cp.Tax_Position)PL_Postion,rtrim(cp.tax_person)PL_person"
-    SqlRpt = SqlRpt & ",rtrim(Up.Name) Name, RTRIM(CP.Address1) HAddress , ( RTRIM(CP.City) + ' ' + RTRIM(CP.Postal_Code) + ' '  + RTRIM(CP.Province) ) HCity , RTRIM( CP.Phone1 ) HPhone , RTRIM( CP.Fax ) HFax " & _
-                  "     From PurchaseOrder_Detail PD " & vbCrLf & _
-                  "         Inner Join PurchaseOrder_Master PM on PD.PO_No=PM.Po_No " & vbCrLf & _
-                  "         Inner Join Trade_Master TM on PM.Supplier_Code=TM.Trade_Code " & vbCrLf & _
-                  "         Inner Join WareHouse_Master WM on PM.WHTO=WM.Wh_Code " & vbCrLf & _
-                  "         Inner Join Trade_Master DT on WM.Adm_Group=DT.Trade_Code " & vbCrLf & _
-                  "         Inner Join Item_Master AS IM ON IM.Item_Code = PD.Item_Code " & vbCrLf & _
-                  "         Inner Join Curr_Cls AS CC ON CC.Curr_Cls = PD.Currency_Code  "
-
-SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls " & vbCrLf & _
-                  "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
-                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls" & vbCrLf & _
-                  "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
-                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = '" & CompanyCode & "'" & vbCrLf & _
-                  " Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' AND WM.Company_Code = '" & CompanyCode & "' " & vbCrLf & _
-                  "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
-' --------
+'SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT, PM.Total_amount, TM.Trade_Name, RTrim(Tm.Address1) Address1, RTrim(isnull(Tm.Address2,'.')) Address2, RTrim(TM.City) City, RTrim(TM.Country) Country, isnull(TM.Telephone,'')Telephone, isnull(TM.Fax,'')fax, " & vbCrLf & _
+'                  "     PT.Description TermOfPayment, PC.Description DeliveryTerm, TM.Epte_Cls, " & vbCrLf & _
+'                  "     DT.Trade_Name DeliverTo,RTrim(DT.Address1) DTAddress1, RTrim(DT.Address2) DTAddress2,RTrim(DT.City) DTCity,RTrim(DT.Country) DTCountry, " & vbCrLf & _
+'                  "     PM.Last_User,PD.Item_Code,IM.Item_Name,PD.Qty, UC.Description Unit, PD.Price, CC.Description Currency, PD.Amount,PD.Delivery_Date " & vbCrLf & _
+'                  "  , rtrim(CP.PPC_Person)PPC_Person,rtrim(CP.PPC_Position)PPC_Position," & _
+'                  " rtrim(cp.Tax_Position)PL_Postion,rtrim(cp.tax_person)PL_person"
+'    SqlRpt = SqlRpt & ",rtrim(Up.Name) Name, RTRIM(CP.Company_Name)Company_Name, (RTRIM(CP.Address1) + ' ' + RTRIM(CP.Address2)) HAddress , ( RTRIM(CP.City) + ' ' + RTRIM(CP.Postal_Code) + ' '  + RTRIM(CP.Province) ) HCity , RTRIM( CP.Phone1 ) HPhone , RTRIM( CP.Fax ) HFax " & _
+'                  "     From PurchaseOrder_Detail PD " & vbCrLf & _
+'                  "         Inner Join PurchaseOrder_Master PM on PD.PO_No=PM.Po_No " & vbCrLf & _
+'                  "         Inner Join Trade_Master TM on PM.Supplier_Code=TM.Trade_Code " & vbCrLf & _
+'                  "         Inner Join WareHouse_Master WM on PM.WHTO=WM.Wh_Code " & vbCrLf & _
+'                  "         Inner Join Trade_Master DT on WM.Adm_Group=DT.Trade_Code " & vbCrLf & _
+'                  "         Inner Join Item_Master AS IM ON IM.Item_Code = PD.Item_Code " & vbCrLf & _
+'                  "         Inner Join Curr_Cls AS CC ON CC.Curr_Cls = PD.Currency_Code  "
+'
+'SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls " & vbCrLf & _
+'                  "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
+'                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls" & vbCrLf & _
+'                  "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
+'                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = '" & CompanyCode & "'" & vbCrLf & _
+'                  " Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' AND WM.Company_Code = '" & CompanyCode & "' " & vbCrLf & _
+'                  "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
+'
+'' --------
+SqlRpt = "EXEC dbo.SP_Report_PurchaseOrder @PONo = '" & Trim(strPONo) & "', @UserLogin = '" & userLogin & "' , @CompanyCode = '" & CompanyCode & "' "
 
     Set rs1 = New Recordset
     rs1.CursorLocation = adUseClient
@@ -1026,28 +1028,30 @@ Public Sub POSubcon(strPONo As String, bteHakPrice As Byte, CompanyCode As Strin
     Dim SqlRpt As String
 
     
-SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT,PM.Total_amount, TM.Trade_Name, RTrim(Tm.Address1) Address1, RTrim(isnull(Tm.Address2,'.')) Address2, RTrim(TM.City) City, RTrim(TM.Country) Country, isnull(TM.Telephone,'')Telephone, isnull(TM.Fax,'')fax, " & vbCrLf & _
-                  "     PT.Description TermOfPayment, PC.Description DeliveryTerm, TM.Epte_Cls, " & vbCrLf & _
-                  "     DT.Trade_Name DeliverTo,RTrim(DT.Address1) DTAddress1, RTrim(DT.Address2) DTAddress2,RTrim(DT.City) DTCity,RTrim(DT.Country) DTCountry, " & vbCrLf & _
-                  "     PM.Last_User,PD.Item_Code,IM.Item_Name,PD.Qty, UC.Description Unit, PD.Price, CC.Description Currency, PD.Amount,PD.Delivery_Date " & vbCrLf & _
-                  "  , rtrim(CP.PPC_Person)PPC_Person,rtrim(CP.PPC_Position)PPC_Position," & _
-                  " rtrim(cp.Tax_Position)PL_Postion,rtrim(cp.tax_person)PL_person"
-                  SqlRpt = SqlRpt & ",rtrim(Up.Name) Name , RTRIM(CP.Address1) HAddress , ( RTRIM(CP.City) + ' ' + RTRIM(CP.Postal_Code) + ' '  + RTRIM(CP.Province) ) HCity , RTRIM( CP.Phone1 ) HPhone , RTRIM( CP.Fax ) HFax " & _
-                  "     From PurchaseOrder_Detail PD " & vbCrLf & _
-                  "         Inner Join PurchaseOrder_Master PM on PD.PO_No=PM.Po_No " & vbCrLf & _
-                  "         Inner Join Trade_Master TM on PM.Supplier_Code=TM.Trade_Code " & vbCrLf & _
-                  "         Inner Join WareHouse_Master WM on PM.WHTO=WM.Wh_Code " & vbCrLf & _
-                  "         Inner Join Trade_Master DT on WM.Adm_Group=DT.Trade_Code " & vbCrLf & _
-                  "         Inner Join Item_Master AS IM ON IM.Item_Code = PD.Item_Code " & vbCrLf & _
-                  "         Inner Join Curr_Cls AS CC ON CC.Curr_Cls = PD.Currency_Code "
-
-SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls " & vbCrLf & _
-                  "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
-                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls " & vbCrLf & _
-                     "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
-                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = '" & CompanyCode & "'" & vbCrLf & _
-                  "     Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' " & vbCrLf & _
-                  "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
+'SqlRpt = " Select  PD.Po_No,PM.Revise_No,PM.PO_Date,PM.PO_LOT,PM.Total_amount, TM.Trade_Name, RTrim(Tm.Address1) Address1, RTrim(isnull(Tm.Address2,'.')) Address2, RTrim(TM.City) City, RTrim(TM.Country) Country, isnull(TM.Telephone,'')Telephone, isnull(TM.Fax,'')fax, " & vbCrLf & _
+'                  "     PT.Description TermOfPayment, PC.Description DeliveryTerm, TM.Epte_Cls, " & vbCrLf & _
+'                  "     DT.Trade_Name DeliverTo,RTrim(DT.Address1) DTAddress1, RTrim(DT.Address2) DTAddress2,RTrim(DT.City) DTCity,RTrim(DT.Country) DTCountry, " & vbCrLf & _
+'                  "     PM.Last_User,PD.Item_Code,IM.Item_Name,PD.Qty, UC.Description Unit, PD.Price, CC.Description Currency, PD.Amount,PD.Delivery_Date " & vbCrLf & _
+'                  "  , rtrim(CP.PPC_Person)PPC_Person,rtrim(CP.PPC_Position)PPC_Position," & _
+'                  " rtrim(cp.Tax_Position)PL_Postion,rtrim(cp.tax_person)PL_person"
+'                  SqlRpt = SqlRpt & ",rtrim(Up.Name) Name , RTRIM(CP.Company_Name)Company_Name, (RTRIM(CP.Address1) + ' ' + RTRIM(CP.Address2)) HAddress , ( RTRIM(CP.City) + ' ' + RTRIM(CP.Postal_Code) + ' '  + RTRIM(CP.Province) ) HCity , RTRIM( CP.Phone1 ) HPhone , RTRIM( CP.Fax ) HFax " & _
+'                  "     From PurchaseOrder_Detail PD " & vbCrLf & _
+'                  "         Inner Join PurchaseOrder_Master PM on PD.PO_No=PM.Po_No " & vbCrLf & _
+'                  "         Inner Join Trade_Master TM on PM.Supplier_Code=TM.Trade_Code " & vbCrLf & _
+'                  "         Inner Join WareHouse_Master WM on PM.WHTO=WM.Wh_Code " & vbCrLf & _
+'                  "         Inner Join Trade_Master DT on WM.Adm_Group=DT.Trade_Code " & vbCrLf & _
+'                  "         Inner Join Item_Master AS IM ON IM.Item_Code = PD.Item_Code " & vbCrLf & _
+'                  "         Inner Join Curr_Cls AS CC ON CC.Curr_Cls = PD.Currency_Code "
+'
+'SqlRpt = SqlRpt + "         Inner Join Unit_Cls AS UC ON UC.Unit_Cls=PD.Unit_Cls " & vbCrLf & _
+'                  "         Left Join PaymentTerm_Cls PT on PT.PaymentTerm_Cls = PM.PaymentTerm_Cls " & vbCrLf & _
+'                  "         Left Join PriceCondition_Cls PC on Pc.PriceCondition_Cls = PM.PriceCondition_Cls " & vbCrLf & _
+'                     "         LEFT JOIN User_Setup UP ON UP.Username = '" & userLogin & "' " & vbCrLf & _
+'                   "        LEFT JOIN Company_Profile CP ON CP.Company_Code = '" & CompanyCode & "'" & vbCrLf & _
+'                  "     Where PD.Po_No='" & Trim(strPONo) & "' and userName='" & userLogin & "' " & vbCrLf & _
+'                  "     Order By PM.PO_Date, PD.PO_No, PD.Item_Code   "
+                  
+    SqlRpt = "EXEC dbo.SP_Report_PurchaseOrder @PONo = '" & Trim(strPONo) & "', @UserLogin = '" & userLogin & "' , @CompanyCode = '" & CompanyCode & "' "
 
     Set rs1 = New Recordset
     rs1.CursorLocation = adUseClient
