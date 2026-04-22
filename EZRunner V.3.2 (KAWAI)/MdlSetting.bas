@@ -57,6 +57,7 @@ Public LightGreen As ColorConstants
         
 Public Sub up_InitSimulation(Frm As Form)
 LightGreen = RGB(204, 255, 204)
+'RGB(204, 255, 204) | RGB(255, 255, 255)
 Dim obj
 Frm.BackColor = LightGreen
 For Each obj In Frm.Controls
