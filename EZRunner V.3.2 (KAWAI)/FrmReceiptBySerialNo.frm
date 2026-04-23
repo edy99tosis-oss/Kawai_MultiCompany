@@ -220,7 +220,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   66125827
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtpTo 
@@ -243,7 +243,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   66125827
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpDNDate 
@@ -266,7 +266,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   66125827
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpReceiptDate 
@@ -289,7 +289,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   66125827
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpBCDate 
@@ -312,7 +312,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128909315
+         Format          =   66125827
          CurrentDate     =   37798
       End
       Begin VB.Label lblRemarks 
@@ -1321,7 +1321,7 @@ Dim prm15 As ADODB.Parameter
                     cmd.Parameters.append prm12
                     Set prm13 = cmd.CreateParameter("BC40_Date", adDate, adParamInput, , dtpBCDate.Value)
                     cmd.Parameters.append prm13
-                    Set prm14 = cmd.CreateParameter("Remarks", adVarChar, adParamInput, , txtremarks.Text)
+                    Set prm14 = cmd.CreateParameter("Remarks", adVarChar, adParamInput, 50, txtremarks.Text)
                     cmd.Parameters.append prm14
                     Set prm15 = cmd.CreateParameter("User", adVarChar, adParamInput, 50, userLogin)
                     cmd.Parameters.append prm15
