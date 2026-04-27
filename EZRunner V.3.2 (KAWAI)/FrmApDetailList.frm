@@ -145,8 +145,8 @@ Begin VB.Form FrmAPListReport
       TabIndex        =   11
       Top             =   180
       Width           =   1845
-      _extentx        =   3254
-      _extenty        =   714
+      _ExtentX        =   3254
+      _ExtentY        =   714
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
@@ -515,7 +515,7 @@ Private Sub Command1_Click()
 '                        " order by PR.Supplier_Code, PR.PO_No,PR.SuratJalan_No "
                       
                       
-    strSQL = "EXEC sp_IncomingMaterialReport_Sel '" & Trim(CboSupplier) & "', '" & Format(dtAwal, "yyyy-mm-dd") & "', '" & Format(dtAkhir, "yyyy-mm-dd") & "'  "
+    strSQL = "EXEC sp_IncomingMaterialReport_Sel  '" & Trim(TxtFc.Text) & "', '" & Trim(CboSupplier) & "', '" & Format(dtAwal, "yyyy-mm-dd") & "', '" & Format(dtAkhir, "yyyy-mm-dd") & "'  "
 
 '    If rsCek.State <> adStateClosed Then rsCek.Close
 '        rsCek.Ope
@@ -543,7 +543,7 @@ Private Sub Command1_Click()
         .Workbooks.Add
         '.Visible = True
        
-        .Range("A1") = "PT. KAWAI INDONESIA PLANT-3"
+        .Range("A1") = Trim(AdoExcel("Company_Name")) '"PT. KAWAI INDONESIA PLANT-3"
         .Range("A1").verticalAlignment = xlCenter
         .Range("A1").Columns.Font.Name = "Arial"
         .Range("A1").Columns.Font.Size = 10
