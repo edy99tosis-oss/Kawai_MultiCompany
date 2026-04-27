@@ -6,7 +6,7 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form FrmAPListReport 
    BackColor       =   &H00FDDFE3&
    Caption         =   "AP Detail List Report"
-   ClientHeight    =   3765
+   ClientHeight    =   3990
    ClientLeft      =   1935
    ClientTop       =   3585
    ClientWidth     =   8940
@@ -21,8 +21,7 @@ Begin VB.Form FrmAPListReport
    EndProperty
    Icon            =   "FrmApDetailList.frx":0000
    LinkTopic       =   "Form1"
-   LockControls    =   -1  'True
-   ScaleHeight     =   3765
+   ScaleHeight     =   3990
    ScaleWidth      =   8940
    StartUpPosition =   2  'CenterScreen
    Begin MSComDlg.CommonDialog Dlg 
@@ -39,7 +38,7 @@ Begin VB.Form FrmAPListReport
       Left            =   7500
       Style           =   1  'Graphical
       TabIndex        =   14
-      Top             =   3180
+      Top             =   3420
       Width           =   1185
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -146,21 +145,32 @@ Begin VB.Form FrmAPListReport
       TabIndex        =   11
       Top             =   180
       Width           =   1845
-      _ExtentX        =   3254
-      _ExtentY        =   714
+      _extentx        =   3254
+      _extenty        =   714
    End
    Begin VB.Frame Frame1 
       BackColor       =   &H00FDDFE3&
-      Height          =   1395
+      Height          =   1755
       Left            =   270
       TabIndex        =   8
-      Top             =   900
+      Top             =   840
       Width           =   8385
+      Begin VB.TextBox TxtFactoryName 
+         BackColor       =   &H00FDDFE3&
+         BorderStyle     =   0  'None
+         Height          =   255
+         Left            =   3840
+         Locked          =   -1  'True
+         TabIndex        =   16
+         TabStop         =   0   'False
+         Top             =   285
+         Width           =   3870
+      End
       Begin MSComCtl2.DTPicker dtAwal 
          Height          =   315
          Left            =   1740
          TabIndex        =   1
-         Top             =   780
+         Top             =   1140
          Width           =   1575
          _ExtentX        =   2778
          _ExtentY        =   556
@@ -182,7 +192,7 @@ Begin VB.Form FrmAPListReport
          Height          =   315
          Left            =   3900
          TabIndex        =   2
-         Top             =   780
+         Top             =   1140
          Width           =   1575
          _ExtentX        =   2778
          _ExtentY        =   556
@@ -200,25 +210,58 @@ Begin VB.Form FrmAPListReport
          Format          =   132382723
          CurrentDate     =   37810
       End
-      Begin VB.Line Line1 
+      Begin VB.Line Line3 
          X1              =   3840
-         X2              =   8220
+         X2              =   8160
          Y1              =   600
          Y2              =   600
+      End
+      Begin MSForms.ComboBox TxtFc 
+         Height          =   345
+         Left            =   1755
+         TabIndex        =   18
+         Top             =   240
+         Width           =   1860
+         VariousPropertyBits=   746604569
+         MaxLength       =   10
+         DisplayStyle    =   3
+         Size            =   "3281;609"
+         MatchEntry      =   1
+         ShowDropButtonWhen=   2
+         FontName        =   "Verdana"
+         FontEffects     =   1073750016
+         FontHeight      =   165
+         FontCharSet     =   0
+         FontPitchAndFamily=   2
+      End
+      Begin VB.Label Label6 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Factory Code"
+         Height          =   255
+         Left            =   180
+         TabIndex        =   17
+         Top             =   300
+         Width           =   1395
+      End
+      Begin VB.Line Line1 
+         X1              =   3840
+         X2              =   8160
+         Y1              =   960
+         Y2              =   960
       End
       Begin VB.Label LblCust 
          BackStyle       =   0  'Transparent
          Height          =   255
          Left            =   3840
          TabIndex        =   15
-         Top             =   360
+         Top             =   720
          Width           =   4335
       End
       Begin MSForms.ComboBox CboSupplier 
          Height          =   315
          Left            =   1740
          TabIndex        =   0
-         Top             =   315
+         Top             =   675
          Width           =   1875
          VariousPropertyBits=   746604571
          MaxLength       =   10
@@ -239,7 +282,7 @@ Begin VB.Form FrmAPListReport
          Index           =   3
          Left            =   180
          TabIndex        =   12
-         Top             =   360
+         Top             =   720
          Width           =   1215
       End
       Begin VB.Label Label8 
@@ -249,7 +292,7 @@ Begin VB.Form FrmAPListReport
          Height          =   255
          Left            =   3390
          TabIndex        =   10
-         Top             =   810
+         Top             =   1170
          Width           =   375
       End
       Begin VB.Label Label1 
@@ -260,7 +303,7 @@ Begin VB.Form FrmAPListReport
          Index           =   2
          Left            =   180
          TabIndex        =   9
-         Top             =   855
+         Top             =   1215
          Width           =   1095
       End
    End
@@ -271,7 +314,7 @@ Begin VB.Form FrmAPListReport
       Left            =   270
       Style           =   1  'Graphical
       TabIndex        =   4
-      Top             =   3180
+      Top             =   3420
       Width           =   1140
    End
    Begin VB.Frame Frame2 
@@ -279,7 +322,7 @@ Begin VB.Form FrmAPListReport
       Height          =   600
       Left            =   270
       TabIndex        =   6
-      Top             =   2445
+      Top             =   2685
       Width           =   8385
       Begin VB.Label LblErrMsg 
          Alignment       =   2  'Center
@@ -309,7 +352,7 @@ Begin VB.Form FrmAPListReport
       Left            =   6180
       Style           =   1  'Graphical
       TabIndex        =   3
-      Top             =   3180
+      Top             =   3420
       Visible         =   0   'False
       Width           =   1185
    End
@@ -356,7 +399,7 @@ Sub IsiCboSuppl() 'Filter Request No
 Dim rscbo As New ADODB.Recordset 'Data Customer
 Dim strSQL As String
 
-With cboSupplier
+With CboSupplier
     .clear
     .columnCount = 2
     .ColumnWidths = "100pt;300pt"
@@ -382,7 +425,7 @@ With cboSupplier
     Loop
         
     Set rscbo = Nothing
-    cboSupplier.ListIndex = 0
+    CboSupplier.ListIndex = 0
 End With
 End Sub
 
@@ -391,11 +434,11 @@ Private Sub CboSupplier_Change()
 End Sub
 
 Private Sub cbosupplier_Click()
-    If cboSupplier.ListIndex < 0 Then
-        cboSupplier.ListIndex = 0
-        lblCust = strAll
+    If CboSupplier.ListIndex < 0 Then
+        CboSupplier.ListIndex = 0
+        LblCust = strAll
     Else
-        lblCust = cboSupplier.Column(1)
+        LblCust = CboSupplier.Column(1)
     End If
 End Sub
 
@@ -472,7 +515,7 @@ Private Sub Command1_Click()
 '                        " order by PR.Supplier_Code, PR.PO_No,PR.SuratJalan_No "
                       
                       
-    strSQL = "EXEC sp_IncomingMaterialReport_Sel '" & Trim(cboSupplier) & "', '" & Format(dtAwal, "yyyy-mm-dd") & "', '" & Format(dtAkhir, "yyyy-mm-dd") & "'  "
+    strSQL = "EXEC sp_IncomingMaterialReport_Sel '" & Trim(CboSupplier) & "', '" & Format(dtAwal, "yyyy-mm-dd") & "', '" & Format(dtAkhir, "yyyy-mm-dd") & "'  "
 
 '    If rsCek.State <> adStateClosed Then rsCek.Close
 '        rsCek.Ope
@@ -733,6 +776,8 @@ If gb_Simulation = True Then Call up_InitSimulation(Me) 'Editan
     dtAwal.Value = Now
     
     Call Kosong
+    Call CompanyMaster
+    
 End Sub
 
 Private Sub dtAwal_Change()
@@ -774,4 +819,19 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
     If ErrMsg = "" Then Unload Me Else LblErrMsg.Caption = ErrMsg
 End Sub
 
+'----------------------update multi company------------------------
+Private Sub CompanyMaster()
+    FillCompanyCombo TxtFc
+End Sub
+
+Private Sub TxtFc_Change()
+    If TxtFc.matchFound Then
+        TxtFactoryName = TxtFc.List(TxtFc.ListIndex, 1)
+    Else
+        TxtFactoryName = ""
+        LblErrMsg.Caption = DisplayMsg(4069)  '"Record is not found"
+    End If
+    'Call IsiCombo
+End Sub
+'------------------------------------------------------------------
 
