@@ -933,12 +933,13 @@ Private Sub btnSubmit_Click()
         End If
         '===============================================
         
-        If grid.TextMatrix(X, bteColTypeBC) = "4.0" Then
-        ElseIf grid.TextMatrix(X, bteColTypeBC) = "2.6.2" Then
-        ElseIf grid.TextMatrix(X, bteColTypeBC) = "2.3" Then
-        Else
-            ProsesStock 1, Trim$(ItemCode), Trim$(WHCode), Trim$(WHCode), Format(receiptDate, "YYYYMM"), Trim$(Qty), ""
-        End If
+'       Remark 20260518
+'        If grid.TextMatrix(X, bteColTypeBC) = "4.0" Then
+'        ElseIf grid.TextMatrix(X, bteColTypeBC) = "2.6.2" Then
+'        ElseIf grid.TextMatrix(X, bteColTypeBC) = "2.3" Then
+'        Else
+'            ProsesStock 1, Trim$(ItemCode), Trim$(WHCode), Trim$(WHCode), Format(receiptDate, "YYYYMM"), Trim$(Qty), ""
+'        End If
         
         Db.Execute "update purchaseorder_detail with (updlock) set complete_cls = " & _
             "case when " & _

@@ -178,7 +178,7 @@ Begin VB.Form FrmPart_RecStatus
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   68026371
+         Format          =   127729667
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker DTFrom 
@@ -201,7 +201,7 @@ Begin VB.Form FrmPart_RecStatus
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   68026371
+         Format          =   127729667
          CurrentDate     =   37810
       End
       Begin VB.Label Label1 
@@ -570,12 +570,12 @@ End Sub
 Private Sub CboSupplier_Change()
     cboSupplier = cboSupplier
     dealerCD = cboSupplier
-    If cboSupplier.MatchFound Then
+    If cboSupplier.matchFound Then
         txt_name = cboSupplier.Column(1)
-        LblErrMsg = ""
+        lblErrMsg = ""
     Else
         txt_name = ""
-        LblErrMsg = DisplayMsg(4011)
+        lblErrMsg = DisplayMsg(4011)
     End If
     Call headerGrid
 End Sub
@@ -588,62 +588,253 @@ Private Sub cmdClear_Click(Index As Integer)
 End Sub
 
 Private Sub cmdSearch_Click(Index As Integer)
-LblErrMsg = ""
+lblErrMsg = ""
     Call IsiGrid
 End Sub
 
 Private Sub CmdSubmit_Click(Index As Integer)
-Dim tanya
+'Remark 20260518
+'Dim tanya
+'
+'    tanya = vbYes 'MsgBox("Do you really want to Process Surat Jalan Status?", vbQuestion & vbYesNo, "Confirmation")
+'        If tanya = vbYes Then
+'            Me.MousePointer = vbHourglass
+'
+'            If cboSupplier.Text = "" Then
+'                lblErrMsg = DisplayMsg(1033)
+'                cboSupplier.SetFocus
+'            ElseIf cboSupplier <> dealerCD Then
+'                lblErrMsg = DisplayMsg(1034)
+'                cboSupplier.SetFocus
+'            Else
+'                cboSupplier = cboSupplier
+'                If cboSupplier.matchFound = False Then
+'                    lblErrMsg = DisplayMsg(4011)
+'                    cboSupplier.SetFocus
+'                Else
+'
+'                    lblErrMsg.Caption = ""
+'
+'                    dbTransfer.ConnectionTimeout = 0
+'                    dbTransfer.CommandTimeout = 0
+'                    dbTransfer.Open Db.ConnectionString
+'                    dbTransfer.BeginTrans
+'
+'                    With grid
+'                        For i = 1 To .Rows - 1
+'
+'                            'Melakukan perubahan atau tidak
+'                            statusKlik = IIf(.Cell(flexcpChecked, i, bteColFix) = flexChecked, 1, 0)
+'                            If .TextMatrix(i, bteColFixCls) <> statusKlik Then
+'                                SJNo = .TextMatrix(i, bteColSJNo)
+'
+''                                '**** Update Stock****
+'                                sql = "EXEC SP_PartReceiptStatus_Submit '" & DTFrom.Value & "', '" & DTTo.Value & "', '" & SJNo & "', '" & statusKlik & "', '" & userLogin & "' "
+'                                dbTransfer.Execute sql
+'                            End If
+'                        Next i
+'                    End With
+'
+'                    dbTransfer.CommitTrans
+'                    dbTransfer.Close
+'                    lblErrMsg = DisplayMsg(1101)
+'                End If
+'            End If
+'
+'            IsiGrid
+'
+'            Me.MousePointer = vbDefault
+'        End If
+Dim tanya As VbMsgBoxResult
 
-    tanya = vbYes 'MsgBox("Do you really want to Process Surat Jalan Status?", vbQuestion & vbYesNo, "Confirmation")
-        If tanya = vbYes Then
-            Me.MousePointer = vbHourglass
-            
-            If cboSupplier.Text = "" Then
-                LblErrMsg = DisplayMsg(1033)
-                cboSupplier.SetFocus
-            ElseIf cboSupplier <> dealerCD Then
-                LblErrMsg = DisplayMsg(1034)
-                cboSupplier.SetFocus
+    Dim i As Long
+
+    Dim statusKlik As Byte
+    Dim currentStatus As Byte
+
+    Dim SJNo As String
+    Dim sql As String
+
+    Dim dtFromStr As String
+    Dim dtToStr As String
+
+    Dim successRows As Long
+    Dim failedRows As Long
+
+    On Error GoTo ErrHandler
+
+    '==================================================
+    ' Confirmation
+    '==================================================
+    tanya = vbYes
+    'tanya = MsgBox("Do you really want to process data ?", _
+    '               vbQuestion + vbYesNo, _
+    '               "Confirmation")
+
+    If tanya <> vbYes Then Exit Sub
+
+    Me.MousePointer = vbHourglass
+   
+    '==================================================
+    ' Validation
+    '==================================================
+    If Trim$(cboSupplier.Text) = "" Then
+
+        lblErrMsg.Caption = DisplayMsg(1033)
+        cboSupplier.SetFocus
+        GoTo CleanUp
+
+    End If
+
+    If cboSupplier.Text <> dealerCD Then
+
+        lblErrMsg.Caption = DisplayMsg(1034)
+        cboSupplier.SetFocus
+        GoTo CleanUp
+
+    End If
+
+    If cboSupplier.matchFound = False Then
+
+        lblErrMsg.Caption = DisplayMsg(4011)
+        cboSupplier.SetFocus
+        GoTo CleanUp
+
+    End If
+
+    lblErrMsg.Caption = ""
+
+    '==================================================
+    ' Prepare Date
+    '==================================================
+    dtFromStr = Format$(DTFrom.Value, "yyyy-MM-dd")
+    dtToStr = Format$(DTTo.Value, "yyyy-MM-dd")
+
+    '==================================================
+    ' Open Connection
+    '==================================================
+    dbTransfer.ConnectionTimeout = 0
+    dbTransfer.CommandTimeout = 0
+
+    If dbTransfer.State <> adStateOpen Then
+        dbTransfer.Open Db.ConnectionString
+    End If
+
+    '==================================================
+    ' Process Grid
+    '==================================================
+    With grid
+
+        For i = 1 To .Rows - 1
+
+            On Error GoTo RowError
+
+            '------------------------------------------
+            ' Checkbox Status
+            '------------------------------------------
+            If .Cell(flexcpChecked, i, bteColFix) = flexChecked Then
+                statusKlik = 1
             Else
-                cboSupplier = cboSupplier
-                If cboSupplier.MatchFound = False Then
-                    LblErrMsg = DisplayMsg(4011)
-                    cboSupplier.SetFocus
-                Else
-                    
-                    LblErrMsg.Caption = ""
-
-                    dbTransfer.ConnectionTimeout = 0
-                    dbTransfer.CommandTimeout = 0
-                    dbTransfer.Open Db.ConnectionString
-                    dbTransfer.BeginTrans
-
-                    With grid
-                        For i = 1 To .Rows - 1
-
-                            'Melakukan perubahan atau tidak
-                            statusKlik = IIf(.Cell(flexcpChecked, i, bteColFix) = flexChecked, 1, 0)
-                            If .TextMatrix(i, bteColFixCls) <> statusKlik Then
-                                SJNo = .TextMatrix(i, bteColSJNo)
-                                
-'                                '**** Update Stock****
-                                sql = "EXEC SP_PartReceiptStatus_Submit '" & DTFrom.Value & "', '" & DTTo.Value & "', '" & SJNo & "', '" & statusKlik & "', '" & userLogin & "' "
-                                dbTransfer.Execute sql
-                            End If
-                        Next i
-                    End With
-
-                    dbTransfer.CommitTrans
-                    dbTransfer.Close
-                    LblErrMsg = DisplayMsg(1101)
-                End If
+                statusKlik = 0
             End If
-            
-            IsiGrid
-            
-            Me.MousePointer = vbDefault
-        End If
+
+            currentStatus = Val(.TextMatrix(i, bteColFixCls))
+
+            '------------------------------------------
+            ' Process only changed row
+            '------------------------------------------
+            If currentStatus <> statusKlik Then
+
+                SJNo = Trim$(.TextMatrix(i, bteColSJNo))
+
+                sql = "EXEC SP_PartReceiptStatus_Submit " & _
+                      "'" & dtFromStr & "', " & _
+                      "'" & dtToStr & "', " & _
+                      "'" & Replace(SJNo, "'", "''") & "', " & _
+                      "'" & statusKlik & "', " & _
+                      "'" & Replace(userLogin, "'", "''") & "'"
+
+                dbTransfer.Execute sql
+
+                '--------------------------------------
+                ' Success Color
+                '--------------------------------------
+                .Row = i
+                .Col = bteColSJNo
+                .CellBackColor = vbWhite
+
+                successRows = successRows + 1
+
+            End If
+
+ContinueLoop:
+
+            On Error GoTo ErrHandler
+
+        Next i
+
+    End With
+
+    '==================================================
+    ' Final Message
+    '==================================================
+    lblErrMsg.Caption = _
+        "Process completed. " & _
+        "Success : " & successRows & _
+        " | Failed : " & failedRows
+
+CleanUp:
+
+    On Error Resume Next
+
+    '==================================================
+    ' Close Connection
+    '==================================================
+    If dbTransfer.State = adStateOpen Then
+        dbTransfer.Close
+    End If
+
+    Me.MousePointer = vbDefault
+
+    IsiGrid
+
+    Exit Sub
+
+'======================================================
+' Row Error
+'======================================================
+RowError:
+
+    failedRows = failedRows + 1
+
+    '--------------------------------------------------
+    ' Highlight error row
+    '--------------------------------------------------
+    grid.Row = i
+    grid.Col = bteColSJNo
+    grid.CellBackColor = vbRed
+
+    '--------------------------------------------------
+    ' Show Error Message
+    '--------------------------------------------------
+    lblErrMsg.Caption = _
+        "Baris " & i & _
+        " | SJ No : " & SJNo & _
+        " | Error : " & err.Description
+
+    Resume ContinueLoop
+
+'======================================================
+' Fatal Error
+'======================================================
+ErrHandler:
+
+    lblErrMsg.Caption = _
+        "Fatal Error : " & _
+        err.number & " - " & err.Description
+
+    Resume CleanUp
+
 End Sub
 
 '******************
@@ -712,7 +903,7 @@ With grid
             RsPartReceipt.MoveNext
         Loop
     Else
-        LblErrMsg = DisplayMsg(4006)
+        lblErrMsg = DisplayMsg(4006)
     End If
     Set RsPartReceipt = Nothing
 End With
@@ -722,21 +913,21 @@ Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Bool
 Dim pesanDTFrom As String, pesanDTTo As String
 
 With grid
-    LblErrMsg = ""
+    lblErrMsg = ""
     If Col < bteColFix Then
         Cancel = 1
     Else
         pesanDTFrom = up_ValidateDateRange(Format(.TextMatrix(Row, bteColRecDate), "yyyy-MM-dd"), True)
         pesanDTTo = up_ValidateDateRange(Format(.TextMatrix(Row, bteColRecDate), "yyyy-MM-dd"), True)
         If Trim(Get_Record("select invoice_no from invoice_master where invoice_no='" & Trim(.TextMatrix(Row, bteColSJNo)) & "'  and Fix_Cls=1 ")) <> "" And .Cell(flexChecked, Row, bteColFix) = 0 Then
-            LblErrMsg = DisplayMsg(4110)
+            lblErrMsg = DisplayMsg(4110)
             Cancel = 1
 '        ElseIf Trim(Get_Record("select top 1 DN_No from packing_master pm inner join Packing_Detail pd on pd.Packing_No=pm.Packing_No where pd.DN_No='" & Trim(.TextMatrix(Row, bteColSJNo)) & "'  and pm.Fix_Cls=1 ")) <> "" And .Cell(flexChecked, Row, bteColFix) = 0 Then
 '            LblErrMsg = "[8120] You Cannot Modify this Status !Packing List has Already Fixed !"
 '            Cancel = 1
         Else
             If pesanDTFrom <> "" Or pesanDTTo <> "" Then
-                LblErrMsg = IIf(pesanDTFrom = "", pesanDTTo, pesanDTFrom)
+                lblErrMsg = IIf(pesanDTFrom = "", pesanDTTo, pesanDTFrom)
                 Cancel = 1
             End If
         End If
@@ -745,8 +936,8 @@ End With
 End Sub
 
 Private Sub dtFrom_Change()
-    LblErrMsg = ""
-    If Format(DTFrom, "yyyy-MM-dd") > Format(CDate(DTTo), "yyyy-MM-dd") Then LblErrMsg = DisplayMsg("4068"): Exit Sub
+    lblErrMsg = ""
+    If Format(DTFrom, "yyyy-MM-dd") > Format(CDate(DTTo), "yyyy-MM-dd") Then lblErrMsg = DisplayMsg("4068"): Exit Sub
     Call headerGrid
 End Sub
 
@@ -755,8 +946,8 @@ Private Sub DTFrom_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub dtTo_Change()
-    LblErrMsg = ""
-    If Format(DTFrom, "yyyy-MM-dd") > Format(CDate(DTTo), "yyyy-MM-dd") Then LblErrMsg = DisplayMsg("4066"): Exit Sub
+    lblErrMsg = ""
+    If Format(DTFrom, "yyyy-MM-dd") > Format(CDate(DTTo), "yyyy-MM-dd") Then lblErrMsg = DisplayMsg("4066"): Exit Sub
     Call headerGrid
 End Sub
 
@@ -779,7 +970,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 

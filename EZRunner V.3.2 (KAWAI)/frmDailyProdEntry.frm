@@ -399,7 +399,7 @@ Begin VB.Form frmDailyProdEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129302531
+      Format          =   115605507
       CurrentDate     =   37859
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
@@ -529,7 +529,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129302531
+         Format          =   115605507
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -561,7 +561,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129302531
+         Format          =   115605507
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -1379,17 +1379,17 @@ End Sub
 Sub Kosong()
     scheduledate1.Value = Format(Now, "dd MMM yyyy")
     scheduledate2.Value = Format(Now, "dd MMM yyyy")
-    lblCust.Caption = ""
+    lblcust.Caption = ""
 '    cboFactory.Text = ""
-    cboCust.Text = ""
+    cbocust.Text = ""
     cbolinecd.clear
     cbolinecd.Text = ""
-    cbopriority.Text = ""
+    cboPriority.Text = ""
     
     lbllinecd.Caption = ""
-    cboGroup.ListIndex = 0   'Add 20090207
+    CboGroup.ListIndex = 0   'Add 20090207
     
-    LblErrMsg = ""
+    lblErrMsg = ""
     scheduledate.Value = Format(Now, "dd MMM yyyy")
     lblschdate = scheduledate.Value
     dailypanggil = ""
@@ -1399,14 +1399,14 @@ Sub Kosong()
 End Sub
 
 Sub kosongBwh()
-    CboItemCode.Enabled = True
-    CboItemCode.Text = ""
-    LblPart.Text = ""
+    cboitemcode.Enabled = True
+    cboitemcode.Text = ""
+    lblPart.Text = ""
     lbldesc.Text = ""
-    txtQty.Text = Format(0, gs_formatQty)
+    txtqty.Text = Format(0, gs_formatQty)
     lblQty = 0
-    lblUnit.Caption = ""
-    TxtLotNo.Text = ""
+    lblunit.Caption = ""
+    txtlotno.Text = ""
 ' Add Serial No For KAWAI 20090207
     TxtSerialFrom = ""
     TxtSerialTo = ""
@@ -1415,7 +1415,7 @@ Sub kosongBwh()
     txtremark1.Text = ""
     lblFNo = ""
     ubah = False
-    TxtSeqNo.Text = ""
+    txtseqno.Text = ""
     lblunit1.Caption = ""
     PONO = ""
     poSEqNo = 0
@@ -1435,7 +1435,7 @@ Dim i As Integer
 
     Set RsCust = Db.Execute(sqlcust)
     
-    With cboCust
+    With cbocust
         .clear
         .columnCount = 2
         .ColumnWidths = "50pt;175pt"
@@ -1457,7 +1457,7 @@ Sub adtocboPriority()
 '===================== Setting Combo Part ===========================
 Dim i As Integer
 
-With cbopriority
+With cboPriority
     .clear
     .columnCount = 1
     .ListWidth = 40
@@ -1485,7 +1485,7 @@ Dim i As Integer
 
     Set RsGroup = Db.Execute(SqlGroup)
     
-    With cboGroup
+    With CboGroup
         .clear
         .columnCount = 2
         .ColumnWidths = "50pt;125pt"
@@ -1513,18 +1513,18 @@ Dim RsLine As New Recordset
 Dim i As Long
 
     sqlLine = "select item_code, makeritem_code, item_name, unit_cls, (select description from unit_cls uc where uc.unit_cls=item_master.unit_cls)  Unit_Desc " & _
-        "from item_master where production_cls = 01 and manufacture_code = '" & Trim(cboCust.Text) & "' " & _
+        "from item_master where production_cls = 01 and manufacture_code = '" & Trim(cbocust.Text) & "' " & _
         "and use_endday > convert(char(8), getdate(), 112) order by item_name"
     Set RsLine = Db.Execute(sqlLine)
     
-    With CboItemCode
+    With cboitemcode
         .clear
         .columnCount = 5
         .ColumnWidths = "80pt;80pt;240pt;0pt;0pt"
         .ListWidth = 400
         .ListRows = 10
         
-        LblPart.Text = ""
+        lblPart.Text = ""
         lbldesc.Text = ""
         i = 0
         Do While Not RsLine.EOF
@@ -1545,7 +1545,7 @@ Dim sqlLine As String
 Dim RsLine As New Recordset
 Dim i As Integer
 
-    sqlLine = "select * from manufacture_line where manufacture_code='" & cboCust.Text & "'"
+    sqlLine = "select * from manufacture_line where manufacture_code='" & cbocust.Text & "'"
     Set RsLine = Db.Execute(sqlLine)
     
     With cbolinecd
@@ -1598,11 +1598,11 @@ Sub Browse()
         "left join item_master b on b.item_code=a.item_code " & _
         "left join productioncalculate_detail pcd on a.plancust_code = pcd.cust_code and a.planpo_seqno = pcd.seq_no and a.plan_seqno = pcd.plan_seqno and a.item_code = pcd.planitem_code  and a.planpo_no = pcd.po_no " & _
         "left join trade_master tm on pcd.cust_code = tm.trade_code " & _
-        "where a.factory_code='" & Trim(cboCust.Text) & "' " & _
+        "where a.factory_code='" & Trim(cbocust.Text) & "' " & _
         "and a.line_code='" & Trim(cbolinecd.Text) & "' "
     
 ' Add Group Filter for Browsing Grid 20090207
-    If cboGroup.Text <> "All" Then strSQL = strSQL & " And b.group_cls='" & Trim(cboGroup.Text) & "' "
+    If CboGroup.Text <> "All" Then strSQL = strSQL & " And b.group_cls='" & Trim(CboGroup.Text) & "' "
 '--------
     strSQL = strSQL & _
         "and a.schedule_date>='" & Format(scheduledate1.Value, "yyyymmdd") & "' " & _
@@ -1712,16 +1712,16 @@ If cboFactory.ListIndex <> -1 Then
         lblFactory.Caption = cboFactory.Column(1)
         adtocboCust
     End If
-    If cboFactory.Text <> "" And cboCust.Text <> "" Then
+    If cboFactory.Text <> "" And cbocust.Text <> "" Then
         Browse
     Else
         Header
     End If
 End Sub
 
-Private Sub cboGroup_Change()
-    If cboGroup.ListIndex <> -1 Then
-        Label11.Caption = cboGroup.Column(1)
+Private Sub CboGroup_Change()
+    If CboGroup.ListIndex <> -1 Then
+        Label11.Caption = CboGroup.Column(1)
         Else
         Label11.Caption = "All"
     End If
@@ -1729,7 +1729,7 @@ Private Sub cboGroup_Change()
 End Sub
 
 Private Sub CboGroup_LostFocus()
-If cboGroup.ListIndex = -1 Then cboGroup.ListIndex = 0
+If CboGroup.ListIndex = -1 Then CboGroup.ListIndex = 0
 End Sub
 
 Private Sub CboItemCode_Change()
@@ -1737,11 +1737,11 @@ Private Sub CboItemCode_Change()
 End Sub
 
 Private Sub cboitemcode_Click()
-    If CboItemCode.ListIndex <> -1 Then
-        LblPart.Text = CboItemCode.Column(1)
-        lbldesc.Text = CboItemCode.Column(2)
-        lblunit1.Caption = CboItemCode.Column(3)
-        lblUnit.Caption = CboItemCode.Column(4)
+    If cboitemcode.ListIndex <> -1 Then
+        lblPart.Text = cboitemcode.Column(1)
+        lbldesc.Text = cboitemcode.Column(2)
+        lblunit1.Caption = cboitemcode.Column(3)
+        lblunit.Caption = cboitemcode.Column(4)
     End If
     Call StartSerial
 End Sub
@@ -1749,10 +1749,10 @@ End Sub
 Private Sub cboitemcode_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
   Dim i As Integer
   If KeyCode = 13 Then
-    For i = 0 To CboItemCode.ListCount - 1
-        If CboItemCode.Text = CboItemCode.List(i) Then
-            If CboItemCode.Column(1) = CboItemCode.List(i, 1) Then
-                CboItemCode.ListIndex = i
+    For i = 0 To cboitemcode.ListCount - 1
+        If cboitemcode.Text = cboitemcode.List(i) Then
+            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
+                cboitemcode.ListIndex = i
                 Exit For
             End If
         End If
@@ -1764,10 +1764,10 @@ End Sub
 
 Private Sub cboItemCode_LostFocus()
     Dim i As Integer
-    For i = 0 To CboItemCode.ListCount - 1
-        If CboItemCode.Text = CboItemCode.List(i) Then
-            If CboItemCode.Column(1) = CboItemCode.List(i, 1) Then
-                CboItemCode.ListIndex = i
+    For i = 0 To cboitemcode.ListCount - 1
+        If cboitemcode.Text = cboitemcode.List(i) Then
+            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
+                cboitemcode.ListIndex = i
                 cboitemcode_Click
                 Exit For
             End If
@@ -1776,11 +1776,11 @@ Private Sub cboItemCode_LostFocus()
 End Sub
 
 Private Sub cmdBrowser_Click()
- If CboItemCode.Enabled = True Then
+ If cboitemcode.Enabled = True Then
   Me.MousePointer = vbHourglass
-  frm_BrowseItem.getItemCode = CboItemCode.Text
+  frm_BrowseItem.getItemCode = cboitemcode.Text
   frm_BrowseItem.Show 1
-  CboItemCode.Text = frm_BrowseItem.getItemCode
+  cboitemcode.Text = frm_BrowseItem.getItemCode
   Me.MousePointer = vbDefault
  End If
 End Sub
@@ -1813,11 +1813,11 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub cboCust_Click()
-    If cboCust.ListIndex <> -1 Then
-        lblCust.Caption = cboCust.Column(1)
+    If cbocust.ListIndex <> -1 Then
+        lblcust.Caption = cbocust.Column(1)
         adtocbolinecd
     End If
-    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
+    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     Else
         Header
@@ -1833,7 +1833,7 @@ Private Sub cbolinecd_Click()
     If cbolinecd.ListIndex <> -1 Then
         lbllinecd.Caption = cbolinecd.Column(1)
     End If
-    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
+    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     Else
         Header
@@ -1848,33 +1848,33 @@ End Sub
 
 Private Sub scheduledate1_Change()
    If CDate(scheduledate1) > CDate(scheduledate2) Then
-      LblErrMsg.Caption = DisplayMsg(4068)
+      lblErrMsg.Caption = DisplayMsg(4068)
       Exit Sub
    Else
-      LblErrMsg.Caption = ""
+      lblErrMsg.Caption = ""
    End If
     
-    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
+    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     End If
 End Sub
 
 Private Sub scheduledate2_Change()
    If CDate(scheduledate2) < CDate(scheduledate1) Then
-      LblErrMsg.Caption = DisplayMsg(4066)
+      lblErrMsg.Caption = DisplayMsg(4066)
       Exit Sub
    Else
-      LblErrMsg.Caption = ""
+      lblErrMsg.Caption = ""
    End If
-    If cboCust.Text <> "" And cbolinecd.Text <> "" Then
+    If cbocust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     End If
 End Sub
 
 Private Sub txtqty_Change()
-If txtQty <> "" Then
+If txtqty <> "" Then
     TxtSerialFrom = StrStartSerial
-    If TxtSerialFrom <> "" Then TxtSerialTo = GetSerialTo(Trim(TxtSerialFrom), txtQty)
+    If TxtSerialFrom <> "" Then TxtSerialTo = GetSerialTo(Trim(TxtSerialFrom), txtqty)
 End If
 End Sub
 
@@ -1897,33 +1897,33 @@ With grid
 
     If TextGrid = "S" Then
         Status = "update"
-        CboItemCode.Text = .TextMatrix(Row, bteColProdCode)
-        CboItemCode.Enabled = False
-        LblPart.Text = .TextMatrix(Row, bteColPart)
+        cboitemcode.Text = .TextMatrix(Row, bteColProdCode)
+        cboitemcode.Enabled = False
+        lblPart.Text = .TextMatrix(Row, bteColPart)
         lbldesc.Text = .TextMatrix(Row, bteColDesc)
-        TxtLotNo.Text = .TextMatrix(Row, bteColLotNo)
+        txtlotno.Text = .TextMatrix(Row, bteColLotNo)
         lbllotno = .TextMatrix(Row, bteColLotNo)
         
         If InStr(1, .TextMatrix(Row, bteColQty), ".") > 0 Then
-            txtQty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
+            txtqty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
         Else
-            txtQty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
+            txtqty.Text = Format(.TextMatrix(Row, bteColQty), gs_formatQty)
         End If
         lblQty = CDbl(.TextMatrix(Row, bteColQty))
                         
         lblunit1.Caption = .TextMatrix(Row, bteColUnitCls)
-        lblUnit.Caption = .TextMatrix(Row, bteColUnit)
+        lblunit.Caption = .TextMatrix(Row, bteColUnit)
         scheduledate.Value = .TextMatrix(Row, bteColDate)
         lblschdate = .TextMatrix(Row, bteColDate)
         txtremark1.Text = .TextMatrix(Row, bteColRemark)
-        TxtSeqNo.Text = .TextMatrix(Row, bteColSeqNo)
+        txtseqno.Text = .TextMatrix(Row, bteColSeqNo)
         TxtSerialFrom = .TextMatrix(Row, BteColSerialFrom)
         TxtSerialTo = .TextMatrix(Row, BteColSerialTo)
        Call kosongColGrid
-       LblErrMsg = ""
+       lblErrMsg = ""
     ElseIf TextGrid = "D" Then
        Call kosongColGrid("S")
-       LblErrMsg = ""
+       lblErrMsg = ""
     End If
 
     .TextMatrix(Row, Col) = TextGrid
@@ -1993,34 +1993,34 @@ Dim rsCek As New ADODB.Recordset
 
 dbw.ConnectionString = Db.ConnectionString
 
-LblErrMsg = ""
+lblErrMsg = ""
 ubah = False
 
 On Error Resume Next
 Select Case Index
   Case 0:   If hakUpdate(Me.Name) = 0 Then _
-            LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+            lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
             
-            If cboCust.Text = "" Then
-              cboCust.SetFocus
-              LblErrMsg = DisplayMsg(1040)  '"Please Select Factory Code"
+            If cbocust.Text = "" Then
+              cbocust.SetFocus
+              lblErrMsg = DisplayMsg(1040)  '"Please Select Factory Code"
               Exit Sub
             ElseIf cbolinecd.Text = "" Then
               cbolinecd.SetFocus
-              LblErrMsg = DisplayMsg(1041)  '"Please Select Machine No"
+              lblErrMsg = DisplayMsg(1041)  '"Please Select Machine No"
               Exit Sub
             End If
                         
-            If cboCust.Text <> "" Then
-                cboCust.MatchEntry = 1
-                cboCust.Text = cboCust.Text
-                If cboCust.matchFound = False Then
-                    LblErrMsg = DisplayMsg(4016)    'Record with this Factory code not found
-                    cboCust.SetFocus
-                    cboCust.MatchEntry = 2
+            If cbocust.Text <> "" Then
+                cbocust.MatchEntry = 1
+                cbocust.Text = cbocust.Text
+                If cbocust.matchFound = False Then
+                    lblErrMsg = DisplayMsg(4016)    'Record with this Factory code not found
+                    cbocust.SetFocus
+                    cbocust.MatchEntry = 2
                     Exit Sub
                 End If
-                cboCust.MatchEntry = 2
+                cbocust.MatchEntry = 2
             End If
             
                         
@@ -2028,7 +2028,7 @@ Select Case Index
                 cbolinecd.MatchEntry = 1
                 cbolinecd.Text = cbolinecd.Text
                 If cbolinecd.matchFound = False Then
-                    LblErrMsg = DisplayMsg(4017)    'Record With this Machine No. not found
+                    lblErrMsg = DisplayMsg(4017)    'Record With this Machine No. not found
                     cbolinecd.SetFocus
                     cbolinecd.MatchEntry = 2
                     Exit Sub
@@ -2041,24 +2041,24 @@ Select Case Index
                                         
             If Cekserial <> "" Then
                 
-               LblErrMsg = Cekserial
+               lblErrMsg = Cekserial
                 Exit Sub
             End If
             
                                        
                            
                 
-            If CboItemCode.Text <> "" Then
-                CboItemCode.MatchEntry = 1
-                CboItemCode.Text = CboItemCode.Text
-                If CboItemCode.matchFound = False Then
+            If cboitemcode.Text <> "" Then
+                cboitemcode.MatchEntry = 1
+                cboitemcode.Text = cboitemcode.Text
+                If cboitemcode.matchFound = False Then
                     '**** cek Data cocok / tdk dgn Database
                     Dim rsDB As New ADODB.Recordset
-                    rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(CboItemCode.Text) & "'", Db, adOpenKeyset, adLockOptimistic
+                    rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(cboitemcode.Text) & "'", Db, adOpenKeyset, adLockOptimistic
                     If rsDB.EOF = True Then
-                        LblErrMsg = DisplayMsg(4003)    'Record With this Product No. not found
-                        CboItemCode.SetFocus
-                        CboItemCode.MatchEntry = 2
+                        lblErrMsg = DisplayMsg(4003)    'Record With this Product No. not found
+                        cboitemcode.SetFocus
+                        cboitemcode.MatchEntry = 2
                         Exit Sub
                     End If
                     rsDB.Close
@@ -2066,7 +2066,7 @@ Select Case Index
             End If
             
             If Auto_Cls = 1 Then
-                LblErrMsg = DisplayMsg(8111)    'Cannot modify data that generated automatically
+                lblErrMsg = DisplayMsg(8111)    'Cannot modify data that generated automatically
                 Exit Sub
             End If
             
@@ -2078,7 +2078,7 @@ Select Case Index
                                 sql1 = "select * from part_receipt where dailyseq_no='" & .TextMatrix(i, bteColSeqNo) & "' and receipt_cls = 'P1'"
                                 Set rs1 = Db.Execute(sql1)
                                 If Not (rs1.BOF And rs1.EOF) Then
-                                    LblErrMsg.Caption = DisplayMsg(1204)
+                                    lblErrMsg.Caption = DisplayMsg(1204)
                                     .Row = i
                                     .SetFocus
                                     Exit Sub
@@ -2087,7 +2087,7 @@ Select Case Index
                                 sql1 = "select complete_cls from daily_production where seq_no='" & .TextMatrix(i, bteColSeqNo) & "' and complete_cls='1' "
                                 Set rs1 = Db.Execute(sql1)
                                 If Not (rs1.BOF And rs1.EOF) Then
-                                    LblErrMsg.Caption = DisplayMsg("0058")
+                                    lblErrMsg.Caption = DisplayMsg("0058")
                                     .Row = i
                                     .SetFocus
                                     Exit Sub
@@ -2102,7 +2102,7 @@ Select Case Index
                                 sql1 = "select * from PartSupplyRequest_Master where Request_Cls='" & req_cls & "'"
                                 Set rs1 = Db.Execute(sql1)
                                 If Not (rs1.BOF And rs1.EOF) Then
-                                    LblErrMsg.Caption = DisplayMsg(1204)
+                                    lblErrMsg.Caption = DisplayMsg(1204)
                                     .Row = i
                                     .SetFocus
                                     Exit Sub
@@ -2126,7 +2126,7 @@ Select Case Index
                                     vbLf & " Serial_No='" & TempSerial & "' And Serial_Status<>'2'"
                                 Set rsCek = dbw.Execute(sql1)
                                 If Not rsCek.EOF Then
-                                    LblErrMsg = "[000]- Serial Number " & Trim(TempSerial) & " is in processed and can't delete !!! "
+                                    lblErrMsg = "[000]- Serial Number " & Trim(TempSerial) & " is in processed and can't delete !!! "
                                     rsCek.Close
                                     Me.MousePointer = vbDefault
                                     Exit Sub
@@ -2184,7 +2184,7 @@ Select Case Index
                             sql1 = "select complete_cls from daily_production where seq_no='" & .TextMatrix(i, bteColSeqNo) & "' and complete_cls='1' "
                             Set rs1 = Db.Execute(sql1)
                             If Not (rs1.BOF And rs1.EOF) Then
-                                LblErrMsg.Caption = DisplayMsg("0059")
+                                lblErrMsg.Caption = DisplayMsg("0059")
                                 .Row = i
                                 .SetFocus
                                 Exit Sub
@@ -2202,7 +2202,7 @@ Select Case Index
                             sql1 = "select * from PartSupplyRequest_Master where Request_Cls='" & req_cls & "'"
                             Set rs1 = Db.Execute(sql1)
                             If Not (rs1.BOF And rs1.EOF) Then
-                                LblErrMsg.Caption = DisplayMsg("9010")
+                                lblErrMsg.Caption = DisplayMsg("9010")
                                 grid.Row = i
                                 Exit Sub
                             End If
@@ -2211,23 +2211,23 @@ Select Case Index
                                 
                     Next i
                     
-                    If (hapus) Then kosongBwh: Browse: LblErrMsg = DisplayMsg(1201): Exit Sub
+                    If (hapus) Then kosongBwh: Browse: lblErrMsg = DisplayMsg(1201): Exit Sub
                 End With
 '
                 
                 'Schedule Date harus lebih besar dari Start Daily
                 If Format(scheduledate.Value, "yyyy-mm-dd") <= Format(startDaily, "yyyy-mm-dd") Then
-                    LblErrMsg.Caption = DisplayMsg("0060") & "" & Format(startDaily, "dd MMM yyyy") & " !"
+                    lblErrMsg.Caption = DisplayMsg("0060") & "" & Format(startDaily, "dd MMM yyyy") & " !"
                     If scheduledate.Enabled Then scheduledate.SetFocus
                     Exit Sub
                 End If
                 
                 'Validasi Schedule Date
-                sql1 = "select * from calendar_master where factory_code = '" & cboCust.Text & "' and cal_date = '" & CDate(scheduledate.Value) & "'"
+                sql1 = "select * from calendar_master where factory_code = '" & cbocust.Text & "' and cal_date = '" & CDate(scheduledate.Value) & "'"
                 Set rs1 = Db.Execute(sql1)
                 If Not (rs1.BOF And rs1.EOF) Then
-                  LblErrMsg.Caption = DisplayMsg(1022)
-                  Command1(3).SetFocus
+                  lblErrMsg.Caption = DisplayMsg(1022)
+                  command1(3).SetFocus
                   Exit Sub
                 'Bila ada perubahan Schedule Date maka perubahan harus tetap dalam Bulan atau Tahun yg sama
                 ElseIf ubah And Not (Month(scheduledate.Value) = Month(lblschdate) And Year(scheduledate.Value) = Year(lblschdate)) Then
@@ -2236,32 +2236,32 @@ Select Case Index
                    Set rs1 = Db.Execute(sql1)
                    If Not rs1.EOF Then
                         If rs1("Qtyresult") > 0 Then
-                            LblErrMsg.Caption = DisplayMsg(1022)
-                            Command1(3).SetFocus
+                            lblErrMsg.Caption = DisplayMsg(1022)
+                            command1(3).SetFocus
                             Exit Sub
                         End If
                    End If
                 End If
                 
-                If CboItemCode.Text <> "" Or txtQty.Text <> "" Or txtremark1.Text <> "" Or TxtLotNo.Text <> "" Then
+                If cboitemcode.Text <> "" Or txtqty.Text <> "" Or txtremark1.Text <> "" Or txtlotno.Text <> "" Then
                 
-                    If CboItemCode.Text = "" Then
-                       CboItemCode.SetFocus
-                       LblErrMsg = DisplayMsg(1024)  '"Please Select Product code"
+                    If cboitemcode.Text = "" Then
+                       cboitemcode.SetFocus
+                       lblErrMsg = DisplayMsg(1024)  '"Please Select Product code"
                        Exit Sub
-                    ElseIf TxtLotNo = "" Then
-                       TxtLotNo.SetFocus
-                       LblErrMsg = " [2008] Please Input LOT Number "
+                    ElseIf txtlotno = "" Then
+                       txtlotno.SetFocus
+                       lblErrMsg = " [2008] Please Input LOT Number "
                        Exit Sub
-                    ElseIf CDbl(txtQty.Text) = 0 Then
-                       txtQty.SetFocus
+                    ElseIf CDbl(txtqty.Text) = 0 Then
+                       txtqty.SetFocus
                        SendKeys "{home}"
                        SendKeys "+{end}"
-                       LblErrMsg = DisplayMsg(1012) '"Please Input Quantity"
+                       lblErrMsg = DisplayMsg(1012) '"Please Input Quantity"
                        Exit Sub
-                    ElseIf CDbl(txtQty.Text) > gd_MaxQty Then
-                       txtQty.SetFocus
-                       LblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
+                    ElseIf CDbl(txtqty.Text) > gd_MaxQty Then
+                       txtqty.SetFocus
+                       lblErrMsg = DisplayMsg(4045) & " " & gd_MaxQty & " !"
                        Exit Sub
                     Else
                     
@@ -2276,19 +2276,19 @@ Select Case Index
                         
                         ' Check For Valid Serial No
                         If awal > akhir Then
-                            LblErrMsg = "[000] - Invalid Serial Number ! "
+                            lblErrMsg = "[000] - Invalid Serial Number ! "
                             Me.MousePointer = vbDefault
                             Exit Sub
                         End If
                         
                         If Depan <> Left(TxtSerialTo, 1) Then
-                            LblErrMsg = "[000] - Invalid Serial Number ! "
+                            lblErrMsg = "[000] - Invalid Serial Number ! "
                             Me.MousePointer = vbDefault
                             Exit Sub
                         End If
                         
-                        If (akhir - awal) + 1 <> CDbl(txtQty) Then
-                            LblErrMsg = "[000] - Data doesn't match between Qty and Serial No ! "
+                        If (akhir - awal) + 1 <> CDbl(txtqty) Then
+                            lblErrMsg = "[000] - Data doesn't match between Qty and Serial No ! "
                             Me.MousePointer = vbDefault
                             Exit Sub
                         End If
@@ -2312,12 +2312,12 @@ Select Case Index
                                 For X = awal To akhir
                                     TempSerial = Depan & Format(X, String(Panjang - 1, "0"))
                                 ' sql1 = "Select * from Serial_Detail where item_code='" & cboitemcode.Text & "' and "
-                                   sql1 = "Select * from Serial_Detail where --item_code='" & CboItemCode.Text & "' and " & vbCrLf & _
+                                   sql1 = "Select * from Serial_Detail where --item_code='" & cboitemcode.Text & "' and " & vbCrLf & _
                                     " Serial_NO='" & TempSerial & "' "
                                     Set rsCek = Db.Execute(sql1)
                                     If Not rsCek.EOF Then
                                         If Not IsNull(rsCek("Product_No")) Then
-                                            LblErrMsg = "[000] - Serial Number Already Process at Daily Number : " & Trim(rsCek("Product_No"))
+                                            lblErrMsg = "[000] - Serial Number Already Process at Daily Number : " & Trim(rsCek("Product_No"))
                                             Me.MousePointer = vbDefault
                                             Exit Sub
                                         End If
@@ -2325,7 +2325,7 @@ Select Case Index
 '                                        lblErrMsg = "[000] - Serial Number " & TempSerial & " doesn't Exist at Order Data !!! "
 '                                        Me.MousePointer = vbDefault
 '                                        Exit Sub
-                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(CboItemCode) & "'," & _
+                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(cboitemcode) & "'," & _
                                         vbLf & "'" & Trim(TempSerial) & "','',0,'1')"
                                         dbw.Execute (sql1)
                                         SerialStatus = True
@@ -2335,7 +2335,7 @@ Select Case Index
                                 ' -------------------------
                        
                             sql1 = "select a.*, b.item_name from daily_production a left join item_master b on b.item_code=a.item_code " & _
-                                      "where a.factory_code='" & cboCust.Text & "' and " & _
+                                      "where a.factory_code='" & cbocust.Text & "' and " & _
                                       "a.line_code='" & cbolinecd.Text & "' and a.schedule_date>='" & Format(scheduledate1.Value, "yyyymmdd") & _
                                       "' and a.schedule_date<='" & Format(scheduledate2.Value, "yyyymmdd") & "' order by a.schedule_date, a.item_code, a.lot_no, a.seq_no"
 
@@ -2345,9 +2345,9 @@ Select Case Index
 
                             'TAMBAHKAN RECORD BARU KE DAILY_PRODUCTION
                             rsUpdate.AddNew
-                            rsUpdate("factory_Code") = cboCust.Text
+                            rsUpdate("factory_Code") = cbocust.Text
                             rsUpdate("line_code") = cbolinecd.Text
-                            rsUpdate("prod_barcode") = Trim(cboCust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & seqNo
+                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & seqNo
                             
                             NO = seqNo
                             rsUpdate("seq_no") = NO ' Udah mo nyimpen Niy
@@ -2365,7 +2365,7 @@ Select Case Index
                                 
                                 sql1 = " select * From ( " & vbLf & _
                                     " Select * From Serial_Detail Where Po_SeqNo is not null ) n " & vbLf & _
-                                    " Where Item_Code='" & CboItemCode.Text & "' and Serial_No='" & TempSerial & "' and product_No <>'" & TxtSeqNo & "'"
+                                    " Where Item_Code='" & cboitemcode.Text & "' and Serial_No='" & TempSerial & "' and product_No <>'" & txtseqno & "'"
                                 
 '                                sql1 = " Select * From " & _
 '                                    vbLf & " (Select * from Serial_Detail where item_code='" & cboItemCode.Text & "' and " & _
@@ -2375,12 +2375,12 @@ Select Case Index
                                 Set rsCek = Db.Execute(sql1)
                                 If Not rsCek.EOF Then
                                     If Not IsNull(rsCek("Product_No")) Then
-                                        LblErrMsg = "[000] - Serial Number Already Process at Daily Number : " & Trim(rsCek("Product_No"))
+                                        lblErrMsg = "[000] - Serial Number Already Process at Daily Number : " & Trim(rsCek("Product_No"))
                                         Me.MousePointer = vbDefault
                                         Exit Sub
                                     End If
                                 Else
-                                    sql1 = "Select * From Serial_Detail Where Item_Code='" & CboItemCode & "' And " & _
+                                    sql1 = "Select * From Serial_Detail Where Item_Code='" & cboitemcode & "' And " & _
                                             "Serial_No='" & TempSerial & "'"
                                     Set rsCek = Db.Execute(sql1)
                                     If rsCek.EOF Then
@@ -2388,7 +2388,7 @@ Select Case Index
 '                                        Me.MousePointer = vbDefault
 '                                        Exit Sub
 
-                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(CboItemCode) & "'," & _
+                                        sql1 = "Insert Into Serial_Detail (Item_Code,Serial_No,Po_No,PO_SeqNo,Serial_Status) Values ('" & Trim(cboitemcode) & "'," & _
                                         vbLf & "'" & Trim(TempSerial) & "','',0,'1')"
                                         dbw.Execute (sql1)
                                         
@@ -2399,17 +2399,17 @@ Select Case Index
                         End If
                         ' -------------------------
                        
-                            sqlGrid = "select * from daily_production where seq_no='" & TxtSeqNo.Text & "' " & _
+                            sqlGrid = "select * from daily_production where seq_no='" & txtseqno.Text & "' " & _
                                       "order by schedule_date, item_code, lot_no, seq_no"
                             If rsUpdate.State <> adStateClosed Then rsUpdate.Close
                             rsUpdate.Open sqlGrid, dbw, adOpenKeyset, adLockOptimistic
-                            rsUpdate("prod_barcode") = Trim(cboCust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & TxtSeqNo.Text
+                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & txtseqno.Text
                        End If
                        
-                       rsUpdate("item_Code") = CboItemCode.Text
-                       rsUpdate("lot_no") = TxtLotNo.Text
+                       rsUpdate("item_Code") = cboitemcode.Text
+                       rsUpdate("lot_no") = txtlotno.Text
                        rsUpdate("schedule_date") = Format(scheduledate.Value, "YYYY-MM-DD")
-                       rsUpdate("qty") = txtQty.Text
+                       rsUpdate("qty") = txtqty.Text
                        rsUpdate("unit_cls") = lblunit1.Caption
                        rsUpdate("remark") = txtremark1.Text
                        rsUpdate("SerialNoFrom") = TxtSerialFrom     ' Add 20090207
@@ -2422,7 +2422,7 @@ Select Case Index
                         ' Save and update Serial Number Status - 20090210
                         
                         sql1 = "Update Serial_Detail Set Product_No=NULL, " & _
-                                 " Serial_Status = '1' Where item_Code='" & CboItemCode.Text & "' And " & _
+                                 " Serial_Status = '1' Where item_Code='" & cboitemcode.Text & "' And " & _
                                  " Product_No='" & rsUpdate("seq_no") & "'"
                         dbw.Execute (sql1)
                         
@@ -2431,7 +2431,7 @@ Select Case Index
                            For X = awal To akhir
                                 TempSerial = Depan & Format(X, String(Panjang - 1, "0"))
                                 sql1 = "Update Serial_Detail Set Product_No='" & rsUpdate("seq_no") & "' , " & _
-                                         " Serial_Status = '2' Where item_Code='" & CboItemCode.Text & "' And " & _
+                                         " Serial_Status = '2' Where item_Code='" & cboitemcode.Text & "' And " & _
                                          " Serial_No='" & TempSerial & "'"
                                 dbw.Execute (sql1)
                             Next X
@@ -2467,22 +2467,22 @@ Select Case Index
                             scheduledate1.Value = Format(scheduledate.Value, "dd MMM yyyy")
                         End If
                     End If
-                    LblErrMsg = IIf(ubah, DisplayMsg(1101), DisplayMsg(1000))
+                    lblErrMsg = IIf(ubah, DisplayMsg(1101), DisplayMsg(1000))
                     kosongBwh
                     Browse
                     ubah = True
                 End If
     Case 1
         Command1_Click 3
-        cboCust = ""
-        lblCust = ""
+        cbocust = ""
+        lblcust = ""
         cboCust_Click
         cbolinecd = ""
         lbllinecd = ""
         scheduledate1.Value = Date
         scheduledate2.Value = Date
     Case 2:
-            If cboCust.Text <> "" Then
+            If cbocust.Text <> "" Then
             
             Dim application As New CRAXDDRT.application
             Dim report As New CRAXDDRT.report
@@ -2494,9 +2494,9 @@ Select Case Index
             
             SqlRpt = "select rtrim(a.factory_code) as factory_code, rtrim(a.line_code) as line_code, a.schedule_date, " & _
                      "rtrim(a.item_code) as item_code, rtrim(a.lot_no) as lot_no, a.seq_no, a.qty,rtrim(a.serialNoFrom) as serialNoFrom,rTrim(a.SerialNoTo) as SerialNoTo, rtrim(a.unit_cls) as unit_cls, (select description from unit_cls uc where uc.unit_cls=a.unit_cls) unit_desc,rtrim(a.remark) as remark1, " & _
-                     "b.makeritem_code, b.item_name, (select trade_name from trade_master where trade_code = '" & cboCust.Text & "') factory_name " & _
+                     "b.makeritem_code, b.item_name, (select trade_name from trade_master where trade_code = '" & cbocust.Text & "') factory_name " & _
                      "from daily_production a left join item_master b on b.item_code=a.item_code " & _
-                     "where a.factory_code='" & cboCust.Text & "' and " & _
+                     "where a.factory_code='" & cbocust.Text & "' and " & _
                      "a.line_code='" & cbolinecd.Text & "' and a.schedule_date>='" & Format(scheduledate1.Value, "yyyymmdd") & _
                      "' and a.schedule_date<='" & Format(scheduledate2.Value, "yyyymmdd") & "' order by a.schedule_date, a.item_code, a.lot_no, a.seq_no"
 
@@ -2506,7 +2506,7 @@ Select Case Index
             sqlprint = SqlRpt
             reportcode = "dailyproduction"
             printorient = 2
-            If rsRpt.EOF Then LblErrMsg = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
+            If rsRpt.EOF Then lblErrMsg = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
             
             Set report = application.OpenReport(App.path & "\Reports\rptdailyproduction.rpt")
             report.Database.Tables(1).SetDataSource rsRpt
@@ -2552,7 +2552,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
@@ -2563,15 +2563,15 @@ End Sub
 
 
 Private Sub txtQty_LostFocus()
-    If IsNumeric(txtQty.Text) Then
-        txtQty.Text = Format(txtQty.Text, gs_formatQty)
+    If IsNumeric(txtqty.Text) Then
+        txtqty.Text = Format(txtqty.Text, gs_formatQty)
     Else
-        txtQty.Text = Format(0, gs_formatQty)
+        txtqty.Text = Format(0, gs_formatQty)
     End If
 End Sub
 
 Private Sub TxtSerialFrom_LostFocus()
-If TxtSerialFrom <> "" Then TxtSerialTo.Text = GetSerialTo(Trim(TxtSerialFrom), txtQty)
+If TxtSerialFrom <> "" Then TxtSerialTo.Text = GetSerialTo(Trim(TxtSerialFrom), txtqty)
 If TxtSerialFrom = "" Then TxtSerialTo = ""
 End Sub
 
@@ -2584,7 +2584,7 @@ Dim LongAwal As Long
 
 'On Error Resume Next
 
-strSQL = "Select * From Item_Master Where Item_Code='" & Trim(CboItemCode) & "'"
+strSQL = "Select * From Item_Master Where Item_Code='" & Trim(cboitemcode) & "'"
 Set RsSerial = Db.Execute(strSQL)
 
 If RsSerial.EOF Then
@@ -2630,13 +2630,13 @@ Private Function uf_ValidasiSerialNo() As String
 
 Dim RsSerial As New ADODB.Recordset
 Dim strSQL As String, seqNo As Integer
-LblErrMsg.Caption = ""
+lblErrMsg.Caption = ""
 
 
-If TxtSeqNo.Text = "" Then
+If txtseqno.Text = "" Then
     seqNo = 0
 Else
-    seqNo = TxtSeqNo.Text
+    seqNo = txtseqno.Text
 End If
 
 strSQL = "exec SP_DailyProductionEntry_Validasi_SerialNo " & seqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "

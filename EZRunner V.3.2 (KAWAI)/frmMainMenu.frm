@@ -18,8 +18,8 @@ Begin VB.Form frmMainMenu
    Begin EZRunnerv3.Anchor Anchor1 
       Left            =   5520
       Top             =   120
-      _extentx        =   847
-      _extenty        =   820
+      _ExtentX        =   847
+      _ExtentY        =   820
    End
    Begin MSComctlLib.ImageList ImageList2 
       Left            =   4995
@@ -288,7 +288,7 @@ Dim ParentCode As Node
 Dim bolshow As Boolean
 
 Sub NoAkses()
-    LblErrMsg = DisplayMsg(3007)
+    lblErrMsg = DisplayMsg(3007)
 End Sub
 
 Private Sub Form_Load()
@@ -296,7 +296,7 @@ Private Sub Form_Load()
     
     If gb_Simulation = True Then Frame1.BackColor = RGB(204, 255, 204)
      
-    LblErrMsg = ""
+    lblErrMsg = ""
     bolshow = True
     lblSim.Visible = gb_Simulation
     
@@ -314,11 +314,11 @@ Private Sub cmdLogout_Click()
     
     FrmFactoryAccess.OBFactory1 = False
     FrmFactoryAccess.OBFactory2 = False
-    FrmFactoryAccess.LblErrMsg.Caption = ""
+    FrmFactoryAccess.lblErrMsg.Caption = ""
     
     DoEvents
     Me.Hide
-    LblErrMsg = ""
+    lblErrMsg = ""
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -373,7 +373,7 @@ End Sub
 Private Sub Tree_DblClick()
     Dim X As Integer
     
-    LblErrMsg = ""
+    lblErrMsg = ""
     If bolshow = False Then bolshow = True: Exit Sub
     
     DoEvents
@@ -466,7 +466,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nPrice Master":
             If hakAkses("frmPriceMaster") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("frmPriceMaster") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("frmPriceMaster") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -798,7 +798,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nAR List":
             If hakAkses("frmARList") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("frmARList") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("frmARList") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -807,7 +807,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nAR Progress Control":
             If hakAkses("frmAR_progress") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("frmAR_progress") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("frmAR_progress") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -1095,7 +1095,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nPayment Amount Entry":
             If hakAkses("FrmApList") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("FrmApList") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("FrmApList") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -1104,7 +1104,7 @@ Private Sub Tree_DblClick()
             Me.Hide
         Case "nAccount Payable Progress":
             If hakAkses("FrmAPProgress") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
-            If hakPrice("FrmAPProgress") = 0 Then LblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
+            If hakPrice("FrmAPProgress") = 0 Then lblErrMsg = DisplayMsg("0006"): frmMainMenu.Show: Exit Sub
             
             sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
             Db.Execute sql
@@ -1397,6 +1397,15 @@ Private Sub Tree_DblClick()
             Db.Execute sql
             
             FrmSupplyBySerialNo.Show
+            Me.Hide
+        
+          Case "nProduction Schedule Interface":
+            If hakAkses("frmProdScheduleInterface") = 0 Then Call NoAkses: frmMainMenu.Show: Exit Sub
+            
+            sql = "Insert Into log_history values('" & Format(Now, "yyyy-mm-dd") & "','" & Trim(userLogin) & "','" & Right(Tree.selectedItem.Key, X) & "',Getdate()) "
+            Db.Execute sql
+            
+            frmProdScheduleInterface.Show
             Me.Hide
             
         '**************** Efficiency Control ****************
@@ -1795,7 +1804,7 @@ Private Sub Tree_DblClick()
             Me.Hide
               
         Case Else
-            LblErrMsg.Caption = "[0000] Function is not available !"
+            lblErrMsg.Caption = "[0000] Function is not available !"
     End Select
     DoEvents
 End Sub

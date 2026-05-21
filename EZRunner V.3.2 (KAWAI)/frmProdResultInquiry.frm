@@ -317,7 +317,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   62717955
+      Format          =   136577027
       CurrentDate     =   37860
    End
    Begin MSComCtl2.DTPicker dtAkhir 
@@ -340,7 +340,7 @@ Begin VB.Form frmProdResultInquiry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   62717955
+      Format          =   136577027
       CurrentDate     =   37891
    End
    Begin VSFlex8Ctl.VSFlexGrid Grid 
@@ -552,6 +552,9 @@ Dim bteColAuto As Byte
 Dim bteColCustCode As Byte
 Dim bteColCustName As Byte
 Dim bteColPONo As Byte
+Dim bteColRegDate As Byte
+
+
 
 Private Sub headerGrid()
     
@@ -566,21 +569,22 @@ Private Sub headerGrid()
     bteColPackSize = 8
     BteColSerialFrom = 9
     BteColSerialTo = 10
-    bteColPlan = 9 + 2
-    bteColResult = 10 + 2
-    bteColRemain = 11 + 2
-    bteColComplete = 12 + 2
-    bteColWHCode = 13 + 2
-    bteColSeqNo = 14 + 2
-    bteColUnitCls = 15 + 2
-    bteColAuto = 16 + 2
-    bteColCustCode = 17 + 2
-    bteColCustName = 18 + 2
-    bteColPONo = 19 + 2
+    bteColPlan = 11
+    bteColResult = 12
+    bteColRemain = 13
+    bteColRegDate = 14
+    bteColComplete = 15
+    bteColWHCode = 16
+    bteColSeqNo = 17
+    bteColUnitCls = 18
+    bteColAuto = 19
+    bteColCustCode = 20
+    bteColCustName = 21
+    bteColPONo = 22
     
     With Grid
         .clear
-        .ColS = 20 + 2
+        .ColS = 23
         .Rows = 1
         
         .TextMatrix(0, bteColSelect) = ""
@@ -599,6 +603,7 @@ Private Sub headerGrid()
         .TextMatrix(0, bteColResult) = "Result"
         .TextMatrix(0, bteColRemain) = "Remaining"
         .TextMatrix(0, bteColComplete) = "Complete"
+        .TextMatrix(0, bteColRegDate) = "Result Date"
         .TextMatrix(0, bteColWHCode) = "WHCode"
         .TextMatrix(0, bteColSeqNo) = "SeqNo"
         .TextMatrix(0, bteColUnitCls) = "UnitCls"
@@ -618,6 +623,7 @@ Private Sub headerGrid()
         .ColWidth(bteColPlan) = 1500
         .ColWidth(bteColResult) = 1500
         .ColWidth(bteColRemain) = 1500
+        .ColWidth(bteColRegDate) = 1500
         .ColWidth(bteColComplete) = 1000
         .ColWidth(bteColAuto) = 1000
         .ColWidth(bteColCustCode) = 1200
@@ -650,6 +656,7 @@ Private Sub headerGrid()
         .ColAlignment(bteColPlan) = flexAlignRightCenter
         .ColAlignment(bteColResult) = flexAlignRightCenter
         .ColAlignment(bteColRemain) = flexAlignRightCenter
+        .ColAlignment(bteColRegDate) = flexAlignLeftCenter
         .ColAlignment(bteColComplete) = flexAlignCenterCenter
         .ColAlignment(bteColAuto) = flexAlignCenterCenter
         .ColAlignment(bteColCustCode) = flexAlignLeftCenter
@@ -659,7 +666,7 @@ Private Sub headerGrid()
         Dim C As Integer
         For C = 0 To .ColS - 1
             .Row = 0
-            .Col = C
+            .col = C
             .CellAlignment = flexAlignCenterCenter
         Next C
         
@@ -1239,6 +1246,9 @@ End Sub
 Sub IsiGrid()
 Dim rsProd As New ADODB.Recordset
 Dim sqlResult As String
+Dim schDate As Date
+Dim resDate As Date
+Dim col As Integer
 
 Me.MousePointer = vbHourglass
 
@@ -1246,35 +1256,38 @@ If nilKosong = True Then Exit Sub
 With Grid
     Call headerGrid
     
-    sql = "select a.Seq_No,Schedule_Date,a.Item_Code,a.SerialNoFrom,a.SerialNoTo, " & _
-            " rtrim(b.makeritem_code) makeritem_code, rtrim(b.Item_Name) Descr, Lot_No," & _
-            " qty "
-    
-    sqlResult = "(select Isnull(Sum(Qty),0) from " & _
-            "Part_Receipt where DailySeq_No = a.Seq_No " & _
-            "And ProductionResult_Cls = 1 and receipt_cls='p1') "
-    
-    sql = sql & "," & sqlResult & " as Result " & _
-        ",(Qty - " & sqlResult & ") as Sisa, Isnull(a.Complete_Cls,0) Complete_Cls," & _
-        "WH_Code,b.Unit_Cls, a.auto_cls, pcd.cust_code, pcd.po_no, tm.trade_name " & _
-        "from Daily_Production a " & _
-        "left join Item_Master b on a.Item_Code = b.Item_Code " & _
-        "left join productioncalculate_detail pcd on a.plancust_code = pcd.cust_code and a.planpo_seqno = pcd.seq_no and a.plan_seqno = pcd.plan_seqno and a.item_code = pcd.planitem_code and a.planpo_no = pcd.po_no  " & _
-        "left join trade_master tm on pcd.cust_code = tm.trade_code " & _
-        "Where Schedule_Date >= '" & Format(dtAwal, "yyyy-MM-dd") & _
-        "' and Schedule_Date <= '" & Format(dtAkhir, "yyyy-MM-dd") & _
-        "' and Factory_Code = '" & cbo(0) & _
-        "' And a.line_Code = '" & cbo(1) & "'"
+'    sql = "select a.Seq_No,Schedule_Date,a.Item_Code,a.SerialNoFrom,a.SerialNoTo, " & _
+'            " rtrim(b.makeritem_code) makeritem_code, rtrim(b.Item_Name) Descr, Lot_No," & _
+'            " qty "
+'
+'    sqlResult = "(select Isnull(Sum(Qty),0) from " & _
+'            "Part_Receipt where DailySeq_No = a.Seq_No " & _
+'            "And ProductionResult_Cls = 1 and receipt_cls='p1') "
+'
+'    sql = sql & "," & sqlResult & " as Result " & _
+'        ",(Qty - " & sqlResult & ") as Sisa, Isnull(a.Complete_Cls,0) Complete_Cls," & _
+'        "WH_Code,b.Unit_Cls, a.auto_cls, pcd.cust_code, pcd.po_no, tm.trade_name " & _
+'        "from Daily_Production a " & _
+'        "left join Item_Master b on a.Item_Code = b.Item_Code " & _
+'        "left join productioncalculate_detail pcd on a.plancust_code = pcd.cust_code and a.planpo_seqno = pcd.seq_no and a.plan_seqno = pcd.plan_seqno and a.item_code = pcd.planitem_code and a.planpo_no = pcd.po_no  " & _
+'        "left join trade_master tm on pcd.cust_code = tm.trade_code " & _
+'        "Where Schedule_Date >= '" & Format(dtAwal, "yyyy-MM-dd") & _
+'        "' and Schedule_Date <= '" & Format(dtAkhir, "yyyy-MM-dd") & _
+'        "' and Factory_Code = '" & cbo(0) & _
+'        "' And a.line_Code = '" & cbo(1) & "'"
+'
+'    If cboRemaining = "Yes" Then
+'        sql = sql & " And Qty - " & sqlResult & " > 0 " & _
+'            "And (Complete_Cls is Null Or Complete_Cls = 0) "
+'    Else
+'        sql = sql & " And (Qty - " & sqlResult & " <= 0 " & _
+'            "Or Complete_Cls =1)"
+'    End If
 
-    If cboRemaining = "Yes" Then
-        sql = sql & " And Qty - " & sqlResult & " > 0 " & _
-            "And (Complete_Cls is Null Or Complete_Cls = 0) "
-    Else
-        sql = sql & " And (Qty - " & sqlResult & " <= 0 " & _
-            "Or Complete_Cls =1)"
-    End If
-    
-    sql = sql & "order by Schedule_Date,a.Item_Code,Lot_no "
+        sql = " EXEC dbo.sp_ProdResultInq_Sel @DateFrom = '" & dtAwal.Value & "' , @DateTo = '" & dtAkhir.Value & "'," & _
+              " @FactoryCode = '" & cbo(0).Text & "', @LineCode = '" & cbo(1).Text & "',  @Remaining = '" & cboRemaining.Text & "' "
+                
+'    sql = sql & "order by Schedule_Date,a.Item_Code,Lot_no "
     Set rsProd = Db.Execute(sql)
     
     i = 1
@@ -1295,6 +1308,7 @@ With Grid
             .TextMatrix(i, bteColPlan) = Format(rsProd("Qty"), gs_formatQty)
             .TextMatrix(i, bteColResult) = Format(rsProd("Result"), gs_formatQty)
             .TextMatrix(i, bteColRemain) = Format(rsProd("Sisa"), gs_formatQty)
+            .TextMatrix(i, bteColRegDate) = Format(Trim(rsProd("Result_Date")), "dd MMM yyyy")
             .Cell(flexcpChecked, i, bteColComplete) = IIf(rsProd("Complete_Cls") = 1, flexChecked, flexUnchecked)
             .TextMatrix(i, bteColWHCode) = Trim(rsProd("WH_Code"))
             .TextMatrix(i, bteColSeqNo) = rsProd("Seq_No")
@@ -1305,9 +1319,24 @@ With Grid
             .TextMatrix(i, bteColCustCode) = rsProd("cust_code") & ""
             .TextMatrix(i, bteColCustName) = rsProd("trade_name") & ""
             .TextMatrix(i, bteColPONo) = rsProd("po_no") & ""
-                     
+            
+            If Not IsNull(rsProd("Schedule_Date")) And Not IsNull(rsProd("Result_Date")) Then
+    
+                schDate = CDate(rsProd("Schedule_Date"))
+                resDate = CDate(rsProd("Result_Date"))
+                
+                If CLng(schDate) = CLng(resDate) Then
+                    
+                    For col = 0 To .ColS - 1
+                        .Cell(flexcpBackColor, i, col) = vbYellow
+                    Next col
+                    
+                End If
+            
+            End If
+            
             .Row = i
-            .Col = bteColComplete
+            .col = bteColComplete
             .CellPictureAlignment = flexAlignCenterCenter
                         
             i = i + 1
@@ -1324,14 +1353,14 @@ End Sub
 
 
 
-Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
-If Col <> bteColSelect Then Cancel = 1
+Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal col As Long, Cancel As Boolean)
+If col <> bteColSelect Then Cancel = 1
 End Sub
 
-Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
+Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal col As Long)
 Dim tampung As Long
 With Grid
-    If Row <> 0 And Col = bteColSelect Then
+    If Row <> 0 And col = bteColSelect Then
         If .Cell(flexcpChecked, Row, bteColSelect) = flexChecked Then
             tampung = Row
 '            For i = 1 To .Rows - 1
@@ -1409,7 +1438,7 @@ Dim rsCek As New ADODB.Recordset
                             
                             frmProdResult.cbo(0).locked = True
                             frmProdResult.cbo(1).locked = True
-                            frmProdResult.CmdSubMenu.Caption = "&Back"
+                            frmProdResult.cmdSubMenu.Caption = "&Back"
                             frmProdResult.Show
                             Me.Hide
                     End Select
@@ -1427,7 +1456,7 @@ End Sub
 
 '************ Unload **********
 Private Sub CmdSubMenu_Click()
-    If CmdSubMenu.Caption = "&Back" Then
+    If cmdSubMenu.Caption = "&Back" Then
         Call Command1_Click(1)
     Else
         Unload frmProdResult

@@ -324,7 +324,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129236995
+         Format          =   52035587
          CurrentDate     =   37868
       End
       Begin MSComCtl2.DTPicker Tgl2 
@@ -346,7 +346,7 @@ Begin VB.Form FrmPart_Rec
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129236995
+         Format          =   52035587
          CurrentDate     =   37868
       End
       Begin VB.Label LblPart 
@@ -998,7 +998,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129236995
+      Format          =   52035587
       CurrentDate     =   37868
    End
    Begin VB.CheckBox ChkComplete 
@@ -1039,7 +1039,7 @@ Begin VB.Form FrmPart_Rec
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129236995
+      Format          =   52035587
       CurrentDate     =   37868
    End
    Begin VB.Label Label17 
@@ -2300,12 +2300,15 @@ Private Sub CbotypeBC_Change()
     LblErr.Caption = ""
     
     up_GetNoSeri (cboitem.Text)
+
+' Remark 20260518
+'    If CbotypeBC.Text = "4.0" Or CbotypeBC.Text = "2.6.2" Or CbotypeBC.Text = "2.3" Then
+'        txtRec_Status.Text = "02"
+'    Else
+'        txtRec_Status.Text = "01"
+'    End If
     
-    If CbotypeBC.Text = "4.0" Or CbotypeBC.Text = "2.6.2" Or CbotypeBC.Text = "2.3" Then
-        txtRec_Status.Text = "02"
-    Else
-        txtRec_Status.Text = "01"
-    End If
+    txtRec_Status.Text = "02"
     
     TxtSj_LostFocus
     
@@ -3543,15 +3546,21 @@ If StrGrid = "S" Then
         SeqID = grid.TextMatrix(grid.Row, bteColSeqNo)
         provisionCls = grid.TextMatrix(grid.Row, bteColProvision)
         QTYRec = grid.TextMatrix(grid.Row, bteColQtyRec)
-        If CbotypeBC.Text = "4.0" Then
-            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
-        ElseIf CbotypeBC.Text = "2.6.2" Then
-            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
-        ElseIf CbotypeBC.Text = "2.3" Then
-            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
-        Else
-            txtRec_Status.Text = "01"
-        End If
+        
+        
+' Remark 20260518
+        
+        txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+
+'        If CbotypeBC.Text = "4.0" Then
+'            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+'        ElseIf CbotypeBC.Text = "2.6.2" Then
+'            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+'        ElseIf CbotypeBC.Text = "2.3" Then
+'            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+'        Else
+'            txtRec_Status.Text = "01"
+'        End If
         
         txtRegisterNo.Text = grid.TextMatrix(grid.Row, bteColNoRegister)
         txtNoSeri.Text = grid.TextMatrix(grid.Row, bteColNoSeri)
@@ -3565,15 +3574,19 @@ If StrGrid = "S" Then
         cboitem = grid.TextMatrix(grid.Row, bteColProdCod)
         OrderQty = grid.TextMatrix(grid.Row, bteColOrder)
         QTYRec = grid.TextMatrix(grid.Row, bteColReceipt)
-        If CbotypeBC.Text = "4.0" Then
-            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
-        ElseIf CbotypeBC.Text = "2.6.2" Then
-            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
-        ElseIf CbotypeBC.Text = "2.3" Then
-            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
-        Else
-            txtRec_Status.Text = "01"
-        End If
+        
+' Remark 20260518
+        txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+        
+'        If CbotypeBC.Text = "4.0" Then
+'            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+'        ElseIf CbotypeBC.Text = "2.6.2" Then
+'            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+'        ElseIf CbotypeBC.Text = "2.3" Then
+'            txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+'        Else
+'            txtRec_Status.Text = "01"
+'        End If
         'txtRegisterNo.Text = Grid.TextMatrix(Grid.Row, bteColNoRegister)
         
         CboRecCls.ListIndex = 0
@@ -4971,22 +4984,27 @@ Private Sub TxtSj_LostFocus()
 
     up_GetReceiptDate
     
-    If CbotypeBC.Text <> "4.0" And CbotypeBC.Text <> "2.6.2" And CbotypeBC.Text <> "2.3" Then
-        If l_SJNo <> TxtSj.Text Then
-            If Trim(TxtSj.Text) <> "" Then
-                sql = "EXEC dbo.sp_GetNoRegister '" & TglReceipt.Value & "', 'R', '" & userLogin & "' "
-                        
-                If rsGetNoSeri.State <> adStateClosed Then rsGetNoSeri.Close
-                rsGetNoSeri.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-                
-                If Not rsGetNoSeri.EOF Then
-                   txtRegisterNo.Text = rsGetNoSeri.Fields("No_Register")
-                End If
-            End If
-        End If
-    Else
-        txtRegisterNo.Text = ""
-    End If
+    
+    'Remark 20260518
+    
+    txtRegisterNo.Text = ""
+    
+'    If CbotypeBC.Text <> "4.0" And CbotypeBC.Text <> "2.6.2" And CbotypeBC.Text <> "2.3" Then
+'        If l_SJNo <> TxtSj.Text Then
+'            If Trim(TxtSj.Text) <> "" Then
+'                sql = "EXEC dbo.sp_GetNoRegister '" & TglReceipt.Value & "', 'R', '" & userLogin & "' "
+'
+'                If rsGetNoSeri.State <> adStateClosed Then rsGetNoSeri.Close
+'                rsGetNoSeri.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNoSeri.EOF Then
+'                   txtRegisterNo.Text = rsGetNoSeri.Fields("No_Register")
+'                End If
+'            End If
+'        End If
+'    Else
+'        txtRegisterNo.Text = ""
+'    End If
 End Sub
 
 Private Sub up_GetReceiptDate()
@@ -5012,24 +5030,9 @@ End Sub
 Private Sub up_GetNoSeri(pItemCode As String)
 Dim rsGetNo As New ADODB.Recordset
 
-    If Trim(CbotypeBC.Text) = "4.0" Then
-'        sql = " SELECT ISNULL(MAX(CAST(No_Seri AS INT)), 0) + 1 No_Seri  " & vbCrLf & _
-'                " FROM Part_Receipt  " & vbCrLf & _
-'                " WHERE SuratJalan_No ='" & Trim(TxtSj.Text) & "' AND Receipt_Date = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "' "
-            
-            sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
-                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
-                "  @ItemCode ='" & pItemCode & "' "
-                
-                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
-                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-                
-                If Not rsGetNo.EOF Then
-                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
-                End If
-    ElseIf Trim(CbotypeBC.Text) = "2.3" Then
-    
-        sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+'Remark 20260518
+If Trim(CbotypeBC.Text) = "2.3" Then
+     sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
                 "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
                 "  @ItemCode ='" & pItemCode & "' "
                         
@@ -5040,8 +5043,8 @@ Dim rsGetNo As New ADODB.Recordset
                    txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
                 End If
             CboRecCls.Text = "R"
-    Else
-         sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+Else
+    sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
                 "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
                 "  @ItemCode ='" & pItemCode & "' "
                 
@@ -5051,6 +5054,47 @@ Dim rsGetNo As New ADODB.Recordset
                 If Not rsGetNo.EOF Then
                    txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
                 End If
-    End If
-    
+End If
+
+'    If Trim(CbotypeBC.Text) = "4.0" Then
+''        sql = " SELECT ISNULL(MAX(CAST(No_Seri AS INT)), 0) + 1 No_Seri  " & vbCrLf & _
+''                " FROM Part_Receipt  " & vbCrLf & _
+''                " WHERE SuratJalan_No ='" & Trim(TxtSj.Text) & "' AND Receipt_Date = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "' "
+'
+'            sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+'                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
+'                "  @ItemCode ='" & pItemCode & "' "
+'
+'                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
+'                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNo.EOF Then
+'                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
+'                End If
+'    ElseIf Trim(CbotypeBC.Text) = "2.3" Then
+'
+'        sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+'                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
+'                "  @ItemCode ='" & pItemCode & "' "
+'
+'                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
+'                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNo.EOF Then
+'                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
+'                End If
+'            CboRecCls.Text = "R"
+'    Else
+'         sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+'                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
+'                "  @ItemCode ='" & pItemCode & "' "
+'
+'                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
+'                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNo.EOF Then
+'                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
+'                End If
+'    End If
+'
 End Sub

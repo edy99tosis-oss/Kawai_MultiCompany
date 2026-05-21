@@ -178,7 +178,7 @@ Begin VB.Form FrmPart_RecUn
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "MMM yyyy"
-         Format          =   123207683
+         Format          =   127729667
          UpDown          =   -1  'True
          CurrentDate     =   37868
       End
@@ -591,7 +591,7 @@ Begin VB.Form FrmPart_RecUn
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   123207683
+      Format          =   127729667
       CurrentDate     =   37868
    End
    Begin EZRunnerv3.CtrlMenu CtrlMenu1 
@@ -720,7 +720,7 @@ Begin VB.Form FrmPart_RecUn
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   123207683
+      Format          =   127729667
       CurrentDate     =   37868
    End
    Begin VB.Label Label17 
@@ -1590,7 +1590,7 @@ Sub Header()
     bteColNoRegister = 25
     bteColNoSeri = 26
     
-    With Grid
+    With grid
         .ColS = 27
         .Rows = 1
         
@@ -1689,7 +1689,7 @@ Private Sub cbocurr_Change()
         If cbocurr.matchFound Then
             xcurr = cbocurr.List(, 0)
             blnshow = False
-            Call browseprice(CboItem, TglReceipt, CboSupp, xcurr)
+            Call browseprice(cboitem, TglReceipt, cboSupp, xcurr)
         Else
             xcurr = ""
         End If
@@ -1770,24 +1770,24 @@ On Error GoTo ErrHandler
     Dim rsPrice As ADODB.Recordset
 
     ' Pastikan ada match
-    If Not CboItem.matchFound Then Exit Sub
+    If Not cboitem.matchFound Then Exit Sub
 
     ' Ambil deskripsi item
-    LblItemName = Trim$(uf_GetItemDescription(Trim$(CboItem)))
+    LblItemName = Trim$(uf_GetItemDescription(Trim$(cboitem)))
     Lbladdress = ""
     cboprice = ""
 
     ' Ambil info item (warehouse & unit)
-    Set RsItem = Db.Execute("SELECT WH_code, unit_cls FROM Item_master WHERE item_code='" & Trim$(CboItem) & "'")
+    Set RsItem = Db.Execute("SELECT WH_code, unit_cls FROM Item_master WHERE item_code='" & Trim$(cboitem) & "'")
     If Not RsItem.EOF Then
-        CboWHCode = Trim$(RsItem!WH_Code)
+        cboWhCode = Trim$(RsItem!WH_Code)
         CboWHCode_Click
 
         ' Ambil harga dan mata uang
         Set rsPrice = Db.Execute("SELECT unit_cls UC, Currency_code CC FROM Price_master " & _
                                  "WHERE (price_cls='01' OR price_cls='05') " & _
-                                 "AND item_code='" & Trim$(CboItem) & "' " & _
-                                 "AND (trade_code='" & CboSupp & "' OR trade_code='000000')")
+                                 "AND item_code='" & Trim$(cboitem) & "' " & _
+                                 "AND (trade_code='" & cboSupp & "' OR trade_code='000000')")
         If Not rsPrice.EOF Then
             cbocurr.Text = uf_GetCurrencyDescription(Trim(rsPrice!CC))
             cbocurr.TextColumn = 2
@@ -1796,9 +1796,9 @@ On Error GoTo ErrHandler
         End If
 
         ' Filter unit
-        Call filterCboUnit(RsItem!Unit_cls, Cbounit)
-        Cbounit.TextColumn = 2
-        Cbounit.Text = uf_GetUnitDescription(Trim(RsItem!Unit_cls))
+        Call filterCboUnit(RsItem!Unit_cls, cbounit)
+        cbounit.TextColumn = 2
+        cbounit.Text = uf_GetUnitDescription(Trim(RsItem!Unit_cls))
 
         txtPackage = Format(0, gs_formatBox)
     End If
@@ -1807,12 +1807,12 @@ On Error GoTo ErrHandler
     blnshow = True
 
     ' Tampilkan harga berdasarkan filter
-    browseprice Trim$(CboItem), Format(TglReceipt, "YYYY-MM-DD"), Trim$(CboSupp), xcurr
+    browseprice Trim$(cboitem), Format(TglReceipt, "YYYY-MM-DD"), Trim$(cboSupp), xcurr
 
     ' Update nomor seri jika baru
-    If baru = True Then up_GetNoSeri CboItem.Text
+    If baru = True Then up_GetNoSeri cboitem.Text
 
-Cleanup:
+CleanUp:
     ' Tutup recordset jika masih terbuka
     If Not RsItem Is Nothing Then
         If RsItem.State = adStateOpen Then RsItem.Close
@@ -1828,7 +1828,7 @@ Cleanup:
 ErrHandler:
     ' Jika error, reset alamat
     Lbladdress = ""
-    Resume Cleanup
+    Resume CleanUp
 End Sub
 
 Private Sub CboItem_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
@@ -1839,10 +1839,10 @@ Private Sub CboItem_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
     Dim oldSelStart As Long
 
     ' Simpan posisi cursor
-    oldSelStart = CboItem.SelStart
+    oldSelStart = cboitem.SelStart
 
     ' Ambil teks user
-    filterText = Trim$(CboItem.Text)
+    filterText = Trim$(cboitem.Text)
 
     ' Minimal 2 karakter sebelum search
     If Len(filterText) < 2 Then Exit Sub
@@ -1860,30 +1860,30 @@ Private Sub CboItem_KeyUp(KeyCode As MSForms.ReturnInteger, Shift As Integer)
     RsI.Open SqlI, Db, adOpenKeyset, adLockReadOnly
 
     ' Build list sementara tanpa Clear
-    CboItem.clear
-    CboItem.columnCount = 2
-    CboItem.TextColumn = 1
+    cboitem.clear
+    cboitem.columnCount = 2
+    cboitem.TextColumn = 1
     ir = 0
        While Not RsI.EOF
-        CboItem.AddItem ""
-        CboItem.List(ir, 0) = RsI!ICd
-        CboItem.List(ir, 1) = Trim$(RsI!inm)
+        cboitem.AddItem ""
+        cboitem.List(ir, 0) = RsI!ICd
+        cboitem.List(ir, 1) = Trim$(RsI!inm)
         ir = ir + 1
         RsI.MoveNext
     Wend
-    CboItem.ColumnWidths = "130 pt; 250 pt"
-    CboItem.ListWidth = 380
-    CboItem.ListRows = 15
+    cboitem.ColumnWidths = "130 pt; 250 pt"
+    cboitem.ListWidth = 380
+    cboitem.ListRows = 15
     RsI.Close
     Set RsI = Nothing
 
     ' Kembalikan teks dan posisi cursor
-    CboItem.Text = filterText
-    CboItem.SelStart = oldSelStart
-    CboItem.SelLength = 0
+    cboitem.Text = filterText
+    cboitem.SelStart = oldSelStart
+    cboitem.SelLength = 0
 
     ' Tampilkan dropdown
-    If ir > 0 Then CboItem.DropDown
+    If ir > 0 Then cboitem.DropDown
 End Sub
 
 Private Sub cboitem_KeyPress(KeyAscii As MSForms.ReturnInteger)
@@ -1903,8 +1903,8 @@ Private Sub cboprice_Change()
     If Trim(cboprice) = "" Then txtamount = "0": Exit Sub
     If Left(Trim(cboprice), 1) = "," Then cboprice = Right(Trim(cboprice), Len(Trim(cboprice)) - 1)
     If cboprice.Text <> "" And IsNumeric(cboprice) = True Then
-        If txtqty <> "" And IsNumeric(txtqty) = True Then
-            txtamount.Text = Format(CDbl(cboprice.Text) * CDbl(txtqty.Text), gs_formatAmount)
+        If txtQty <> "" And IsNumeric(txtQty) = True Then
+            txtamount.Text = Format(CDbl(cboprice.Text) * CDbl(txtQty.Text), gs_formatAmount)
         Else
             txtamount = Format(0, gs_formatAmount)
         End If
@@ -1916,9 +1916,9 @@ End Sub
 
 Private Sub cboprice_Click()
     If Val(cboprice) = 0 Then txtamount = 0: Exit Sub
-    If Val(txtqty) = 0 Then txtamount = 0: Exit Sub
-    If CDbl(txtqty) > 0 And CDbl(cboprice) > 0 Then
-        txtamount = CDbl(txtqty) * CDbl(cboprice)
+    If Val(txtQty) = 0 Then txtamount = 0: Exit Sub
+    If CDbl(txtQty) > 0 And CDbl(cboprice) > 0 Then
+        txtamount = CDbl(txtQty) * CDbl(cboprice)
         If Round(CDbl(txtamount)) / CDbl(txtamount) = 1 Then
             txtamount = Format(CDbl(txtamount), gs_formatAmount)
         Else
@@ -1957,11 +1957,11 @@ Private Sub CboSupp_Change()
 End Sub
 
 Private Sub CboSupp_Click()
-    CboSupp = CboSupp
-    Lblsupp = ""
+    cboSupp = cboSupp
+    lblSupp = ""
     CbotypeBC = ""
     GetBCType
-    If CboSupp.matchFound = True Then Lblsupp = CboSupp.List(CboSupp.ListIndex, 1) ': display
+    If cboSupp.matchFound = True Then lblSupp = cboSupp.List(cboSupp.ListIndex, 1) ': display
 End Sub
 
 Private Sub CboSupp_KeyPress(KeyAscii As MSForms.ReturnInteger)
@@ -1980,13 +1980,15 @@ End Sub
 Private Sub CbotypeBC_Change()
     LblErr.Caption = ""
     
-    up_GetNoSeri (CboItem.Text)
+    up_GetNoSeri (cboitem.Text)
     
-    If CbotypeBC.Text = "4.0" Or CbotypeBC.Text = "2.6.2" Or CbotypeBC.Text = "2.3" Then
-        txtRec_Status.Text = "02"
-    Else
-        txtRec_Status.Text = "01"
-    End If
+'   Remark 20260518
+    txtRec_Status.Text = "02"
+'    If CbotypeBC.Text = "4.0" Or CbotypeBC.Text = "2.6.2" Or CbotypeBC.Text = "2.3" Then
+'        txtRec_Status.Text = "02"
+'    Else
+'        txtRec_Status.Text = "01"
+'    End If
     
    TxtSj_LostFocus
 End Sub
@@ -2001,13 +2003,13 @@ End Sub
 
 Private Sub CboWHCode_Click()
     Dim RsIA As New Recordset
-    CboWHCode = CboWHCode
-    CboItem = CboItem
+    cboWhCode = cboWhCode
+    cboitem = cboitem
     Lbladdress = ""
-    If CboWHCode.matchFound = True And CboItem.matchFound = True Then
+    If cboWhCode.matchFound = True And cboitem.matchFound = True Then
     
         If RsIA.State <> adStateClosed Then RsIA.Close
-        RsIA.Open "Select Address from item_master where item_code='" & CboItem & "' and WH_code='" & CboWHCode & "'", Db, adOpenKeyset, adLockOptimistic
+        RsIA.Open "Select Address from item_master where item_code='" & cboitem & "' and WH_code='" & cboWhCode & "'", Db, adOpenKeyset, adLockOptimistic
         If Not RsIA.EOF Then Lbladdress = Trim$(RsIA!Address & "")
     End If
     If RsIA.State <> adStateClosed Then RsIA.Close
@@ -2102,8 +2104,8 @@ Private Sub CmdBC40_Click()
 
     Me.MousePointer = vbHourglass
     
-    If Grid.Rows > 1 And Trim(Grid.TextMatrix(Grid.Row, bteColBC)) <> "" Then
-        BC40 Grid.TextMatrix(Grid.Row, bteColBC)
+    If grid.Rows > 1 And Trim(grid.TextMatrix(grid.Row, bteColBC)) <> "" Then
+        BC40 grid.TextMatrix(grid.Row, bteColBC)
     Else
         LblErr = DisplayMsg("0013")
     End If
@@ -2113,30 +2115,30 @@ Private Sub CmdBC40_Click()
 End Sub
 
 Private Sub cmdBrowser_Click()
- If CboItem.Enabled = True Then
+ If cboitem.Enabled = True Then
   Me.MousePointer = vbHourglass
-  frm_BrowseItem.getItemCode = CboItem.Text
+  frm_BrowseItem.getItemCode = cboitem.Text
   frm_BrowseItem.Show 1
-  CboItem.Text = frm_BrowseItem.getItemCode
+  cboitem.Text = frm_BrowseItem.getItemCode
   Me.MousePointer = vbDefault
  End If
 End Sub
 
 Private Sub cmdCancel_Click()
     Dim Ikd As Long
-    For Ikd = 1 To Grid.Rows - 1
-        Grid.TextMatrix(Ikd, 0) = ""
+    For Ikd = 1 To grid.Rows - 1
+        grid.TextMatrix(Ikd, 0) = ""
     Next
     Kosong
 End Sub
 
 Private Sub cmdClear_Click()
     Header
-    CboItem = ""
-    CboWHCode = ""
+    cboitem = ""
+    cboWhCode = ""
     Lbladdress = ""
-    txtqty = ""
-    Cbounit = ""
+    txtQty = ""
+    cbounit = ""
     cbocurr = ""
     cboprice = ""
     txtamount = ""
@@ -2149,13 +2151,13 @@ Private Sub cmdClear_Click()
     CboRecCls = ""
     TglReceipt = Now()
     DtBCDate = Now()
-    TxtRemarks = ""
-    CboSupp = ""
+    txtremarks = ""
+    cboSupp = ""
     LblErr = ""
     LblRecCls = ""
-    LblWHCode = ""
-    LblItemCode = ""
-    LblQty = ""
+    lblWHCode = ""
+    lblItemCode = ""
+    lblQty = ""
     LblRecDate = ""
     LblRec = ""
     txtRegisterNo = ""
@@ -2190,7 +2192,7 @@ Private Sub CmdData_Click(Index As Integer)
         RsPM.MoveLast
         LblErr = DisplayMsg(4021) '""This is the last page of file !"
     End Select
-    CboSupp.Text = Trim$(RsPM!Supplier_Code)
+    cboSupp.Text = Trim$(RsPM!Supplier_Code)
     CboRecCls = Trim$(RsPM!receipt_cls)
     TglReceipt = Format(RsPM!Receipt_Date, "dd mmm yyyy")
     RsPM.filter = ""
@@ -2208,8 +2210,8 @@ Private Sub CmdMenu_Click()
 End Sub
 
 Private Sub cmdSearch_Click()
-    CboSupp = CboSupp
-    If CboSupp.matchFound Then display
+    cboSupp = cboSupp
+    If cboSupp.matchFound Then display
 End Sub
 
 Private Sub CmdSubmit_Click()
@@ -2222,7 +2224,7 @@ Private Sub CmdSubmit_Click()
         
     If HakU = 0 Then LblErr = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
     
-     If up_Validasi_Item(Trim(CboItem.Text)) = False Then up_SendEmail
+     If up_Validasi_Item(Trim(cboitem.Text)) = False Then up_SendEmail
     
     CekS = False
     CekD = False
@@ -2255,8 +2257,8 @@ Private Sub CmdSubmit_Click()
         End If
         adoInv.Close
         
-        strS = Grid.FindRow("S", , bteColSelect, False)
-        strD = Grid.FindRow("D", , bteColSelect, False, False)
+        strS = grid.FindRow("S", , bteColSelect, False)
+        strD = grid.FindRow("D", , bteColSelect, False, False)
         
         If strD > 0 Then CekD = True: Jawab = MsgBox(DisplayMsg(8071), vbInformation + vbYesNo + vbDefaultButton2, "Confirmation")
         If Jawab = vbYes Then DataGrid
@@ -2267,18 +2269,18 @@ Private Sub CmdSubmit_Click()
                 LblErr = DisplayMsg(1101)
                 baru = True
                 PosRec = strS
-                NoSeq = Grid.TextMatrix(PosRec, bteColSeqNo)
+                NoSeq = grid.TextMatrix(PosRec, bteColSeqNo)
                 GridAct PosRec, NoSeq, 0
                 Kosong
-                CboItem = ""
-                txtqty = ""
-                Cbounit = ""
+                cboitem = ""
+                txtQty = ""
+                cbounit = ""
                 cbocurr = ""
                 cboprice = ""
                 txtamount = ""
                 Dim IK As Long
-                For IK = 1 To Grid.Rows - 1
-                    Grid.TextMatrix(IK, bteColSelect) = ""
+                For IK = 1 To grid.Rows - 1
+                    grid.TextMatrix(IK, bteColSelect) = ""
                 Next
             Else
                 LblErr = DisplayMsg(1102)
@@ -2299,8 +2301,8 @@ Private Sub CmdSubmit_Click()
                 baru = True
                 Kosong
                 Dim Ikd As Long
-                For Ikd = 1 To Grid.Rows - 1
-                    Grid.TextMatrix(Ikd, bteColSelect) = ""
+                For Ikd = 1 To grid.Rows - 1
+                    grid.TextMatrix(Ikd, bteColSelect) = ""
                 Next
             End If
         End If
@@ -2326,8 +2328,8 @@ Private Sub CmdSubmit_Click()
               SqlU = "insert into Part_Receipt (Seq_No, Supplier_Code, PO_No, Warehouse_Code, Address, Receipt_Cls, Receipt_Date, " & _
                     "BC40_No, BC40_Date,BC_type , Item_Code, Qty, Unit_Cls, Currency_Code, Price, Amount, SuratJalan_No, ProductionResult_Cls, DailySeq_No, Remarks, " & _
                     "Last_Update, Last_User, Receipt_Status, No_Register, No_Seri) " & _
-                    "Values (" & KeyProd & ",'" & Trim$(CboSupp) & "','0','" & Trim$(CboWHCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
-                    Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(CboItem) & "'," & CDbl(txtqty) & ",'" & Trim$(Cbounit.List(Cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & Val(cboprice) & "," & Val(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(TxtRemarks) & "', " & _
+                    "Values (" & KeyProd & ",'" & Trim$(cboSupp) & "','0','" & Trim$(cboWhCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
+                    Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(cboitem) & "'," & CDbl(txtQty) & ",'" & Trim$(cbounit.List(cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & Val(cboprice) & "," & Val(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(txtremarks) & "', " & _
                     "getdate(), '" & userLogin & "', '" & txtRec_Status.Text & "', '" & txtRegisterNo.Text & "', '" & txtNoSeri.Text & "')"
                     
             ElseIf Val(cboprice) > 0 Then
@@ -2343,12 +2345,12 @@ Private Sub CmdSubmit_Click()
                 SqlU = "insert into Part_Receipt (Seq_No, Supplier_Code, PO_No, Warehouse_Code, Address, Receipt_Cls, Receipt_Date, " & _
                     "BC40_No, BC40_Date,BC_Type, Item_Code, Qty, Unit_Cls, Currency_Code, Price, Amount, SuratJalan_No, ProductionResult_Cls, DailySeq_No, Remarks, " & _
                     "Last_Update, Last_User, Receipt_Status, No_Register, No_Seri) " & _
-                    "values (" & KeyProd & ",'" & Trim$(CboSupp) & "','0','" & Trim$(CboWHCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
-                    Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(CboItem) & "'," & CDbl(txtqty) & ",'" & Trim$(Cbounit.List(Cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & CDbl(cboprice) & "," & CDbl(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(TxtRemarks) & "'" & _
+                    "values (" & KeyProd & ",'" & Trim$(cboSupp) & "','0','" & Trim$(cboWhCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
+                    Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(cboitem) & "'," & CDbl(txtQty) & ",'" & Trim$(cbounit.List(cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & CDbl(cboprice) & "," & CDbl(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(txtremarks) & "'" & _
                     ",getdate(), '" & userLogin & "', '" & txtRec_Status.Text & "', '" & txtRegisterNo.Text & "', '" & txtNoSeri.Text & "')"
             End If
             
-            PosRec = Grid.Rows - 1
+            PosRec = grid.Rows - 1
             NoSeq = 0
             
             'On Error GoTo Errhandle
@@ -2365,18 +2367,18 @@ Errhandle:
                     SqlU = "insert into Part_Receipt (Seq_No, Supplier_Code, PO_No, Warehouse_Code, Address, Receipt_Cls, Receipt_Date, " & _
                         "BC40_No, BC40_Date,BC_type, Item_Code, Qty, Unit_Cls, Currency_Code, Price, Amount, SuratJalan_No, ProductionResult_Cls, DailySeq_No, Remarks, " & _
                         "Last_Update, Last_User, Receipt_Status, No_Register, No_Seri) " & _
-                        "Values (" & KeyProd & ",'" & Trim$(CboSupp) & "','0','" & Trim$(CboWHCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
-                        Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(CboItem) & "'," & CDbl(txtqty) & ",'" & Trim$(Cbounit.List(Cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & Val(cboprice) & "," & Val(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(TxtRemarks) & "', " & _
+                        "Values (" & KeyProd & ",'" & Trim$(cboSupp) & "','0','" & Trim$(cboWhCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
+                        Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(cboitem) & "'," & CDbl(txtQty) & ",'" & Trim$(cbounit.List(cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & Val(cboprice) & "," & Val(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(txtremarks) & "', " & _
                         "getdate(), '" & userLogin & "', '" & txtRec_Status.Text & "', '" & txtRegisterNo.Text & "', '" & txtNoSeri.Text & "')"
                 ElseIf Val(cboprice) > 0 Then
                     SqlU = "insert into Part_Receipt (Seq_No, Supplier_Code, PO_No, Warehouse_Code, Address, Receipt_Cls, Receipt_Date, " & _
                         "BC40_No, BC40_Date,BC_type, Item_Code, Qty, Unit_Cls, Currency_Code, Price, Amount, SuratJalan_No, ProductionResult_Cls, DailySeq_No, Remarks, " & _
                         "Last_Update, Last_User, Receipt_Status, No_Register) " & _
-                        "values (" & KeyProd & ",'" & Trim$(CboSupp) & "','0','" & Trim$(CboWHCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
-                        Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(CboItem) & "'," & CDbl(txtqty) & ",'" & Trim$(Cbounit.List(Cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & CDbl(cboprice) & "," & CDbl(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(TxtRemarks) & "', " & _
+                        "values (" & KeyProd & ",'" & Trim$(cboSupp) & "','0','" & Trim$(cboWhCode) & "','" & Trim$(Lbladdress) & "','" & Trim$(CboRecCls) & " ','" & Format(TglReceipt.Value, "yyyy-mm-dd") & "','" & _
+                        Trim$(txtBC40) & "','" & Format(DtBCDate.Value, "yyyy-mm-dd") & "','" & Trim(CbotypeBC.Text) & "','" & Trim$(cboitem) & "'," & CDbl(txtQty) & ",'" & Trim$(cbounit.List(cbounit.ListIndex, 0)) & "','" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "'," & CDbl(cboprice) & "," & CDbl(txtamount) & ",'" & Trim$(TxtSj) & "','0',Null,'" & Trim$(txtremarks) & "', " & _
                         "getdate(), '" & userLogin & "', '" & txtRec_Status.Text & "', '" & txtRegisterNo.Text & "', '" & txtNoSeri.Text & "')"
                 End If
-                PosRec = Grid.Rows - 1
+                PosRec = grid.Rows - 1
                 NoSeq = 0
                 Db.Execute SqlU
                 If InStr(1, err.Description, "Violation of PRIMARY KEY constraint") > 0 Then GoTo Errhandle
@@ -2386,17 +2388,17 @@ Errhandle:
                 Db.CommitTrans
                 
                 If txtRec_Status.Text = "01" Then
-                    ProsesStock 1, Trim$(CboItem), Trim$(CboWHCode), Trim$(CboWHCode), Format(TglReceipt, "YYYYMM"), Trim$(txtqty), ""
+                    ProsesStock 1, Trim$(cboitem), Trim$(cboWhCode), Trim$(cboWhCode), Format(TglReceipt, "YYYYMM"), Trim$(txtQty), ""
                 End If
                 
             
                 '*********** Proses Insert ke Supply **************
-                sql = "Select Provision_Cls from Item_MaSter where ITem_Code = '" & CboItem & "'"
+                sql = "Select Provision_Cls from Item_MaSter where ITem_Code = '" & cboitem & "'"
                 Set rsProv = Db.Execute(sql)
                 If Not rsProv.EOF Then provisionCls = Trim(rsProv(0)) Else provisionCls = ""
                 If provisionCls = "01" Then
                     KeyProd = "R" & KeyProd
-                    Call inputSupply(CboItem, CDbl(txtqty))
+                    Call inputSupply(cboitem, CDbl(txtQty))
                 End If
                 '*************************************************
             
@@ -2411,7 +2413,7 @@ Errhandle:
             
                 GridAct PosRec + 1, NoSeq, 1
                 Kosong
-                CboSupp.SetFocus
+                cboSupp.SetFocus
             Else
                 Db.RollbackTrans
                 LblErr = err.Description
@@ -2477,7 +2479,7 @@ Sub inputSupply(ibu As String, Qty As Double, Optional UnitAnak As String, Optio
         sql = "insert into Part_Supply(FromWarehouse_Code,From_Address,ToWarehouse_Code,ChildSupply_date,ChildItem_Code,Supply_Cls," & _
             "ChildRequirement_Qty,ChildUnit_Cls,Currency_Code,Price,Amount,ParentItem_Code,Lot_No,Production_Date,Remarks,Do_NO,Last_Update,Last_User) " & _
             "values ('" & fromWHCode & "','" & fromAddress & "','" & toWHCode & "','" & Format(TglReceipt, "yyyy-MM-dd") & "','" & itemAnak & "','S'," & _
-            CDbl(qtyAnak) & ",'" & UnitCls & "','" & currAnak & "'," & Price & "," & Amount & ",'" & CboItem & "','',Null,'" & TxtRemarks & "','" & KeyProd & "',getdate(),'" & userLogin & "')"
+            CDbl(qtyAnak) & ",'" & UnitCls & "','" & currAnak & "'," & Price & "," & Amount & ",'" & cboitem & "','',Null,'" & txtremarks & "','" & KeyProd & "',getdate(),'" & userLogin & "')"
     
         Db.Execute sql
     
@@ -2518,20 +2520,20 @@ Private Sub Form_Load()
     
     Set rst = New Recordset
     rst.Open SQLT, Db, adOpenKeyset, adLockOptimistic
-    CboSupp.clear
-    CboSupp.columnCount = 2
-    CboSupp.TextColumn = 1
+    cboSupp.clear
+    cboSupp.columnCount = 2
+    cboSupp.TextColumn = 1
     ir = 0
     While Not rst.EOF
-        CboSupp.AddItem ""
-        CboSupp.List(ir, 0) = rst!TC
-        CboSupp.List(ir, 1) = Trim$(rst!TN)
+        cboSupp.AddItem ""
+        cboSupp.List(ir, 0) = rst!TC
+        cboSupp.List(ir, 1) = Trim$(rst!TN)
         ir = ir + 1
         rst.MoveNext
     Wend
-    CboSupp.ColumnWidths = "60 pt; 300 pt"
-    CboSupp.ListWidth = 360
-    CboSupp.ListRows = 15
+    cboSupp.ColumnWidths = "60 pt; 300 pt"
+    cboSupp.ListWidth = 360
+    cboSupp.ListRows = 15
     
     '##Tampilkan Warehouse code dari warehouse_master
 '    SqlW = "Select rtrim(wh_code) as WC,wh_name as WN from warehouse_master order by wh_code"
@@ -2540,20 +2542,20 @@ Private Sub Form_Load()
      
     Set RsW = New Recordset
     RsW.Open SqlW, Db, adOpenKeyset, adLockOptimistic
-    CboWHCode.clear
-    CboWHCode.columnCount = 2
-    CboWHCode.TextColumn = 1
+    cboWhCode.clear
+    cboWhCode.columnCount = 2
+    cboWhCode.TextColumn = 1
     ir = 0
     While Not RsW.EOF
-        CboWHCode.AddItem ""
-        CboWHCode.List(ir, 0) = RsW!wC
-        CboWHCode.List(ir, 1) = Trim$(RsW!wn)
+        cboWhCode.AddItem ""
+        cboWhCode.List(ir, 0) = RsW!wC
+        cboWhCode.List(ir, 1) = Trim$(RsW!wn)
         ir = ir + 1
         RsW.MoveNext
     Wend
-    CboWHCode.ColumnWidths = "60 pt; 180 pt"
-    CboWHCode.ListWidth = 240
-    CboWHCode.ListRows = 15
+    cboWhCode.ColumnWidths = "60 pt; 180 pt"
+    cboWhCode.ListWidth = 240
+    cboWhCode.ListRows = 15
     
     '## receipt Combo
     CboRecCls.clear
@@ -2590,8 +2592,8 @@ Private Sub Form_Load()
 '    cboitem.ListRows = 15
     
     '## Unit Combo
-    Call up_FillCombo(Cbounit, "unit_cls")
-    Cbounit.TextColumn = 2
+    Call up_FillCombo(cbounit, "unit_cls")
+    cbounit.TextColumn = 2
     '## Curr Combo
     Call up_FillCombo(cbocurr, "curr_cls")
     cbocurr.TextColumn = 2
@@ -2659,7 +2661,7 @@ Sub display()
                     " FROM    Part_Receipt PR , " & vbCrLf & _
                     "         Item_Master IM " & vbCrLf & _
                     " WHERE   PR.Item_Code = IM.Item_Code " & vbCrLf & _
-                    "         AND PR.Supplier_Code = '" & CboSupp & "' " & vbCrLf & _
+                    "         AND PR.Supplier_Code = '" & cboSupp & "' " & vbCrLf & _
                     "         AND ( PO_No = '0' " & vbCrLf & _
                     "               OR PO_No IS NULL " & vbCrLf & _
                     "             ) " & vbCrLf & _
@@ -2675,7 +2677,7 @@ Sub display()
     If RsPD.State = adStateOpen Then RsPD.Close
     RsPD.Open SqlPD, Db, adOpenDynamic, adLockOptimistic
     
-    With Grid
+    With grid
         ig = 0
         Header
         While Not RsPD.EOF
@@ -2757,76 +2759,76 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
     Dim StrGrid As String
     Dim AdaS As Boolean, brs As Integer, id As Long
     
-    StrGrid = Grid.Text
+    StrGrid = grid.Text
     AdaS = False
     brs = 0
     If StrGrid = "S" Then
     
-        For id = 1 To Grid.Rows - 1
-            If id <> Row Then Grid.TextMatrix(id, bteColSelect) = ""
+        For id = 1 To grid.Rows - 1
+            If id <> Row Then grid.TextMatrix(id, bteColSelect) = ""
         Next id
     
-        CboItem = Grid.TextMatrix(Grid.Row, bteColProdCode)
-        TxtSj = Grid.TextMatrix(Grid.Row, bteColSJNo)
-        If UCase(Trim(Grid.TextMatrix(Grid.Row, bteColReceipt))) = "R" Then
+        cboitem = grid.TextMatrix(grid.Row, bteColProdCode)
+        TxtSj = grid.TextMatrix(grid.Row, bteColSJNo)
+        If UCase(Trim(grid.TextMatrix(grid.Row, bteColReceipt))) = "R" Then
             CboRecCls = "R"
-        ElseIf UCase(Trim(Grid.TextMatrix(Grid.Row, bteColReceipt))) = "R1" Then
+        ElseIf UCase(Trim(grid.TextMatrix(grid.Row, bteColReceipt))) = "R1" Then
             CboRecCls = "R1"
         End If
         
-        DtBCDate = IIf(Grid.TextMatrix(Grid.Row, bteColBCDate) = "", Grid.TextMatrix(Grid.Row, bteColReceiptDate), Grid.TextMatrix(Grid.Row, bteColBCDate))
+        DtBCDate = IIf(grid.TextMatrix(grid.Row, bteColBCDate) = "", grid.TextMatrix(grid.Row, bteColReceiptDate), grid.TextMatrix(grid.Row, bteColBCDate))
         
-        TglReceipt = Grid.TextMatrix(Grid.Row, bteColReceiptDate)
-        CboWHCode = Grid.TextMatrix(Grid.Row, bteColWHCode)
+        TglReceipt = grid.TextMatrix(grid.Row, bteColReceiptDate)
+        cboWhCode = grid.TextMatrix(grid.Row, bteColWHCode)
         
-        If IsNull(Grid.TextMatrix(Grid.Row, bteColQty)) Then
-            txtqty = 0
+        If IsNull(grid.TextMatrix(grid.Row, bteColQty)) Then
+            txtQty = 0
         Else
-            If InStr(1, CDbl(Grid.TextMatrix(Grid.Row, bteColQty)), ".") = 0 Then
-                txtqty = Format(Grid.TextMatrix(Grid.Row, bteColQty), gs_formatQty)
-            ElseIf InStr(1, CDbl(Grid.TextMatrix(Grid.Row, bteColQty)), ".") > 0 Then
-                If Split(CDbl(Grid.TextMatrix(Grid.Row, bteColQty)), ".")(1) <> "" Then txtqty = Format(Grid.TextMatrix(Grid.Row, bteColQty), gs_formatQty)
+            If InStr(1, CDbl(grid.TextMatrix(grid.Row, bteColQty)), ".") = 0 Then
+                txtQty = Format(grid.TextMatrix(grid.Row, bteColQty), gs_formatQty)
+            ElseIf InStr(1, CDbl(grid.TextMatrix(grid.Row, bteColQty)), ".") > 0 Then
+                If Split(CDbl(grid.TextMatrix(grid.Row, bteColQty)), ".")(1) <> "" Then txtQty = Format(grid.TextMatrix(grid.Row, bteColQty), gs_formatQty)
             End If
         End If
     
-        Cbounit = uf_GetUnitDescription(Trim$(Grid.TextMatrix(Grid.Row, bteColUnitCls)))
-        cbocurr.Text = uf_GetCurrencyDescription(Trim$(Grid.TextMatrix(Grid.Row, bteColCurrCode)))
+        cbounit = uf_GetUnitDescription(Trim$(grid.TextMatrix(grid.Row, bteColUnitCls)))
+        cbocurr.Text = uf_GetCurrencyDescription(Trim$(grid.TextMatrix(grid.Row, bteColCurrCode)))
     
-        If IsNull(Grid.TextMatrix(Grid.Row, bteColPrice)) Then
+        If IsNull(grid.TextMatrix(grid.Row, bteColPrice)) Then
             cboprice = 0
         Else
-            cboprice = Trim(Grid.TextMatrix(Grid.Row, bteColPrice))
+            cboprice = Trim(grid.TextMatrix(grid.Row, bteColPrice))
         End If
     
-        If IsNull(Grid.TextMatrix(Grid.Row, bteColAmount)) Then
+        If IsNull(grid.TextMatrix(grid.Row, bteColAmount)) Then
             txtamount = 0
         Else
-            txtamount = Grid.TextMatrix(Grid.Row, bteColAmount)
+            txtamount = grid.TextMatrix(grid.Row, bteColAmount)
         End If
     
-        TxtRemarks = Trim$(Grid.TextMatrix(Grid.Row, bteColRemark))
+        txtremarks = Trim$(grid.TextMatrix(grid.Row, bteColRemark))
         LblRecCls = CboRecCls
-        LblRecDate = Grid.TextMatrix(Grid.Row, bteColReceiptDate)
-        LblWHCode = Grid.TextMatrix(Grid.Row, bteColWHCode)
-        LblItemCode = Grid.TextMatrix(Grid.Row, bteColProdCode)
-        LblQty = CDbl(Grid.TextMatrix(Grid.Row, bteColQty))
-        SeqID = Grid.TextMatrix(Grid.Row, bteColSeqNo)
-        txtBC40 = Grid.TextMatrix(Grid.Row, bteColBC)
-        CbotypeBC = Grid.TextMatrix(Grid.Row, bteColBctype)
-        cboTransport = Grid.TextMatrix(Grid.Row, bteColTransport)
-        txtPackage = Val(Grid.TextMatrix(Grid.Row, bteColPackageQty))
-        cboPackage = Grid.TextMatrix(Grid.Row, bteColPackage)
-        txtRec_Status.Text = Grid.TextMatrix(Grid.Row, bteColRecStatus)
-        txtRegisterNo.Text = Grid.TextMatrix(Grid.Row, bteColNoRegister)
-        txtNoSeri.Text = Grid.TextMatrix(Grid.Row, bteColNoSeri)
+        LblRecDate = grid.TextMatrix(grid.Row, bteColReceiptDate)
+        lblWHCode = grid.TextMatrix(grid.Row, bteColWHCode)
+        lblItemCode = grid.TextMatrix(grid.Row, bteColProdCode)
+        lblQty = CDbl(grid.TextMatrix(grid.Row, bteColQty))
+        SeqID = grid.TextMatrix(grid.Row, bteColSeqNo)
+        txtBC40 = grid.TextMatrix(grid.Row, bteColBC)
+        CbotypeBC = grid.TextMatrix(grid.Row, bteColBctype)
+        cboTransport = grid.TextMatrix(grid.Row, bteColTransport)
+        txtPackage = Val(grid.TextMatrix(grid.Row, bteColPackageQty))
+        cboPackage = grid.TextMatrix(grid.Row, bteColPackage)
+        txtRec_Status.Text = grid.TextMatrix(grid.Row, bteColRecStatus)
+        txtRegisterNo.Text = grid.TextMatrix(grid.Row, bteColNoRegister)
+        txtNoSeri.Text = grid.TextMatrix(grid.Row, bteColNoSeri)
         
 '        up_GetNoSeri (CboItem.Text)
         
         baru = False
         LblErr = ""
     ElseIf StrGrid = "D" Then
-        For id = 1 To Grid.Rows - 1
-            If Grid.TextMatrix(id, bteColSelect) = "S" Then Grid.TextMatrix(id, bteColSelect) = "": Exit For
+        For id = 1 To grid.Rows - 1
+            If grid.TextMatrix(id, bteColSelect) = "S" Then grid.TextMatrix(id, bteColSelect) = "": Exit For
         Next id
         Kosong
         baru = False
@@ -2839,7 +2841,7 @@ End Sub
 
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
     Dim pesanTgl As String
-    With Grid
+    With grid
     If .Col > bteColSelect Then Cancel = True: Exit Sub
         pesanTgl = up_ValidateDateRange(Format(.TextMatrix(Row, bteColReceiptDate), "yyyy-MM-dd"), True)
         If pesanTgl <> "" Then LblErr = pesanTgl: Cancel = 1 Else LblErr = ""
@@ -2847,7 +2849,7 @@ Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Bool
 End Sub
 
 Private Sub Grid_KeyPressEdit(ByVal Row As Long, ByVal Col As Long, KeyAscii As Integer)
-    If Grid.Col = bteColSelect Then
+    If grid.Col = bteColSelect Then
         KeyAscii = Asc(UCase(Chr(KeyAscii)))
         If KeyAscii <> Asc("D") And KeyAscii <> Asc("S") And KeyAscii <> vbKeyBack And KeyAscii <> vbKeyDelete And KeyAscii <> vbKeyReturn Then
             KeyAscii = 0
@@ -2890,13 +2892,13 @@ pass:
 End Sub
 
 Private Sub TglReceipt_Change()
-If CboItem <> "" Then
+If cboitem <> "" Then
     If cbocurr.ListCount > 0 Then
         cbocurr = Trim(cbocurr)
         If cbocurr.matchFound Then
             xcurr = cbocurr.List(0)
             blnshow = False
-            If CboItem <> "" Then Call browseprice(CboItem, TglReceipt, CboSupp, xcurr)
+            If cboitem <> "" Then Call browseprice(cboitem, TglReceipt, cboSupp, xcurr)
         Else
             xcurr = ""
             LblErr = DisplayMsg(4005): cbocurr.SetFocus
@@ -2927,15 +2929,15 @@ End If
 End Sub
 
 Private Sub txtqty_Change()
-    If InStr(1, txtqty.Text, ",") = 1 Then txtqty.Text = Mid(txtqty.Text, 2, Len(txtqty.Text))
-    If InStr(1, txtqty.Text, ".") = 1 Then txtqty = ""
-    If txtqty.Text <> "" Then
+    If InStr(1, txtQty.Text, ",") = 1 Then txtQty.Text = Mid(txtQty.Text, 2, Len(txtQty.Text))
+    If InStr(1, txtQty.Text, ".") = 1 Then txtQty = ""
+    If txtQty.Text <> "" Then
     End If
     If Val(cboprice) = 0 Then txtamount = 0: Exit Sub
-    If Val(txtqty) = 0 Then txtamount = 0: Exit Sub
-    If IsNumeric(txtqty) = True And IsNumeric(cboprice) = True Then
-        If CDbl(txtqty) > 0 And CDbl(cboprice) > 0 Then
-            txtamount = CDbl(txtqty) * CDbl(cboprice)
+    If Val(txtQty) = 0 Then txtamount = 0: Exit Sub
+    If IsNumeric(txtQty) = True And IsNumeric(cboprice) = True Then
+        If CDbl(txtQty) > 0 And CDbl(cboprice) > 0 Then
+            txtamount = CDbl(txtQty) * CDbl(cboprice)
             If Round(CDbl(txtamount)) / CDbl(txtamount) = 1 Then
                 txtamount = Format(CDbl(txtamount), gs_formatAmount)
             Else
@@ -2958,20 +2960,20 @@ Sub DataGrid()
     Dim strSQL As String
     Dim PosS As Integer
     
-    PosS = Grid.FindRow("S", , bteColSelect, False)
+    PosS = grid.FindRow("S", , bteColSelect, False)
     If PosS > 0 Then
         Db.BeginTrans
-        kode = Trim$(Grid.TextMatrix(PosS, 1))
+        kode = Trim$(grid.TextMatrix(PosS, 1))
     
         strSQL = "update part_receipt " & _
-            "set Supplier_code='" & Trim$(CboSupp.Text) & "', " & _
+            "set Supplier_code='" & Trim$(cboSupp.Text) & "', " & _
             "PO_no='0', " & _
-            "warehouse_code='" & Trim$(CboWHCode) & "', " & _
+            "warehouse_code='" & Trim$(cboWhCode) & "', " & _
             "receipt_cls='" & Trim$(CboRecCls) & "', " & _
             "receipt_date='" & Format(TglReceipt, "yyyy-mm-dd") & "', " & _
-            "item_code='" & Trim$(CboItem) & "', " & _
-            "qty=" & CDbl(txtqty) & ", " & _
-            "Unit_cls='" & Trim$(Cbounit.List(Cbounit.ListIndex, 0)) & "', " & _
+            "item_code='" & Trim$(cboitem) & "', " & _
+            "qty=" & CDbl(txtQty) & ", " & _
+            "Unit_cls='" & Trim$(cbounit.List(cbounit.ListIndex, 0)) & "', " & _
             "currency_code='" & Trim$(cbocurr.List(cbocurr.ListIndex, 0)) & "', " & _
             "BC40_Date='" & Format(DtBCDate, "yyyy-mm-dd") & "', " & _
             "BC40_No='" & Trim$(txtBC40) & "', " & _
@@ -2983,7 +2985,7 @@ Sub DataGrid()
             strSQL = strSQL & "price=" & CDbl(cboprice) & ", amount=" & Trim$(CDbl(txtamount)) & ", "
         End If
         
-        strSQL = strSQL & " suratjalan_no='" & Trim$(TxtSj) & "', Remarks='" & Trim$(TxtRemarks) & "', No_Register='" & Trim$(txtRegisterNo) & "', No_Seri='" & Trim$(txtNoSeri) & "',  " & _
+        strSQL = strSQL & " suratjalan_no='" & Trim$(TxtSj) & "', Remarks='" & Trim$(txtremarks) & "', No_Register='" & Trim$(txtRegisterNo) & "', No_Seri='" & Trim$(txtNoSeri) & "',  " & _
             "Last_Update = getdate(), Last_User = '" & userLogin & "' " & _
             "where Seq_No='" & SeqID & "'"
         
@@ -2999,50 +3001,50 @@ Sub DataGrid()
             Dim rsProv As New ADODB.Recordset
             KeyProd = "R" & SeqID
             Call seqNo.HapusDataSupp(Db, "'" & KeyProd & "'", blnFix, thnFix)
-            sql = "Select Provision_Cls from Item_MaSter where ITem_Code = '" & CboItem & "'"
+            sql = "Select Provision_Cls from Item_MaSter where ITem_Code = '" & cboitem & "'"
             Set rsProv = Db.Execute(sql)
             If Not rsProv.EOF Then provisionCls = Trim(rsProv(0)) Else provisionCls = ""
-            If provisionCls = "01" Then Call inputSupply(CboItem, CDbl(txtqty))
+            If provisionCls = "01" Then Call inputSupply(cboitem, CDbl(txtQty))
             '*************************************************
         
             Db.CommitTrans
             
             If txtRec_Status.Text = "01" Then
                 If Format(LblRecDate, "YYYYMMDD") <> Format(TglReceipt, "YYYYMMDD") Then
-                    If Trim$(CboItem) <> Trim$(LblItemCode) Then
-                        If Trim$(LblWHCode) <> Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)) Then
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(LblQty) 'Update yg lama
-                            ProsesStock 2, Trim$(CboItem), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Format(TglReceipt, "YYYYMM"), CDbl(txtqty), 0 'Update yg baru
+                    If Trim$(cboitem) <> Trim$(lblItemCode) Then
+                        If Trim$(lblWHCode) <> Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)) Then
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(lblQty) 'Update yg lama
+                            ProsesStock 2, Trim$(cboitem), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Format(TglReceipt, "YYYYMM"), CDbl(txtQty), 0 'Update yg baru
                         Else
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(LblQty) 'Update yg lama
-                            ProsesStock 2, Trim$(CboItem), Trim$(LblWHCode), Trim$(LblWHCode), Format(TglReceipt, "YYYYMM"), CDbl(txtqty), 0 'Update yg baru
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(lblQty) 'Update yg lama
+                            ProsesStock 2, Trim$(cboitem), Trim$(lblWHCode), Trim$(lblWHCode), Format(TglReceipt, "YYYYMM"), CDbl(txtQty), 0 'Update yg baru
                         End If
                         '##
                     Else
-                        If Trim$(LblWHCode) <> Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)) Then
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(LblQty) 'Update yg lama
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Format(TglReceipt, "YYYYMM"), CDbl(txtqty), 0 'Update yg baru
+                        If Trim$(lblWHCode) <> Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)) Then
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(lblQty) 'Update yg lama
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Format(TglReceipt, "YYYYMM"), CDbl(txtQty), 0 'Update yg baru
                         Else
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(LblQty) 'Update yg lama
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(TglReceipt, "YYYYMM"), CDbl(txtqty), 0 'Update yg baru
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(lblQty) 'Update yg lama
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(TglReceipt, "YYYYMM"), CDbl(txtQty), 0 'Update yg baru
                         End If
                     End If
                 Else
-                    If Trim$(CboItem) <> Trim$(LblItemCode) Then
-                        If Trim$(LblWHCode) <> Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)) Then
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(LblQty) 'Update yg lama
-                            ProsesStock 2, Trim$(CboItem), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Format(LblRecDate, "YYYYMM"), CDbl(txtqty), 0 'Update yg baru
+                    If Trim$(cboitem) <> Trim$(lblItemCode) Then
+                        If Trim$(lblWHCode) <> Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)) Then
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(lblQty) 'Update yg lama
+                            ProsesStock 2, Trim$(cboitem), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Format(LblRecDate, "YYYYMM"), CDbl(txtQty), 0 'Update yg baru
                         Else
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(LblQty) 'Update yg lama
-                            ProsesStock 2, Trim$(CboItem), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), CDbl(txtqty), 0 'Update yg baru
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(lblQty) 'Update yg lama
+                            ProsesStock 2, Trim$(cboitem), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), CDbl(txtQty), 0 'Update yg baru
                         End If
                         '##
                     Else
-                        If Trim$(LblWHCode) <> Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)) Then
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(LblQty) 'Update yg lama
-                            ProsesStock 2, Trim$(LblItemCode), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Trim$(CboWHCode.List(CboWHCode.ListIndex, 0)), Format(TglReceipt, "YYYYMM"), CDbl(txtqty), 0 'Update yg baru
+                        If Trim$(lblWHCode) <> Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)) Then
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), 0, CDbl(lblQty) 'Update yg lama
+                            ProsesStock 2, Trim$(lblItemCode), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Trim$(cboWhCode.List(cboWhCode.ListIndex, 0)), Format(TglReceipt, "YYYYMM"), CDbl(txtQty), 0 'Update yg baru
                         Else
-                            ProsesStock 2, Trim$(CboItem), Trim$(LblWHCode), Trim$(CboWHCode), Format(TglReceipt, "YYYYMM"), CDbl(txtqty), CDbl(LblQty)
+                            ProsesStock 2, Trim$(cboitem), Trim$(lblWHCode), Trim$(cboWhCode), Format(TglReceipt, "YYYYMM"), CDbl(txtQty), CDbl(lblQty)
                         End If
                     End If
                 End If
@@ -3061,22 +3063,22 @@ Sub DataGrid()
     Dim strKey As String
     
     strKey = ""
-    For ix = 1 To Grid.Rows - 1
-        kode = Trim$(Grid.TextMatrix(ix, bteColQty))
-        If UCase(Grid.TextMatrix(ix, bteColReceipt)) = "R" Or UCase(Grid.TextMatrix(ix, bteColReceipt)) = "R" Then
+    For ix = 1 To grid.Rows - 1
+        kode = Trim$(grid.TextMatrix(ix, bteColQty))
+        If UCase(grid.TextMatrix(ix, bteColReceipt)) = "R" Or UCase(grid.TextMatrix(ix, bteColReceipt)) = "R" Then
             LblRecCls = "R"
-        ElseIf UCase(Grid.TextMatrix(ix, bteColReceipt)) = "R1" Or UCase(Grid.TextMatrix(ix, bteColReceipt)) = "R1" Then
+        ElseIf UCase(grid.TextMatrix(ix, bteColReceipt)) = "R1" Or UCase(grid.TextMatrix(ix, bteColReceipt)) = "R1" Then
             LblRecCls = "R1"
         End If
-        LblQty = Grid.TextMatrix(ix, bteColQty)
-        LblRecDate = Grid.TextMatrix(ix, bteColReceiptDate)
-        LblWHCode = Grid.TextMatrix(ix, bteColWHCode)
-        LblItemCode = Grid.TextMatrix(ix, bteColProdCode)
-        Sta = Trim$(Grid.TextMatrix(ix, bteColSelect))
+        lblQty = grid.TextMatrix(ix, bteColQty)
+        LblRecDate = grid.TextMatrix(ix, bteColReceiptDate)
+        lblWHCode = grid.TextMatrix(ix, bteColWHCode)
+        lblItemCode = grid.TextMatrix(ix, bteColProdCode)
+        Sta = Trim$(grid.TextMatrix(ix, bteColSelect))
     
         If Sta = "D" Then
     
-            strSQL = "delete from  part_receipt where Seq_No='" & Grid.TextMatrix(ix, bteColSeqNo) & "'"
+            strSQL = "delete from  part_receipt where Seq_No='" & grid.TextMatrix(ix, bteColSeqNo) & "'"
             If strSQL <> "" Then Db.Execute strSQL
         
             If err.number <> 0 Then
@@ -3086,10 +3088,10 @@ Sub DataGrid()
             Else
                 If txtRec_Status.Text = "01" Then
                     nOK = nOK + 1
-                    ProsesStock 3, Trim$(LblItemCode), Trim$(LblWHCode), Trim$(LblWHCode), Format(LblRecDate, "YYYYMM"), CDbl(LblQty), ""
+                    ProsesStock 3, Trim$(lblItemCode), Trim$(lblWHCode), Trim$(lblWHCode), Format(LblRecDate, "YYYYMM"), CDbl(lblQty), ""
                 End If
             End If
-            strKey = strKey & "'R" & Grid.TextMatrix(ix, bteColSeqNo) & "',"
+            strKey = strKey & "'R" & grid.TextMatrix(ix, bteColSeqNo) & "',"
         End If
         strSQL = ""
     Next ix
@@ -3114,18 +3116,18 @@ Sub DataGrid()
 End Sub
 
 Sub Kosong()
-    CboItem = ""
+    cboitem = ""
     LblItemName = ""
-    CboWHCode = ""
+    cboWhCode = ""
     Lbladdress = ""
-    Cbounit = ""
+    cbounit = ""
     cbocurr = ""
     cboprice = ""
-    txtqty = ""
+    txtQty = ""
     txtamount = ""
-    TxtRemarks = ""
-    LblWHCode = ""
-    LblItemCode = ""
+    txtremarks = ""
+    lblWHCode = ""
+    lblItemCode = ""
     LblRecCls = ""
     LblRecDate = ""
     txtNoSeri.Text = ""
@@ -3137,14 +3139,14 @@ End Sub
 Function cek() As Boolean
     cek = True
     
-    If Trim$(CboSupp) = "" Then
+    If Trim$(cboSupp) = "" Then
         LblErr = DisplayMsg(1054) '""Please input Supplier Code"
-        CboSupp.SetFocus: cek = False: Exit Function
+        cboSupp.SetFocus: cek = False: Exit Function
     End If
-    CboSupp = CboSupp
-    If CboSupp.matchFound = False Then
+    cboSupp = cboSupp
+    If cboSupp.matchFound = False Then
         LblErr = DisplayMsg(4050) '"Supplier Code is invalid ! "
-        CboSupp.SetFocus: cek = False: Exit Function
+        cboSupp.SetFocus: cek = False: Exit Function
     End If
     
     If Trim(TxtSj) = "" Then
@@ -3162,39 +3164,39 @@ Function cek() As Boolean
         CboRecCls.SetFocus: cek = False: Exit Function
     End If
     
-    If Trim$(CboItem) = "" Then
+    If Trim$(cboitem) = "" Then
         LblErr = DisplayMsg(1009) '"Please input Product Code"
-        CboItem.SetFocus: cek = False: Exit Function
+        cboitem.SetFocus: cek = False: Exit Function
     End If
-    CboItem = CboItem
-    If CboItem.matchFound = False Then
+    cboitem = cboitem
+    If cboitem.matchFound = False Then
         '**** cek Data cocok / tdk dgn Database
         Dim rsDB As New ADODB.Recordset
-        rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(CboItem) & "'", Db, adOpenKeyset, adLockOptimistic
+        rsDB.Open "select Item_Code from Item_Master where Item_Code='" & Trim(cboitem) & "'", Db, adOpenKeyset, adLockOptimistic
         If rsDB.EOF = True Then
             LblErr = DisplayMsg(4061) '"Product Code is invalid! "
-            CboItem.SetFocus: cek = False: Exit Function
+            cboitem.SetFocus: cek = False: Exit Function
         End If
         rsDB.Close
     End If
     
-    If Trim$(CboWHCode) & "" = "" Then LblErr = DisplayMsg(1042): CboWHCode.SetFocus: cek = False: Exit Function
-    CboWHCode = CboWHCode
-    If CboWHCode.matchFound = False Then LblErr = DisplayMsg(4023): CboWHCode.SetFocus:  cek = False: Exit Function
+    If Trim$(cboWhCode) & "" = "" Then LblErr = DisplayMsg(1042): cboWhCode.SetFocus: cek = False: Exit Function
+    cboWhCode = cboWhCode
+    If cboWhCode.matchFound = False Then LblErr = DisplayMsg(4023): cboWhCode.SetFocus:  cek = False: Exit Function
     
-    If Trim(txtqty) = "" Or IsNumeric(txtqty) = False Then
+    If Trim(txtQty) = "" Or IsNumeric(txtQty) = False Then
         LblErr = DisplayMsg(4044) '"Please input Quantity"
-        txtqty.SetFocus: cek = False: Exit Function
+        txtQty.SetFocus: cek = False: Exit Function
     End If
     
-    If CDbl(txtqty) > gd_MaxQty Then
+    If CDbl(txtQty) > gd_MaxQty Then
         LblErr = DisplayMsg(4045) & " " & gd_MaxQty
-        txtqty.SetFocus: cek = False: Exit Function
+        txtQty.SetFocus: cek = False: Exit Function
     End If
     
-    If Trim$(Cbounit & "") = "" Then LblErr = DisplayMsg(1030):  cek = False: Exit Function 'Cbounit.SetFocus
-    Cbounit = Cbounit
-    If Cbounit.matchFound = False Then LblErr = DisplayMsg(1030):  cek = False: Exit Function 'Cbounit.SetFocus
+    If Trim$(cbounit & "") = "" Then LblErr = DisplayMsg(1030):  cek = False: Exit Function 'Cbounit.SetFocus
+    cbounit = cbounit
+    If cbounit.matchFound = False Then LblErr = DisplayMsg(1030):  cek = False: Exit Function 'Cbounit.SetFocus
     
     If Trim$(cbocurr & "") = "" Then
         If bteHakPrice = 0 Then
@@ -3226,7 +3228,7 @@ Function cek() As Boolean
                 Exit Function
             End If
             
-            If CDbl(cboprice) * CDbl(txtqty) > gd_MaxAmount Then
+            If CDbl(cboprice) * CDbl(txtQty) > gd_MaxAmount Then
                 LblErr = DisplayMsg(4051) & " " & gd_MaxAmount
                 cboprice.SetFocus
                 cek = False
@@ -3260,10 +3262,10 @@ Function cek() As Boolean
 End Function
 
 Private Sub txtQty_LostFocus()
-If IsNumeric(txtqty) = True Then
-    txtqty.Text = Format(txtqty.Text, gs_formatQty)
+If IsNumeric(txtQty) = True Then
+    txtQty.Text = Format(txtQty.Text, gs_formatQty)
 Else
-    txtqty.Text = Format(0, gs_formatQty)
+    txtQty.Text = Format(0, gs_formatQty)
 End If
 End Sub
 
@@ -3849,33 +3851,33 @@ Function CariMakerItem(ItemCode As String) As String
 End Function
 
 Sub GridAct(PosRec As Long, seqNo As Long, opt As Byte)
-    With Grid
+    With grid
         If opt = 1 Then .AddItem "", PosRec
         .TextMatrix(PosRec, bteColSJNo) = Trim$(TxtSj)
         .Cell(flexcpAlignment, PosRec, bteColSJNo) = flexAlignLeftCenter
         .TextMatrix(PosRec, bteColReceiptDate) = Format(TglReceipt, "dd mmm yyyy")
         .Cell(flexcpAlignment, PosRec, bteColReceiptDate) = flexAlignLeftCenter
-        .TextMatrix(PosRec, bteColProdCode) = Trim$(CboItem)
+        .TextMatrix(PosRec, bteColProdCode) = Trim$(cboitem)
         .Cell(flexcpAlignment, PosRec, bteColProdCode) = flexAlignLeftCenter
-        .TextMatrix(PosRec, bteColPartNo) = CariMakerItem(CboItem)
+        .TextMatrix(PosRec, bteColPartNo) = CariMakerItem(cboitem)
         .Cell(flexcpAlignment, PosRec, bteColPartNo) = flexAlignLeftCenter
-        .TextMatrix(PosRec, bteColDesc) = Trim$(uf_GetItemDescription(Trim$(CboItem)))
+        .TextMatrix(PosRec, bteColDesc) = Trim$(uf_GetItemDescription(Trim$(cboitem)))
         .Cell(flexcpAlignment, PosRec, bteColDesc) = flexAlignLeftCenter
-        .TextMatrix(PosRec, bteColWHCode) = Trim$(CboWHCode)
+        .TextMatrix(PosRec, bteColWHCode) = Trim$(cboWhCode)
         .Cell(flexcpAlignment, PosRec, bteColWHCode) = flexAlignLeftCenter
         .TextMatrix(PosRec, bteColAddress) = Trim$(Lbladdress)
         .Cell(flexcpAlignment, PosRec, bteColAddress) = flexAlignLeftCenter
         .TextMatrix(PosRec, bteColReceipt) = Trim$(CboRecCls)
         .Cell(flexcpAlignment, PosRec, bteColReceipt) = flexAlignLeftCenter
         
-        If InStr(1, CDbl(txtqty), ".") = 0 Then
-            .TextMatrix(PosRec, bteColQty) = Format(txtqty, gs_formatQty)
-        ElseIf InStr(1, CDbl(txtqty), ".") > 0 Then
-            If Split(CDbl(txtqty), ".")(1) <> "" Then .TextMatrix(PosRec, bteColQty) = Format(txtqty, gs_formatQty)
+        If InStr(1, CDbl(txtQty), ".") = 0 Then
+            .TextMatrix(PosRec, bteColQty) = Format(txtQty, gs_formatQty)
+        ElseIf InStr(1, CDbl(txtQty), ".") > 0 Then
+            If Split(CDbl(txtQty), ".")(1) <> "" Then .TextMatrix(PosRec, bteColQty) = Format(txtQty, gs_formatQty)
         End If
         
         .Cell(flexcpAlignment, PosRec, bteColQty) = flexAlignRightCenter
-        .TextMatrix(PosRec, bteColUnit) = uf_GetUnitDescription(Trim$(Cbounit.List(Cbounit.ListIndex, 0)))
+        .TextMatrix(PosRec, bteColUnit) = uf_GetUnitDescription(Trim$(cbounit.List(cbounit.ListIndex, 0)))
         .Cell(flexcpAlignment, PosRec, bteColUnit) = flexAlignLeftCenter
         
         .TextMatrix(PosRec, bteColCurr) = uf_GetCurrencyDescription(Trim$(cbocurr.List(cbocurr.ListIndex, 0)))
@@ -3891,9 +3893,9 @@ Sub GridAct(PosRec As Long, seqNo As Long, opt As Byte)
         End If
 
         .Cell(flexcpAlignment, PosRec, bteColAmount) = flexAlignRightCenter
-        .TextMatrix(PosRec, bteColUnitCls) = Trim$(Cbounit.List(Cbounit.ListIndex, 0))
+        .TextMatrix(PosRec, bteColUnitCls) = Trim$(cbounit.List(cbounit.ListIndex, 0))
         .TextMatrix(PosRec, bteColCurrCode) = Trim$(cbocurr.List(cbocurr.ListIndex, 0))
-        .TextMatrix(PosRec, bteColRemark) = Trim$(TxtRemarks)
+        .TextMatrix(PosRec, bteColRemark) = Trim$(txtremarks)
         .TextMatrix(PosRec, bteColSeqNo) = seqNo
         .TextMatrix(PosRec, bteColBC) = Trim$(txtBC40)
         .TextMatrix(PosRec, bteColBctype) = Trim(CbotypeBC)
@@ -3994,10 +3996,10 @@ Private Sub up_SendEmail()
         ls_bcc = Trim(rsmailconfig!bccemail_address & "")
         ls_message = Trim(rsmailconfig!mail_header & "") & vbCrLf & vbCrLf
         ls_message = ls_message & Trim(rsmailconfig!Mail_Content & "") & vbCrLf & vbCrLf
-        ls_message = ls_message & "Part No" & vbTab & vbTab & ":" & Trim(CboItem.Text) & vbCrLf
+        ls_message = ls_message & "Part No" & vbTab & vbTab & ":" & Trim(cboitem.Text) & vbCrLf
         ls_message = ls_message & "Part Name" & vbTab & ":" & Trim(LblItemName.Text) & vbCrLf
-        ls_message = ls_message & "Qty" & vbTab & vbTab & ":" & Trim(txtqty.Text) & vbCrLf
-        ls_message = ls_message & "Vendor" & vbTab & vbTab & ":" & Trim(CboSupp.Text) & " - " & Trim(Lblsupp.Text) & vbCrLf
+        ls_message = ls_message & "Qty" & vbTab & vbTab & ":" & Trim(txtQty.Text) & vbCrLf
+        ls_message = ls_message & "Vendor" & vbTab & vbTab & ":" & Trim(cboSupp.Text) & " - " & Trim(lblSupp.Text) & vbCrLf
         ls_message = ls_message & "Surat Jalan" & vbTab & ":" & Trim(TxtSj.Text) & vbCrLf & vbCrLf
         ls_message = ls_message & "Kepada yang berkepentingan Mohon Segera Pastikan Barang Tersebut." & vbCrLf
         ls_message = ls_message & "Terima Kasih" & vbCrLf & vbCrLf & vbCrLf
@@ -4121,7 +4123,7 @@ End Function
 
 Private Sub GetBCType()
 Dim RS As New ADODB.Recordset
-    RS.Open "select Type_BC from Trade_Master where Trade_Code = '" & CboSupp.Text & "' ", Db, adOpenForwardOnly, adLockReadOnly, adCmdText
+    RS.Open "select Type_BC from Trade_Master where Trade_Code = '" & cboSupp.Text & "' ", Db, adOpenForwardOnly, adLockReadOnly, adCmdText
     If RS.EOF = False Then
         CbotypeBC.Text = IIf(IsNull(Trim(RS!Type_BC)), "", Trim(RS!Type_BC))
     End If
@@ -4158,58 +4160,36 @@ Dim rsCek As New ADODB.Recordset
 End Function
 
 Private Sub TxtSj_LostFocus()
-'     Dim rsGetNoSeri As New ADODB.Recordset
-'
-'    If l_SJNo <> TxtSj Then
-'        If Trim(TxtSj.Text) <> "" Then
-'            sql = "EXEC dbo.sp_GetNoRegister '" & TglReceipt.Value & "', 'R', '" & userLogin & "' "
-'
-'            If rsGetNoSeri.State <> adStateClosed Then rsGetNoSeri.Close
-'            rsGetNoSeri.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'            If Not rsGetNoSeri.EOF Then
-'               txtRegisterNo.Text = rsGetNoSeri.Fields("No_Register")
-'            End If
-'        End If
-'    End If
 Dim rsGetNoSeri As New ADODB.Recordset
 
 '    up_GetReceiptDate
-    
-    If CbotypeBC.Text <> "4.0" And CbotypeBC.Text <> "2.6.2" And CbotypeBC.Text <> "2.3" Then
-        If l_SJNo <> TxtSj.Text Then
-            If Trim(TxtSj.Text) <> "" Then
-                sql = "EXEC dbo.sp_GetNoRegister '" & TglReceipt.Value & "', 'R', '" & userLogin & "' "
-                        
-                If rsGetNoSeri.State <> adStateClosed Then rsGetNoSeri.Close
-                rsGetNoSeri.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-                
-                If Not rsGetNoSeri.EOF Then
-                   txtRegisterNo.Text = rsGetNoSeri.Fields("No_Register")
-                End If
-            End If
-        End If
-    Else
-        txtRegisterNo.Text = ""
-    End If
+
+' Remark 20260518
+    txtRegisterNo.Text = ""
+'    If CbotypeBC.Text <> "4.0" And CbotypeBC.Text <> "2.6.2" And CbotypeBC.Text <> "2.3" Then
+'        If l_SJNo <> TxtSj.Text Then
+'            If Trim(TxtSj.Text) <> "" Then
+'                sql = "EXEC dbo.sp_GetNoRegister '" & TglReceipt.Value & "', 'R', '" & userLogin & "' "
+'
+'                If rsGetNoSeri.State <> adStateClosed Then rsGetNoSeri.Close
+'                rsGetNoSeri.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNoSeri.EOF Then
+'                   txtRegisterNo.Text = rsGetNoSeri.Fields("No_Register")
+'                End If
+'            End If
+'        End If
+'    Else
+'        txtRegisterNo.Text = ""
+'    End If
 End Sub
 
 Private Sub up_GetNoSeri(pItemCode As String)
 Dim rsGetNo As New ADODB.Recordset
 
-    If Trim(CbotypeBC.Text) = "4.0" Then
-            sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
-                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
-                "  @ItemCode ='" & pItemCode & "' "
-                
-                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
-                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-                
-                If Not rsGetNo.EOF Then
-                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
-                End If
-    ElseIf Trim(CbotypeBC.Text) = "2.3" Then
+    'Remark 20260518
     
+    If Trim(CbotypeBC.Text) = "2.3" Then
         sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
                 "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
                 "  @ItemCode ='" & pItemCode & "' "
@@ -4233,5 +4213,42 @@ Dim rsGetNo As New ADODB.Recordset
                    txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
                 End If
     End If
+    
+'    If Trim(CbotypeBC.Text) = "4.0" Then
+'            sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+'                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
+'                "  @ItemCode ='" & pItemCode & "' "
+'
+'                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
+'                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNo.EOF Then
+'                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
+'                End If
+'    ElseIf Trim(CbotypeBC.Text) = "2.3" Then
+'
+'        sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+'                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
+'                "  @ItemCode ='" & pItemCode & "' "
+'
+'                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
+'                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNo.EOF Then
+'                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
+'                End If
+'            CboRecCls.Text = "R"
+'    Else
+'        sql = "EXEC dbo.sp_PartReceipt_GetNoSeri @SJNo = '" & Trim(TxtSj.Text) & "', " & vbCrLf & _
+'                "  @ReceiptDate = '" & Format(TglReceipt.Value, "yyyy-mm-dd") & "', " & vbCrLf & _
+'                "  @ItemCode ='" & pItemCode & "' "
+'
+'                If rsGetNo.State <> adStateClosed Then rsGetNo.Close
+'                rsGetNo.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'                If Not rsGetNo.EOF Then
+'                   txtNoSeri.Text = Trim(rsGetNo.Fields("No_Seri"))
+'                End If
+'    End If
     
 End Sub

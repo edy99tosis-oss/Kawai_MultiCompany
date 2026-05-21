@@ -626,7 +626,7 @@ For ct = 0 To iBins - 1
 'Get each bin name in turn and assign to the next item in the array
 sNextString = Mid(sNamesList, 24 * ct + 1, 24)
 vBins(ct) = Left(sNextString, InStr(1, sNextString, Chr(0)) - 1)
-combo1.AddItem vBins(ct)
+Combo1.AddItem vBins(ct)
 Next ct
 End If
 'Return the array to the calling routine
@@ -662,11 +662,11 @@ Private Sub cbxPrinters_Click()
         End If
     Next
     If cbxPrinters.Text = DefPrinter Then
-        LblStatus.Caption = "Default printer; Ready"
+        lblStatus.Caption = "Default printer; Ready"
     Else
-        LblStatus.Caption = "Ready"
+        lblStatus.Caption = "Ready"
     End If
-    combo1.clear
+    Combo1.clear
     GetBinNames
     'combo1.ListIndex = 0
    ' Label2 = cbxPrinters.Column(1)
@@ -905,6 +905,8 @@ Private Sub cmok_Click()
         PurchasingPrice
     ElseIf reportcode = "bc40" Then
         PrintBC40
+    ElseIf reportcode = "PartReceiptBarcode" Then
+        PartReceiptBarcode
     End If
     
     TutupPtr = False
@@ -936,12 +938,12 @@ Dim rs1 As Recordset
         'report.FormulaFields(9).Text = gi_decimalDigitAmount
         '#####################################################################
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
 
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
         'report.PaperSize = crPaperA4
         Else
         MsgBox "No paper tray has been selected."
@@ -1018,12 +1020,12 @@ Dim rs1 As Recordset
         report.FormulaFields(9).Text = gi_decimalDigitAmount
         '#####################################################################
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
 
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
         'report.PaperSize = crPaperA4
         Else
         MsgBox "No paper tray has been selected."
@@ -1062,12 +1064,12 @@ Dim rs1 As Recordset
         report.FormulaFields(6).Text = gi_decimalDigitAmount
         '#####################################################################
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
 
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
         'report.PaperSize = crPaperA4
         Else
         MsgBox "No paper tray has been selected."
@@ -1100,12 +1102,12 @@ Dim rs1 As Recordset
          report.FormulaFields.GetItemByName("DecimalBox").Text = "" & gi_decimalDigitBox & ""
         '#####################################################################
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
 
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
         'report.PaperSize = crPaperA4
         Else
         MsgBox "No paper tray has been selected."
@@ -1137,11 +1139,11 @@ Sub DOPrint()
         report.FormulaFields.GetItemByName("DecimalQty").Text = "" & gi_decimalDigitQty & ""
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1174,11 +1176,11 @@ Private Sub PackingListPrint()
         report.FormulaFields(3).Text = "" & gi_decimalDigitWeight & ""
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1212,11 +1214,11 @@ Private Sub PackingListKwiPrint()
         report.DiscardSavedData
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1269,11 +1271,11 @@ SQLr = SQLr + "   Inner Join Trade_Master TM on PM.Cust_Code=TM.Trade_Code " & v
         report.DiscardSavedData
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1326,11 +1328,11 @@ Private Sub PackingListPrint_Ex()
 
                 
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1374,13 +1376,13 @@ report.FormulaFields(14).Text = "'Period            :  " & MonthName(Fbulan) & "
 '#####################################################################
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
 vBinNumbers = GetBinNumbers
 report.SelectPrinter Label3, cbxPrinters.Text, Label2
 
 report.PaperSize = crPaperA4
 report.PaperOrientation = Orient
-report.PaperSource = vBinNumbers(combo1.ListIndex)
+report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
 MsgBox "No paper tray has been selected."
 End If
@@ -1424,12 +1426,12 @@ report.Database.Tables(1).SetDataSource xrpt
     End If
         
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = Orient
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
     MsgBox "No paper tray has been selected."
     End If
@@ -1531,11 +1533,11 @@ Sub Invoice()
         report.FormulaFields.GetItemByName("DecimalAmountIDR").Text = gi_decimalDigitAmountIDR
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1596,11 +1598,11 @@ Sub InvoiceEx()
         End If
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1636,11 +1638,11 @@ Sub InvoiceKWI()
         report.DiscardSavedData
                
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1680,12 +1682,12 @@ Sub Pajak()
     '#####################################################################
     
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperSize = crPaperA4
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -1716,12 +1718,12 @@ Sub TradeMaster()
   report.ReportTitle = "Trade Master"
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1760,12 +1762,12 @@ Dim rsRpt As New ADODB.Recordset
     '#####################################################################
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1788,12 +1790,12 @@ Dim rsRpt As New ADODB.Recordset
     report.Database.Tables(1).SetDataSource rsRpt
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         'report.PaperSize = crPaperA3
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1819,12 +1821,12 @@ Dim sqlResult As String
     report.FormulaFields(2).Text = "'" & tglAkhirRptPrint & "'"
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA3
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1856,12 +1858,12 @@ Dim sqlResult As String
     '#####################################################################
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1887,12 +1889,12 @@ Dim sqlResult As String
     report.FormulaFields(2).Text = "'" & tglAkhirRptPrint & "'"
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA3
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1923,12 +1925,12 @@ Dim rsRpt As New ADODB.Recordset
   '#####################################################################
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1956,12 +1958,12 @@ Sub custexchrate()
   report.FormulaFields(2).Text = Fbulan
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -1995,12 +1997,12 @@ Sub dailyproduction()
     report.FormulaFields(5).Text = "" & gi_decimalDigitQty & ""
     '#####################################################################
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2366,12 +2368,12 @@ Wend
     Rpt2.FormulaFields(88).Text = "'" & Ftahun & "'"
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         Rpt2.SelectPrinter Label3, cbxPrinters.Text, Label2
         Rpt2.PaperSize = crPaperA4
         Rpt2.PaperOrientation = Orient
-        Rpt2.PaperSource = vBinNumbers(combo1.ListIndex)
+        Rpt2.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2424,12 +2426,12 @@ Function POLocalPrint(PONO$)
     report.FormulaFields(3).Text = "" & gi_decimalDigitAmount & ""
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2473,12 +2475,12 @@ Function POImportPrint(PONO$)
         End If
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         'report.PaperSize = crPaperLetter
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2512,12 +2514,12 @@ Function POSubconPrint(PONO$)
 '    report.FormulaFields(3).Text = "" & gi_decimalDigitAmount & ""
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2562,12 +2564,12 @@ report.FormulaFields(14).Text = "" & gi_decimalDigitLength & ""
 '#####################################################################
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2594,12 +2596,12 @@ Sub OutstandingMaterial()
   report.FormulaFields(4).Text = "'" & Format(Fbulan, "MMMM yyyy") & "'"
   
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA3
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2640,12 +2642,12 @@ report.FormulaFields(3).Text = "" & gi_decimalDigitQty & ""
              report.ReportTitle = "Physical Inventory List ( Detail )"
             
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2711,12 +2713,12 @@ report.FormulaFields(3).Text = "" & gi_decimalDigitQty & ""
              report.ReportTitle = "Physical Inventory List ( Summary )"
             
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2785,12 +2787,12 @@ report.FormulaFields(6).Text = "" & gi_decimalDigitQty & ""
             
             
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2840,12 +2842,12 @@ Sub piReportwh()
     report.OpenSubreport("summary").FormulaFields(1).Text = "" & intDiffClosing & ""
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2875,12 +2877,12 @@ Sub ResinRequest()
     report.Database.Tables(1).SetDataSource rsRpt
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2907,12 +2909,12 @@ Sub MaterialRequest()
     report.Database.Tables(1).SetDataSource rsRpt
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2943,12 +2945,12 @@ Sub MaterialConsumption()
          
   
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA3
         report.PaperOrientation = crLandscape
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -2984,12 +2986,12 @@ Sub AccPay()
 '    report.FormulaFields(14).Text = "" & gi_decimalDigitAmount & "x"
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3041,12 +3043,12 @@ Private Sub RecSupInquiry()
              
             
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3076,12 +3078,12 @@ Sub PurchasingMaterial()
   report.FormulaFields(2).Text = "'" & Format(Fbulan, "MMMM yyyy") & "'"
   
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA3
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3113,12 +3115,12 @@ Sub itemMaster()
   report.ReportTitle = "Item Master"
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3160,12 +3162,12 @@ Private Sub rawMaterial()
             
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3226,12 +3228,12 @@ Dim rs1 As Recordset, rs2 As Recordset
         Next
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
     
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
             report.PaperSize = crPaperA4
         Else
             MsgBox "No paper tray has been selected."
@@ -3260,12 +3262,12 @@ Sub ExchangeList()
     report.FormulaFields(1).Text = "'" & Fbulan & "'"
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3295,12 +3297,12 @@ Sub pocust()
     report.FormulaFields(4).Text = "'" & Ftahun & "'"
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3360,12 +3362,12 @@ report.ReportTitle = "Receipt Supply Schedule Inquiry"
   
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3396,12 +3398,12 @@ Sub RptRequestAuto()
     
     Dim vBinNumbers As Variant
     
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = crLandscape
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3434,12 +3436,12 @@ report.FormulaFields(4).Text = "" & gi_decimalDigitQty & ""
 report.FormulaFields(5).Text = "" & gi_decimalDigitQty & ""
 '#####################################################################
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3472,12 +3474,12 @@ report.FormulaFields(4).Text = "" & gi_decimalDigitQty & ""
 report.FormulaFields(5).Text = "" & gi_decimalDigitQty & ""
 '#####################################################################
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3520,12 +3522,12 @@ Sub ForecastPart()
         '#####################################################################
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3573,12 +3575,12 @@ Sub ForecastMaterial()
         report.FormulaFields(23).Text = "" & gi_decimalDigitLength & ""
         '#####################################################################
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3627,12 +3629,12 @@ report.FormulaFields(4).Text = "'" & tglAwalRptPrint & "'"
 report.ReportTitle = "WIP Report"
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = Orient
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
     MsgBox "No paper tray has been selected."
 End If
@@ -3676,12 +3678,12 @@ report.FormulaFields(34).Text = "" & gi_decimalDigitQty & ""
 '#####################################################################
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = Orient
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
     MsgBox "No paper tray has been selected."
 End If
@@ -3719,12 +3721,12 @@ Private Sub rptWorksheet()
     '#####################################################################
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3762,12 +3764,12 @@ Private Sub rptProdResultInquiry2()
     '#####################################################################
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperA4
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -3807,12 +3809,12 @@ report.FormulaFields(25).Text = "" & gi_decimalDigitQty & ""
 '#####################################################################
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = Orient
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
     MsgBox "No paper tray has been selected."
 End If
@@ -3853,12 +3855,12 @@ report.FormulaFields(11).Text = "'" & frmRptSupplyList.cbo_frwarehouse.Column(1)
     report.ReportTitle = "Parts (Material) Supply List Report"
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = Orient
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
     MsgBox "No paper tray has been selected."
 End If
@@ -3897,12 +3899,12 @@ report.FormulaFields(10).Text = "'" & FrmValuationPriceReportCls.cbo_frwarehouse
 report.FormulaFields(11).Text = "'" & FrmValuationPriceReportCls.cbo_frwarehouse.Column(1) & "'"
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = crLandscape
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
     MsgBox "No paper tray has been selected."
 End If
@@ -3931,12 +3933,12 @@ report.FormulaFields(1).Text = gi_decimalDigitQtyBOM
 report.FormulaFields(4).Text = gi_decimalDigitQty
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = Orient
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
     MsgBox "No paper tray has been selected."
 End If
@@ -3971,12 +3973,12 @@ report.FormulaFields(7).Text = "'" & FrmSalesReport.cbo_item.Column(1) & "'"
 report.FormulaFields(14).Text = gi_decimalDigitQty
 
 Dim vBinNumbers As Variant
-If combo1.ListIndex >= 0 Then
+If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperSize = crPaperA4
     report.PaperOrientation = Orient
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
 Else
     MsgBox "No paper tray has been selected."
 End If
@@ -4028,12 +4030,68 @@ Private Sub PrintBC40()
     report.OpenSubreport("amount").FormulaFields(4).Text = "" & gi_decimalDigitAmountIDR & ""
     
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
         vBinNumbers = GetBinNumbers
         report.SelectPrinter Label3, cbxPrinters.Text, Label2
         report.PaperSize = crPaperLegal
         report.PaperOrientation = Orient
-        report.PaperSource = vBinNumbers(combo1.ListIndex)
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
+    Else
+        MsgBox "No paper tray has been selected."
+    End If
+
+    Dim nCopy As Integer
+    nCopy = Me.txtCopies
+    Call Printout(report, nCopy, True, Val(txtRange(0)), Val(txtRange(1)))
+    Set report = Nothing
+    rsRpt.Close
+    Set rsRpt = Nothing
+        
+End Sub
+
+Private Sub PartReceiptBarcode()
+    
+  Dim application As New CRAXDDRT.application
+  Dim report As New CRAXDDRT.report
+  Dim rsRpt As New ADODB.Recordset
+  Dim rsrptsub1 As New ADODB.Recordset
+  Dim rsrptsub2 As New ADODB.Recordset
+  
+  
+  rsRpt.CursorLocation = adUseClient
+  If rsRpt.State <> adStateClosed Then rsRpt.Close
+  rsRpt.Open sql, Db, adOpenDynamic, adLockOptimistic
+  
+  If rsRpt.EOF Then Exit Sub
+
+    Set report = application.OpenReport(App.path & "\Reports\ShippingLabel.rpt")
+    report.Database.Tables(1).SetDataSource rsRpt
+    
+'    report.FormulaFields(1).Text = "" & gi_decimalDigitQty & ""
+'    report.FormulaFields(2).Text = "" & gi_decimalDigitAmount & ""
+'    report.FormulaFields(3).Text = "" & gi_decimalDigitAmountIDR & ""
+'    report.FormulaFields(6).Text = "" & gi_decimalDigitBox & ""
+'    report.FormulaFields(7).Text = "" & rsRpt.RecordCount & ""
+'
+'    Set rsrptsub1 = New Recordset
+'    rsrptsub1.CursorLocation = adUseClient
+'    rsrptsub1.Open sqlprint2, Db, adOpenKeyset, adLockOptimistic
+'    report.OpenSubreport("po").Database.Tables(1).SetDataSource rsrptsub1
+'
+'    Set rsrptsub2 = New Recordset
+'    rsrptsub2.CursorLocation = adUseClient
+'    rsrptsub2.Open sqlprint3, Db, adOpenKeyset, adLockOptimistic
+'    report.OpenSubreport("amount").Database.Tables(1).SetDataSource rsrptsub2
+'    report.OpenSubreport("amount").FormulaFields(3).Text = "" & gi_decimalDigitAmount & ""
+'    report.OpenSubreport("amount").FormulaFields(4).Text = "" & gi_decimalDigitAmountIDR & ""
+    
+    Dim vBinNumbers As Variant
+    If Combo1.ListIndex >= 0 Then
+        vBinNumbers = GetBinNumbers
+        report.SelectPrinter Label3, cbxPrinters.Text, Label2
+        report.PaperSize = crPaperLegal
+        report.PaperOrientation = Orient
+        report.PaperSource = vBinNumbers(Combo1.ListIndex)
     Else
         MsgBox "No paper tray has been selected."
     End If
@@ -4071,11 +4129,11 @@ Sub InvoiceDetailList()
         report.OpenSubreport("summary_country").Database.Tables(1).SetDataSource rs3
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -4117,11 +4175,11 @@ Sub InvoiceSummaryList()
         report.OpenSubreport("summary_country").Database.Tables(1).SetDataSource rs2
         
         Dim vBinNumbers As Variant
-        If combo1.ListIndex >= 0 Then
+        If Combo1.ListIndex >= 0 Then
             vBinNumbers = GetBinNumbers
             report.SelectPrinter Label3, cbxPrinters.Text, Label2
             report.PaperOrientation = Orient
-            report.PaperSource = vBinNumbers(combo1.ListIndex)
+            report.PaperSource = vBinNumbers(Combo1.ListIndex)
         Else
             MsgBox "No paper tray has been selected."
         End If
@@ -4158,12 +4216,12 @@ If Not rs1.EOF Then
     report.FormulaFields(4).Text = Kt3
 
     Dim vBinNumbers As Variant
-    If combo1.ListIndex >= 0 Then
+    If Combo1.ListIndex >= 0 Then
     vBinNumbers = GetBinNumbers
 
     report.SelectPrinter Label3, cbxPrinters.Text, Label2
     report.PaperOrientation = crLandscape
-    report.PaperSource = vBinNumbers(combo1.ListIndex)
+    report.PaperSource = vBinNumbers(Combo1.ListIndex)
     'report.PaperSize = crPaperA4
     Else
     MsgBox "No paper tray has been selected."
