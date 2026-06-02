@@ -220,7 +220,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66125827
+         Format          =   128385027
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker DtpTo 
@@ -243,7 +243,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66125827
+         Format          =   128385027
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpDNDate 
@@ -266,7 +266,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66125827
+         Format          =   128385027
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpReceiptDate 
@@ -289,7 +289,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66125827
+         Format          =   128385027
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtpBCDate 
@@ -312,7 +312,7 @@ Begin VB.Form FrmReceiptBySerialNo
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   66125827
+         Format          =   128385027
          CurrentDate     =   37798
       End
       Begin VB.Label lblRemarks 
@@ -1081,7 +1081,7 @@ Dim bteColQty As Byte
 Dim btecolDNNo As Byte
 Dim btecolRSstatus As Byte
 Dim SupplierCode As String, ItemCode As String, DNNo As String, WHFrom As String, WHTo As String, CurrencyCode As String
-Dim Qty As Integer
+Dim Qty As Double
 Dim Price As Double, Amount As Double
 Dim RSGetPrice As New Recordset
 Dim RSGetCurr As New Recordset
@@ -1203,6 +1203,9 @@ Dim prm13 As ADODB.Parameter
 Dim prm14 As ADODB.Parameter
 Dim prm15 As ADODB.Parameter
 
+Dim lsTrace As String
+Dim lsDebug As String
+
     cmd_submit.Enabled = False
     
     If hakUpdate(Me.Name) = 0 Then lbl_pesan = DisplayMsg(3008): cmd_submit.Enabled = True: Exit Sub
@@ -1239,140 +1242,364 @@ Dim prm15 As ADODB.Parameter
     
     '#BEGIN TRANS
     db2.BeginTrans
-    
+'
     On Error GoTo ErrHandler
     
     Me.MousePointer = vbHourglass
     
-    Set cmd = New ADODB.Command
-    Set RSSuply = New ADODB.Recordset
-    cmd.CommandType = adCmdStoredProc
-    cmd.CommandTimeout = 0
-    cmd.ActiveConnection = Db
-    cmd.CommandText = "sp_SupplyScan_Sel"
-    
-    cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
-    cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH.Text))
-    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DTPFrom)
-    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DTPTo)
-    cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
-    cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "3")
-    
-    Set RSSupply = cmd.Execute
-    
-           
-'        i = 1
-'        With Grid
-            If RSSupply.EOF = False Then
-                
-                While Not RSSupply.EOF
-                    ItemCode = Trim(RSSupply("ChildItem_Code"))
-                    SupplyCls = Trim(RSSupply("Supply_Cls"))
-                    UnitCls = Trim(RSSupply("childunit_cls"))
-                    CurrencyCode = up_GetCurrency(ItemCode)
-                    Price = up_GetPrice(ItemCode)
-                    Qty = Trim(RSSupply("ChildRequirement_Qty"))
-                    Amount = Price * Qty
-                    SJNo = Trim(RSSupply("SJNo"))
-                    
-                    Dim strSQL As String
-                    Dim RSIns As ADODB.Recordset
-                    Dim prm As ADODB.Parameter
-                    
-                    Set cmd = New ADODB.Command
-                    cmd.CommandType = adCmdStoredProc
-                    cmd.CommandTimeout = 0
-                    cmd.ActiveConnection = Db
-                    cmd.CommandText = "sp_ReceiptSerialNoInsertUpdate"
-                    
-                    Set prm1 = cmd.CreateParameter("FromWarehouse_Code", adVarChar, adParamInput, 50, RTrim(cboFromWH.Text))
-                    cmd.Parameters.append prm1
-                    Set prm2 = cmd.CreateParameter("ToWarehouse_Code", adVarChar, adParamInput, 50, RTrim(cboToWH.Text))
-                    cmd.Parameters.append prm2
-                    Set prm3 = cmd.CreateParameter("ChildSupply_date", adDate, adParamInput, , dtpReceiptDate.Value)
-                    cmd.Parameters.append prm3
-                    Set prm4 = cmd.CreateParameter("ChildItem_Code", adVarChar, adParamInput, 50, RTrim(ItemCode))
-                    cmd.Parameters.append prm4
-                    Set prm5 = cmd.CreateParameter("ChildUnit_Cls", adVarChar, adParamInput, 50, UnitCls)
-                    cmd.Parameters.append prm5
-                    Set prm6 = cmd.CreateParameter("Currency_Code", adVarChar, adParamInput, 50, CurrencyCode)
-                    cmd.Parameters.append prm6
-                    
-                    Set prm7 = cmd.CreateParameter("Price", adDecimal, adParamInput, , Price)
-                    prm7.Precision = 38
-                    prm7.NumericScale = 4
-                    cmd.Parameters.append prm7
-                    
-                    Set prm8 = cmd.CreateParameter("ChildeItemQty", adDecimal, adParamInput, , Qty)
-                    prm8.Precision = 38
-                    prm8.NumericScale = 4
-                    cmd.Parameters.append prm8
-                    
-                    Set prm9 = cmd.CreateParameter("Amount", adDecimal, adParamInput, , Amount)
-                    prm9.Precision = 38
-                    prm9.NumericScale = 4
-                    cmd.Parameters.append prm9
-                    
-                    Set prm10 = cmd.CreateParameter("SJNo", adVarChar, adParamInput, 50, RTrim(cboDNo.Text))
-                    cmd.Parameters.append prm10
-                    Set prm11 = cmd.CreateParameter("BCType", adVarChar, adParamInput, 50, RTrim(cboBCType.Text))
-                    cmd.Parameters.append prm11
-                    Set prm12 = cmd.CreateParameter("BCNo", adVarChar, adParamInput, 50, RTrim(txtBCNo.Text))
-                    cmd.Parameters.append prm12
-                    Set prm13 = cmd.CreateParameter("BC40_Date", adDate, adParamInput, , dtpBCDate.Value)
-                    cmd.Parameters.append prm13
-                    Set prm14 = cmd.CreateParameter("Remarks", adVarChar, adParamInput, 50, txtremarks.Text)
-                    cmd.Parameters.append prm14
-                    Set prm15 = cmd.CreateParameter("User", adVarChar, adParamInput, 50, userLogin)
-                    cmd.Parameters.append prm15
-                        
-                    Set RSIns = cmd.Execute
-                
-                    '#Check if item influence the stock or not
-'                    Call up_UpdateStockMaster(Format(dtpDNDate.Value, "yyyy-MM-dd"), ls_ClosingMonth, ls_ClosingYear, Trim(cboFromWH), Trim(cboToWH), Trim(ItemCode), CDbl(Qty), "S1", Trim(l_stock_location), "", "I", "", "", False, False, True, Db)
-                    uf_UpdateSupplyStockMaster
-                    
-                    uf_UpdateReceiptStockMaster
-                    
-                    '#Update Stock Receipt
-'                    Call up_UpdateStockMaster(Format(dtpDNDate.Value, "yyyy-MM-dd"), ls_ClosingMonth, ls_ClosingYear, Trim(cboFromWH), Trim(cboToWH), Trim(ItemCode), CDbl(Qty), "R", Trim(l_stock_location), "", "I", "", "", False, False, True, Db)
-                RSSupply.MoveNext
-                                
-                Wend
-                
-                Set cmd = New ADODB.Command
-                Set rsUpd = New ADODB.Recordset
-                cmd.CommandType = adCmdStoredProc
-                cmd.CommandTimeout = 0
-                cmd.ActiveConnection = Db
-                cmd.CommandText = "sp_SupplyScan_updStatus"
-                
-                cmd.Parameters.append cmd.CreateParameter("Receipt_User", adVarChar, adParamInput, 25, userLogin)
-                cmd.Parameters.append cmd.CreateParameter("ReceiptDate", adDate, adParamInput, , dtpReceiptDate.Value)
-                cmd.Parameters.append cmd.CreateParameter("SJNo", adVarChar, adParamInput, 50, RTrim(cboDNo.Text))
-                
-                Set rsUpd = cmd.Execute
-                
-                
-                db2.CommitTrans
-                
-                up_GridLoad
-                
-                lbl_pesan.Caption = DisplayMsg(1000) '"Insert data success !"
-            Else
-                db2.CommitTrans
-                lbl_pesan.Caption = DisplayMsg(9003) '"Insert data success !"
-                
+'    Set cmd = New ADODB.Command
+'    Set RSSuply = New ADODB.Recordset
+'    cmd.CommandType = adCmdStoredProc
+'    cmd.CommandTimeout = 0
+'    cmd.ActiveConnection = Db
+'    cmd.CommandText = "sp_SupplyScan_Sel"
+'
+'    cmd.Parameters.append cmd.CreateParameter("FromwH", adVarChar, adParamInput, 15, RTrim(cboFromWH.Text))
+'    cmd.Parameters.append cmd.CreateParameter("ToWH", adVarChar, adParamInput, 15, RTrim(cboToWH.Text))
+'    cmd.Parameters.append cmd.CreateParameter("DateFrom", adDBTime, adParamInput, , DTPFrom)
+'    cmd.Parameters.append cmd.CreateParameter("DateTo", adDBTime, adParamInput, , DTPTo)
+'    cmd.Parameters.append cmd.CreateParameter("DNNo", adVarChar, adParamInput, 25, RTrim(cboDNo.Text))
+'    cmd.Parameters.append cmd.CreateParameter("Type", adVarChar, adParamInput, 1, "3")
+'
+'    Set RSSupply = cmd.Execute
+'
+'
+'            If RSSupply.EOF = False Then
+'                lsTrace = "Before Loop"
+'
+'
+'                While Not RSSupply.EOF
+'                  lsTrace = "Read ItemCode"
+'                    ItemCode = Trim(RSSupply("ChildItem_Code"))
+'
+'                    lsTrace = "Read SupplyCls"
+'                    SupplyCls = Trim(RSSupply("Supply_Cls"))
+'
+'                    lsTrace = "Read UnitCls"
+'                    UnitCls = Trim(RSSupply("childunit_cls"))
+'
+'                    lsTrace = "Get Currency"
+'                    CurrencyCode = up_GetCurrency(ItemCode)
+'
+'                    lsTrace = "Get Price"
+'                    Price = up_GetPrice(ItemCode)
+'
+'                   lsTrace = "Get Qty"
+'                    Qty = CDbl(RSSupply("ChildRequirement_Qty"))
+'
+'                   lsTrace = "Before Calculate Amount"
+'                    Amount = Price * Qty
+'                    lsTrace = "After Calculate Amount"
+'
+'                    lsTrace = "Get SJNo"
+'                    SJNo = Trim(RSSupply("SJNo"))
+'
+'                    lsDebug = ""
+'                    lsDebug = lsDebug & vbCrLf & "ItemCode = " & ItemCode
+'                    lsDebug = lsDebug & vbCrLf & "Price    = " & CStr(Price)
+'                    lsDebug = lsDebug & vbCrLf & "Qty      = " & CStr(Qty)
+'                    lsDebug = lsDebug & vbCrLf & "Amount   = " & CStr(Amount)
+'
+'                    Dim strSQL As String
+'                    Dim RSIns As ADODB.Recordset
+'                    Dim prm As ADODB.Parameter
+'
+'                    Set cmd = New ADODB.Command
+'                    cmd.CommandType = adCmdStoredProc
+'                    cmd.CommandTimeout = 0
+'                    cmd.ActiveConnection = Db
+'                    cmd.CommandText = "sp_ReceiptSerialNoInsertUpdate"
+'
+'                    Set prm1 = cmd.CreateParameter("FromWarehouse_Code", adVarChar, adParamInput, 50, RTrim(cboFromWH.Text))
+'                    cmd.Parameters.append prm1
+'                    Set prm2 = cmd.CreateParameter("ToWarehouse_Code", adVarChar, adParamInput, 50, RTrim(cboToWH.Text))
+'                    cmd.Parameters.append prm2
+'                    Set prm3 = cmd.CreateParameter("ChildSupply_date", adDate, adParamInput, , dtpReceiptDate.Value)
+'                    cmd.Parameters.append prm3
+'                    Set prm4 = cmd.CreateParameter("ChildItem_Code", adVarChar, adParamInput, 50, RTrim(ItemCode))
+'                    cmd.Parameters.append prm4
+'                    Set prm5 = cmd.CreateParameter("ChildUnit_Cls", adVarChar, adParamInput, 50, UnitCls)
+'                    cmd.Parameters.append prm5
+'                    Set prm6 = cmd.CreateParameter("Currency_Code", adVarChar, adParamInput, 50, CurrencyCode)
+'                    cmd.Parameters.append prm6
+'
+'                    '=========================================
+'                    ' Price
+'                    '=========================================
+'                    lsTrace = "Create Param Price"
+'
+'                    Set prm7 = cmd.CreateParameter("Price", adNumeric, adParamInput)
+'
+'                    prm7.Precision = 38
+'                    prm7.NumericScale = 4
+'                    prm7.Value = Price
+'
+'                    cmd.Parameters.append prm7
+'
+'                    '=========================================
+'                    ' Qty
+'                    '=========================================
+'                    lsTrace = "Create Param Qty"
+'
+'                    Set prm8 = cmd.CreateParameter("ChildeItemQty", adNumeric, adParamInput)
+'
+'                    prm8.Precision = 38
+'                    prm8.NumericScale = 4
+'                    prm8.Value = Qty
+'
+'                    cmd.Parameters.append prm8
+'
+'                    '=========================================
+'                    ' Amount
+'                    '=========================================
+'                    lsTrace = "Create Param Amount"
+'
+'                    Set prm9 = cmd.CreateParameter("Amount", adNumeric, adParamInput)
+'
+'                    prm9.Precision = 38
+'                    prm9.NumericScale = 4
+'                    prm9.Value = Amount
+'
+'                    cmd.Parameters.append prm9
+'
+'                    Set prm10 = cmd.CreateParameter("SJNo", adVarChar, adParamInput, 50, RTrim(cboDNo.Text))
+'                    cmd.Parameters.append prm10
+'                    Set prm11 = cmd.CreateParameter("BCType", adVarChar, adParamInput, 50, RTrim(cboBCType.Text))
+'                    cmd.Parameters.append prm11
+'                    Set prm12 = cmd.CreateParameter("BCNo", adVarChar, adParamInput, 50, RTrim(txtBCNo.Text))
+'                    cmd.Parameters.append prm12
+'                    Set prm13 = cmd.CreateParameter("BC40_Date", adDate, adParamInput, , dtpBCDate.Value)
+'                    cmd.Parameters.append prm13
+'                    Set prm14 = cmd.CreateParameter("Remarks", adVarChar, adParamInput, 50, txtremarks.Text)
+'                    cmd.Parameters.append prm14
+'                    Set prm15 = cmd.CreateParameter("User", adVarChar, adParamInput, 50, userLogin)
+'                    cmd.Parameters.append prm15
+'
+'                    lsTrace = "Execute sp_ReceiptSerialNoInsertUpdate"
+'                    Set RSIns = cmd.Execute
+'
+'                    '#Check if item influence the stock or not
+''                    Call up_UpdateStockMaster(Format(dtpDNDate.Value, "yyyy-MM-dd"), ls_ClosingMonth, ls_ClosingYear, Trim(cboFromWH), Trim(cboToWH), Trim(ItemCode), CDbl(Qty), "S1", Trim(l_stock_location), "", "I", "", "", False, False, True, Db)
+'                   lsTrace = "uf_UpdateSupplyStockMaster"
+'                    uf_UpdateSupplyStockMaster
+'
+'                    lsTrace = "uf_UpdateReceiptStockMaster"
+'                    uf_UpdateReceiptStockMaster
+'
+'                    '#Update Stock Receipt
+''                    Call up_UpdateStockMaster(Format(dtpDNDate.Value, "yyyy-MM-dd"), ls_ClosingMonth, ls_ClosingYear, Trim(cboFromWH), Trim(cboToWH), Trim(ItemCode), CDbl(Qty), "R", Trim(l_stock_location), "", "I", "", "", False, False, True, Db)
+'                lsTrace = "RSSupply.MoveNext"
+'                RSSupply.MoveNext
+'
+'                Wend
+'
+'                Set cmd = New ADODB.Command
+'                Set rsUpd = New ADODB.Recordset
+'                cmd.CommandType = adCmdStoredProc
+'                cmd.CommandTimeout = 0
+'                cmd.ActiveConnection = Db
+'                cmd.CommandText = "sp_SupplyScan_updStatus"
+'
+'                cmd.Parameters.append cmd.CreateParameter("Receipt_User", adVarChar, adParamInput, 25, userLogin)
+'                cmd.Parameters.append cmd.CreateParameter("ReceiptDate", adDate, adParamInput, , dtpReceiptDate.Value)
+'                cmd.Parameters.append cmd.CreateParameter("SJNo", adVarChar, adParamInput, 50, RTrim(cboDNo.Text))
+'
+'                Set rsUpd = cmd.Execute
+'
+'
+'                db2.CommitTrans
+'
+'                up_GridLoad
+'
+'                lbl_pesan.Caption = DisplayMsg(1000) '"Insert data success !"
+'            Else
+'                db2.CommitTrans
+'                lbl_pesan.Caption = DisplayMsg(9003) '"Insert data success !"
+'
+'            End If
+            
+            Dim DicQty As Object
+            Dim vKey As Variant
+            Dim RSIns As ADODB.Recordset
+            
+            Set DicQty = CreateObject("Scripting.Dictionary")
+            
+            lsTrace = "Build Grouping Data"
+            
+            '=========================================
+            ' Group Qty per Item Code dari Grid Checked
+            '=========================================
+            For i = 1 To grid.Rows - 1
+            
+            If grid.Cell(flexcpChecked, i, ColCheck) = flexChecked Then
+            
+                ItemCode = Trim(grid.TextMatrix(i, bteColItemCode))
+            
+                If Trim(grid.TextMatrix(i, bteColQty)) = "" Then
+                    Qty = 0
+                Else
+                    Qty = CDbl(grid.TextMatrix(i, bteColQty))
+                End If
+            
+                If DicQty.Exists(ItemCode) Then
+                    DicQty(ItemCode) = CDbl(DicQty(ItemCode)) + Qty
+                Else
+                    DicQty.Add ItemCode, Qty
+                End If
+            
             End If
             
-           
+            Next i
+            
+            If DicQty.Count = 0 Then
+                db2.RollbackTrans
+                lbl_pesan.Caption = "Tidak ada data yang dipilih."
+                Me.MousePointer = vbDefault
+                cmd_submit.Enabled = True
+                Exit Sub
+            End If
+        
+            
+            '=========================================
+            ' Insert per Item Code
+            '=========================================
+            Set RSIns = Nothing
+            For Each vKey In DicQty.Keys
+            
+            ItemCode = CStr(vKey)
+            Qty = CDbl(DicQty(vKey))
+            
+            lsTrace = "Get Currency"
+            CurrencyCode = up_GetCurrency(ItemCode)
+            
+            lsTrace = "Get Price"
+            Price = up_GetPrice(ItemCode)
+            
+            lsTrace = "Before Calculate Amount"
+            Amount = Price * Qty
+            lsTrace = "After Calculate Amount"
+            
+            UnitCls = ""
+            
+            lsDebug = ""
+            lsDebug = lsDebug & vbCrLf & "ItemCode = " & ItemCode
+            lsDebug = lsDebug & vbCrLf & "Price    = " & CStr(Price)
+            lsDebug = lsDebug & vbCrLf & "Qty      = " & CStr(Qty)
+            lsDebug = lsDebug & vbCrLf & "Amount   = " & CStr(Amount)
+            
+            Set cmd = New ADODB.Command
+            
+            cmd.CommandType = adCmdStoredProc
+            cmd.CommandTimeout = 0
+            cmd.ActiveConnection = Db
+            cmd.CommandText = "sp_ReceiptSerialNoInsertUpdate"
+            
+            Set prm1 = cmd.CreateParameter("FromWarehouse_Code", adVarChar, adParamInput, 50, RTrim(cboFromWH.Text))
+            cmd.Parameters.append prm1
+            
+            Set prm2 = cmd.CreateParameter("ToWarehouse_Code", adVarChar, adParamInput, 50, RTrim(cboToWH.Text))
+            cmd.Parameters.append prm2
+            
+            Set prm3 = cmd.CreateParameter("ChildSupply_date", adDate, adParamInput, , dtpReceiptDate.Value)
+            cmd.Parameters.append prm3
+            
+            Set prm4 = cmd.CreateParameter("ChildItem_Code", adVarChar, adParamInput, 50, ItemCode)
+            cmd.Parameters.append prm4
+            
+            Set prm5 = cmd.CreateParameter("ChildUnit_Cls", adVarChar, adParamInput, 50, "")
+            cmd.Parameters.append prm5
+            
+            Set prm6 = cmd.CreateParameter("Currency_Code", adVarChar, adParamInput, 50, CurrencyCode)
+            cmd.Parameters.append prm6
+            
+            lsTrace = "Create Param Price"
+            
+            Set prm7 = cmd.CreateParameter("Price", adNumeric, adParamInput)
+            
+            prm7.Precision = 38
+            prm7.NumericScale = 4
+            prm7.Value = Price
+            
+            cmd.Parameters.append prm7
+            
+            lsTrace = "Create Param Qty"
+            
+            Set prm8 = cmd.CreateParameter("ChildeItemQty", adNumeric, adParamInput)
+            
+            prm8.Precision = 38
+            prm8.NumericScale = 4
+            prm8.Value = Qty
+            
+            cmd.Parameters.append prm8
+            
+            lsTrace = "Create Param Amount"
+            
+            Set prm9 = cmd.CreateParameter("Amount", adNumeric, adParamInput)
+            
+            prm9.Precision = 38
+            prm9.NumericScale = 4
+            prm9.Value = Amount
+            
+            cmd.Parameters.append prm9
+            
+            Set prm10 = cmd.CreateParameter("SJNo", adVarChar, adParamInput, 50, RTrim(cboDNo.Text))
+            cmd.Parameters.append prm10
+            
+            Set prm11 = cmd.CreateParameter("BCType", adVarChar, adParamInput, 50, RTrim(cboBCType.Text))
+            cmd.Parameters.append prm11
+            
+            Set prm12 = cmd.CreateParameter("BCNo", adVarChar, adParamInput, 50, RTrim(txtBCNo.Text))
+            cmd.Parameters.append prm12
+            
+            Set prm13 = cmd.CreateParameter("BC40_Date", adDate, adParamInput, , dtpBCDate.Value)
+            cmd.Parameters.append prm13
+            
+            Set prm14 = cmd.CreateParameter("Remarks", adVarChar, adParamInput, 50, txtremarks.Text)
+            cmd.Parameters.append prm14
+            
+            Set prm15 = cmd.CreateParameter("User", adVarChar, adParamInput, 50, userLogin)
+            cmd.Parameters.append prm15
+            
+            lsTrace = "Execute sp_ReceiptSerialNoInsertUpdate"
+            Set RSIns = cmd.Execute
+            
+            lsTrace = "uf_UpdateSupplyStockMaster"
+            uf_UpdateSupplyStockMaster
+            
+            lsTrace = "uf_UpdateReceiptStockMaster"
+            uf_UpdateReceiptStockMaster
+            
+            Next
+            
+            '=========================================
+            ' Update Status Supply Scan
+            '=========================================
+            lsTrace = "Update Supply Scan Status"
+            
+            Set cmd = New ADODB.Command
+            Set rsUpd = New ADODB.Recordset
             
             
+            cmd.CommandType = adCmdStoredProc
+            cmd.CommandTimeout = 0
+            cmd.ActiveConnection = Db
+            cmd.CommandText = "sp_SupplyScan_updStatus"
             
-    
-    
-    
-    Me.MousePointer = vbDefault
+            cmd.Parameters.append cmd.CreateParameter("Receipt_User", adVarChar, adParamInput, 25, userLogin)
+            cmd.Parameters.append cmd.CreateParameter("ReceiptDate", adDate, adParamInput, , dtpReceiptDate.Value)
+            cmd.Parameters.append cmd.CreateParameter("SJNo", adVarChar, adParamInput, 50, RTrim(cboDNo.Text))
+            
+            Set rsUpd = cmd.Execute
+            
+            lsTrace = "Commit Transaction"
+            db2.CommitTrans
+        
+            up_GridLoad
+            
+            lbl_pesan.Caption = DisplayMsg(1000)
+            cmd_submit.Enabled = True
+        
+            Me.MousePointer = vbDefault
     
     
 ErrExit:
@@ -1380,11 +1607,32 @@ ErrExit:
     Exit Sub
     
 ErrHandler:
+
+    Dim sErr As String
+    Dim lErrNo As Long
+    Dim lErrDesc As String
+
+    lErrNo = err.number
+    lErrDesc = err.Description
+
     cmd_submit.Enabled = True
+
+    On Error Resume Next
     db2.RollbackTrans
-    lbl_pesan.Caption = "[" & err.number & "] " & err.Description
+
+    sErr = ""
+    sErr = sErr & "TRACE : " & lsTrace & vbCrLf
+    sErr = sErr & lsDebug & vbCrLf
+    sErr = sErr & vbCrLf
+    sErr = sErr & "ERR NO : " & lErrNo & vbCrLf
+    sErr = sErr & "ERR MSG: " & lErrDesc
+
+    MsgBox sErr, vbCritical, "OVERFLOW DEBUG"
+
+    lbl_pesan.Caption = sErr
+
     Me.MousePointer = vbDefault
-    err.clear
+
     Resume ErrExit
 
 End Sub
