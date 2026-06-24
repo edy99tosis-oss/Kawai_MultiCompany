@@ -118,6 +118,7 @@ Begin VB.Form frmProdScheduleInterface
          _ExtentX        =   2725
          _ExtentY        =   556
          _Version        =   393216
+         Enabled         =   0   'False
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Verdana"
             Size            =   8.25
@@ -128,7 +129,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   116129795
+         Format          =   129368067
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -150,6 +151,7 @@ Begin VB.Form frmProdScheduleInterface
          _ExtentX        =   2725
          _ExtentY        =   556
          _Version        =   393216
+         Enabled         =   0   'False
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Verdana"
             Size            =   8.25
@@ -160,7 +162,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   116129795
+         Format          =   129368067
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -683,6 +685,7 @@ Dim dbTransfer As New ADODB.Connection
 'Dim WIPLimit As Double, tWIPLimit As Double
 'Dim tmpParentLotNo As String, ttmpParentLotNo As String
 
+Dim bteColDate As Byte
 Dim bteColProdCode As Byte
 Dim bteColPart As Byte
 Dim bteColDesc As Byte
@@ -692,7 +695,6 @@ Dim bteColUnitCls As Byte
 Dim bteColUnit As Byte
 Dim BteColSerialFrom As Byte
 Dim BteColSerialTo As Byte
-Dim bteColDate As Byte
 Dim bteColRemark As Byte
 Dim bteColAuto As Byte
 Dim bteColCustCode As Byte
@@ -837,6 +839,55 @@ Private Sub CmdSubmit_Click()
     dbTransfer.BeginTrans
 
     StatInsertUpdate = False
+    
+    ' =====================================================
+    ' CHECK REVISE
+    ' =====================================================
+    Dim blnRevisi As Boolean
+    
+    blnRevisi = False
+    
+    With grid
+    
+        For i = 1 To .Rows - 1
+    
+            If .Cell(flexcpChecked, i, bteColApproved) = flexChecked Then
+    
+                If Trim(.TextMatrix(i, bteColApprovedDate)) <> "" Then
+    
+                    blnRevisi = True
+                    Exit For
+    
+                End If
+    
+            End If
+    
+        Next i
+    
+    End With
+    
+    If blnRevisi Then
+    
+              If MsgBox("Approved data detected. Submit as revision?", _
+          vbQuestion + vbYesNo + vbDefaultButton2, _
+          "Confirmation") = vbNo Then
+            
+            MousePointer = vbDefault
+            
+              If dbTransfer.State = 1 Then
+                    dbTransfer.RollbackTrans
+                    dbTransfer.Close
+                End If
+                
+            Exit Sub
+
+        End If
+
+    End If
+    
+       
+    
+'    End If
 
     ' =====================================================
     ' PROCESS GRID
@@ -901,23 +952,25 @@ NextData:
     Next i
 
     End With
-
+    
+    
     ' =====================================================
     ' COMMIT
     ' =====================================================
     dbTransfer.CommitTrans
     dbTransfer.Close
     
-    Call Export_ToCsv
-
+    Export_ToCsv
+    
+    
     ' =====================================================
     ' REFRESH GRID
     ' =====================================================
-    If StatInsertUpdate = True Then
+'    If StatInsertUpdate = True Then
         Browse
-    End If
-
-    lblErrMsg = DisplayMsg(1101)
+'    End If
+'harus ditambahkan validasi antara gagal interface atau tidak
+'    lblErrMsg = DisplayMsg(1101)
 
     MousePointer = vbDefault
     Exit Sub
@@ -1337,6 +1390,15 @@ Private Sub Form_Load()
     adtocboStatus
 
     Call Kosong
+    
+    If GetAdminStatus() = 1 Then
+        scheduledate1.Enabled = True
+        scheduledate2.Enabled = True
+    Else
+        scheduledate1.Enabled = False
+        scheduledate2.Enabled = False
+    End If
+
 
     'GET START DAILY
     Dim Ret As String, NC As Long, TempPWD As String
@@ -1832,10 +1894,11 @@ End Sub
 '
 'End Sub
 
-Private Sub Export_ToCsv()
-
+Public Sub Export_ToCsv()
+   
     On Error GoTo Errhandle
-
+     
+         
     Dim rsCsv As New ADODB.Recordset
     Dim RsFtp As New ADODB.Recordset
 
@@ -1884,7 +1947,6 @@ Private Sub Export_ToCsv()
     Dim SerialCount As Long
     Dim LogSql As String
     
-
     ' =====================================================
     ' EXPORT FOLDER
     ' =====================================================
@@ -1964,11 +2026,12 @@ Private Sub Export_ToCsv()
 'Dim RevisionNo As Long
 Dim CheckFile As String
 
-scheduledate = _
-    Trim("" & rsCsv.Fields("Schedule Date").Value)
+'scheduledate = sche
+'    Trim("" & rsCsv.Fields("Schedule Date").Value)
 
-scheduledate = Replace(scheduledate, "-", "")
+scheduledate = Format$(Now, "yyyymmdd")
 LineCode = Right$("00" & Mid$(cbolinecd.Text, 5, 1), 3) 'cbolinecd.Text
+
 '=========================================
 ' GET REVISION NUMBER
 '=========================================
@@ -2200,15 +2263,27 @@ End If
         ftpRemarks, _
         ErrMsg) = False Then
     
-       Db.Execute _
+        Db.Execute _
             "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
             "@LogID = " & LogID & _
             ", @FTPStatus = 'FAILED'" & _
             ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
             ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
     
-'        MsgBox ErrMsg, vbCritical
-        
+        ' Hapus file CSV yang sudah dibuat
+        On Error Resume Next
+    
+        If Len(Dir$(HeaderFullPath)) > 0 Then
+            Kill HeaderFullPath
+        End If
+    
+        If Len(Dir$(DetailFullPath)) > 0 Then
+            Kill DetailFullPath
+        End If
+    
+        On Error GoTo 0
+    
+        lblErrMsg = ErrMsg
     
         Exit Sub
     
@@ -2238,7 +2313,9 @@ End If
             ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
     
 '        MsgBox ErrMsg, vbCritical
-    
+
+        lblErrMsg = ErrMsg
+        
         Exit Sub
     
     End If
@@ -2251,10 +2328,13 @@ End If
         "EXEC sp_Interface_Export_Log_UpdFTPStatus " & _
         LogID & _
         ", 'SUCCESS', '" & Trim(userLogin) & "'"
-        MsgBox _
-            "Export CSV & FTP Upload Success", _
-            vbInformation
-    
+        
+        MsgBox "Schedule Production sent successfully.", _
+        vbInformation, _
+        "Success"
+        
+        lblErrMsg = ErrMsg
+           
         Exit Sub
 
 Errhandle:
@@ -2268,16 +2348,16 @@ End Sub
 Sub Header()
     Dim i As Long
     
-    bteColProdCode = 0
-    bteColPart = 1
-    bteColDesc = 2
-    bteColLotNo = 3
-    bteColQty = 4
-    bteColUnitCls = 5
-    bteColUnit = 6
-    BteColSerialFrom = 7
-    BteColSerialTo = 8
-    bteColDate = 9
+    bteColDate = 0
+    bteColProdCode = 1
+    bteColPart = 2
+    bteColDesc = 3
+    bteColLotNo = 4
+    bteColQty = 5
+    bteColUnitCls = 6
+    bteColUnit = 7
+    BteColSerialFrom = 8
+    BteColSerialTo = 9
     bteColRemark = 10
     bteColAuto = 11
     bteColCustCode = 12
@@ -2297,6 +2377,7 @@ Sub Header()
       .Rows = 1
       .ColS = 22
       
+      .ColWidth(bteColDate) = 1450
       .ColWidth(bteColProdCode) = 1400
       .ColWidth(bteColPart) = 1400
       .ColWidth(bteColDesc) = 3000
@@ -2305,7 +2386,6 @@ Sub Header()
       .ColWidth(bteColUnit) = 650
       .ColWidth(BteColSerialFrom) = 1100
       .ColWidth(BteColSerialTo) = 1100
-      .ColWidth(bteColDate) = 1450
       .ColWidth(bteColRemark) = 3250
       .ColWidth(bteColAuto) = 1000
       .ColWidth(bteColCustCode) = 1200
@@ -2318,6 +2398,7 @@ Sub Header()
       .ColWidth(bteColVoidDate) = 1450
       .ColWidth(bteColVoidUser) = 1500
       
+      .TextMatrix(0, bteColDate) = "Schedule Date"
       .TextMatrix(0, bteColPart) = "Part Number"
       .TextMatrix(0, bteColProdCode) = "Product Code"
       .TextMatrix(0, bteColDesc) = "Description"
@@ -2327,7 +2408,6 @@ Sub Header()
       .TextMatrix(0, bteColUnit) = "Unit"
       .TextMatrix(0, BteColSerialFrom) = "Serial From"
       .TextMatrix(0, BteColSerialTo) = "Serial To"
-      .TextMatrix(0, bteColDate) = "Schedule Date"
       .TextMatrix(0, bteColRemark) = "Remark"
       .TextMatrix(0, bteColAuto) = "Auto"
       .TextMatrix(0, bteColCustCode) = "Cust. Code"
@@ -2534,6 +2614,8 @@ Sub Browse()
         With grid
             Do While Not rsGrid.EOF
                 .Rows = .Rows + 1
+                
+                .TextMatrix(i, bteColDate) = Format(Trim(rsGrid("schedule_date")), "dd MMM yyyy")
                 .TextMatrix(i, bteColProdCode) = Trim(rsGrid("Item_Code"))
                 .TextMatrix(i, bteColPart) = Trim(rsGrid("MakerItem_Code"))
                 .TextMatrix(i, bteColDesc) = IIf(IsNull(rsGrid("item_name")), "", Trim(rsGrid("item_name")))
@@ -2558,7 +2640,7 @@ Sub Browse()
                 .TextMatrix(i, BteColSerialFrom) = IIf(IsNull(rsGrid("SerialNoFrom")), "", Trim(rsGrid("SerialNoFrom"))) 'Add 20090207
                 .TextMatrix(i, BteColSerialTo) = IIf(IsNull(rsGrid("SerialNoTo")), "", Trim(rsGrid("SerialNoTo"))) 'Add 20090207
                 
-                .TextMatrix(i, bteColDate) = Format(Trim(rsGrid("schedule_date")), "dd MMM yyyy")
+                
                 .TextMatrix(i, bteColRemark) = IIf(IsNull(rsGrid("remark")), "", Trim(rsGrid("remark")))
                 .TextMatrix(i, bteColSeqNo) = Val(rsGrid("seq_no"))
                 
@@ -2587,8 +2669,8 @@ Sub Browse()
                     .TextMatrix(i, bteColVoid) = True
                 End If
                 
-                 .TextMatrix(i, bteColVoidDate) = Format(Trim(rsGrid("Void_Date")), "dd MMM yyyy") & ""
-                 .TextMatrix(i, bteColVoidUser) = rsGrid("Void_User") & ""
+                .TextMatrix(i, bteColVoidDate) = Format(Trim(rsGrid("Void_Date")), "dd MMM yyyy") & ""
+                .TextMatrix(i, bteColVoidUser) = rsGrid("Void_User") & ""
                 
                 rsGrid.MoveNext
                 i = i + 1
@@ -2848,6 +2930,7 @@ On Error GoTo Errhandle
 
 Dim ftpCommand As String
 Dim StartTime As Single
+Dim lsResponse As String
 
 UploadFTP = False
 ErrMsg = ""
@@ -2907,28 +2990,59 @@ If UCase$(Trim$(ftpRemarks)) = "TRIAL" Then
 
         DoEvents
 
-        If Timer - StartTime > 60 Then
-            ErrMsg = "FTP Timeout (60 Seconds)"
+        If Timer - StartTime > 120 Then
+            ErrMsg = "FTP Timeout (120 Seconds)"
             Exit Function
         End If
 
     Loop
 
+'    Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
+''
+''    UploadFTP = True
+'
+''    Debug.Print "STATUS       : SUCCESS"
+'
+'    WriteLog String(80, "=")
+'    WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
+'    WriteLog "FTP MODE      : TRIAL"
+'    WriteLog "SOURCE FILE   : " & filename
+'    WriteLog "DEST FILE     : " & ftpFolder & filename
+'    WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
+'
+'    Dim lsResponse As String
+'
+'    lsResponse = Trim$(Inet1.ResponseInfo)
+'
+'
+'    If InStr(1, lsResponse, "completed successfully", vbTextCompare) > 0 Then
+'        UploadFTP = True
+'    Else
+'        UploadFTP = False
+'    End If
+
     Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
-
-    UploadFTP = True
     
-    Debug.Print "STATUS       : SUCCESS"
-
     WriteLog String(80, "=")
     WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
     WriteLog "FTP MODE      : TRIAL"
     WriteLog "SOURCE FILE   : " & filename
     WriteLog "DEST FILE     : " & ftpFolder & filename
     WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
-    WriteLog "STATUS        : SUCCESS"
-    
 
+    
+    lsResponse = Trim$(Inet1.ResponseInfo)
+    
+    If InStr(1, lsResponse, "completed successfully", vbTextCompare) > 0 Then
+        UploadFTP = True
+        WriteLog "STATUS        : SUCCESS"
+        ErrMsg = lsResponse
+    Else
+        UploadFTP = False
+        WriteLog "STATUS        : FAILED"
+        ErrMsg = lsResponse
+    End If
+    
     Exit Function
 
 End If
@@ -2979,20 +3093,42 @@ Do While Inet1.StillExecuting
 
 Loop
 
-Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo 'Inet1.GetChunk(0, icString)
+'Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo 'Inet1.GetChunk(0, icString)
+'
+'UploadFTP = True
+'
+'Debug.Print "STATUS       : SUCCESS"
+'
+'    WriteLog String(80, "=")
+'    WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
+'    WriteLog "FTP MODE      : LIVE"
+'    WriteLog "SOURCE FILE   : " & filename
+'    WriteLog "DEST FILE     : " & ftpFolder & filename
+'    WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
 
-UploadFTP = True
+Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
 
-Debug.Print "STATUS       : SUCCESS"
+WriteLog String(80, "=")
+WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
+WriteLog "FTP MODE      : TRIAL"
+WriteLog "SOURCE FILE   : " & filename
+WriteLog "DEST FILE     : " & ftpFolder & filename
+WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
 
-    WriteLog String(80, "=")
-    WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
-    WriteLog "FTP MODE      : LIVE"
-    WriteLog "SOURCE FILE   : " & filename
-    WriteLog "DEST FILE     : " & ftpFolder & filename
-    WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
-    WriteLog "STATUS        : SUCCESS"
-    
+
+
+lsResponse = Trim$(Inet1.ResponseInfo)
+
+    If InStr(1, lsResponse, "completed successfully", vbTextCompare) > 0 Then
+        UploadFTP = True
+        WriteLog "STATUS        : SUCCESS"
+        ErrMsg = lsResponse
+    Else
+        UploadFTP = False
+        WriteLog "STATUS        : FAILED"
+        ErrMsg = lsResponse
+    End If
+
 
 Exit Function
 
@@ -3100,6 +3236,26 @@ ErrHandler:
         Set RS = Nothing
 
     End If
+
+End Function
+
+Private Function GetAdminStatus() As Integer
+
+    Dim RS As ADODB.Recordset
+
+    Set RS = Db.Execute( _
+        "SELECT ISNULL(Status_Admin,0) AS Status_Admin " & _
+        "FROM dbo.User_Setup " & _
+        "WHERE Username = '" & Replace(userLogin, "'", "''") & "'")
+
+    If Not RS.EOF Then
+        GetAdminStatus = RS!status_Admin
+    Else
+        GetAdminStatus = 0
+    End If
+
+    RS.Close
+    Set RS = Nothing
 
 End Function
 
