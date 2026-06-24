@@ -129,7 +129,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129368067
+         Format          =   107479043
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -162,7 +162,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129368067
+         Format          =   107479043
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -671,19 +671,6 @@ Dim sqlGrid As String
 Dim startDaily As String
 Dim dbTransfer As New ADODB.Connection
 
-'Dim ubah As Boolean, ubahBulan As Boolean, ubahBulanQty As Boolean, Status As String
-'Dim PONO As String, poSEqNo As String, lblFNo As String, startDaily As String
-'Dim lbllotno As String, lblschdate As Date, lblQty As Double, changeQty As Double
-'Public dailypanggil As String
-'Dim gabung As Boolean, gabungState As Boolean
-'Dim OrderEntry As Double, ForecastAwal As Double, TotalDaily As Double
-'Dim tOrderEntry As Double, tForecastAwal As Double, tTotalDaily As Double, tUpdateQty As Double
-'Dim insertActForecast As Boolean, insertActOrder As Boolean, insertActDaily As Boolean, insertActWIP As Boolean
-'Dim tinsertActForecast As Boolean, tinsertActOrder As Boolean, tinsertActDaily As Boolean, tinsertActWIP As Boolean
-'
-'Dim notFinishGood As Boolean, tnotFinishGood As Boolean
-'Dim WIPLimit As Double, tWIPLimit As Double
-'Dim tmpParentLotNo As String, ttmpParentLotNo As String
 
 Dim bteColDate As Byte
 Dim bteColProdCode As Byte
@@ -711,7 +698,19 @@ Dim bteColVoidUser As Byte
 Dim Auto_Cls As Byte
 Dim StrStartSerial As String
 
+Private Type tApproveData
+    ItemCode As String
+    LotNo As String
+    Qty As Double
+End Type
+
+Private arrApprove() As tApproveData
+Private ApproveCount As Long
+
 Private Sub CboCust_Change()
+
+lblErrMsg.Caption = ""
+
     If cbocust.ListIndex <> -1 Then
         lblcust.Caption = cbocust.Column(1)
         adtocbolinecd
@@ -733,7 +732,10 @@ Private Sub cboFactory_Change()
 End Sub
 
 Private Sub cboGroup_Change()
-     If CboGroup.ListIndex <> -1 Then
+
+lblErrMsg.Caption = ""
+
+    If CboGroup.ListIndex <> -1 Then
         Label11.Caption = CboGroup.Column(1)
         Else
         Label11.Caption = "All"
@@ -742,6 +744,9 @@ Private Sub cboGroup_Change()
 End Sub
 
 Private Sub cbolinecd_Change()
+
+lblErrMsg.Caption = ""
+
     If cbolinecd.ListIndex <> -1 Then
         lbllinecd.Caption = cbolinecd.Column(1)
     End If
@@ -760,9 +765,13 @@ Private Sub cboLotNo_Change()
 End Sub
 
 Private Sub cbostatus_Change()
+
+lblErrMsg.Caption = ""
+
     If cbocust.Text <> "" And cbolinecd.Text <> "" Then
         Browse
     End If
+    
 End Sub
 
 Private Sub cmdClear_Click()
@@ -772,7 +781,7 @@ End Sub
 Private Sub CmdSubmit_Click()
 
     Dim tanya As VbMsgBoxResult
-    Dim sql As String
+    Dim Sql As String
     Dim statusProses As String
     Dim StatInsertUpdate As Boolean
     Dim i As Long
@@ -826,9 +835,10 @@ Private Sub CmdSubmit_Click()
         Exit Sub
 
     End If
-
+    
     lblErrMsg.Caption = ""
-
+    
+   
     ' =====================================================
     ' OPEN CONNECTION
     ' =====================================================
@@ -845,8 +855,7 @@ Private Sub CmdSubmit_Click()
     ' =====================================================
     Dim blnRevisi As Boolean
     
-    blnRevisi = False
-    
+
     With grid
     
         For i = 1 To .Rows - 1
@@ -886,8 +895,12 @@ Private Sub CmdSubmit_Click()
     End If
     
        
+    blnRevisi = False
     
-'    End If
+    ApproveCount = 0
+    
+    Erase arrApprove
+
 
     ' =====================================================
     ' PROCESS GRID
@@ -930,22 +943,39 @@ Private Sub CmdSubmit_Click()
         ' =================================================
         ' EXECUTE STORED PROCEDURE
         ' =================================================
-        sql = ""
+        Sql = ""
     
-        sql = sql & " EXEC sp_ProdScheduleInf_status "
-        sql = sql & " '" & Trim(cbocust.Text) & "', "
-        sql = sql & " '" & Trim(cbolinecd.Text) & "', "
-        sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-        sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-        sql = sql & " '" & Trim(.TextMatrix(i, bteColProdCode)) & "', "
-        sql = sql & " '" & Trim(.TextMatrix(i, bteColLotNo)) & "', "
-        sql = sql & "  " & Val(.TextMatrix(i, bteColQty)) & ", "
-        sql = sql & "  '" & statusProses & "', "
-        sql = sql & " '" & userLogin & "' "
+        Sql = Sql & " EXEC sp_ProdScheduleInf_status "
+        Sql = Sql & " '" & Trim(cbocust.Text) & "', "
+        Sql = Sql & " '" & Trim(cbolinecd.Text) & "', "
+        Sql = Sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
+        Sql = Sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
+        Sql = Sql & " '" & Trim(.TextMatrix(i, bteColProdCode)) & "', "
+        Sql = Sql & " '" & Trim(.TextMatrix(i, bteColLotNo)) & "', "
+        Sql = Sql & "  " & Val(.TextMatrix(i, bteColQty)) & ", "
+        Sql = Sql & "  '" & statusProses & "', "
+        Sql = Sql & " '" & userLogin & "' "
     
-        dbTransfer.Execute sql
+        dbTransfer.Execute Sql
     
         StatInsertUpdate = True
+        
+         If statusProses = "APPROVE" Then
+    
+            ApproveCount = ApproveCount + 1
+        
+            ReDim Preserve arrApprove(1 To ApproveCount)
+        
+            arrApprove(ApproveCount).ItemCode = _
+                Trim(.TextMatrix(i, bteColProdCode))
+        
+            arrApprove(ApproveCount).LotNo = _
+                Trim(.TextMatrix(i, bteColLotNo))
+        
+            arrApprove(ApproveCount).Qty = _
+                Val(.TextMatrix(i, bteColQty))
+        
+        End If
     
 NextData:
     
@@ -953,24 +983,25 @@ NextData:
 
     End With
     
-    
     ' =====================================================
     ' COMMIT
     ' =====================================================
     dbTransfer.CommitTrans
     dbTransfer.Close
     
-    Export_ToCsv
+    If Export_ToCsv() = False Then
     
+        Call RollbackApprove
     
-    ' =====================================================
-    ' REFRESH GRID
-    ' =====================================================
-'    If StatInsertUpdate = True Then
+        MsgBox lblErrMsg, vbExclamation, "FTP Upload Failed"
+    
+        MousePointer = vbDefault
+    
+        Exit Sub
+    
+    End If
+  
         Browse
-'    End If
-'harus ditambahkan validasi antara gagal interface atau tidak
-'    lblErrMsg = DisplayMsg(1101)
 
     MousePointer = vbDefault
     Exit Sub
@@ -984,398 +1015,13 @@ ErrorMesage:
         dbTransfer.RollbackTrans
         dbTransfer.Close
     End If
-
+    
     lblErrMsg.Caption = err.number & " - " & err.Description
 
     MousePointer = vbDefault
 
 End Sub
 
-'Private Sub Export_ToCsv()
-'
-'    Dim rsCsv As New ADODB.Recordset
-'    Dim sql As String
-'    Dim filename As String
-'    Dim FullPath As String
-'    Dim FileNo As Integer
-'
-'    Dim scheduledate As String
-'    Dim LineCode As String
-'    Dim ItemCode As String
-'    Dim SerialNumber As String
-'    Dim StatusData As String
-'
-'    On Error GoTo Errhandle
-'
-'    ' =====================================================
-'    ' SAVE FILE DIALOG
-'    ' =====================================================
-'    CommonDialog1.CancelError = True
-'    CommonDialog1.filter = "CSV File (*.csv)|*.csv"
-'    CommonDialog1.DefaultExt = "csv"
-'    CommonDialog1.filename = "Schedule-" & Format(Now, "yyyymmdd") & ".csv"
-'    CommonDialog1.ShowSave
-'
-'    FullPath = CommonDialog1.filename
-'
-'    If Trim(FullPath) = "" Then Exit Sub
-'
-'    ' =====================================================
-'    ' QUERY
-'    ' =====================================================
-'   sql = ""
-'
-'    sql = sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
-'    sql = sql & " '" & Trim(cbocust.Text) & "', "
-'    sql = sql & " '" & Trim(cbolinecd.Text) & "', "
-'    sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
-'
-'    rsCsv.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'    If rsCsv.EOF Then
-'
-'        MsgBox "No data to export.", vbExclamation
-'        rsCsv.Close
-'        Exit Sub
-'
-'    End If
-'
-'    ' =====================================================
-'    ' CREATE CSV
-'    ' =====================================================
-'    FileNo = FreeFile
-'
-'    Open FullPath For Output As #FileNo
-'
-'    ' HEADER
-'    Print #FileNo, _
-'        "Schedule Date,Line Code,Item Code,Serial Number,Status"
-'
-'    ' DETAIL
-'    Do While Not rsCsv.EOF
-'
-'        scheduledate = rsCsv.Fields("Schedule Date").Value
-'         LineCode = "=""" & rsCsv.Fields("Line Code").Value & """"
-'        ItemCode = "=""" & rsCsv.Fields("Item Code").Value & """"
-'        SerialNumber = "=""" & rsCsv.Fields("Serial Number").Value & """"
-'        StatusData = rsCsv.Fields("Status").Value
-'
-'        Print #FileNo, _
-'            scheduledate & "," & _
-'            LineCode & "," & _
-'            ItemCode & "," & _
-'            SerialNumber & "," & _
-'            StatusData
-'
-'        rsCsv.MoveNext
-'
-'    Loop
-'
-'    Close #FileNo
-'
-'    rsCsv.Close
-'
-'    MsgBox "Export CSV Success", vbInformation
-'
-'    Exit Sub
-'
-'Errhandle:
-'
-'    If rsCsv.State = 1 Then rsCsv.Close
-'
-'    MsgBox err.number & " - " & err.Description, vbCritical
-'
-'End Sub
-
-'Private Sub Export_ToCsv()
-'
-'    On Error GoTo Errhandle
-'
-'    Dim rsCsv As New ADODB.Recordset
-'    Dim RsFtp As New ADODB.Recordset
-'
-'    Dim sql As String
-'    Dim ftpSql As String
-'
-'    Dim FullPath As String
-'    Dim ExportFolder As String
-'
-'    Dim FileNo As Integer
-'
-'    Dim scheduledate As String
-'    Dim LineCode As String
-'    Dim ItemCode As String
-'    Dim SerialNumber As String
-'    Dim StatusData As String
-'
-'    Dim ftpHost As String
-'    Dim ftpUser As String
-'    Dim ftpPass As String
-'    Dim ftpFolder As String
-'
-'    Dim ftpCommand As String
-'
-'    Dim filename As String
-'
-'    Dim i As Long
-'
-'    ' =====================================================
-'    ' FILE NAME
-'    ' =====================================================
-'
-'    filename = _
-'        "Schedule-" & _
-'        Format(Now, "yyyymmdd_hhnnss") & _
-'        ".csv"
-'
-'    ' =====================================================
-'    ' EXPORT FOLDER
-'    ' =====================================================
-'
-'    ExportFolder = App.path & "\IFProductionSchedule"
-'
-'    If Dir(ExportFolder, vbDirectory) = "" Then
-'        MkDir ExportFolder
-'    End If
-'
-'    If Right(ExportFolder, 1) <> "\" Then
-'        ExportFolder = ExportFolder & "\"
-'    End If
-'
-'    FullPath = ExportFolder & filename
-'
-'    Debug.Print "======================================"
-'    Debug.Print "EXPORT FOLDER : " & ExportFolder
-'    Debug.Print "FULL PATH     : " & FullPath
-'    Debug.Print "======================================"
-'
-'    ' =====================================================
-'    ' QUERY EXPORT
-'    ' =====================================================
-'
-'    sql = ""
-'
-'    sql = sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
-'    sql = sql & " '" & Trim(cbocust.Text) & "', "
-'    sql = sql & " '" & Trim(cbolinecd.Text) & "', "
-'    sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
-'
-'    Debug.Print sql
-'
-'    rsCsv.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'    If rsCsv.EOF Then
-'
-'        MsgBox _
-'            "No data to export.", _
-'            vbExclamation
-'
-'        rsCsv.Close
-'
-'        Exit Sub
-'
-'    End If
-'
-'    ' =====================================================
-'    ' CREATE CSV
-'    ' =====================================================
-'
-'    FileNo = FreeFile
-'
-'    Open FullPath For Output As #FileNo
-'
-'    ' HEADER
-'    Print #FileNo, _
-'        "Schedule Date,Line Code,Item Code,Serial Number,Status"
-'
-'    ' DETAIL
-'    Do While Not rsCsv.EOF
-'
-'        scheduledate = rsCsv.Fields("Schedule Date").Value
-'
-'        LineCode = "=""" & _
-'                   rsCsv.Fields("Line Code").Value & """"
-'
-'        ItemCode = "=""" & _
-'                   rsCsv.Fields("Item Code").Value & """"
-'
-'        SerialNumber = "=""" & _
-'                       rsCsv.Fields("Serial Number").Value & """"
-'
-'        StatusData = rsCsv.Fields("Status").Value
-'
-'        Print #FileNo, _
-'            scheduledate & "," & _
-'            LineCode & "," & _
-'            ItemCode & "," & _
-'            SerialNumber & "," & _
-'            StatusData
-'
-'        rsCsv.MoveNext
-'
-'    Loop
-'
-'    Close #FileNo
-'
-'    rsCsv.Close
-'
-'    ' =====================================================
-'    ' CHECK FILE EXIST
-'    ' =====================================================
-'
-'    If Dir(FullPath) = "" Then
-'
-'        MsgBox _
-'            "CSV File Failed Create :" & vbCrLf & _
-'            FullPath, _
-'            vbCritical
-'
-'        Exit Sub
-'
-'    End If
-'
-'    Debug.Print "CSV FILE CREATED"
-'
-'    Debug.Print "FILE SIZE : " & FileLen(FullPath)
-'
-'    ' =====================================================
-'    ' GET FTP CONFIG
-'    ' =====================================================
-'
-'    ftpSql = "EXEC sp_GetFTPConfig"
-'
-'    RsFtp.Open ftpSql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'    If RsFtp.EOF Then
-'
-'        MsgBox _
-'            "FTP Config Not Found", _
-'            vbCritical
-'
-'        Exit Sub
-'
-'    End If
-'
-'    ftpHost = Trim(RsFtp.Fields("FTP_HOST").Value)
-'
-'    ftpUser = Trim(RsFtp.Fields("FTP_USER").Value)
-'
-'    ftpPass = Trim(RsFtp.Fields("FTP_PASS").Value)
-'
-'    ftpFolder = Trim(RsFtp.Fields("FTP_FOLDER").Value)
-'
-'    RsFtp.Close
-'
-'    ' =====================================================
-'    ' FTP FOLDER VALIDATION
-'    ' =====================================================
-'
-'    If Right(ftpFolder, 1) <> "/" Then
-'        ftpFolder = ftpFolder & "/"
-'    End If
-'
-'    ' =====================================================
-'    ' FTP COMMAND
-'    ' =====================================================
-'
-'    ftpCommand = _
-'        "PUT """ & _
-'        FullPath & _
-'        """ " & _
-'        ftpFolder & _
-'        filename
-'
-'    Debug.Print "======================================"
-'    Debug.Print "FTP HOST    : " & ftpHost
-'    Debug.Print "FTP USER    : " & ftpUser
-'    Debug.Print "FTP FOLDER  : " & ftpFolder
-'    Debug.Print "FTP COMMAND : " & ftpCommand
-'    Debug.Print "======================================"
-'
-'    ' =====================================================
-'    ' FTP UPLOAD
-'    ' =====================================================
-'
-'    Inet1.Protocol = icFTP
-'
-'    Inet1.URL = ftpHost
-'
-'    Inet1.userName = ftpUser
-'
-'    Inet1.Password = ftpPass
-'
-'    Inet1.Execute , ftpCommand
-'
-'    Do While Inet1.StillExecuting
-'        DoEvents
-'    Loop
-'
-'    ' SMALL DELAY
-'    For i = 1 To 500000
-'        DoEvents
-'    Next i
-'
-'    Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
-'
-'    ' =====================================================
-'    ' FTP RESULT
-'    ' =====================================================
-'
-'    If InStr(1, _
-'              Inet1.ResponseInfo, _
-'              "successfully", _
-'              vbTextCompare) > 0 Then
-'
-'        ' DELETE LOCAL FILE
-'        If Dir(FullPath) <> "" Then
-'            Kill FullPath
-'        End If
-'
-'        MsgBox _
-'            "Export CSV & FTP Upload Success", _
-'            vbInformation
-'
-'    Else
-'
-'        MsgBox _
-'            "FTP Upload Failed" & vbCrLf & vbCrLf & _
-'            Inet1.ResponseInfo, _
-'            vbCritical
-'
-'    End If
-'
-'    Exit Sub
-'
-'    ' =====================================================
-'    ' ERROR HANDLER
-'    ' =====================================================
-'
-'Errhandle:
-'
-'    Dim ErrMsg As String
-'
-'    ErrMsg = ""
-'    ErrMsg = ErrMsg & "EXPORT / FTP ERROR" & vbCrLf
-'    ErrMsg = ErrMsg & String(50, "-") & vbCrLf
-'    ErrMsg = ErrMsg & "Error Number : " & err.number & vbCrLf
-'    ErrMsg = ErrMsg & "Description  : " & err.Description & vbCrLf
-'
-'    Debug.Print ErrMsg
-'
-'    On Error Resume Next
-'
-'    If rsCsv.State = 1 Then rsCsv.Close
-'
-'    If RsFtp.State = 1 Then RsFtp.Close
-'
-'    MsgBox ErrMsg, vbCritical
-'
-'End Sub
-'
 Private Sub Form_Load()
 
     If gb_Simulation = True Then Call up_InitSimulation(Me)
@@ -1413,496 +1059,16 @@ Private Sub Form_Load()
     End With
 End Sub
 
-'Improve Split Per File Name
-'Private Sub Export_ToCsv()
-'
-'    On Error GoTo Errhandle
-'
-'    Dim rsCsv As New ADODB.Recordset
-'    Dim RsFtp As New ADODB.Recordset
-'
-'    Dim sql As String
-'    Dim ftpSql As String
-'
-'    Dim ExportFolder As String
-'    Dim FullPath As String
-'
-'    Dim FileNo As Integer
-'
-'    Dim scheduledate As String
-'    Dim PrevScheduleDate As String
-'
-'    Dim LineCode As String
-'    Dim ItemCode As String
-'    Dim SerialNumber As String
-'    Dim StatusData As String
-'
-'    Dim ftpHost As String
-'    Dim ftpUser As String
-'    Dim ftpPass As String
-'    Dim ftpFolder As String
-'
-'    Dim ftpCommand As String
-'
-'    Dim filename As String
-'
-'    Dim i As Long
-'
-'    ' =====================================================
-'    ' EXPORT FOLDER
-'    ' =====================================================
-'
-'    ExportFolder = App.path & "\IFProductionSchedule"
-'
-'    If Dir(ExportFolder, vbDirectory) = "" Then
-'        MkDir ExportFolder
-'    End If
-'
-'    If Right(ExportFolder, 1) <> "\" Then
-'        ExportFolder = ExportFolder & "\"
-'    End If
-'
-'    ' =====================================================
-'    ' QUERY EXPORT
-'    ' =====================================================
-'
-'    sql = ""
-'
-'    sql = sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
-'    sql = sql & " '" & Trim(cbocust.Text) & "', "
-'    sql = sql & " '" & Trim(cbolinecd.Text) & "', "
-'    sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
-'
-'    rsCsv.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'    If rsCsv.EOF Then
-'
-'        MsgBox "No data to export.", vbExclamation
-'
-'        rsCsv.Close
-'
-'        Exit Sub
-'
-'    End If
-'
-'    ' =====================================================
-'    ' GET FTP CONFIG
-'    ' =====================================================
-'
-'    ftpSql = "EXEC sp_GetFTPConfig"
-'
-'    RsFtp.Open ftpSql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'    If RsFtp.EOF Then
-'
-'        MsgBox "FTP Config Not Found", vbCritical
-'
-'        Exit Sub
-'
-'    End If
-'
-'    ftpHost = Trim(RsFtp.Fields("FTP_HOST").Value)
-'
-'    ftpUser = Trim(RsFtp.Fields("FTP_USER").Value)
-'
-'    ftpPass = Trim(RsFtp.Fields("FTP_PASS").Value)
-'
-'    ftpFolder = Trim(RsFtp.Fields("FTP_FOLDER").Value)
-'
-'    RsFtp.Close
-'
-'    If Right(ftpFolder, 1) <> "/" Then
-'        ftpFolder = ftpFolder & "/"
-'    End If
-'
-'    ' =====================================================
-'    ' START LOOP
-'    ' =====================================================
-'
-'    PrevScheduleDate = ""
-'
-'    Do While Not rsCsv.EOF
-'
-'        scheduledate = _
-'            Replace(rsCsv.Fields("Schedule Date").Value, "-", "")
-'
-'        ' =====================================================
-'        ' NEW FILE
-'        ' =====================================================
-'
-'        If PrevScheduleDate <> scheduledate Then
-'
-'            ' CLOSE PREVIOUS FILE
-'            If FileNo <> 0 Then
-'
-'                Close #FileNo
-'
-'                ' FTP UPLOAD
-'                Call UploadFTP( _
-'                    FullPath, _
-'                    filename, _
-'                    ftpHost, _
-'                    ftpUser, _
-'                    ftpPass, _
-'                    ftpFolder)
-'
-'                ' DELETE LOCAL FILE
-'                If Dir(FullPath) <> "" Then
-'                    Kill FullPath
-'                End If
-'
-'            End If
-'
-'            ' CREATE NEW FILE
-'            filename = _
-'                "Schedule-" & _
-'                scheduledate & _
-'                ".csv"
-'
-'            FullPath = ExportFolder & filename
-'
-'            FileNo = FreeFile
-'
-'            Open FullPath For Output As #FileNo
-'
-'            ' HEADER
-'            Print #FileNo, _
-'                "Line Code,Item Code,Serial Number,Status"
-'
-'            PrevScheduleDate = scheduledate
-'
-'        End If
-'
-'        ' =====================================================
-'        ' DETAIL
-'        ' =====================================================
-'
-'        LineCode = "=""" & _
-'                   rsCsv.Fields("Line Code").Value & """"
-'
-'        ItemCode = "=""" & _
-'                   rsCsv.Fields("Item Code").Value & """"
-'
-'        SerialNumber = "=""" & _
-'                       rsCsv.Fields("Serial Number").Value & """"
-'
-'        StatusData = rsCsv.Fields("Status").Value
-'
-'        Print #FileNo, _
-'            LineCode & "," & _
-'            ItemCode & "," & _
-'            SerialNumber & "," & _
-'            StatusData
-'
-'        rsCsv.MoveNext
-'
-'    Loop
-'
-'    ' =====================================================
-'    ' LAST FILE
-'    ' =====================================================
-'
-'    If FileNo <> 0 Then
-'
-'        Close #FileNo
-'
-'        Call UploadFTP( _
-'            FullPath, _
-'            filename, _
-'            ftpHost, _
-'            ftpUser, _
-'            ftpPass, _
-'            ftpFolder)
-'
-'        If Dir(FullPath) <> "" Then
-'            Kill FullPath
-'        End If
-'
-'    End If
-'
-'    rsCsv.Close
-'
-'    MsgBox _
-'        "Export CSV & FTP Upload Success", _
-'        vbInformation
-'
-'    Exit Sub
-'
-'Errhandle:
-'
-'    MsgBox _
-'        err.number & " - " & err.Description, _
-'        vbCritical
-'
-'End Sub
-'REMARK 20260611 improvement header detail
-'Private Sub Export_ToCsv()
-'
-'    On Error GoTo Errhandle
-'
-'    Dim rsCsv As New ADODB.Recordset
-'    Dim RsFtp As New ADODB.Recordset
-'
-'    Dim sql As String
-'    Dim ftpSql As String
-'
-'    Dim ExportFolder As String
-'    Dim FullPath As String
-'
-'    Dim FileNo As Integer
-'
-'    Dim scheduledate As String
-'    Dim PrevScheduleDate As String
-'
-'    Dim LineCode As String
-'    Dim ItemCode As String
-'    Dim SerialNumber As String
-'    Dim StatusData As String
-'
-'    Dim ftpHost As String
-'    Dim ftpUser As String
-'    Dim ftpPass As String
-'    Dim ftpFolder As String
-'    Dim ftpRemarks As String
-'
-'    Dim ftpCommand As String
-'
-'    Dim filename As String
-'
-'    Dim ErrMsg As String
-'
-'    Dim i As Long
-'
-'    ' =====================================================
-'    ' EXPORT FOLDER
-'    ' =====================================================
-'
-'    ExportFolder = App.path & "\IFProductionSchedule"
-'
-'    If Dir(ExportFolder, vbDirectory) = "" Then
-'        MkDir ExportFolder
-'    End If
-'
-'    If Right(ExportFolder, 1) <> "\" Then
-'        ExportFolder = ExportFolder & "\"
-'    End If
-'
-'    ' =====================================================
-'    ' QUERY EXPORT
-'    ' =====================================================
-'
-'    sql = ""
-'
-'    sql = sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
-'    sql = sql & " '" & Trim(cbocust.Text) & "', "
-'    sql = sql & " '" & Trim(cbolinecd.Text) & "', "
-'    sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-'    sql = sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
-'
-'    rsCsv.Open sql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'    If rsCsv.EOF Then
-'
-'        MsgBox "No data to export.", vbExclamation
-'
-'        rsCsv.Close
-'
-'        Exit Sub
-'
-'    End If
-'
-'    Dim rsDetail As ADODB.Recordset
-'
-'    Set rsDetail = rsCsv.NextRecordset
-'
-'    If rsDetail Is Nothing Then
-'        MsgBox "Detail Recordset Not Found"
-'    Else
-'        MsgBox "Detail Recordset OK"
-'    End If
-'
-'    ' =====================================================
-'    ' GET FTP CONFIG
-'    ' =====================================================
-'
-'    ftpSql = "EXEC sp_GetFTPConfig"
-'
-'    RsFtp.Open ftpSql, Db, adOpenForwardOnly, adLockReadOnly
-'
-'    If RsFtp.EOF Then
-'
-'        MsgBox "FTP Config Not Found", vbCritical
-'
-'        Exit Sub
-'
-'    End If
-'
-'    ftpHost = Trim(RsFtp.Fields("FTP_HOST").Value)
-'
-'    ftpUser = Trim(RsFtp.Fields("FTP_USER").Value)
-'
-'    ftpPass = Trim(RsFtp.Fields("FTP_PASS").Value)
-'
-'    ftpFolder = Trim(RsFtp.Fields("FTP_FOLDER").Value)
-'
-'    ftpRemarks = Trim("" & RsFtp.Fields("FTP_REMARKS").Value)
-'
-'    RsFtp.Close
-'
-'    If Right(ftpFolder, 1) <> "/" Then
-'        ftpFolder = ftpFolder & "/"
-'    End If
-'
-'    ' =====================================================
-'    ' START LOOP
-'    ' =====================================================
-'
-'    PrevScheduleDate = ""
-'
-'    Do While Not rsCsv.EOF
-'
-'        scheduledate = _
-'            Replace(rsCsv.Fields("Schedule Date").Value, "-", "")
-'
-'        ' =====================================================
-'        ' NEW FILE
-'        ' =====================================================
-'
-'        If PrevScheduleDate <> scheduledate Then
-'
-'            ' CLOSE PREVIOUS FILE
-'            If FileNo <> 0 Then
-'
-'                Close #FileNo
-'
-'                If UploadFTP( _
-'                    FullPath, _
-'                    filename, _
-'                    ftpHost, _
-'                    ftpUser, _
-'                    ftpPass, _
-'                    ftpFolder, _
-'                    ftpRemarks, _
-'                    ErrMsg) Then
-'
-'                    Kill FullPath
-'
-'                Else
-'
-'                    MsgBox ErrMsg, vbCritical
-'
-'                End If
-'
-'
-''                ' DELETE LOCAL FILE
-''                If Dir(FullPath) <> "" Then
-''                    Kill FullPath
-''                End If
-'
-'            End If
-'
-'            ' CREATE NEW FILE
-'            filename = _
-'                "Schedule-" & _
-'                scheduledate & _
-'                ".csv"
-'
-'            FullPath = ExportFolder & filename
-'
-'            FileNo = FreeFile
-'
-'            Open FullPath For Output As #FileNo
-'
-'            ' HEADER
-'            Print #FileNo, _
-'                "Line Code,Item Code,Serial Number,Status"
-'
-'            PrevScheduleDate = scheduledate
-'
-'        End If
-'
-'        ' =====================================================
-'        ' DETAIL
-'        ' =====================================================
-'
-'        LineCode = "=""" & _
-'                   rsCsv.Fields("Line Code").Value & """"
-'
-'        ItemCode = "=""" & _
-'                   rsCsv.Fields("Item Code").Value & """"
-'
-'        SerialNumber = "=""" & _
-'                       rsCsv.Fields("Serial Number").Value & """"
-'
-'        StatusData = rsCsv.Fields("Status").Value
-'
-'        Print #FileNo, _
-'            LineCode & "," & _
-'            ItemCode & "," & _
-'            SerialNumber & "," & _
-'            StatusData
-'
-'        rsCsv.MoveNext
-'
-'    Loop
-'
-'    ' =====================================================
-'    ' LAST FILE
-'    ' =====================================================
-'
-'    If FileNo <> 0 Then
-'
-'        Close #FileNo
-'
-'         If UploadFTP( _
-'                    FullPath, _
-'                    filename, _
-'                    ftpHost, _
-'                    ftpUser, _
-'                    ftpPass, _
-'                    ftpFolder, _
-'                    ftpRemarks, _
-'                    ErrMsg) Then
-'
-'                    Kill FullPath
-'
-'                Else
-'
-'                    MsgBox ErrMsg, vbCritical
-'
-'                End If
-'
-'
-'    End If
-'
-'    rsCsv.Close
-'
-'    MsgBox _
-'        "Export CSV & FTP Upload Success", _
-'        vbInformation
-'
-'    Exit Sub
-'
-'Errhandle:
-'
-'    MsgBox _
-'        err.number & " - " & err.Description, _
-'        vbCritical
-'
-'End Sub
-
-Public Sub Export_ToCsv()
+Public Function Export_ToCsv() As Boolean
    
     On Error GoTo Errhandle
      
+    Export_ToCsv = False
          
     Dim rsCsv As New ADODB.Recordset
     Dim RsFtp As New ADODB.Recordset
 
-    Dim sql As String
+    Dim Sql As String
     Dim ftpSql As String
 
     Dim ExportFolder As String
@@ -1965,18 +1131,18 @@ Public Sub Export_ToCsv()
     ' QUERY EXPORT
     ' =====================================================
 
-    sql = ""
+    Sql = ""
 
-    sql = sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
-    sql = sql & " '" & Trim(cbocust.Text) & "', "
-    sql = sql & " '" & Trim(cbolinecd.Text) & "', "
-    sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-    sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-    sql = sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
+    Sql = Sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
+    Sql = Sql & " '" & Trim(cbocust.Text) & "', "
+    Sql = Sql & " '" & Trim(cbolinecd.Text) & "', "
+    Sql = Sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
+    Sql = Sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
+    Sql = Sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
     
     Dim rsdetail As ADODB.Recordset
 
-    rsCsv.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+    rsCsv.Open Sql, Db, adOpenForwardOnly, adLockReadOnly
     
     If rsCsv.EOF Then
     
@@ -1984,7 +1150,7 @@ Public Sub Export_ToCsv()
     
         rsCsv.Close
     
-        Exit Sub
+        Exit Function
     
     End If
 
@@ -2002,7 +1168,7 @@ Public Sub Export_ToCsv()
             "FTP Config Not Found", _
             vbCritical
     
-        Exit Sub
+        Exit Function
     
     End If
     
@@ -2285,7 +1451,7 @@ End If
     
         lblErrMsg = ErrMsg
     
-        Exit Sub
+        Exit Function
     
     End If
 
@@ -2316,7 +1482,7 @@ End If
 
         lblErrMsg = ErrMsg
         
-        Exit Sub
+        Exit Function
     
     End If
     
@@ -2335,7 +1501,9 @@ End If
         
         lblErrMsg = ErrMsg
            
-        Exit Sub
+        Export_ToCsv = True
+          
+        Exit Function
 
 Errhandle:
 
@@ -2343,7 +1511,7 @@ Errhandle:
         err.number & " - " & err.Description, _
         vbCritical
 
-End Sub
+End Function
 
 Sub Header()
     Dim i As Long
@@ -2558,35 +1726,6 @@ Dim i As Integer
         .ListIndex = 0
     End With
 End Sub
-
-'Sub adtoCboLotNo()
-'Dim SqlStatus As String
-'Dim RsStatus As New Recordset
-'Dim i As Integer
-'
-'    SqlStatus = " EXEC dbo.sp_FillComboProdScheduleInf @Type = '4', @Param1 = '" & cbocust.Text & "', @Param2 = '" & cbolinecd.Text & "', " & vbCrLf & _
-'                " @Param3 = '" & scheduledate1.Value & "', @Param4 = '" & scheduledate2.Value & "'"
-'
-'    Set RsStatus = Db.Execute(SqlStatus)
-'
-'    With cboLotNo
-'        .clear
-'        .columnCount = 1
-'        .ColumnWidths = "82pt"
-'        .ListWidth = 82
-'        .ListRows = 3
-'
-'        i = 0
-'        Do While Not RsStatus.EOF
-'            .AddItem
-'            .List(i, 0) = Trim(RsStatus("Lot_No"))
-'            RsStatus.MoveNext
-'            i = i + 1
-'        Loop
-'
-'        .ListIndex = 0
-'    End With
-'End Sub
 
 Private Sub CmdSubMenu_Click()
     Unload Me
@@ -2828,93 +1967,6 @@ End Sub
 '
 'End Sub
 
-'remark 20260610
-'Private Function UploadFTP( _
-'    ByVal FullPath As String, _
-'    ByVal filename As String, _
-'    ByVal ftpHost As String, _
-'    ByVal ftpUser As String, _
-'    ByVal ftpPass As String, _
-'    ByVal ftpFolder As String, _
-'    ByVal ftpRemarks As String) As Boolean
-'
-'    On Error GoTo Errhandle
-'
-'    Dim ftpCommand As String
-'    Dim i As Long
-'
-'    ' =====================================================
-'    ' TRIAL MODE
-'    ' =====================================================
-'
-'    If UCase(Trim(ftpRemarks)) = "TRIAL" Then
-'
-'        If Right(ftpFolder, 1) <> "\" Then
-'            ftpFolder = ftpFolder & "\"
-'        End If
-'
-'        FileCopy FullPath, ftpFolder & filename
-'
-'        Debug.Print _
-'            "TRIAL COPY : " & _
-'            ftpFolder & filename
-'
-'        UploadFTP = True
-'
-'        Exit Function
-'
-'    End If
-'
-'    ' =====================================================
-'    ' LIVE FTP MODE
-'    ' =====================================================
-'
-'    Inet1.Protocol = icFTP
-'
-'    Inet1.URL = ftpHost
-'
-'    Inet1.userName = ftpUser
-'
-'    Inet1.Password = ftpPass
-'
-'    If Right(ftpFolder, 1) <> "\" Then
-'        ftpFolder = ftpFolder & "\"
-'    End If
-'
-'    ftpCommand = _
-'        "PUT """ & _
-'        FullPath & _
-'        """ " & _
-'        ftpFolder & _
-'        filename
-'
-'    Debug.Print ftpCommand
-'
-'    Inet1.Execute , ftpCommand
-'
-'    Do While Inet1.StillExecuting
-'        DoEvents
-'    Loop
-'
-'    For i = 1 To 500000
-'        DoEvents
-'    Next i
-'
-'    UploadFTP = True
-'
-'    Exit Function
-'
-'Errhandle:
-'
-'    UploadFTP = False
-'
-'    Debug.Print _
-'        err.number & _
-'        " - " & _
-'        err.Description
-'
-'End Function
-
 Private Function UploadFTP( _
 ByVal FullPath As String, _
 ByVal filename As String, _
@@ -2990,36 +2042,21 @@ If UCase$(Trim$(ftpRemarks)) = "TRIAL" Then
 
         DoEvents
 
-        If Timer - StartTime > 120 Then
+        If Abs(Timer - StartTime) > 120 Then
+
+            UploadFTP = False
+        
             ErrMsg = "FTP Timeout (120 Seconds)"
+        
+            WriteLog "STATUS        : FAILED"
+            WriteLog "ERROR         : " & ErrMsg
+            WriteLog "FILE          : " & filename
+        
             Exit Function
+        
         End If
 
     Loop
-
-'    Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
-''
-''    UploadFTP = True
-'
-''    Debug.Print "STATUS       : SUCCESS"
-'
-'    WriteLog String(80, "=")
-'    WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
-'    WriteLog "FTP MODE      : TRIAL"
-'    WriteLog "SOURCE FILE   : " & filename
-'    WriteLog "DEST FILE     : " & ftpFolder & filename
-'    WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
-'
-'    Dim lsResponse As String
-'
-'    lsResponse = Trim$(Inet1.ResponseInfo)
-'
-'
-'    If InStr(1, lsResponse, "completed successfully", vbTextCompare) > 0 Then
-'        UploadFTP = True
-'    Else
-'        UploadFTP = False
-'    End If
 
     Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
     
@@ -3083,34 +2120,31 @@ Do While Inet1.StillExecuting
 
     DoEvents
 
-    If Timer - StartTime > 60 Then
+    If Timer - StartTime > 120 Then
 
-        ErrMsg = "FTP Timeout (60 Seconds)"
+        UploadFTP = False
 
+        ErrMsg = _
+            "FTP Timeout (120 Seconds)" & _
+            vbCrLf & _
+            "File : " & filename
+    
+        WriteLog "STATUS        : FAILED"
+        WriteLog "ERROR         : FTP Timeout"
+        WriteLog "FILE          : " & filename
+    
         Exit Function
 
     End If
 
 Loop
 
-'Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo 'Inet1.GetChunk(0, icString)
-'
-'UploadFTP = True
-'
-'Debug.Print "STATUS       : SUCCESS"
-'
-'    WriteLog String(80, "=")
-'    WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
-'    WriteLog "FTP MODE      : LIVE"
-'    WriteLog "SOURCE FILE   : " & filename
-'    WriteLog "DEST FILE     : " & ftpFolder & filename
-'    WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
 
 Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
 
 WriteLog String(80, "=")
 WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
-WriteLog "FTP MODE      : TRIAL"
+WriteLog "FTP MODE      : LIVE"
 WriteLog "SOURCE FILE   : " & filename
 WriteLog "DEST FILE     : " & ftpFolder & filename
 WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
@@ -3203,16 +2237,16 @@ End Function
 Private Function GetFTPFolder(ByVal filename As String) As String
 
     Dim RS As ADODB.Recordset
-    Dim sql As String
+    Dim Sql As String
 
     On Error GoTo ErrHandler
 
     Set RS = New ADODB.Recordset
 
-    sql = "EXEC sp_GetFTPFileType_ProdScheduleInf '" & _
+    Sql = "EXEC sp_GetFTPFileType_ProdScheduleInf '" & _
           Replace(filename, "'", "''") & "'"
 
-    RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+    RS.Open Sql, Db, adOpenForwardOnly, adLockReadOnly
 
     If Not RS.EOF Then
 
@@ -3258,4 +2292,30 @@ Private Function GetAdminStatus() As Integer
     Set RS = Nothing
 
 End Function
+
+Private Sub RollbackApprove()
+
+    Dim j As Long
+    Dim Sql As String
+
+    For j = 1 To ApproveCount
+
+        Sql = ""
+
+        Sql = Sql & " EXEC sp_ProdScheduleInf_Status "
+        Sql = Sql & " '" & Trim(cbocust.Text) & "', "
+        Sql = Sql & " '" & Trim(cbolinecd.Text) & "', "
+        Sql = Sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
+        Sql = Sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
+        Sql = Sql & " '" & arrApprove(j).ItemCode & "', "
+        Sql = Sql & " '" & arrApprove(j).LotNo & "', "
+        Sql = Sql & arrApprove(j).Qty & ", "
+        Sql = Sql & " 'UNAPPROVE', "
+        Sql = Sql & " '" & userLogin & "' "
+
+        Db.Execute Sql
+
+    Next j
+
+End Sub
 
