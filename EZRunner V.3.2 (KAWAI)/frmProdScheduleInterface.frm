@@ -129,7 +129,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   107479043
+         Format          =   128778243
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -162,7 +162,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   107479043
+         Format          =   128778243
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -700,7 +700,7 @@ Dim StrStartSerial As String
 
 Private Type tApproveData
     ItemCode As String
-    LotNo As String
+    lotno As String
     Qty As Double
 End Type
 
@@ -781,7 +781,7 @@ End Sub
 Private Sub CmdSubmit_Click()
 
     Dim tanya As VbMsgBoxResult
-    Dim Sql As String
+    Dim sql As String
     Dim statusProses As String
     Dim StatInsertUpdate As Boolean
     Dim i As Long
@@ -943,20 +943,20 @@ Private Sub CmdSubmit_Click()
         ' =================================================
         ' EXECUTE STORED PROCEDURE
         ' =================================================
-        Sql = ""
+        sql = ""
     
-        Sql = Sql & " EXEC sp_ProdScheduleInf_status "
-        Sql = Sql & " '" & Trim(cbocust.Text) & "', "
-        Sql = Sql & " '" & Trim(cbolinecd.Text) & "', "
-        Sql = Sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-        Sql = Sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-        Sql = Sql & " '" & Trim(.TextMatrix(i, bteColProdCode)) & "', "
-        Sql = Sql & " '" & Trim(.TextMatrix(i, bteColLotNo)) & "', "
-        Sql = Sql & "  " & Val(.TextMatrix(i, bteColQty)) & ", "
-        Sql = Sql & "  '" & statusProses & "', "
-        Sql = Sql & " '" & userLogin & "' "
+        sql = sql & " EXEC sp_ProdScheduleInf_status "
+        sql = sql & " '" & Trim(cbocust.Text) & "', "
+        sql = sql & " '" & Trim(cbolinecd.Text) & "', "
+        sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
+        sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
+        sql = sql & " '" & Trim(.TextMatrix(i, bteColProdCode)) & "', "
+        sql = sql & " '" & Trim(.TextMatrix(i, bteColLotNo)) & "', "
+        sql = sql & "  " & Val(.TextMatrix(i, bteColQty)) & ", "
+        sql = sql & "  '" & statusProses & "', "
+        sql = sql & " '" & userLogin & "' "
     
-        dbTransfer.Execute Sql
+        dbTransfer.Execute sql
     
         StatInsertUpdate = True
         
@@ -969,7 +969,7 @@ Private Sub CmdSubmit_Click()
             arrApprove(ApproveCount).ItemCode = _
                 Trim(.TextMatrix(i, bteColProdCode))
         
-            arrApprove(ApproveCount).LotNo = _
+            arrApprove(ApproveCount).lotno = _
                 Trim(.TextMatrix(i, bteColLotNo))
         
             arrApprove(ApproveCount).Qty = _
@@ -1068,7 +1068,7 @@ Public Function Export_ToCsv() As Boolean
     Dim rsCsv As New ADODB.Recordset
     Dim RsFtp As New ADODB.Recordset
 
-    Dim Sql As String
+    Dim sql As String
     Dim ftpSql As String
 
     Dim ExportFolder As String
@@ -1131,18 +1131,18 @@ Public Function Export_ToCsv() As Boolean
     ' QUERY EXPORT
     ' =====================================================
 
-    Sql = ""
+    sql = ""
 
-    Sql = Sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
-    Sql = Sql & " '" & Trim(cbocust.Text) & "', "
-    Sql = Sql & " '" & Trim(cbolinecd.Text) & "', "
-    Sql = Sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-    Sql = Sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-    Sql = Sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
+    sql = sql & " EXEC sp_ProdScheduleInterface_ExportCsv "
+    sql = sql & " '" & Trim(cbocust.Text) & "', "
+    sql = sql & " '" & Trim(cbolinecd.Text) & "', "
+    sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
+    sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
+    sql = sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
     
     Dim rsdetail As ADODB.Recordset
 
-    rsCsv.Open Sql, Db, adOpenForwardOnly, adLockReadOnly
+    rsCsv.Open sql, Db, adOpenForwardOnly, adLockReadOnly
     
     If rsCsv.EOF Then
     
@@ -1560,10 +1560,10 @@ Sub Header()
       .ColWidth(bteColCustName) = 2800
       .ColWidth(bteColPONo) = 2000
       .ColWidth(bteColApproved) = 1050
-      .ColWidth(bteColApprovedDate) = 1450
+      .ColWidth(bteColApprovedDate) = 2150
       .ColWidth(bteColApprovedUser) = 1500
       .ColWidth(bteColVoid) = 1000
-      .ColWidth(bteColVoidDate) = 1450
+      .ColWidth(bteColVoidDate) = 2150
       .ColWidth(bteColVoidUser) = 1500
       
       .TextMatrix(0, bteColDate) = "Schedule Date"
@@ -1797,7 +1797,7 @@ Sub Browse()
                     .TextMatrix(i, bteColApproved) = True
                 End If
                 
-                 .TextMatrix(i, bteColApprovedDate) = Format(Trim(rsGrid("Approved_Date")), "dd MMM yyyy") & ""
+                 .TextMatrix(i, bteColApprovedDate) = Format(Trim(rsGrid("Approved_Date")), "dd MMM yyyy HH:nn:ss") & ""
                  .TextMatrix(i, bteColApprovedUser) = rsGrid("Approved_User") & ""
                  
                 .Cell(flexcpBackColor, i, bteColVoid) = vbWhite
@@ -1808,7 +1808,7 @@ Sub Browse()
                     .TextMatrix(i, bteColVoid) = True
                 End If
                 
-                .TextMatrix(i, bteColVoidDate) = Format(Trim(rsGrid("Void_Date")), "dd MMM yyyy") & ""
+                .TextMatrix(i, bteColVoidDate) = Format(Trim(rsGrid("Void_Date")), "dd MMM yyyy HH:nn:ss") & ""
                 .TextMatrix(i, bteColVoidUser) = rsGrid("Void_User") & ""
                 
                 rsGrid.MoveNext
@@ -2237,16 +2237,16 @@ End Function
 Private Function GetFTPFolder(ByVal filename As String) As String
 
     Dim RS As ADODB.Recordset
-    Dim Sql As String
+    Dim sql As String
 
     On Error GoTo ErrHandler
 
     Set RS = New ADODB.Recordset
 
-    Sql = "EXEC sp_GetFTPFileType_ProdScheduleInf '" & _
+    sql = "EXEC sp_GetFTPFileType_ProdScheduleInf '" & _
           Replace(filename, "'", "''") & "'"
 
-    RS.Open Sql, Db, adOpenForwardOnly, adLockReadOnly
+    RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
 
     If Not RS.EOF Then
 
@@ -2296,24 +2296,24 @@ End Function
 Private Sub RollbackApprove()
 
     Dim j As Long
-    Dim Sql As String
+    Dim sql As String
 
     For j = 1 To ApproveCount
 
-        Sql = ""
+        sql = ""
 
-        Sql = Sql & " EXEC sp_ProdScheduleInf_Status "
-        Sql = Sql & " '" & Trim(cbocust.Text) & "', "
-        Sql = Sql & " '" & Trim(cbolinecd.Text) & "', "
-        Sql = Sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
-        Sql = Sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-        Sql = Sql & " '" & arrApprove(j).ItemCode & "', "
-        Sql = Sql & " '" & arrApprove(j).LotNo & "', "
-        Sql = Sql & arrApprove(j).Qty & ", "
-        Sql = Sql & " 'UNAPPROVE', "
-        Sql = Sql & " '" & userLogin & "' "
+        sql = sql & " EXEC sp_ProdScheduleInf_Status "
+        sql = sql & " '" & Trim(cbocust.Text) & "', "
+        sql = sql & " '" & Trim(cbolinecd.Text) & "', "
+        sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
+        sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
+        sql = sql & " '" & arrApprove(j).ItemCode & "', "
+        sql = sql & " '" & arrApprove(j).lotno & "', "
+        sql = sql & arrApprove(j).Qty & ", "
+        sql = sql & " 'UNAPPROVE', "
+        sql = sql & " '" & userLogin & "' "
 
-        Db.Execute Sql
+        Db.Execute sql
 
     Next j
 
