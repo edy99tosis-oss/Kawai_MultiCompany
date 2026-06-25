@@ -129,7 +129,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128778243
+         Format          =   129761283
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -162,7 +162,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   128778243
+         Format          =   129761283
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -2085,109 +2085,128 @@ If UCase$(Trim$(ftpRemarks)) = "TRIAL" Then
 End If
 
 ' ==========================================
-' LIVE FTP MODE
+' LIVE FTP MODE (ftp.exe)
 ' ==========================================
 
-If Right$(ftpFolder, 1) <> "\" Then
-    ftpFolder = ftpFolder & "\"
+Dim ScriptFile As String
+Dim LogFile As String
+Dim FF As Integer
+Dim Wsh As Object
+Dim Result As String
+Dim FSO As Object
+Dim TS As Object
+
+UploadFTP = False
+
+If Right$(ftpFolder, 1) = "\" Then
+    ftpFolder = Left$(ftpFolder, Len(ftpFolder) - 1)
 End If
 
-ftpCommand = _
-    "PUT """ & _
-    FullPath & _
-    """ """ & _
-    ftpFolder & _
-    filename & """"
+ScriptFile = App.path & "\ftp_upload.txt"
+LogFile = App.path & "\ftp_upload.log"
+
+FF = FreeFile
+
+Open ScriptFile For Output As #FF
+
+Print #FF, "open " & ftpHost
+Print #FF, "user " & ftpUser & " " & ftpPass
+Print #FF, "binary"
+
+Print #FF, "put """ & _
+            FullPath & _
+            """ " & _
+            ftpFolder & "\" & filename
+
+Print #FF, "bye"
+
+Close #FF
 
 Debug.Print String(80, "=")
 Debug.Print "FTP HOST     : " & ftpHost
 Debug.Print "FTP USER     : " & ftpUser
 Debug.Print "FTP FOLDER   : " & ftpFolder
 Debug.Print "LOCAL FILE   : " & FullPath
-Debug.Print "REMOTE FILE  : " & ftpFolder & filename
-Debug.Print "COMMAND      : " & ftpCommand
+Debug.Print "REMOTE FILE  : " & ftpFolder & "\" & filename
 
-Inet1.Protocol = icFTP
-Inet1.URL = ftpHost
-Inet1.userName = ftpUser
-Inet1.Password = ftpPass
+Set Wsh = CreateObject("WScript.Shell")
 
-StartTime = Timer
+Wsh.Run _
+    "cmd /c ftp -n -s:""" & _
+    ScriptFile & _
+    """ > """ & _
+    LogFile & _
+    """ 2>&1", _
+    0, _
+    True
 
-Inet1.Execute , ftpCommand
+Set FSO = CreateObject("Scripting.FileSystemObject")
 
-Do While Inet1.StillExecuting
+Result = ""
 
-    DoEvents
+If FSO.FileExists(LogFile) Then
 
-    If Timer - StartTime > 120 Then
+    Set TS = FSO.OpenTextFile(LogFile, 1)
 
-        UploadFTP = False
+    Result = TS.ReadAll
 
-        ErrMsg = _
-            "FTP Timeout (120 Seconds)" & _
-            vbCrLf & _
-            "File : " & filename
-    
-        WriteLog "STATUS        : FAILED"
-        WriteLog "ERROR         : FTP Timeout"
-        WriteLog "FILE          : " & filename
-    
-        Exit Function
+    TS.Close
 
-    End If
+End If
 
-Loop
-
-
-Debug.Print "FTP RESPONSE : " & Inet1.ResponseInfo
+Debug.Print Result
 
 WriteLog String(80, "=")
 WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
 WriteLog "FTP MODE      : LIVE"
 WriteLog "SOURCE FILE   : " & filename
-WriteLog "DEST FILE     : " & ftpFolder & filename
-WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
+WriteLog "DEST FILE     : " & ftpFolder & "\" & filename
+WriteLog "FTP RESPONSE  : "
+WriteLog Result
 
+If InStr(1, Result, "226", vbTextCompare) > 0 _
+Or InStr(1, Result, "Transfer complete", vbTextCompare) > 0 _
+Or InStr(1, Result, "completed successfully", vbTextCompare) > 0 Then
 
+    UploadFTP = True
+    ErrMsg = "Upload completed successfully."
 
-lsResponse = Trim$(Inet1.ResponseInfo)
+    WriteLog "STATUS        : SUCCESS"
 
-    If InStr(1, lsResponse, "completed successfully", vbTextCompare) > 0 Then
-        UploadFTP = True
-        WriteLog "STATUS        : SUCCESS"
-        ErrMsg = lsResponse
-    Else
-        UploadFTP = False
-        WriteLog "STATUS        : FAILED"
-        ErrMsg = lsResponse
-    End If
+Else
 
+    UploadFTP = False
+    ErrMsg = Trim$(Result)
+
+    WriteLog "STATUS        : FAILED"
+
+End If
+
+On Error Resume Next
+
+If FSO.FileExists(ScriptFile) Then Kill ScriptFile
+If FSO.FileExists(LogFile) Then Kill LogFile
+
+Set TS = Nothing
+Set FSO = Nothing
+Set Wsh = Nothing
+
+On Error GoTo Errhandle
 
 Exit Function
 
-
 Errhandle:
 
+ErrMsg = "VB Error " & err.number & " - " & err.Description
 
-ErrMsg = _
-    "VB Error " & err.number & _
-    " - " & err.Description
-
-Debug.Print String(80, "=")
-Debug.Print "STATUS       : FAILED"
-Debug.Print ErrMsg
-
-    WriteLog String(80, "=")
-    WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
-    WriteLog "FTP MODE      : " & ftpRemarks
-    WriteLog "SOURCE FILE   : " & filename
-    WriteLog "FTP RESPONSE  : " & Inet1.ResponseInfo
-    WriteLog "STATUS        : FAILED"
-    WriteLog "ERROR         : " & ErrMsg
+WriteLog String(80, "=")
+WriteLog "DATE/TIME     : " & Format(Now, "yyyy-mm-dd HH:mm:ss")
+WriteLog "FTP MODE      : " & ftpRemarks
+WriteLog "SOURCE FILE   : " & filename
+WriteLog "STATUS        : FAILED"
+WriteLog "ERROR         : " & ErrMsg
 
 UploadFTP = False
-
 
 End Function
 
