@@ -112,7 +112,7 @@ Begin VB.Form frmDailyProdEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   285
-      Left            =   4860
+      Left            =   4800
       Locked          =   -1  'True
       TabIndex        =   42
       TabStop         =   0   'False
@@ -399,7 +399,7 @@ Begin VB.Form frmDailyProdEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   115605507
+      Format          =   129105923
       CurrentDate     =   37859
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
@@ -529,7 +529,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   115605507
+         Format          =   129105923
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -561,7 +561,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   115605507
+         Format          =   129105923
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -1719,7 +1719,7 @@ If cboFactory.ListIndex <> -1 Then
     End If
 End Sub
 
-Private Sub CboGroup_Change()
+Private Sub cboGroup_Change()
     If CboGroup.ListIndex <> -1 Then
         Label11.Caption = CboGroup.Column(1)
         Else
@@ -1762,27 +1762,135 @@ Private Sub cboitemcode_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integ
   End If
 End Sub
 
+'Private Sub cboItemCode_LostFocus()
+'
+'    Dim i As Integer
+'    For i = 0 To cboitemcode.ListCount - 1
+'        If cboitemcode.Text = cboitemcode.List(i) Then
+'            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
+'                cboitemcode.ListIndex = i
+'                cboitemcode_Click
+'                Exit For
+'            End If
+'        End If
+'    Next
+'
+'End Sub
+
 Private Sub cboItemCode_LostFocus()
+
+    Dim RS As New ADODB.Recordset
+    Dim sql As String
     Dim i As Integer
+    Dim bFound As Boolean
+
+    bFound = False
+
+    '=================================================
+    ' Check apakah Item Code ada di Combo
+    '=================================================
     For i = 0 To cboitemcode.ListCount - 1
-        If cboitemcode.Text = cboitemcode.List(i) Then
-            If cboitemcode.Column(1) = cboitemcode.List(i, 1) Then
-                cboitemcode.ListIndex = i
-                cboitemcode_Click
-                Exit For
-            End If
+
+        If Trim$(cboitemcode.Text) = Trim$(cboitemcode.List(i)) Then
+
+            cboitemcode.ListIndex = i
+            cboitemcode_Click
+
+            bFound = True
+            Exit For
+
         End If
-    Next
+
+    Next i
+
+    'Kalau sudah ketemu, tidak perlu query lagi
+    If bFound Then Exit Sub
+
+    '=================================================
+    ' Lookup ke Database jika tidak ditemukan
+    '=================================================
+    sql = "EXEC dbo.sp_DailyProdSchedule_Lookup " & _
+          "@Type='ItemCode', " & _
+          "@Param1='" & Trim$(cboitemcode.Text) & "'"
+
+    If RS.State = adStateOpen Then RS.Close
+    RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+
+    lblPart.Text = ""
+    lbldesc.Text = ""
+    lblunit.Caption = ""
+
+    If Not RS.EOF Then
+        cboitemcode.Text = Trim$(cboitemcode.Text)
+        lblPart.Text = Trim$(RS!MakerItem_Code & "")
+        lbldesc.Text = Trim$(RS!Item_Name & "")
+        lblunit.Caption = Trim$(RS!Unit_Cls & "")
+    End If
+
+    RS.Close
+    Set RS = Nothing
+
 End Sub
 
 Private Sub cmdBrowser_Click()
- If cboitemcode.Enabled = True Then
-  Me.MousePointer = vbHourglass
-  frm_BrowseItem.getItemCode = cboitemcode.Text
-  frm_BrowseItem.Show 1
-  cboitemcode.Text = frm_BrowseItem.getItemCode
-  Me.MousePointer = vbDefault
- End If
+ Dim RS As New ADODB.Recordset
+    Dim sql As String
+    
+' If CboItemCode.Enabled = True Then
+'  Me.MousePointer = vbHourglass
+'  frm_BrowseItem.getItemCode = CboItemCode.Text
+'  frm_BrowseItem.Show 1
+'  CboItemCode.Text = frm_BrowseItem.getItemCode
+'
+'   sql = "EXEC dbo.sp_DailyProdSchedule_Lookup " & _
+'          "@Type='ItemCode', " & _
+'          "@Param1='" & Replace(Trim(CboItemCode.Text), "'", "''") & "'"
+'
+'    If RS.State = adStateOpen Then RS.Close
+'    RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+'
+'    If Not RS.EOF Then
+'        LblPart.Caption = Trim(RS!MakerItem_Code & "")
+'        lbldesc.Caption = Trim(RS!Item_Name & "")
+'        lblUnit.Caption = Trim(RS!Unit_Cls & "")
+'    End If
+'
+'    RS.Close
+'    Set RS = Nothing
+'
+'  Me.MousePointer = vbDefault
+' End If
+
+If cboitemcode.Enabled = False Then Exit Sub
+
+    Me.MousePointer = vbHourglass
+
+    frm_BrowseItem.getItemCode = cboitemcode.Text
+    frm_BrowseItem.Show 1
+
+    cboitemcode.Text = frm_BrowseItem.getItemCode
+
+    sql = "EXEC dbo.sp_DailyProdSchedule_Lookup " & _
+          "@Type='ItemCode', " & _
+          "@Param1='" & Trim(cboitemcode.Text) & "'"
+
+    If RS.State = adStateOpen Then RS.Close
+    RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+
+    lblPart.Text = ""
+    lbldesc.Text = ""
+    lblunit.Caption = ""
+
+    If Not RS.EOF Then
+        lblPart.Text = Trim(RS!MakerItem_Code & "")
+        lbldesc.Text = Trim(RS!Item_Name & "")
+        lblunit.Caption = Trim(RS!Unit_Cls & "")
+    End If
+
+    RS.Close
+
+    Me.MousePointer = vbDefault
+    
 End Sub
 
 Private Sub Form_Load()
@@ -1896,6 +2004,37 @@ With grid
     TextGrid = grid.Text
 
     If TextGrid = "S" Then
+        Dim RS As New ADODB.Recordset
+        Dim sql As String
+    
+        sql = "EXEC dbo.sp_DailyProdSchedule_Lookup " & _
+              "@Type='CheckSerial', " & _
+              "@Param1='" & Trim(.TextMatrix(Row, bteColSeqNo)) & "'"
+    
+        If RS.State = adStateOpen Then RS.Close
+        RS.Open sql, Db, adOpenForwardOnly, adLockReadOnly
+    
+        If Not RS.EOF Then
+            If RS!IsExist = 1 Then
+    
+                MsgBox "Daily Production Schedule already process." & vbCrLf & vbCrLf & _
+                       "This schedule cannot be edited.", _
+                       vbExclamation, _
+                       "Warning"
+    
+                .TextMatrix(Row, Col) = ""
+                RS.Close
+                Exit Sub
+    
+            End If
+        End If
+    
+        RS.Close
+    
+        '==========================
+        ' LANJUT PROSES EDIT
+        '==========================
+        
         Status = "update"
         cboitemcode.Text = .TextMatrix(Row, bteColProdCode)
         cboitemcode.Enabled = False
@@ -2623,8 +2762,6 @@ Else
 End If
 
 End Sub
-
-
 
 Private Function uf_ValidasiSerialNo() As String
 
