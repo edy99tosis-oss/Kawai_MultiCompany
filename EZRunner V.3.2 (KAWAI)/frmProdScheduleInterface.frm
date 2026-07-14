@@ -17,6 +17,27 @@ Begin VB.Form frmProdScheduleInterface
    ScaleWidth      =   14940
    StartUpPosition =   2  'CenterScreen
    WindowState     =   2  'Maximized
+   Begin VB.CommandButton cmdVoid 
+      BackColor       =   &H0080FFFF&
+      Caption         =   "&Void"
+      Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   12360
+      Style           =   1  'Graphical
+      TabIndex        =   27
+      Tag             =   "FFTT*/"
+      Top             =   9720
+      Width           =   1125
+   End
    Begin InetCtlsObjects.Inet Inet1 
       Left            =   4080
       Top             =   9600
@@ -44,7 +65,7 @@ Begin VB.Form frmProdScheduleInterface
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   12360
+      Left            =   11160
       Style           =   1  'Graphical
       TabIndex        =   8
       Tag             =   "FFTT*/"
@@ -129,7 +150,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129761283
+         Format          =   129499139
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -162,7 +183,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129761283
+         Format          =   129499139
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -671,13 +692,15 @@ Dim sqlGrid As String
 Dim startDaily As String
 Dim dbTransfer As New ADODB.Connection
 
-
+Dim bteColDPSeqNo As Byte
 Dim bteColDate As Byte
 Dim bteColProdCode As Byte
 Dim bteColPart As Byte
 Dim bteColDesc As Byte
 Dim bteColLotNo As Byte
 Dim bteColQty As Byte
+Dim bteColResult As Byte
+Dim bteColRemaining As Byte
 Dim bteColUnitCls As Byte
 Dim bteColUnit As Byte
 Dim BteColSerialFrom As Byte
@@ -706,6 +729,7 @@ End Type
 
 Private arrApprove() As tApproveData
 Private ApproveCount As Long
+Private arrChanged() As Boolean
 
 Private Sub CboCust_Change()
 
@@ -1269,7 +1293,7 @@ FileNo = FreeFile
 Open FullPath For Output As #FileNo
 
 Print #FileNo, _
-    "Schedule Date,Item Code,Qty"
+    "Schedule Date,Item Code,Qty,Carton Code, Pallet Type"
 
 Qty = 0
 SerialCount = 0
@@ -1278,10 +1302,21 @@ Do While Not rsCsv.EOF
 
     Qty = Qty + CLng(Val(rsCsv.Fields("Qty").Value))
     
-   Print #FileNo, _
+  Print #FileNo, _
     rsCsv.Fields("Schedule Date").Value & "," & _
-    """" & rsCsv.Fields("Item Code").Value & """," & _
-    rsCsv.Fields("Qty").Value
+    rsCsv.Fields("Item Code").Value & "," & _
+    rsCsv.Fields("Qty").Value & "," & _
+    rsCsv.Fields("Carton Code").Value & "," & _
+    rsCsv.Fields("Pallet Type").Value
+    
+'   Print #FileNo, _
+'    rsCsv.Fields("Schedule Date").Value & "," & _
+'    """" & rsCsv.Fields("Item Code").Value & """," & _
+'   """" & "=""" & rsCsv.Fields("Qty").Value & """" & """", " &" _
+'    ; """" & rsCsv.Fields("Carton Code").Value & """," & _
+'    """" & rsCsv.Fields("Pallet Type").Value & """"
+'    ," & _
+''    rsCsv.Fields("Qty").Value
 
     rsCsv.MoveNext
 
@@ -1412,93 +1447,95 @@ End If
 '
 '    End If
 
-    
-    '=========================================
-    ' FTP HEADER
-    '=========================================
-    
-    ftpFolder = GetFTPFolder(HeaderFile)
+'' '20260714 diremark untuk trial
+'    '=========================================
+'    ' FTP HEADER
+'    '=========================================
+'
+'    ftpFolder = GetFTPFolder(HeaderFile)
+'
+'    If UploadFTP( _
+'        HeaderFullPath, _
+'        HeaderFile, _
+'        ftpHost, _
+'        ftpUser, _
+'        ftpPass, _
+'        ftpFolder, _
+'        ftpRemarks, _
+'        ErrMsg) = False Then
+'
+'        Db.Execute _
+'            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
+'            "@LogID = " & LogID & _
+'            ", @FTPStatus = 'FAILED'" & _
+'            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
+'            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
+'
+'        ' Hapus file CSV yang sudah dibuat
+'        On Error Resume Next
+'
+'        If Len(Dir$(HeaderFullPath)) > 0 Then
+'            Kill HeaderFullPath
+'        End If
+'
+'        If Len(Dir$(DetailFullPath)) > 0 Then
+'            Kill DetailFullPath
+'        End If
+'
+'        On Error GoTo 0
+'
+'        lblErrMsg = ErrMsg
+'
+'        Exit Function
+'
+'    End If
+'
+'    '=========================================
+'    ' FTP DETAIL
+'    '=========================================
+'
+'    ftpFolder = GetFTPFolder(DetailFile)
+'
+'    If UploadFTP( _
+'        DetailFullPath, _
+'        DetailFile, _
+'        ftpHost, _
+'        ftpUser, _
+'        ftpPass, _
+'        ftpFolder, _
+'        ftpRemarks, _
+'        ErrMsg) = False Then
+'
+'    Db.Execute _
+'            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
+'            "@LogID = " & LogID & _
+'            ", @FTPStatus = 'FAILED'" & _
+'            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
+'            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
+'
+''        MsgBox ErrMsg, vbCritical
+'
+'        lblErrMsg = ErrMsg
+'
+'        Exit Function
+'
+'    End If
+'
+'    '=========================================
+'    ' BOTH SUCCESS
+'    '=========================================
+'
+'    Db.Execute _
+'        "EXEC sp_Interface_Export_Log_UpdFTPStatus " & _
+'        LogID & _
+'        ", 'SUCCESS', '" & Trim(userLogin) & "'"
+''20260714 diremark untuk trial /  DITUTUP
 
-    If UploadFTP( _
-        HeaderFullPath, _
-        HeaderFile, _
-        ftpHost, _
-        ftpUser, _
-        ftpPass, _
-        ftpFolder, _
-        ftpRemarks, _
-        ErrMsg) = False Then
-    
-        Db.Execute _
-            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
-            "@LogID = " & LogID & _
-            ", @FTPStatus = 'FAILED'" & _
-            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
-            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
-    
-        ' Hapus file CSV yang sudah dibuat
-        On Error Resume Next
-    
-        If Len(Dir$(HeaderFullPath)) > 0 Then
-            Kill HeaderFullPath
-        End If
-    
-        If Len(Dir$(DetailFullPath)) > 0 Then
-            Kill DetailFullPath
-        End If
-    
-        On Error GoTo 0
-    
-        lblErrMsg = ErrMsg
-    
-        Exit Function
-    
-    End If
-
-    '=========================================
-    ' FTP DETAIL
-    '=========================================
-    
-    ftpFolder = GetFTPFolder(DetailFile)
-    
-    If UploadFTP( _
-        DetailFullPath, _
-        DetailFile, _
-        ftpHost, _
-        ftpUser, _
-        ftpPass, _
-        ftpFolder, _
-        ftpRemarks, _
-        ErrMsg) = False Then
-    
-    Db.Execute _
-            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
-            "@LogID = " & LogID & _
-            ", @FTPStatus = 'FAILED'" & _
-            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
-            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
-    
-'        MsgBox ErrMsg, vbCritical
-
-        lblErrMsg = ErrMsg
-        
-        Exit Function
-    
-    End If
-    
-    '=========================================
-    ' BOTH SUCCESS
-    '=========================================
-    
-    Db.Execute _
-        "EXEC sp_Interface_Export_Log_UpdFTPStatus " & _
-        LogID & _
-        ", 'SUCCESS', '" & Trim(userLogin) & "'"
-        
         MsgBox "Schedule Production sent successfully.", _
         vbInformation, _
         "Success"
-        
+
+
         lblErrMsg = ErrMsg
            
         Export_ToCsv = True
@@ -1516,45 +1553,51 @@ End Function
 Sub Header()
     Dim i As Long
     
-    bteColDate = 0
-    bteColProdCode = 1
-    bteColPart = 2
-    bteColDesc = 3
-    bteColLotNo = 4
-    bteColQty = 5
-    bteColUnitCls = 6
-    bteColUnit = 7
-    BteColSerialFrom = 8
-    BteColSerialTo = 9
-    bteColRemark = 10
-    bteColAuto = 11
-    bteColCustCode = 12
-    bteColCustName = 13
-    bteColPONo = 14
-    bteColSeqNo = 15
-    bteColApproved = 16
-    bteColApprovedDate = 17
-    bteColApprovedUser = 18
-    bteColVoid = 19
-    bteColVoidDate = 20
-    bteColVoidUser = 21
+    bteColDPSeqNo = 0
+    bteColDate = 1
+    bteColProdCode = 2
+    bteColPart = 3
+    bteColDesc = 4
+    bteColLotNo = 5
+    bteColQty = 6
+    bteColResult = 7
+    bteColRemaining = 8
+    bteColUnitCls = 9
+    bteColUnit = 10
+    BteColSerialFrom = 11
+    BteColSerialTo = 12
+    bteColRemark = 13
+    bteColAuto = 14
+    bteColCustCode = 15
+    bteColCustName = 16
+    bteColPONo = 17
+    bteColSeqNo = 18
+    bteColApproved = 19
+    bteColApprovedDate = 20
+    bteColApprovedUser = 21
+    bteColVoid = 22
+    bteColVoidDate = 23
+    bteColVoidUser = 24
     
     
     With grid
       .clear
       .Rows = 1
-      .ColS = 22
+      .ColS = 25
       
+       .ColWidth(bteColDPSeqNo) = 500
       .ColWidth(bteColDate) = 1450
       .ColWidth(bteColProdCode) = 1400
       .ColWidth(bteColPart) = 1400
       .ColWidth(bteColDesc) = 3000
       .ColWidth(bteColLotNo) = 1000
-      .ColWidth(bteColQty) = 1230
+      .ColWidth(bteColQty) = 1150
+      .ColWidth(bteColResult) = 1150
+      .ColWidth(bteColRemaining) = 1150
       .ColWidth(bteColUnit) = 650
       .ColWidth(BteColSerialFrom) = 1100
       .ColWidth(BteColSerialTo) = 1100
-      .ColWidth(bteColRemark) = 3250
+      .ColWidth(bteColRemark) = 2000
       .ColWidth(bteColAuto) = 1000
       .ColWidth(bteColCustCode) = 1200
       .ColWidth(bteColCustName) = 2800
@@ -1565,13 +1608,17 @@ Sub Header()
       .ColWidth(bteColVoid) = 1000
       .ColWidth(bteColVoidDate) = 2150
       .ColWidth(bteColVoidUser) = 1500
+
       
+      .TextMatrix(0, bteColDPSeqNo) = "No."
       .TextMatrix(0, bteColDate) = "Schedule Date"
       .TextMatrix(0, bteColPart) = "Part Number"
       .TextMatrix(0, bteColProdCode) = "Product Code"
       .TextMatrix(0, bteColDesc) = "Description"
       .TextMatrix(0, bteColLotNo) = "Lot No"
       .TextMatrix(0, bteColQty) = "Qty"
+      .TextMatrix(0, bteColResult) = "Result"
+      .TextMatrix(0, bteColRemaining) = "Remaining"
       .TextMatrix(0, bteColUnitCls) = "UnitCls"
       .TextMatrix(0, bteColUnit) = "Unit"
       .TextMatrix(0, BteColSerialFrom) = "Serial From"
@@ -1599,11 +1646,14 @@ Sub Header()
       .ColDataType(bteColDate) = flexDTDate
       
       .Cell(flexcpAlignment, 0, 0, 0, bteColVoidUser) = flexAlignCenterCenter
+      .ColAlignment(bteColDPSeqNo) = flexAlignCenterCenter
       .ColAlignment(bteColPart) = flexAlignLeftCenter
       .ColAlignment(bteColProdCode) = flexAlignLeftCenter
       .ColAlignment(bteColDesc) = flexAlignLeftCenter
       .ColAlignment(bteColLotNo) = flexAlignCenterCenter
       .ColAlignment(bteColQty) = flexAlignRightCenter
+      .ColAlignment(bteColResult) = flexAlignRightCenter
+      .ColAlignment(bteColRemaining) = flexAlignRightCenter
       .ColAlignment(bteColUnit) = flexAlignCenterCenter
       .ColAlignment(BteColSerialFrom) = flexAlignCenterCenter
       .ColAlignment(BteColSerialTo) = flexAlignCenterCenter
@@ -1616,7 +1666,7 @@ Sub Header()
       .ColAlignment(bteColApproved) = flexAlignCenterCenter
       .ColAlignment(bteColVoid) = flexAlignCenterCenter
       
-      .EditMaxLength = 1
+      .EditMaxLength = 2
     End With
  
 End Sub
@@ -1754,6 +1804,8 @@ Sub Browse()
             Do While Not rsGrid.EOF
                 .Rows = .Rows + 1
                 
+                .Cell(flexcpBackColor, i, bteColDPSeqNo) = vbWhite
+                .TextMatrix(i, bteColDPSeqNo) = rsGrid("DProdSeqNo")
                 .TextMatrix(i, bteColDate) = Format(Trim(rsGrid("schedule_date")), "dd MMM yyyy")
                 .TextMatrix(i, bteColProdCode) = Trim(rsGrid("Item_Code"))
                 .TextMatrix(i, bteColPart) = Trim(rsGrid("MakerItem_Code"))
@@ -1767,6 +1819,22 @@ Sub Browse()
                 Else
                     .TextMatrix(i, bteColQty) = Format(.TextMatrix(i, bteColQty), gs_formatQty)
                 End If
+                
+                 .TextMatrix(i, bteColResult) = IIf(IsNull(rsGrid("Result")), 0, Trim(rsGrid("Result")))
+                If InStr(1, .TextMatrix(i, bteColResult), ".") > 0 Then
+                    .TextMatrix(i, bteColResult) = Format(.TextMatrix(i, bteColResult), gs_formatQty)
+                Else
+                    .TextMatrix(i, bteColResult) = Format(.TextMatrix(i, bteColResult), gs_formatQty)
+                End If
+                
+                .TextMatrix(i, bteColRemaining) = IIf(IsNull(rsGrid("Remaining")), 0, Trim(rsGrid("Remaining")))
+                If InStr(1, .TextMatrix(i, bteColRemaining), ".") > 0 Then
+                    .TextMatrix(i, bteColRemaining) = Format(.TextMatrix(i, bteColRemaining), gs_formatQty)
+                Else
+                    .TextMatrix(i, bteColRemaining) = Format(.TextMatrix(i, bteColRemaining), gs_formatQty)
+                End If
+
+
         
                 If IsNull(rsGrid("unit_cls")) Then
                   .TextMatrix(i, bteColUnitCls) = ""
@@ -1818,6 +1886,21 @@ Sub Browse()
     End If
     rsGrid.Close
     Set rsGrid = Nothing
+    
+    '=====================================================
+    ' INITIALIZE CHANGED ROW
+    '=====================================================
+    If grid.Rows > grid.FixedRows Then
+    
+        ReDim arrChanged(1 To grid.Rows - 1)
+    
+        For i = 1 To grid.Rows - 1
+            arrChanged(i) = False
+        Next i
+    
+    End If
+
+
 End Sub
 
 Private Sub scheduledate1_Change()
@@ -1876,7 +1959,27 @@ End Sub
 Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Boolean)
 
     With grid
-
+        
+        ' =========================================
+        ' Edit Seq No
+        ' =========================================
+        If Col = bteColDPSeqNo Then
+    
+            ' Jika sudah submit dan checkbox sudah checked
+            If Trim(.TextMatrix(Row, bteColApprovedDate)) <> "" Then
+    
+                If .Cell(flexcpChecked, Row, bteColApproved) = flexChecked Then
+    
+                    MsgBox "Data already submitted.", vbExclamation
+                    Cancel = True
+                    Exit Sub
+    
+                End If
+    
+            End If
+    
+        End If
+        
         ' =========================================
         ' APPROVED
         ' =========================================
@@ -1895,6 +1998,13 @@ Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Bool
                 End If
 
             End If
+            
+'            If grid.Cell(flexcpChecked, Row, bteColApproved) = flexChecked Then
+'                cmdVoid.Enabled = False
+'            Else
+'                cmdVoid.Enabled = True
+'            End If
+
 
         End If
 
@@ -1912,6 +2022,13 @@ Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Bool
                 Exit Sub
 
             End If
+            
+          
+            If grid.Cell(flexcpChecked, Row, bteColVoid) = flexChecked Then
+                cmdSubmit.Enabled = False
+            Else
+                cmdSubmit.Enabled = True
+            End If
 
         End If
 
@@ -1919,13 +2036,32 @@ Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Bool
         ' =========================================
         ' READONLY COLUMN
         ' =========================================
-        If Col <> bteColApproved And Col <> bteColVoid Then
+        If Col <> bteColApproved And Col <> bteColVoid And Col <> bteColDPSeqNo Then
             Cancel = True
         End If
 
     End With
 
 End Sub
+
+Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
+
+    '=====================================================
+    ' MARK ROW AS CHANGED
+    '=====================================================
+    Select Case Col
+
+        Case bteColApproved, bteColVoid
+
+            If Row > 0 Then
+                arrChanged(Row) = True
+            End If
+
+    End Select
+
+End Sub
+
+
 
 'Private Sub UploadFTP( _
 '    ByVal FullPath As String, _
@@ -2093,7 +2229,7 @@ Dim LogFile As String
 Dim FF As Integer
 Dim Wsh As Object
 Dim Result As String
-Dim FSO As Object
+Dim fso As Object
 Dim TS As Object
 
 UploadFTP = False
@@ -2140,13 +2276,13 @@ Wsh.Run _
     0, _
     True
 
-Set FSO = CreateObject("Scripting.FileSystemObject")
+Set fso = CreateObject("Scripting.FileSystemObject")
 
 Result = ""
 
-If FSO.FileExists(LogFile) Then
+If fso.FileExists(LogFile) Then
 
-    Set TS = FSO.OpenTextFile(LogFile, 1)
+    Set TS = fso.OpenTextFile(LogFile, 1)
 
     Result = TS.ReadAll
 
@@ -2184,11 +2320,11 @@ End If
 
 On Error Resume Next
 
-If FSO.FileExists(ScriptFile) Then Kill ScriptFile
-If FSO.FileExists(LogFile) Then Kill LogFile
+If fso.FileExists(ScriptFile) Then Kill ScriptFile
+If fso.FileExists(LogFile) Then Kill LogFile
 
 Set TS = Nothing
-Set FSO = Nothing
+Set fso = Nothing
 Set Wsh = Nothing
 
 On Error GoTo Errhandle
