@@ -722,6 +722,7 @@ Dim Auto_Cls As Byte
 Dim StrStartSerial As String
 
 Private Type tApproveData
+    DPSeqNo As Double
     ItemCode As String
     lotno As String
     Qty As Double
@@ -977,6 +978,7 @@ Private Sub CmdSubmit_Click()
         sql = sql & " '" & Trim(.TextMatrix(i, bteColProdCode)) & "', "
         sql = sql & " '" & Trim(.TextMatrix(i, bteColLotNo)) & "', "
         sql = sql & "  " & Val(.TextMatrix(i, bteColQty)) & ", "
+        sql = sql & "  " & Val(.TextMatrix(i, bteColDPSeqNo)) & ", "
         sql = sql & "  '" & statusProses & "', "
         sql = sql & " '" & userLogin & "' "
     
@@ -989,7 +991,10 @@ Private Sub CmdSubmit_Click()
             ApproveCount = ApproveCount + 1
         
             ReDim Preserve arrApprove(1 To ApproveCount)
-        
+            
+             arrApprove(ApproveCount).ItemCode = _
+                Val(.TextMatrix(i, bteColDPSeqNo))
+                
             arrApprove(ApproveCount).ItemCode = _
                 Trim(.TextMatrix(i, bteColProdCode))
         
@@ -1447,89 +1452,88 @@ End If
 '
 '    End If
 
-'' '20260714 diremark untuk trial
-'    '=========================================
-'    ' FTP HEADER
-'    '=========================================
-'
-'    ftpFolder = GetFTPFolder(HeaderFile)
-'
-'    If UploadFTP( _
-'        HeaderFullPath, _
-'        HeaderFile, _
-'        ftpHost, _
-'        ftpUser, _
-'        ftpPass, _
-'        ftpFolder, _
-'        ftpRemarks, _
-'        ErrMsg) = False Then
-'
-'        Db.Execute _
-'            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
-'            "@LogID = " & LogID & _
-'            ", @FTPStatus = 'FAILED'" & _
-'            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
-'            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
-'
-'        ' Hapus file CSV yang sudah dibuat
-'        On Error Resume Next
-'
-'        If Len(Dir$(HeaderFullPath)) > 0 Then
-'            Kill HeaderFullPath
-'        End If
-'
-'        If Len(Dir$(DetailFullPath)) > 0 Then
-'            Kill DetailFullPath
-'        End If
-'
-'        On Error GoTo 0
-'
+
+    '=========================================
+    ' FTP HEADER
+    '=========================================
+
+    ftpFolder = GetFTPFolder(HeaderFile)
+
+    If UploadFTP( _
+        HeaderFullPath, _
+        HeaderFile, _
+        ftpHost, _
+        ftpUser, _
+        ftpPass, _
+        ftpFolder, _
+        ftpRemarks, _
+        ErrMsg) = False Then
+
+        Db.Execute _
+            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
+            "@LogID = " & LogID & _
+            ", @FTPStatus = 'FAILED'" & _
+            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
+            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
+
+        ' Hapus file CSV yang sudah dibuat
+        On Error Resume Next
+
+        If Len(Dir$(HeaderFullPath)) > 0 Then
+            Kill HeaderFullPath
+        End If
+
+        If Len(Dir$(DetailFullPath)) > 0 Then
+            Kill DetailFullPath
+        End If
+
+        On Error GoTo 0
+
+        lblErrMsg = ErrMsg
+
+        Exit Function
+
+    End If
+
+    '=========================================
+    ' FTP DETAIL
+    '=========================================
+
+    ftpFolder = GetFTPFolder(DetailFile)
+
+    If UploadFTP( _
+        DetailFullPath, _
+        DetailFile, _
+        ftpHost, _
+        ftpUser, _
+        ftpPass, _
+        ftpFolder, _
+        ftpRemarks, _
+        ErrMsg) = False Then
+
+    Db.Execute _
+            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
+            "@LogID = " & LogID & _
+            ", @FTPStatus = 'FAILED'" & _
+            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
+            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
+
+        MsgBox ErrMsg, vbCritical
+
 '        lblErrMsg = ErrMsg
-'
-'        Exit Function
-'
-'    End If
-'
-'    '=========================================
-'    ' FTP DETAIL
-'    '=========================================
-'
-'    ftpFolder = GetFTPFolder(DetailFile)
-'
-'    If UploadFTP( _
-'        DetailFullPath, _
-'        DetailFile, _
-'        ftpHost, _
-'        ftpUser, _
-'        ftpPass, _
-'        ftpFolder, _
-'        ftpRemarks, _
-'        ErrMsg) = False Then
-'
-'    Db.Execute _
-'            "EXEC dbo.sp_Interface_Export_Log_UpdFTPStatus " & _
-'            "@LogID = " & LogID & _
-'            ", @FTPStatus = 'FAILED'" & _
-'            ", @UserID = '" & Replace(Trim$(userLogin), "'", "''") & "'" & _
-'            ", @ErrorMessage = '" & Replace(ErrMsg, "'", "''") & "'"
-'
-''        MsgBox ErrMsg, vbCritical
-'
-'        lblErrMsg = ErrMsg
-'
-'        Exit Function
-'
-'    End If
-'
-'    '=========================================
-'    ' BOTH SUCCESS
-'    '=========================================
-'
-'    Db.Execute _
-'        "EXEC sp_Interface_Export_Log_UpdFTPStatus " & _
-'        LogID & _
-'        ", 'SUCCESS', '" & Trim(userLogin) & "'"
-''20260714 diremark untuk trial /  DITUTUP
+
+        Exit Function
+
+    End If
+
+    '=========================================
+    ' BOTH SUCCESS
+    '=========================================
+
+    Db.Execute _
+        "EXEC sp_Interface_Export_Log_UpdFTPStatus " & _
+        LogID & _
+        ", 'SUCCESS', '" & Trim(userLogin) & "'"
 
         MsgBox "Schedule Production sent successfully.", _
         vbInformation, _
@@ -2465,6 +2469,7 @@ Private Sub RollbackApprove()
         sql = sql & " '" & arrApprove(j).ItemCode & "', "
         sql = sql & " '" & arrApprove(j).lotno & "', "
         sql = sql & arrApprove(j).Qty & ", "
+        sql = sql & " '" & arrApprove(j).DPSeqNo & "', "
         sql = sql & " 'UNAPPROVE', "
         sql = sql & " '" & userLogin & "' "
 
