@@ -399,7 +399,7 @@ Begin VB.Form frmDailyProdEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   129499139
+      Format          =   137166851
       CurrentDate     =   37859
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
@@ -529,7 +529,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129499139
+         Format          =   137166851
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -561,7 +561,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129499139
+         Format          =   137166851
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -1000,12 +1000,12 @@ Begin VB.Form frmDailyProdEntry
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   195
-      Left            =   2490
+      Height          =   315
+      Left            =   1680
       TabIndex        =   40
       Tag             =   "TTFF*/"
-      Top             =   10050
-      Width           =   210
+      Top             =   9960
+      Width           =   525
    End
    Begin VB.Label Label5 
       AutoSize        =   -1  'True
@@ -1566,7 +1566,7 @@ Dim i As Integer
     End With
 End Sub
 
-Function seqNo() As Long
+Function SeqNo() As Long
 Dim sqlseqno As String
 Dim rsseqno As New Recordset
 
@@ -1576,9 +1576,9 @@ rsseqno.Open sqlseqno, Db, adOpenKeyset, adLockOptimistic
 
 If Not (rsseqno.BOF And rsseqno.EOF) Then
     rsseqno.MoveLast
-    seqNo = rsseqno!Seq_no + 1
+    SeqNo = rsseqno!Seq_no + 1
 Else
-    seqNo = 1
+    SeqNo = 1
 End If
 End Function
 
@@ -2351,20 +2351,48 @@ Select Case Index
                             
                            ubah = True
                            
-                            sql = "select Request_Cls from daily_production where seq_no='" & grid.TextMatrix(i, bteColSeqNo) & "' "
-                            Set rs1 = Db.Execute(sql)
-                            If Not (rs1.BOF And rs1.EOF) Then
-                                req_cls = Trim(rs1.Fields("request_cls"))
-                            End If
-                                    
-                            'Validasi cek ke tabel PartSupplyRequest_Master
-                            sql1 = "select * from PartSupplyRequest_Master where Request_Cls='" & req_cls & "'"
-                            Set rs1 = Db.Execute(sql1)
-                            If Not (rs1.BOF And rs1.EOF) Then
-                                lblErrMsg.Caption = DisplayMsg("9010")
-                                grid.Row = i
-                                Exit Sub
-                            End If
+'                            sql = "select Request_Cls from daily_production where seq_no='" & grid.TextMatrix(i, bteColSeqNo) & "' "
+'                            Set rs1 = Db.Execute(sql)
+'                            If Not (rs1.BOF And rs1.EOF) Then
+'                                req_cls = Trim(rs1.Fields("request_cls"))
+'                            End If
+'
+'                            'Validasi cek ke tabel PartSupplyRequest_Master
+'                            sql1 = "select * from PartSupplyRequest_Master where Request_Cls='" & req_cls & "'"
+'                            Set rs1 = Db.Execute(sql1)
+'                            If Not (rs1.BOF And rs1.EOF) Then
+'                                lblErrMsg.Caption = DisplayMsg("9010")
+'                                grid.Row = i
+'                                Exit Sub
+'                            End If
+                
+                req_cls = ""
+                
+                sql = "SELECT Request_Cls " & _
+                      "FROM Daily_Production " & _
+                      "WHERE Seq_No='" & Replace(grid.TextMatrix(i, bteColSeqNo), "'", "''") & "'"
+                
+                Set rs1 = Db.Execute(sql)
+                
+                If Not (rs1.BOF And rs1.EOF) Then
+                    req_cls = Trim(rs1!Request_Cls)
+                End If
+                
+                If req_cls <> "" Then
+                
+                    sql = "SELECT TOP 1 1 " & _
+                          "FROM PartSupplyRequest_Master " & _
+                          "WHERE Request_Cls='" & Replace(req_cls, "'", "''") & "'"
+                
+                    Set rs1 = Db.Execute(sql)
+                
+                    If Not rs1.EOF Then
+                        lblErrMsg.Caption = DisplayMsg("9010")
+                        grid.Row = i
+                        Exit Sub
+                    End If
+                
+                End If
                         
                         End If
                                 
@@ -2506,9 +2534,9 @@ Select Case Index
                             rsUpdate.AddNew
                             rsUpdate("factory_Code") = cbocust.Text
                             rsUpdate("line_code") = cbolinecd.Text
-                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & seqNo
+                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & SeqNo
                             
-                            NO = seqNo
+                            NO = SeqNo
                             rsUpdate("seq_no") = NO ' Udah mo nyimpen Niy
                             
                             
@@ -2614,7 +2642,7 @@ Select Case Index
                        dbw.Close
                        
                        If InStr(1, err.Description, "Violation of PRIMARY KEY constraint") > 0 Then
-                            NO = seqNo
+                            NO = SeqNo
                             rsUpdate.update
                        End If
                                                 
@@ -2786,17 +2814,17 @@ End Sub
 Private Function uf_ValidasiSerialNo() As String
 
 Dim RsSerial As New ADODB.Recordset
-Dim strSQL As String, seqNo As Integer
+Dim strSQL As String, SeqNo As Integer
 lblErrMsg.Caption = ""
 
 
 If TxtSeqNo.Text = "" Then
-    seqNo = 0
+    SeqNo = 0
 Else
-    seqNo = TxtSeqNo.Text
+    SeqNo = TxtSeqNo.Text
 End If
 
-strSQL = "exec SP_DailyProductionEntry_Validasi_SerialNo " & seqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "
+strSQL = "exec SP_DailyProductionEntry_Validasi_SerialNo " & SeqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "
 
 Set RsSerial = Db.Execute(strSQL)
 i = 1

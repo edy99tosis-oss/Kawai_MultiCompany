@@ -20,7 +20,6 @@ Begin VB.Form frmProdScheduleInterface
    Begin VB.CommandButton cmdVoid 
       BackColor       =   &H0080FFFF&
       Caption         =   "&Void"
-      Enabled         =   0   'False
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -150,7 +149,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129499139
+         Format          =   136314883
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -183,7 +182,7 @@ Begin VB.Form frmProdScheduleInterface
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   129499139
+         Format          =   136314883
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -510,11 +509,11 @@ Begin VB.Form frmProdScheduleInterface
          TabIndex        =   6
          Tag             =   "TTFF*/"
          Top             =   1200
-         Width           =   1515
+         Width           =   1995
          VariousPropertyBits=   746604571
          MaxLength       =   10
          DisplayStyle    =   3
-         Size            =   "2672;556"
+         Size            =   "3519;556"
          MatchEntry      =   1
          ShowDropButtonWhen=   2
          FontName        =   "Verdana"
@@ -726,11 +725,13 @@ Private Type tApproveData
     ItemCode As String
     lotno As String
     Qty As Double
+    SeqNo As Double
 End Type
 
 Private arrApprove() As tApproveData
 Private ApproveCount As Long
 Private arrChanged() As Boolean
+Dim strSeqNo As String
 
 Private Sub CboCust_Change()
 
@@ -931,7 +932,9 @@ Private Sub CmdSubmit_Click()
     ' PROCESS GRID
     ' =====================================================
     With grid
-
+        
+        strSeqNo = ""
+        
         For i = 1 To .Rows - 1
 
         statusProses = ""
@@ -979,6 +982,7 @@ Private Sub CmdSubmit_Click()
         sql = sql & " '" & Trim(.TextMatrix(i, bteColLotNo)) & "', "
         sql = sql & "  " & Val(.TextMatrix(i, bteColQty)) & ", "
         sql = sql & "  " & Val(.TextMatrix(i, bteColDPSeqNo)) & ", "
+        sql = sql & "  " & Val(.TextMatrix(i, bteColSeqNo)) & ", "
         sql = sql & "  '" & statusProses & "', "
         sql = sql & " '" & userLogin & "' "
     
@@ -986,23 +990,30 @@ Private Sub CmdSubmit_Click()
     
         StatInsertUpdate = True
         
-         If statusProses = "APPROVE" Then
-    
-            ApproveCount = ApproveCount + 1
+               
+        If statusProses = "APPROVE" Then
         
-            ReDim Preserve arrApprove(1 To ApproveCount)
-            
-             arrApprove(ApproveCount).ItemCode = _
-                Val(.TextMatrix(i, bteColDPSeqNo))
-                
-            arrApprove(ApproveCount).ItemCode = _
-                Trim(.TextMatrix(i, bteColProdCode))
+           ApproveCount = ApproveCount + 1
         
-            arrApprove(ApproveCount).lotno = _
-                Trim(.TextMatrix(i, bteColLotNo))
+           ReDim Preserve arrApprove(1 To ApproveCount)
+           
+            arrApprove(ApproveCount).DPSeqNo = _
+               Val(.TextMatrix(i, bteColDPSeqNo))
+               
+           arrApprove(ApproveCount).ItemCode = _
+               Trim(.TextMatrix(i, bteColProdCode))
         
-            arrApprove(ApproveCount).Qty = _
-                Val(.TextMatrix(i, bteColQty))
+           arrApprove(ApproveCount).lotno = _
+               Trim(.TextMatrix(i, bteColLotNo))
+        
+           arrApprove(ApproveCount).Qty = _
+               Val(.TextMatrix(i, bteColQty))
+               
+            arrApprove(ApproveCount).SeqNo = _
+               Val(.TextMatrix(i, bteColSeqNo))
+        
+           If Len(strSeqNo) > 0 Then strSeqNo = strSeqNo & ","
+            strSeqNo = strSeqNo & CStr(Val(.TextMatrix(i, bteColSeqNo)))
         
         End If
     
@@ -1167,7 +1178,8 @@ Public Function Export_ToCsv() As Boolean
     sql = sql & " '" & Trim(cbolinecd.Text) & "', "
     sql = sql & " '" & Format(scheduledate1.Value, "yyyy-mm-dd") & "', "
     sql = sql & " '" & Format(scheduledate2.Value, "yyyy-mm-dd") & "', "
-    sql = sql & " '" & UCase(Trim(cboStatus.Text)) & "' "
+    sql = sql & " '" & strSeqNo & "', "
+    sql = sql & " '1' "
     
     Dim rsdetail As ADODB.Recordset
 
@@ -1230,63 +1242,68 @@ LineCode = Right$("00" & Mid$(cbolinecd.Text, 5, 1), 3) 'cbolinecd.Text
 '=========================================
 ' GET REVISION NUMBER
 '=========================================
-
-RevisionNo = 0
-
-Do
-
-    If RevisionNo = 0 Then
-
-        CheckFile = _
-            ExportFolder & _
-            "SCHEDULE_" & _
-             Trim(LineCode) & "_" & _
-            scheduledate & _
-            ".csv"
-
-    Else
-
-        CheckFile = _
-            ExportFolder & _
-            "SCHEDULE_" & _
-            Trim(LineCode) & "_" & _
-            scheduledate & _
-            "_R_" & _
-            RevisionNo & _
-            ".csv"
-
-    End If
-
-    If Dir(CheckFile) = "" Then Exit Do
-
-    RevisionNo = RevisionNo + 1
-
-Loop
+'DIREMARK KARENA TIDAK PERLU REVISION FILE NAME
+'RevisionNo = 0
+'
+'Do
+'
+'    If RevisionNo = 0 Then
+'
+'        CheckFile = _
+'            ExportFolder & _
+'            "SCHEDULE_" & _
+'             Trim(LineCode) & "_" & _
+'            scheduledate & _
+'            ".csv"
+'
+'    Else
+'
+'        CheckFile = _
+'            ExportFolder & _
+'            "SCHEDULE_" & _
+'            Trim(LineCode) & "_" & _
+'            scheduledate & _
+'            "_R_" & _
+'            RevisionNo & _
+'            ".csv"
+'
+'    End If
+'
+'    If Dir(CheckFile) = "" Then Exit Do
+'
+'    RevisionNo = RevisionNo + 1
+'
+'Loop
 
 '=========================================
 ' HEADER FILE NAME
 '=========================================
+'tidak perlu prefix R dalam file yg revisi atau dikirm ulang
+'If RevisionNo = 0 Then
+'
+'    filename = _
+'        "SCHEDULE_" & _
+'        Trim(LineCode) & "_" & _
+'         Trim(scheduledate) & _
+'        ".csv"
+'
+'Else
+'
+'    filename = _
+'        "SCHEDULE_" & _
+'         Trim(LineCode) & "_" & _
+'        scheduledate & _
+'        "_R_" & _
+'        RevisionNo & _
+'        ".csv"
+'
+'End If
 
-If RevisionNo = 0 Then
-
-    filename = _
+ filename = _
         "SCHEDULE_" & _
         Trim(LineCode) & "_" & _
          Trim(scheduledate) & _
         ".csv"
-
-Else
-
-    filename = _
-        "SCHEDULE_" & _
-         Trim(LineCode) & "_" & _
-        scheduledate & _
-        "_R_" & _
-        RevisionNo & _
-        ".csv"
-
-End If
-
 
 FullPath = ExportFolder & filename
 
@@ -1340,25 +1357,31 @@ On Error GoTo Errhandle
 
 If Not rsdetail Is Nothing Then
 
-    If RevisionNo = 0 Then
-
-        filename = _
+filename = _
             "SERIAL_" & _
             Trim(LineCode) & "_" & _
             scheduledate & _
             ".csv"
-
-    Else
-
-        filename = _
-            "SERIAL_" & _
-            Trim(LineCode) & "_" & _
-            scheduledate & _
-            "_R_" & _
-            RevisionNo & _
-            ".csv"
-
-    End If
+'
+'    If RevisionNo = 0 Then
+'
+'        filename = _
+'            "SERIAL_" & _
+'            Trim(LineCode) & "_" & _
+'            scheduledate & _
+'            ".csv"
+'
+'    Else
+'
+'        filename = _
+'            "SERIAL_" & _
+'            Trim(LineCode) & "_" & _
+'            scheduledate & _
+'            "_R_" & _
+'            RevisionNo & _
+'            ".csv"
+'
+'    End If
     
    
 
@@ -1452,7 +1475,7 @@ End If
 '
 '    End If
 
-
+'DIREMARK UNTUK TRIAL 20260714
     '=========================================
     ' FTP HEADER
     '=========================================
@@ -1535,6 +1558,7 @@ End If
         LogID & _
         ", 'SUCCESS', '" & Trim(userLogin) & "'"
 
+'DIREMARK UNTUK TRIAL 20260714
         MsgBox "Schedule Production sent successfully.", _
         vbInformation, _
         "Success"
@@ -1765,8 +1789,8 @@ Dim i As Integer
     With cboStatus
         .clear
         .columnCount = 1
-        .ColumnWidths = "82pt"
-        .ListWidth = 82
+        .ColumnWidths = "100pt"
+        .ListWidth = 100
         .ListRows = 3
         
         i = 0
@@ -2003,11 +2027,11 @@ Private Sub Grid_BeforeEdit(ByVal Row As Long, ByVal Col As Long, Cancel As Bool
 
             End If
             
-'            If grid.Cell(flexcpChecked, Row, bteColApproved) = flexChecked Then
-'                cmdVoid.Enabled = False
-'            Else
-'                cmdVoid.Enabled = True
-'            End If
+            If grid.Cell(flexcpChecked, Row, bteColApproved) = flexChecked Then
+                cmdVoid.Enabled = False
+            Else
+                cmdVoid.Enabled = True
+            End If
 
 
         End If
@@ -2253,6 +2277,9 @@ Print #FF, "open " & ftpHost
 Print #FF, "user " & ftpUser & " " & ftpPass
 Print #FF, "binary"
 
+'Untuk delete file lama
+Print #FF, "delete " & ftpFolder & "\" & filename
+
 Print #FF, "put """ & _
             FullPath & _
             """ " & _
@@ -2470,6 +2497,7 @@ Private Sub RollbackApprove()
         sql = sql & " '" & arrApprove(j).lotno & "', "
         sql = sql & arrApprove(j).Qty & ", "
         sql = sql & " '" & arrApprove(j).DPSeqNo & "', "
+        sql = sql & " '" & arrApprove(j).SeqNo & "', "
         sql = sql & " 'UNAPPROVE', "
         sql = sql & " '" & userLogin & "' "
 
@@ -2477,5 +2505,78 @@ Private Sub RollbackApprove()
 
     Next j
 
+End Sub
+
+Private Sub cmdVoid_Click()
+    Dim tanya As VbMsgBoxResult
+    Dim i As Long
+
+    ' =========================================
+    ' CEK DATA
+    ' =========================================
+    If grid.Rows <= grid.FixedRows Then
+        MsgBox "There is no data to void.", vbExclamation
+        Exit Sub
+    End If
+
+    ' =========================================
+    ' KONFIRMASI
+    ' =========================================
+    tanya = MsgBox("Do you really want to void data?", _
+                   vbQuestion + vbYesNo, "Confirmation")
+
+    If tanya = vbNo Then Exit Sub
+
+    ' =========================================
+    ' PROSES VOID
+    ' =========================================
+    For i = grid.FixedRows To grid.Rows - 1
+
+        If grid.Cell(flexcpChecked, i, bteColVoid) = flexChecked Then
+
+            ' Belum pernah di-void
+            If Trim(grid.TextMatrix(i, bteColVoidDate)) = "" Then
+
+                ' =========================================
+                ' EXECUTE SP
+                ' =========================================
+                Call VoidData(grid.TextMatrix(i, bteColSeqNo))
+
+            End If
+
+        End If
+    
+    Next i
+    
+    Browse
+
+    MsgBox "Void completed successfully.", vbInformation
+
+End Sub
+
+Private Sub VoidData(ByVal SeqNo As String)
+
+    Dim cmd As ADODB.Command
+
+    Set cmd = New ADODB.Command
+
+    With cmd
+        .ActiveConnection = ConnStr
+        .CommandType = adCmdStoredProc
+        .CommandText = "sp_DailyProductionEntry_Void"
+
+        .Parameters.append .CreateParameter("@SeqNo", adVarChar, adParamInput, 20, SeqNo)
+        .Parameters.append .CreateParameter("@VoidUser", adVarChar, adParamInput, 30, userLogin)
+
+        .Execute
+    End With
+
+    Set cmd = Nothing
+
+End Sub
+
+Private Sub cmdBtnStatus()
+    cmdSubmit.Enabled = True
+    cmdVoid.Enabled = True
 End Sub
 
