@@ -17,6 +17,42 @@ Begin VB.Form frmOrderEntry
    ScaleWidth      =   15270
    StartUpPosition =   2  'CenterScreen
    WindowState     =   2  'Maximized
+   Begin VB.TextBox txtBCType 
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Left            =   11400
+      MaxLength       =   25
+      TabIndex        =   90
+      Top             =   2760
+      Visible         =   0   'False
+      Width           =   1650
+   End
+   Begin VB.TextBox txtBCNo 
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   315
+      Left            =   9360
+      MaxLength       =   25
+      TabIndex        =   86
+      Top             =   2760
+      Width           =   1650
+   End
    Begin VB.CommandButton cmdReport 
       BackColor       =   &H0080FFFF&
       Caption         =   "&Print"
@@ -180,7 +216,7 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   131465219
+      Format          =   139395075
       CurrentDate     =   39777
    End
    Begin VB.TextBox txtremarks 
@@ -221,10 +257,10 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   315
-      Left            =   5925
+      Left            =   2970
       MaxLength       =   2
       TabIndex        =   7
-      Top             =   2340
+      Top             =   2760
       Width           =   450
    End
    Begin VB.TextBox Txtdisplay 
@@ -281,9 +317,9 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       Height          =   195
-      Left            =   9540
+      Left            =   6600
       TabIndex        =   9
-      Top             =   2400
+      Top             =   2760
       Width           =   1620
    End
    Begin VB.TextBox txtseqno 
@@ -376,10 +412,10 @@ Begin VB.Form frmOrderEntry
       EndProperty
       Height          =   375
       Index           =   2
-      Left            =   11310
+      Left            =   13920
       Style           =   1  'Graphical
       TabIndex        =   10
-      Top             =   2310
+      Top             =   2340
       Width           =   1125
    End
    Begin VB.TextBox txtamount 
@@ -425,7 +461,7 @@ Begin VB.Form frmOrderEntry
          EndProperty
          ForeColor       =   &H00FF00FF&
          Height          =   255
-         Left            =   60
+         Left            =   120
          TabIndex        =   37
          Top             =   150
          Width           =   14940
@@ -593,13 +629,13 @@ Begin VB.Form frmOrderEntry
       Width           =   1125
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
-      Height          =   4230
-      Left            =   60
+      Height          =   3870
+      Left            =   0
       TabIndex        =   11
-      Top             =   2775
+      Top             =   3120
       Width           =   15075
       _cx             =   26591
-      _cy             =   7461
+      _cy             =   6826
       Appearance      =   1
       BorderStyle     =   1
       Enabled         =   -1  'True
@@ -820,7 +856,7 @@ Begin VB.Form frmOrderEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   131465219
+         Format          =   139395075
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker deliverydate2 
@@ -851,7 +887,7 @@ Begin VB.Form frmOrderEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   131465219
+         Format          =   139395075
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -906,7 +942,7 @@ Begin VB.Form frmOrderEntry
          Top             =   690
          Width           =   1785
          VariousPropertyBits=   746604571
-         MaxLength       =   6
+         MaxLength       =   15
          DisplayStyle    =   3
          Size            =   "3149;556"
          MatchEntry      =   1
@@ -985,12 +1021,12 @@ Begin VB.Form frmOrderEntry
       End
       Begin MSForms.ComboBox cbocust 
          Height          =   315
-         Left            =   1410
+         Left            =   1440
          TabIndex        =   0
          Top             =   285
          Width           =   1785
          VariousPropertyBits=   612386843
-         MaxLength       =   6
+         MaxLength       =   15
          DisplayStyle    =   3
          Size            =   "3149;556"
          MatchEntry      =   1
@@ -1029,11 +1065,11 @@ Begin VB.Form frmOrderEntry
    End
    Begin MSComCtl2.DTPicker podate 
       Height          =   315
-      Left            =   7800
+      Left            =   6600
       TabIndex        =   8
       Top             =   2340
-      Width           =   1530
-      _ExtentX        =   2699
+      Width           =   1650
+      _ExtentX        =   2910
       _ExtentY        =   556
       _Version        =   393216
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -1046,7 +1082,7 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   131465219
+      Format          =   139395075
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker deltime 
@@ -1068,7 +1104,7 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "HH:mm "
-      Format          =   131465219
+      Format          =   139395075
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -1088,6 +1124,105 @@ Begin VB.Form frmOrderEntry
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
+   End
+   Begin MSComCtl2.DTPicker dtpBCDate 
+      Height          =   315
+      Left            =   12120
+      TabIndex        =   88
+      Top             =   2340
+      Width           =   1530
+      _ExtentX        =   2699
+      _ExtentY        =   556
+      _Version        =   393216
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      CustomFormat    =   "dd MMM yyyy"
+      Format          =   139395075
+      CurrentDate     =   37798
+   End
+   Begin VB.Label Label3 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "BC Date"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   195
+      Index           =   8
+      Left            =   11280
+      TabIndex        =   89
+      Top             =   2400
+      Width           =   720
+   End
+   Begin VB.Label Label3 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "BC No."
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   195
+      Index           =   7
+      Left            =   8520
+      TabIndex        =   87
+      Top             =   2760
+      Width           =   600
+   End
+   Begin VB.Label Label3 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "BC Type"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   195
+      Index           =   6
+      Left            =   8520
+      TabIndex        =   85
+      Top             =   2400
+      Width           =   735
+   End
+   Begin MSForms.ComboBox cboBCType 
+      Height          =   315
+      Left            =   9360
+      TabIndex        =   84
+      Top             =   2340
+      Width           =   1665
+      VariousPropertyBits=   746604571
+      MaxLength       =   6
+      DisplayStyle    =   3
+      Size            =   "2937;556"
+      MatchEntry      =   1
+      ShowDropButtonWhen=   2
+      FontName        =   "Verdana"
+      FontHeight      =   165
+      FontCharSet     =   0
+      FontPitchAndFamily=   2
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
@@ -1432,9 +1567,9 @@ Begin VB.Form frmOrderEntry
       EndProperty
       Height          =   195
       Index           =   25
-      Left            =   5415
+      Left            =   1920
       TabIndex        =   59
-      Top             =   2400
+      Top             =   2760
       Width           =   390
    End
    Begin VB.Label Label5 
@@ -1510,9 +1645,9 @@ Begin VB.Form frmOrderEntry
       EndProperty
       ForeColor       =   &H00FF00FF&
       Height          =   195
-      Left            =   14100
+      Left            =   14040
       TabIndex        =   49
-      Top             =   2400
+      Top             =   2880
       Visible         =   0   'False
       Width           =   1005
    End
@@ -1571,7 +1706,7 @@ Begin VB.Form frmOrderEntry
       EndProperty
       Height          =   195
       Index           =   2
-      Left            =   6675
+      Left            =   5520
       TabIndex        =   41
       Top             =   2400
       Width           =   975
@@ -1924,9 +2059,10 @@ Sub Kosong()
     deliverydate2.Value = Format(Now + 1, "dd MMM yyyy")
     txtRevisi.Text = ""
     PODate.Value = Format(Now, "dd MMM yyyy")
+    dtpBCDate.Value = Format(Now, "dd MMM yyyy")
     lblcust(0).Text = ""
     lblcust(1).Text = ""
-    cboCust.Text = ""
+    cbocust.Text = ""
     
     txtcontact.Text = ""
     cboDelPlace.Text = ""
@@ -1937,14 +2073,18 @@ Sub Kosong()
     
     Call up_FillCombo(cbounit, "unit_cls")
     cbounit.TextColumn = 2
-    LblErrMsg = ""
+    lblErrMsg = ""
     DelDate.Value = Format(Now + 1, "dd MMM yyyy")
     deltime.Value = Format("00:00", "hh:mm")
     statusfix = 0
         
     PODate.DataChanged = False
     txtcontact.DataChanged = False
-         
+    
+    cboBCType.ListIndex = -1
+    txtBCNo.Text = ""
+    dtpBCDate.Value = Format(Now, "dd MMM yyyy")
+    
     kunci (False)
     kosongBwh
     Header
@@ -1992,7 +2132,7 @@ Dim i As Integer
                 
     Set RsCust = Db.Execute(sqlcust)
     
-    With cboCust
+    With cbocust
         .clear
         .columnCount = 3
         .ColumnWidths = "50pt;300pt;0pt"
@@ -2006,6 +2146,36 @@ Dim i As Integer
             .List(i, 1) = IIf(IsNull(RsCust("trade_name")), " ", Trim(RsCust("Trade_Name")))
             .List(i, 2) = IIf(IsNull(RsCust("address1")), " ", Trim(RsCust("Address1")))
             RsCust.MoveNext
+            i = i + 1
+        Loop
+    End With
+End Sub
+
+Sub adtocboBCType()
+Dim sql As String
+Dim RS As New Recordset
+Dim i As Integer
+
+    
+    sql = "SELECT BCType_Cls, Description FROM dbo.BCType_Cls"
+                
+    Set RS = Db.Execute(sql)
+    
+    With cboBCType
+        .clear
+        .columnCount = 1
+        .ColumnWidths = "85pt"
+        .ListWidth = 85
+        .ListRows = 10
+        
+        i = 0
+        Do While Not RS.EOF
+            .AddItem
+            
+            .List(i, 0) = Trim(RS("BCType_Cls"))
+            .List(i, 1) = Trim(RS("Description"))
+            
+            RS.MoveNext
             i = i + 1
         Loop
     End With
@@ -2129,7 +2299,7 @@ Sub adtocbopono(p As String)
         
     Set rsno = Db.Execute(sqlno)
     
-    With CboPOnO
+    With cboPONo
         .clear
         .columnCount = 2
         .ColumnWidths = "115pt;0pt"
@@ -2177,7 +2347,7 @@ Sub browsecust()
 Dim sql1 As String
 Dim rs1 As New Recordset
     
-    sql1 = "select contact_person from trade_master where trade_code='" & cboCust.Text & "' "
+    sql1 = "select contact_person from trade_master where trade_code='" & cbocust.Text & "' "
     Set rs1 = Db.Execute(sql1)
     
     If Not (rs1.BOF And rs1.EOF) Then
@@ -2193,7 +2363,7 @@ Sub BrowseService()
     If CboItemCode = "" Or IsNull(CboItemCode) Then Exit Sub
     
     sql2 = "select trade_code, priority_cls, currency_code, price from price_master where " & _
-           "item_code='" & CboItemCode.Text & "' and price_cls='05' and (trade_code='" & cboCust.Text & _
+           "item_code='" & CboItemCode.Text & "' and price_cls='05' and (trade_code='" & cbocust.Text & _
            "' or trade_code='000000') and start_date<='" & Format(DelDate.Value, "yyyymmdd") & "' and end_date>='" & _
            Format(DelDate.Value, "yyyymmdd") & "'"
     
@@ -2245,7 +2415,7 @@ Sub BrowseService()
 Exit Sub
 
 handlar:
-LblErrMsg.Caption = err.Description
+lblErrMsg.Caption = err.Description
 err.clear
 
 
@@ -2272,14 +2442,14 @@ Sub browseprice()
 
  If cbocurr <> "" Or Not IsNull(cbocurr) Then
     sql2 = "EXEC dbo.sp_OrderEntry_BrowsePrice @ItemCode = '" & CboItemCode.Column(1) & "'," & _
-           " @SupplierCode = '" & cboCust.Text & "'," & _
+           " @SupplierCode = '" & cbocust.Text & "'," & _
            " @ConsigneeCode = '" & cboDelPlace.Text & "'," & _
            " @StartDate = '" & Format(PODate.Value, "yyyymmdd") & "'," & _
            " @EndDate = '" & Format(PODate.Value, "yyyymmdd") & "'," & _
            " @CurrencyCode = '" & cbocurr.Column(0) & "' "
  Else
     sql2 = "EXEC dbo.sp_OrderEntry_BrowsePrice @ItemCode = '" & CboItemCode.Column(1) & "'," & _
-           " @SupplierCode = '" & cboCust.Text & "'," & _
+           " @SupplierCode = '" & cbocust.Text & "'," & _
            " @ConsigneeCode = '" & cboDelPlace.Text & "'," & _
            " @StartDate = '" & Format(PODate.Value, "yyyymmdd") & "'," & _
            " @EndDate = '" & Format(PODate.Value, "yyyymmdd") & "'," & _
@@ -2336,7 +2506,7 @@ Dim t, p As String
 Dim sqltgl As String
 Dim rstgl As New Recordset
 
-    LblErrMsg = ""
+    lblErrMsg = ""
     
     sql = "select * from orderentry_master where po_no='" & txtPoNo.Text & "' "
     If RS.State <> adStateClosed Then RS.Close
@@ -2368,8 +2538,10 @@ Dim rstgl As New Recordset
         p = IIf(IsNull(RS("location_code")), " ", Trim(RS("location_code")))
         t = IIf(IsNull(RS("contact_person")), " ", Trim(RS("contact_person")))
         statusfix = IIf(IsNull(RS("fix_cls")), 0, RS("fix_cls"))
-        cboCust.Text = Trim(RS("Cust_code"))
-        
+        cbocust.Text = Trim(RS("Cust_code"))
+        cboBCType.Text = uf_GetBCType(Trim(RS("BC_Type")))
+        txtBCNo.Text = Trim(RS("BC_No"))
+        dtpBCDate.Value = RS("BC_Date")
         
         If RS("NoCommercial_Cls") = "1" Then
             Check1.Value = 1
@@ -2497,6 +2669,16 @@ Private Sub cbEditStatus_Click()
     
 End Sub
 
+Private Sub cbobctype_Change()
+lblErrMsg.Caption = ""
+
+    If cboBCType.ListIndex <> -1 Then
+        txtBCType.Text = cboBCType.Column(1)
+    ElseIf cboBCType.Text = "" Then
+        txtBCType.Text = ""
+    End If
+End Sub
+
 Private Sub cbocurr_Click()
     cboPrice_LostFocus
 End Sub
@@ -2606,6 +2788,7 @@ Private Sub Form_Load()
     
     adtocboCust
     adtocbodelplace
+    adtocboBCType
     
     ' Item Order harus ada pada Price_Master
     adtocboitem
@@ -2636,7 +2819,7 @@ Private Sub Combo1_Click()
 Dim ketemu As Boolean
     
     ketemu = False
-    LblErrMsg = ""
+    lblErrMsg = ""
     kunci (False)
     kosongBwh
     Header
@@ -2648,7 +2831,7 @@ Dim ketemu As Boolean
         ubah = False
         deliverydate1.Enabled = False
         deliverydate2.Enabled = False
-        CboPOnO.locked = True
+        cboPONo.locked = True
         txtPoNo.Text = "KI3-"
         txtRevisi.Text = ""
         PODate.Value = Format(Now, "dd MMM yyyy")
@@ -2657,14 +2840,17 @@ Dim ketemu As Boolean
         cbounit.TextColumn = 2
         Txtdisplay(0) = ""
         Txtdisplay(1) = ""
+        cboBCType.ListIndex = -1
+        txtBCNo.Text = ""
+        dtpBCDate.Value = Format(Now, "dd MMM yyyy")
 
     Else
         
-        If cboCust.Text = "" Then
-            CboPOnO.clear
+        If cbocust.Text = "" Then
+            cboPONo.clear
             txtPoNo.Text = ""
         Else
-            sql = " and a.Cust_Code='" & cboCust.Text & "' "
+            sql = " and a.Cust_Code='" & cbocust.Text & "' "
             adtocbopono (sql)
         End If
         
@@ -2672,12 +2858,12 @@ Dim ketemu As Boolean
         Command1(2).Caption = "&Update"
         deliverydate1.Enabled = True
         deliverydate2.Enabled = True
-        CboPOnO.locked = False
+        cboPONo.locked = False
         
-        For i = 0 To CboPOnO.ListCount - 1
-            If txtPoNo.Text = CboPOnO.List(i) Then
+        For i = 0 To cboPONo.ListCount - 1
+            If txtPoNo.Text = cboPONo.List(i) Then
                 ketemu = True
-                CboPOnO.ListIndex = i
+                cboPONo.ListIndex = i
                 Exit For
             End If
         Next
@@ -2693,9 +2879,9 @@ Private Sub combo1_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
 End Sub
 
 Private Sub cbopono_Click()
-    LblErrMsg = ""
-    txtPoNo.Text = CboPOnO.Text
-    If CboPOnO.MatchFound Then txtRevisi.Text = CboPOnO.List(CboPOnO.ListIndex, 1)
+    lblErrMsg = ""
+    txtPoNo.Text = cboPONo.Text
+    If cboPONo.matchFound Then txtRevisi.Text = cboPONo.List(cboPONo.ListIndex, 1)
     Header
     kosongBwh
 End Sub
@@ -2709,14 +2895,14 @@ Private Sub txtpono_Change()
 Dim ketemu As Boolean
 
 If combo1.ListIndex = 1 Then
-    For i = 0 To CboPOnO.ListCount - 1
-        If txtPoNo.Text = CboPOnO.List(i) Then
+    For i = 0 To cboPONo.ListCount - 1
+        If txtPoNo.Text = cboPONo.List(i) Then
             ketemu = True
-            CboPOnO.ListIndex = i
+            cboPONo.ListIndex = i
             Exit For
         End If
     Next
-    If ketemu = False Then CboPOnO.ListIndex = -1
+    If ketemu = False Then cboPONo.ListIndex = -1
 End If
 End Sub
 
@@ -2741,21 +2927,26 @@ Private Sub cboCust_Click()
     Dim ketemu As Boolean
 
     ketemu = False
-    LblErrMsg = ""
+    lblErrMsg = ""
     kunci (False)
     ClearData
-    If cboCust.ListIndex <> -1 Then
-        lblcust(0).Text = cboCust.Column(1)
-        lblcust(1).Text = cboCust.Column(2)
+    
+    cboBCType.ListIndex = -1
+    txtBCNo.Text = ""
+    dtpBCDate.Value = Format(Now, "dd MMM yyyy")
+    
+    If cbocust.ListIndex <> -1 Then
+        lblcust(0).Text = cbocust.Column(1)
+        lblcust(1).Text = cbocust.Column(2)
         browsecust
         If combo1.ListIndex = 1 Then
-            sql = " and a.Cust_Code='" & cboCust.Text & "' "
+            sql = " and a.Cust_Code='" & cbocust.Text & "' "
             adtocbopono (sql)
             
-            For i = 0 To CboPOnO.ListCount - 1
-                If txtPoNo.Text = CboPOnO.List(i) Then
+            For i = 0 To cboPONo.ListCount - 1
+                If txtPoNo.Text = cboPONo.List(i) Then
                     ketemu = True
-                    CboPOnO.ListIndex = i
+                    cboPONo.ListIndex = i
                     Exit For
                 End If
             Next
@@ -2781,16 +2972,18 @@ Private Sub cboCust_Click()
         lblcust(1).Text = ""
         txtcontact = ""
         txtcontact.DataChanged = False
-        CboPOnO.clear
+        cboPONo.clear
+              
         If combo1.ListIndex = 1 Then
             txtPoNo.Text = ""
             txtRevisi.Text = ""
             PODate.Value = Format(Now, "dd MMM yyyy")
+                      
             kosongBwh
             Header
         End If
-        LblErrMsg.Caption = DisplayMsg(4011)
-        cboCust.SetFocus
+        lblErrMsg.Caption = DisplayMsg(4011)
+        cbocust.SetFocus
         Exit Sub
     End If
 
@@ -2798,9 +2991,9 @@ End Sub
 
 Private Sub cboCust_KeyDown(KeyCode As MSForms.ReturnInteger, Shift As Integer)
   If KeyCode = 13 Then
-    For i = 0 To cboCust.ListCount - 1
-        If cboCust.Text = cboCust.List(i) Then
-            cboCust.ListIndex = i
+    For i = 0 To cbocust.ListCount - 1
+        If cbocust.Text = cbocust.List(i) Then
+            cbocust.ListIndex = i
             Exit For
         End If
     Next
@@ -2816,14 +3009,14 @@ Private Sub cbocust_KeyPress(KeyAscii As MSForms.ReturnInteger)
 End Sub
 
 Private Sub cbodelplace_Click()
-LblErrMsg = ""
+lblErrMsg = ""
     If cboDelPlace.ListIndex <> -1 Then
         lblDelPlace.Text = cboDelPlace.Column(1)
     Else
         If RTrim(cboDelPlace.Text) <> "" Then
             lblDelPlace.Text = ""
             lblDelPlace.DataChanged = False
-            LblErrMsg.Caption = DisplayMsg(4014)
+            lblErrMsg.Caption = DisplayMsg(4014)
             cboDelPlace.SetFocus
             Exit Sub
         Else
@@ -2853,17 +3046,17 @@ End Sub
 Private Sub deliverydate1_Change()
    
    If CDate(deliverydate1) > CDate(deliverydate2) Then
-      LblErrMsg.Caption = DisplayMsg("4076") & " " & Format(deliverydate2, "dd MMM yyyy")
+      lblErrMsg.Caption = DisplayMsg("4076") & " " & Format(deliverydate2, "dd MMM yyyy")
       Exit Sub
    Else
-      LblErrMsg.Caption = ""
+      lblErrMsg.Caption = ""
    End If
     
-    If cboCust.Text = "" Then
-        CboPOnO.clear
+    If cbocust.Text = "" Then
+        cboPONo.clear
         txtPoNo.Text = ""
     Else
-        sql = " and a.Cust_Code='" & cboCust.Text & "' "
+        sql = " and a.Cust_Code='" & cbocust.Text & "' "
         adtocbopono (sql)
     End If
     
@@ -2872,24 +3065,24 @@ End Sub
 Private Sub deliverydate2_Change()
    
    If CDate(deliverydate2) < CDate(deliverydate1) Then
-      LblErrMsg.Caption = DisplayMsg("4077") & " " & Format(deliverydate1, "dd MMM yyyy")
+      lblErrMsg.Caption = DisplayMsg("4077") & " " & Format(deliverydate1, "dd MMM yyyy")
       Exit Sub
    Else
-      LblErrMsg.Caption = ""
+      lblErrMsg.Caption = ""
    End If
    
-    If cboCust.Text = "" Then
-        CboPOnO.clear
+    If cbocust.Text = "" Then
+        cboPONo.clear
         txtPoNo.Text = ""
     Else
-        sql = " and a.Cust_Code='" & cboCust.Text & "' "
+        sql = " and a.Cust_Code='" & cbocust.Text & "' "
         adtocbopono (sql)
     End If
    
 End Sub
 
 Private Sub cboitemcode_Click()
-    LblErrMsg = ""
+    lblErrMsg = ""
     If CboItemCode.ListIndex <> -1 Then
         lbldesc.Text = CboItemCode.Column(1) & " " & CboItemCode.Column(2)
         cbounit.TextColumn = 2
@@ -2904,7 +3097,7 @@ Private Sub cboitemcode_Click()
         cbocurr.ListIndex = -1
         cboprice.clear
         cboprice.ListIndex = -1
-        LblErrMsg.Caption = DisplayMsg(4003)
+        lblErrMsg.Caption = DisplayMsg(4003)
         CboItemCode.SetFocus
         Exit Sub
     End If
@@ -3006,7 +3199,7 @@ If InStr(1, txtQty.Text, ",") = 1 Then txtQty.Text = Right(txtQty, Len(txtQty) -
   End If
   
 bugs:
-  LblErrMsg.Caption = err.Description
+  lblErrMsg.Caption = err.Description
   
   
 End Sub
@@ -3033,7 +3226,7 @@ Private Sub Grid_AfterEdit(ByVal Row As Long, ByVal Col As Long)
 
 Dim TextGrid As String
 Dim k As Boolean
-LblErrMsg.Caption = ""
+lblErrMsg.Caption = ""
 k = False
 
 On Error GoTo handler
@@ -3126,7 +3319,7 @@ With grid
 End With
 
 handler:
-LblErrMsg.Caption = err.Description
+lblErrMsg.Caption = err.Description
 
 End Sub
 
@@ -3155,7 +3348,7 @@ On Error GoTo handler
 
   If grid.Col <> bteColSelect Then Cancel = True
 handler:
-LblErrMsg.Caption = err.Description
+lblErrMsg.Caption = err.Description
   
 End Sub
 
@@ -3209,26 +3402,26 @@ Private Sub Command1_Click(Index As Integer)
     Dim rsCek As New ADODB.Recordset
     
     dbw.ConnectionString = Db.ConnectionString
-    LblErrMsg = ""
+    lblErrMsg = ""
     ubahgrid = False
     
     Select Case Index
     Case 0:
         Me.MousePointer = vbHourglass
-        If hakUpdate(Me.Name) = 0 Then LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+        If hakUpdate(Me.Name) = 0 Then lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
         If txtPoNo.Text = "" Then
             txtPoNo.SetFocus
-            LblErrMsg = DisplayMsg(1046) 'Please Input PO No
+            lblErrMsg = DisplayMsg(1046) 'Please Input PO No
             Me.MousePointer = vbDefault
             Exit Sub
-        ElseIf cboCust.Text = "" Then
-            cboCust.SetFocus
-            LblErrMsg = DisplayMsg(1045) 'Please Select Customer Code
+        ElseIf cbocust.Text = "" Then
+            cbocust.SetFocus
+            lblErrMsg = DisplayMsg(1045) 'Please Select Customer Code
             Me.MousePointer = vbDefault
             Exit Sub
         ElseIf cboDelPlace.Text = "" Then
-            cboCust.SetFocus
-            LblErrMsg = "Please Select Consignee Code !" 'Please Select Customer Code
+            cbocust.SetFocus
+            lblErrMsg = "Please Select Consignee Code !" 'Please Select Customer Code
             Me.MousePointer = vbDefault
             Exit Sub
         End If
@@ -3241,7 +3434,7 @@ Private Sub Command1_Click(Index As Integer)
                                         
             If CekSr <> "" Then
                 
-               LblErrMsg.Caption = CekSr
+               lblErrMsg.Caption = CekSr
                Me.MousePointer = vbDefault
                Exit Sub
             End If
@@ -3253,7 +3446,7 @@ Private Sub Command1_Click(Index As Integer)
         Else
             For i = 1 To grid.Rows - 1
                 If Trim(grid.TextMatrix(i, bteColCurrCode)) <> Trim(cbocurr) Then
-                    LblErrMsg = DisplayMsg(4084)
+                    lblErrMsg = DisplayMsg(4084)
                     cbocurr.SetFocus
                     Me.MousePointer = vbDefault
                     Exit Sub
@@ -3267,7 +3460,7 @@ Private Sub Command1_Click(Index As Integer)
         RS.Open sql, Db, adOpenKeyset, adLockOptimistic
         
         If RS.BOF And RS.EOF Then
-            LblErrMsg.Caption = DisplayMsg(4015)
+            lblErrMsg.Caption = DisplayMsg(4015)
             txtPoNo.SetFocus
             Me.MousePointer = vbDefault
             Exit Sub
@@ -3278,8 +3471,8 @@ Private Sub Command1_Click(Index As Integer)
             If cboDelPlace.Text <> "" Then
                 cboDelPlace.MatchEntry = 1
                 cboDelPlace.Text = cboDelPlace.Text
-                If cboDelPlace.MatchFound = False Then
-                    LblErrMsg = DisplayMsg("0039")
+                If cboDelPlace.matchFound = False Then
+                    lblErrMsg = DisplayMsg("0039")
                     cboDelPlace.SetFocus
                     cboDelPlace.MatchEntry = 2
                     Me.MousePointer = vbDefault
@@ -3313,12 +3506,12 @@ Private Sub Command1_Click(Index As Integer)
             End If
             RS.update
             
-            If CboPOnO.ListIndex >= 0 Then
-                If CboPOnO.List(CboPOnO.ListIndex, 1) <> Trim(txtRevisi.Text) Then
-                    CboPOnO.List(CboPOnO.ListIndex, 1) = Trim(txtRevisi.Text)
-                    CboPOnO.List(CboPOnO.ListIndex, 0) = Trim(RS("po_no"))
+            If cboPONo.ListIndex >= 0 Then
+                If cboPONo.List(cboPONo.ListIndex, 1) <> Trim(txtRevisi.Text) Then
+                    cboPONo.List(cboPONo.ListIndex, 1) = Trim(txtRevisi.Text)
+                    cboPONo.List(cboPONo.ListIndex, 0) = Trim(RS("po_no"))
                     BrowseGrid
-                    LblErrMsg.Caption = DisplayMsg(1000)
+                    lblErrMsg.Caption = DisplayMsg(1000)
                     Me.MousePointer = vbDefault
                     Exit Sub
                 End If
@@ -3337,7 +3530,7 @@ Private Sub Command1_Click(Index As Integer)
                         "seq_no='" & .TextMatrix(i, bteColSeqNo) & "' "
                         Set rs1 = Db.Execute(sql1)
                         If Not (rs1.BOF And rs1.EOF) Then
-                            LblErrMsg.Caption = DisplayMsg(1204)
+                            lblErrMsg.Caption = DisplayMsg(1204)
                             .Row = i
                             .SetFocus
                             Me.MousePointer = vbDefault
@@ -3380,7 +3573,7 @@ Private Sub Command1_Click(Index As Integer)
 '                        End If
                         ' ----------------------------
                             
-                            sql1 = "delete from orderentry_detail where cust_Code='" & cboCust.Text & "' and " & _
+                            sql1 = "delete from orderentry_detail where cust_Code='" & cbocust.Text & "' and " & _
                             "po_no='" & txtPoNo.Text & "' and item_code='" & .TextMatrix(i, bteColItemCode) & "' and " & _
                             "delivery_date='" & Format(.TextMatrix(i, bteColDate), "YYYY-MM-DD") & "' and seq_no='" & .TextMatrix(i, bteColSeqNo) & "' "
                             dbw.Execute sql1
@@ -3415,25 +3608,25 @@ Private Sub Command1_Click(Index As Integer)
                 End If
             Next i
             
-            If (hapus) Then BrowseGrid: LblErrMsg = DisplayMsg(1201): Me.MousePointer = vbDefault: Exit Sub
+            If (hapus) Then BrowseGrid: lblErrMsg = DisplayMsg(1201): Me.MousePointer = vbDefault: Exit Sub
         
         End With
         
         If CboItemCode.Text = "" Then
             'CboItemCode.SetFocus
-            LblErrMsg = DisplayMsg(1047) 'Please Select Part Number
+            lblErrMsg = DisplayMsg(1047) 'Please Select Part Number
             Me.MousePointer = vbDefault
             Exit Sub
         End If
         If txtQty.Text = "" Then
             txtQty.SetFocus
-            LblErrMsg = DisplayMsg(1012) 'Please Input Quantity
+            lblErrMsg = DisplayMsg(1012) 'Please Input Quantity
             Me.MousePointer = vbDefault
             Exit Sub
         End If
         If cbounit.Text = "" Then
             cbounit.SetFocus
-            LblErrMsg = DisplayMsg(1030)
+            lblErrMsg = DisplayMsg(1030)
             Me.MousePointer = vbDefault
             Exit Sub
         End If
@@ -3444,7 +3637,7 @@ Private Sub Command1_Click(Index As Integer)
                 cbocurr.ListIndex = uf_GetComboListIndex(cbocurr, gs_DefaultCurrencyCode)
             Else
                 cbocurr.SetFocus
-                LblErrMsg = DisplayMsg(1028)
+                lblErrMsg = DisplayMsg(1028)
                 Me.MousePointer = vbDefault
                 Exit Sub
             End If
@@ -3456,7 +3649,7 @@ Private Sub Command1_Click(Index As Integer)
                 cboprice = 0
             Else
                 cboprice.SetFocus
-                LblErrMsg = DisplayMsg(1029)
+                lblErrMsg = DisplayMsg(1029)
                 Me.MousePointer = vbDefault
                 Exit Sub
             End If
@@ -3511,19 +3704,19 @@ Private Sub Command1_Click(Index As Integer)
         ' Check For Valid Serial No
         
         If awal > akhir Then
-            LblErrMsg = "[000] - Invalid Serial Number ! "
+            lblErrMsg = "[000] - Invalid Serial Number ! "
             Me.MousePointer = vbDefault
             Exit Sub
         End If
         
         If Depan <> Left(TxtSerialTo, 1) Then
-            LblErrMsg = "[000] - Invalid Serial Number ! "
+            lblErrMsg = "[000] - Invalid Serial Number ! "
             Me.MousePointer = vbDefault
             Exit Sub
         End If
         
         If (akhir - awal) + 1 <> CDbl(txtQty) Then
-            LblErrMsg = "[000] - Data doesn't match between Qty and Serial No ! "
+            lblErrMsg = "[000] - Data doesn't match between Qty and Serial No ! "
             Me.MousePointer = vbDefault
             Exit Sub
         End If
@@ -3556,9 +3749,9 @@ Private Sub Command1_Click(Index As Integer)
             rsUpdate.Open sqlGrid, dbw, adOpenKeyset, adLockOptimistic
         
             rsUpdate.AddNew
-            rsUpdate("cust_Code") = cboCust.Text
+            rsUpdate("cust_Code") = cbocust.Text
             rsUpdate("po_no") = txtPoNo.Text
-            rsUpdate("seq_no") = seqNo(cboCust.Text, txtPoNo.Text)
+            rsUpdate("seq_no") = seqNo(cbocust.Text, txtPoNo.Text)
             changeQty = CDbl(txtQty.Text)
             
         'UPDATE ORDER ENTRY DETAIL
@@ -3613,12 +3806,12 @@ Private Sub Command1_Click(Index As Integer)
             Set rsc = Db.Execute(Sqlc)
             If Not (rsc.BOF And rsc.EOF) Then
                 If CDbl(txtQty.Text) < rsc(0) Then
-                    LblErrMsg.Caption = DisplayMsg("4043") & " " & rsc(0)
+                    lblErrMsg.Caption = DisplayMsg("4043") & " " & rsc(0)
                     txtQty.SetFocus
                     Me.MousePointer = vbDefault
                     Exit Sub
                 Else
-                    sqlGrid = "select * from orderentry_detail where cust_Code='" & cboCust.Text & "' and po_no='" & txtPoNo.Text & "' and " & _
+                    sqlGrid = "select * from orderentry_detail where cust_Code='" & cbocust.Text & "' and po_no='" & txtPoNo.Text & "' and " & _
                         "item_code='" & CboItemCode.Text & "' and delivery_date='" & Format(Tgl, "YYYY-MM-DD") & "' and seq_no='" & _
                         TxtSeqNo.Text & "' order by delivery_date, makeritem_code, seq_no"
                     If rsUpdate.State <> adStateClosed Then rsUpdate.Close
@@ -3672,7 +3865,7 @@ Private Sub Command1_Click(Index As Integer)
        ' --------------------
         
         If InStr(1, err.Description, "Violation of PRIMARY KEY constraint") > 0 Then
-            LblErrMsg = DisplayMsg(1023): DelDate.SetFocus: Me.MousePointer = vbDefault: Exit Sub
+            lblErrMsg = DisplayMsg(1023): DelDate.SetFocus: Me.MousePointer = vbDefault: Exit Sub
         End If
 
         dbw.CommitTrans
@@ -3698,7 +3891,7 @@ Private Sub Command1_Click(Index As Integer)
         Next j
         ubahgrid = True
         
-        LblErrMsg = DisplayMsg(1101)
+        lblErrMsg = DisplayMsg(1101)
         
         'Call adtocboitem
     Case 1: Kosong
@@ -3707,7 +3900,7 @@ Private Sub Command1_Click(Index As Integer)
         combo1.ListIndex = 1
         Call Combo1_Click
         cboDestination.Text = "2"
-        cboCust.SetFocus
+        cbocust.SetFocus
     Case 2:
         Me.MousePointer = vbHourglass
         
@@ -3717,39 +3910,39 @@ Private Sub Command1_Click(Index As Integer)
 
         If combo1.ListIndex = 0 Then
             
-            If hakUpdate(Me.Name) = 0 Then LblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
+            If hakUpdate(Me.Name) = 0 Then lblErrMsg = DisplayMsg(3008): Me.MousePointer = vbDefault: Exit Sub
         
             If txtPoNo.Text = "" Then
                 txtPoNo.SetFocus
-                LblErrMsg = DisplayMsg(1046) '"Please Input PO No"
+                lblErrMsg = DisplayMsg(1046) '"Please Input PO No"
                 Me.MousePointer = vbDefault
                 Exit Sub
-            ElseIf cboCust.Text = "" Then
-                cboCust.SetFocus
-                LblErrMsg = DisplayMsg(1045) '"Please Select Customer Code"
+            ElseIf cbocust.Text = "" Then
+                cbocust.SetFocus
+                lblErrMsg = DisplayMsg(1045) '"Please Select Customer Code"
                 Me.MousePointer = vbDefault
                 Exit Sub
             Else
         
-                If cboCust.Text <> "" Then
-                    cboCust.MatchEntry = 1
-                    cboCust.Text = cboCust.Text
-                    If cboCust.MatchFound = False Then
-                        LblErrMsg = DisplayMsg(4011)
-                        cboCust.SetFocus
-                        cboCust.MatchEntry = 2
+                If cbocust.Text <> "" Then
+                    cbocust.MatchEntry = 1
+                    cbocust.Text = cbocust.Text
+                    If cbocust.matchFound = False Then
+                        lblErrMsg = DisplayMsg(4011)
+                        cbocust.SetFocus
+                        cbocust.MatchEntry = 2
                         Me.MousePointer = vbDefault
                         Exit Sub
                     End If
-                    cboCust.MatchEntry = 2
+                    cbocust.MatchEntry = 2
                 End If
-                cboCust.MatchEntry = 1
+                cbocust.MatchEntry = 1
         
                 If cboDelPlace.Text <> "" Then
                     cboDelPlace.MatchEntry = 1
                     cboDelPlace.Text = cboDelPlace.Text
-                    If cboDelPlace.MatchFound = False Then
-                        LblErrMsg = DisplayMsg("0039")
+                    If cboDelPlace.matchFound = False Then
+                        lblErrMsg = DisplayMsg("0039")
                         cboDelPlace.SetFocus
                         cboDelPlace.MatchEntry = 2
                         Me.MousePointer = vbDefault
@@ -3765,14 +3958,14 @@ Private Sub Command1_Click(Index As Integer)
         
                 If ubah = False Then
                     If Not (RS.BOF And RS.EOF) Then
-                        LblErrMsg.Caption = DisplayMsg(1023)
+                        lblErrMsg.Caption = DisplayMsg(1023)
                         txtPoNo.SetFocus
                         Me.MousePointer = vbDefault
                         Exit Sub
                     Else
                         RS.AddNew
                         RS("po_no") = txtPoNo.Text
-                        RS("cust_code") = cboCust.Text
+                        RS("cust_code") = cbocust.Text
                     End If
                 End If
         
@@ -3786,6 +3979,9 @@ Private Sub Command1_Click(Index As Integer)
                 
                 RS("location_code") = cboDelPlace.Text
                 RS("contact_person") = txtcontact.Text
+                RS("BC_Type") = txtBCType.Text
+                RS("BC_Date") = dtpBCDate.Value
+                RS("BC_No") = txtBCNo.Text
                 RS("last_update") = Now
                 RS("last_user") = userLogin
                 RS.update
@@ -3795,7 +3991,7 @@ Private Sub Command1_Click(Index As Integer)
                 
                 combo1.ListIndex = 1
                 
-                LblErrMsg.Caption = DisplayMsg(1000)
+                lblErrMsg.Caption = DisplayMsg(1000)
                 ubah = True
         
             End If
@@ -3804,7 +4000,7 @@ Private Sub Command1_Click(Index As Integer)
             
             If txtPoNo.Text = "" Then
                 txtPoNo.SetFocus
-                LblErrMsg = DisplayMsg(1048) '"Please Select PO No"
+                lblErrMsg = DisplayMsg(1048) '"Please Select PO No"
                 Me.MousePointer = vbDefault
                 Exit Sub
             Else
@@ -3814,7 +4010,12 @@ Private Sub Command1_Click(Index As Integer)
                     txtRevisi.Text = ""
                     PODate.Value = Format(Now, "dd MMM yyyy")
                     PODate.DataChanged = False
-                    LblErrMsg.Caption = DisplayMsg(4015)
+                    
+                    cboBCType.ListIndex = -1
+                    txtBCNo.Text = ""
+                    dtpBCDate.Value = Format(Now, "dd MMM yyyy")
+                    
+                    lblErrMsg.Caption = DisplayMsg(4015)
                     txtPoNo.SetFocus
                     Me.MousePointer = vbDefault
                     Exit Sub
@@ -3834,22 +4035,22 @@ Private Sub Command1_Click(Index As Integer)
        Dim xdo As Recordset
        Dim po_no As String
             MousePointer = vbHourglass
-            If Trim(CboPOnO) <> "" Then
-                CboPOnO = CboPOnO
-                If CboPOnO.MatchFound Then
-                    sql = "select top 1 po_no from orderentry_detail where po_no ='" & CboPOnO & "'"
+            If Trim(cboPONo) <> "" Then
+                cboPONo = cboPONo
+                If cboPONo.matchFound Then
+                    sql = "select top 1 po_no from orderentry_detail where po_no ='" & cboPONo & "'"
                     Set xdo = New Recordset
                     xdo.Open sql, Db, adOpenDynamic, adLockOptimistic
                     If xdo.EOF Then
-                        LblErrMsg = DisplayMsg(4071)
+                        lblErrMsg = DisplayMsg(4071)
                         MousePointer = 1
                         Exit Sub
                     Else
-                        po_no = "'" & CboPOnO & "'"
+                        po_no = "'" & cboPONo & "'"
                         Call LoadForm(po_no)
                     End If
                 Else
-                    LblErrMsg = DisplayMsg(4015)
+                    lblErrMsg = DisplayMsg(4015)
                 End If
             End If
             MousePointer = vbDefault
@@ -3858,29 +4059,29 @@ Private Sub Command1_Click(Index As Integer)
    
     Case 6:
     
-        If cboCust.Text = "" Then
+        If cbocust.Text = "" Then
         
-            LblErrMsg.Caption = "Please Select Customer Code !"
+            lblErrMsg.Caption = "Please Select Customer Code !"
             Exit Sub
             
-        ElseIf CboPOnO.Text = "" Then
+        ElseIf cboPONo.Text = "" Then
             
-            LblErrMsg.Caption = "Please Select or Create SI/PO No !"
+            lblErrMsg.Caption = "Please Select or Create SI/PO No !"
             Exit Sub
             
         ElseIf cboDelPlace.Text = "" Then
             
-            LblErrMsg.Caption = "Please Select Consignee Code !"
+            lblErrMsg.Caption = "Please Select Consignee Code !"
             Exit Sub
                        
-        ElseIf uf_validasi_upload(Trim(cboCust.Text), Trim(CboPOnO.Text)) = False Then
-            LblErrMsg.Caption = "Data SI/PO No : " & Trim(CboPOnO.Text) & " Has Been Upload !!"
+        ElseIf uf_validasi_upload(Trim(cbocust.Text), Trim(cboPONo.Text)) = False Then
+            lblErrMsg.Caption = "Data SI/PO No : " & Trim(cboPONo.Text) & " Has Been Upload !!"
             Exit Sub
         
         End If
             
-        FrmUploadDetailItem.txtTradeCode.Text = Trim(cboCust.Text)
-        FrmUploadDetailItem.txtPoNo.Text = Trim(CboPOnO.Text)
+        FrmUploadDetailItem.txtTradeCode.Text = Trim(cbocust.Text)
+        FrmUploadDetailItem.txtPoNo.Text = Trim(cboPONo.Text)
         FrmUploadDetailItem.txtConsCode.Text = Trim(cboDelPlace.Text)
         FrmUploadDetailItem.Show 1
         Command1_Click (2)
@@ -3898,7 +4099,7 @@ ErrMsg:
     Set rsc = Nothing
     Set rslot = Nothing
     Set rsUpdate = Nothing
-    LblErrMsg = err.number & " " & err.Description
+    lblErrMsg = err.number & " " & err.Description
 
     
     
@@ -3948,7 +4149,7 @@ Sub Stuffing()
               " LEFT JOIN dbo.Item_Master IM ON OD.Item_Code = IM.Item_Code " & vbCrLf & _
               " LEFT JOIN dbo.OrderEntry_Master OM ON OD.PO_No = OM.PO_No " & vbCrLf & _
               " LEFT JOIN dbo.Trade_Master TM ON OM.Location_Code = TM.Trade_Code " & vbCrLf & _
-              " WHERE OD.Cust_Code = '" & Trim(cboCust.Text) & "' AND OD.PO_No = '" & Trim(txtPoNo.Text) & "' ORDER BY Item_Code"
+              " WHERE OD.Cust_Code = '" & Trim(cbocust.Text) & "' AND OD.PO_No = '" & Trim(txtPoNo.Text) & "' ORDER BY Item_Code"
         
         If rsStuffing.State <> adStateClosed Then rsStuffing.Close
         rsStuffing.Open sql, Db, adOpenKeyset, adLockOptimistic
@@ -3968,7 +4169,7 @@ Sub Stuffing()
             Loop
             
             If Cekserial = False Then
-                LblErrMsg = "This SI/PO No have not serial number"
+                lblErrMsg = "This SI/PO No have not serial number"
                 Exit Sub
             End If
             
@@ -4261,11 +4462,11 @@ Sub Stuffing()
             Me.MousePointer = vbDefault
             
         Else
-            LblErrMsg = DisplayMsg(4015)
+            lblErrMsg = DisplayMsg(4015)
         End If
         
     Else
-        LblErrMsg = DisplayMsg(1048)
+        lblErrMsg = DisplayMsg(1048)
     End If
     
 err:
@@ -4273,7 +4474,7 @@ err:
     Set objWorkBook = Nothing
     Set objWorkSheet = Nothing
     Set objExcel = Nothing
-    LblErrMsg = err.Description
+    lblErrMsg = err.Description
     Me.MousePointer = vbDefault
 
 End Sub
@@ -4368,13 +4569,13 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
 Public Sub dr_orderInquiry(p_custCode As String, p_poNo As String, p_itemCode As String, date1 As String, date2 As String, date3 As String, p_seqNo As String)
     combo1.ListIndex = 1
-    cboCust.Text = p_custCode
+    cbocust.Text = p_custCode
     Call cboCust_Click
     txtPoNo.Text = p_poNo
     Call txtpono_KeyPress(13)
@@ -4449,7 +4650,7 @@ Dim rsRpt As New ADODB.Recordset
 Dim Rpt As New FrmRpt3
 
 
- LblErrMsg = ""
+ lblErrMsg = ""
             MousePointer = vbHourglass
             
            
@@ -4460,7 +4661,7 @@ Dim Rpt As New FrmRpt3
           " INNER JOIN orderentry_master b ON a.po_no=b.po_no " & _
           " INNER JOIN trade_master c ON b.location_code=c.trade_code " & _
           " INNER JOIN item_master d ON a.item_code = d.item_code " & _
-          " where a.po_no= '" & CboPOnO.Text & "' " & _
+          " where a.po_no= '" & cboPONo.Text & "' " & _
           " order by a.delivery_date, a.makeritem_code, a.seq_no "
    
             
@@ -4471,7 +4672,7 @@ Dim Rpt As New FrmRpt3
          
          
          
-         If rsRpt.EOF Then LblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
+         If rsRpt.EOF Then lblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
     
          'Set report = application.OpenReport(App.path & "\Reports\rptSupplyList.rpt")
           Set report = application.OpenReport(App.path & "\Reports\LoadingForm.rpt")
@@ -4500,7 +4701,7 @@ Private Function uf_ValidasiSerialNo() As String
 Dim RsSerial As New ADODB.Recordset
 Dim strSQL As String
 Dim seqNo As Integer
-LblErrMsg.Caption = ""
+lblErrMsg.Caption = ""
 
 
 
@@ -4512,7 +4713,7 @@ Else
 End If
 
 
-strSQL = "exec SP_OrderEntry_Validasi_SerialNo '" & CboPOnO.Text & "'," & seqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "
+strSQL = "exec SP_OrderEntry_Validasi_SerialNo '" & cboPONo.Text & "'," & seqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "
 
 
 Set RsSerial = Db.Execute(strSQL)
