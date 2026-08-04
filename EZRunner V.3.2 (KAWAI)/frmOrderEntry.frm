@@ -216,7 +216,7 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   139395075
+      Format          =   127008771
       CurrentDate     =   39777
    End
    Begin VB.TextBox txtremarks 
@@ -856,7 +856,7 @@ Begin VB.Form frmOrderEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   139395075
+         Format          =   127008771
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker deliverydate2 
@@ -887,7 +887,7 @@ Begin VB.Form frmOrderEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   139395075
+         Format          =   127008771
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -1082,7 +1082,7 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   139395075
+      Format          =   127008771
       CurrentDate     =   37798
    End
    Begin MSComCtl2.DTPicker deltime 
@@ -1104,7 +1104,7 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "HH:mm "
-      Format          =   139395075
+      Format          =   127008771
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -1144,7 +1144,7 @@ Begin VB.Form frmOrderEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   139395075
+      Format          =   127008771
       CurrentDate     =   37798
    End
    Begin VB.Label Label3 
@@ -2539,10 +2539,15 @@ Dim rstgl As New Recordset
         t = IIf(IsNull(RS("contact_person")), " ", Trim(RS("contact_person")))
         statusfix = IIf(IsNull(RS("fix_cls")), 0, RS("fix_cls"))
         cbocust.Text = Trim(RS("Cust_code"))
-        cboBCType.Text = uf_GetBCType(Trim(RS("BC_Type")))
-        txtBCNo.Text = Trim(RS("BC_No"))
-        dtpBCDate.Value = RS("BC_Date")
+        cboBCType.Text = uf_GetBCType(IIf(IsNull(RS("BC_Type")), " ", Trim(RS("BC_Type"))))
+        txtBCNo.Text = Trim(IIf(IsNull(RS("BC_No")), " ", Trim(RS("BC_No"))))
         
+        If IsNull(RS("BC_Date")) Then
+            dtpBCDate.Value = Date   'atau tanggal default yang kamu mau
+        Else
+            dtpBCDate.Value = RS("BC_Date")
+        End If
+
         If RS("NoCommercial_Cls") = "1" Then
             Check1.Value = 1
         Else
