@@ -13,15 +13,15 @@ Public gs_cartoonList As String
 Public li_diff As Integer
 
 Public Function uf_Description(ls_Code As String, ls_tablename As String, ls_fieldname As String) As String
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
 
     sql = "select description from " & ls_tablename & " where " & ls_fieldname & "  = '" & Trim(ls_Code) & "'"
-    If RS.State <> adStateClosed Then RS.Close
-    RS.Open sql, Db, adOpenKeyset, adLockOptimistic
-    If Not (RS.EOF And RS.BOF) Then
-        uf_Description = Trim(RS!Description)
+    If Rs.State <> adStateClosed Then Rs.Close
+    Rs.Open sql, Db, adOpenKeyset, adLockOptimistic
+    If Not (Rs.EOF And Rs.BOF) Then
+        uf_Description = Trim(Rs!Description)
     End If
-    If RS.State <> adStateClosed Then RS.Close
+    If Rs.State <> adStateClosed Then Rs.Close
 End Function
 Public Sub up_FillCombo(nmCombo, ls_tablename As String, Optional ls_field As String, Optional ls_Condition As String, Optional lb_AllSelection As Boolean)
     
@@ -94,20 +94,20 @@ End Function
 
 Public Function uf_GenerateSupplyRequestNo(Month As String, Year As String) As String
 
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
 
-    RS.Open " select * from partSupplyRequest_Master where " & _
+    Rs.Open " select * from partSupplyRequest_Master where " & _
         "( month(childsupply_date)='" & Trim(Month) & "' and  year(childsupply_date)='" & Trim(Year) & "' ) " & _
         "or right(rtrim(supplyRec_No),7)='" & Trim(Month) & "/" & Trim(Year) & "' " & _
         "order by left(supplyRec_no,5) desc ", Db
 
-    If RS.EOF = False Then '# previous number exits
-        RS.MoveFirst
-        uf_GenerateSupplyRequestNo = Format(Val(Left(RS!supplyRec_No, 5) + 1), "00000") & "/" & Month & "/" & Year
+    If Rs.EOF = False Then '# previous number exits
+        Rs.MoveFirst
+        uf_GenerateSupplyRequestNo = Format(Val(Left(Rs!supplyRec_No, 5) + 1), "00000") & "/" & Month & "/" & Year
     Else '# previous number not exits
         uf_GenerateSupplyRequestNo = "00001/" & Format(Month, "00") & "/" & Format(Year, "0000")
     End If
-    RS.Close
+    Rs.Close
 
 End Function
 
@@ -123,15 +123,15 @@ End Function
 
 Public Function uf_GetMaterialDescription(material_code As String) As String
 
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
     
-    RS.Open "select * from material_cls where material_cls='" & Trim(material_code) & "'", Db
-    If RS.EOF = False Then '# Material Exist
-        uf_GetMaterialDescription = Trim(RS!Description)
+    Rs.Open "select * from material_cls where material_cls='" & Trim(material_code) & "'", Db
+    If Rs.EOF = False Then '# Material Exist
+        uf_GetMaterialDescription = Trim(Rs!Description)
     Else '# Material Exist
         uf_GetMaterialDescription = ""
     End If
-    RS.Close
+    Rs.Close
 
 End Function
 
@@ -437,76 +437,90 @@ End Function
 
 Public Function uf_GetItemDescription(n As String) As String
     
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
     
     sql = "select im.*,description from item_master im left join sheetcoil_cls sh on im.sheetcoil_cls=sh.sheetcoil_cls  where item_code='" & Trim(n) & "'"
-    Set RS = Db.Execute(sql)
-    If Not (RS.EOF And RS.BOF) Then
-        If Trim(RS!sheetcoil_cls) <> "" Then
-            uf_GetItemDescription = Trim(RS!item_name) '& " (" & Trim(rs!Description) & ", T" & rs!Thickness & " x W" & rs!Width & " x L" & rs!Length & ")"
+    Set Rs = Db.Execute(sql)
+    If Not (Rs.EOF And Rs.BOF) Then
+        If Trim(Rs!sheetcoil_cls) <> "" Then
+            uf_GetItemDescription = Trim(Rs!item_name) '& " (" & Trim(rs!Description) & ", T" & rs!Thickness & " x W" & rs!Width & " x L" & rs!Length & ")"
         Else
-            uf_GetItemDescription = Trim(RS!item_name)
+            uf_GetItemDescription = Trim(Rs!item_name)
         End If
     End If
-    RS.Close
+    Rs.Close
 
 End Function
 
 Public Function uf_GetCurrencyDescription(ls_Code As String) As String
 
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
 
     sql = "select description from curr_cls where curr_cls='" & Trim(ls_Code) & "'"
-    If RS.State <> adStateClosed Then RS.Close
-    RS.Open sql, Db, adOpenKeyset, adLockOptimistic
-    If Not (RS.EOF And RS.BOF) Then
-        uf_GetCurrencyDescription = Trim(RS!Description)
+    If Rs.State <> adStateClosed Then Rs.Close
+    Rs.Open sql, Db, adOpenKeyset, adLockOptimistic
+    If Not (Rs.EOF And Rs.BOF) Then
+        uf_GetCurrencyDescription = Trim(Rs!Description)
     End If
-    If RS.State <> adStateClosed Then RS.Close
+    If Rs.State <> adStateClosed Then Rs.Close
 
 End Function
 
 Public Function uf_GetUnitDescription(ls_Code As String) As String
     
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
     
     sql = "select description from unit_cls where unit_cls='" & Trim(ls_Code) & "'"
-    If RS.State <> adStateClosed Then RS.Close
-    RS.Open sql, Db, adOpenKeyset, adLockOptimistic
-    If Not (RS.EOF And RS.BOF) Then
-        uf_GetUnitDescription = Trim(RS!Description)
+    If Rs.State <> adStateClosed Then Rs.Close
+    Rs.Open sql, Db, adOpenKeyset, adLockOptimistic
+    If Not (Rs.EOF And Rs.BOF) Then
+        uf_GetUnitDescription = Trim(Rs!Description)
     End If
-    If RS.State <> adStateClosed Then RS.Close
+    If Rs.State <> adStateClosed Then Rs.Close
     
 End Function
 
 Public Function uf_GetCurrencyCode(ls_description As String) As String
     
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
     
     sql = "select curr_cls from curr_cls where description='" & Trim(ls_description) & "'"
-    If RS.State <> adStateClosed Then RS.Close
-    RS.Open sql, Db, adOpenKeyset, adLockOptimistic
-    If Not (RS.EOF And RS.BOF) Then
-        uf_GetCurrencyCode = Trim(RS!curr_cls)
+    If Rs.State <> adStateClosed Then Rs.Close
+    Rs.Open sql, Db, adOpenKeyset, adLockOptimistic
+    If Not (Rs.EOF And Rs.BOF) Then
+        uf_GetCurrencyCode = Trim(Rs!curr_cls)
     Else
         uf_GetCurrencyCode = "02"
     End If
-    If RS.State <> adStateClosed Then RS.Close
+    If Rs.State <> adStateClosed Then Rs.Close
     
 End Function
 
 Public Function uf_GetUnitCode(ls_description As String) As String
     
-    Dim RS As New ADODB.Recordset
+    Dim Rs As New ADODB.Recordset
     
     sql = "select unit_cls from unit_cls where description='" & Trim(ls_description) & "'"
-    If RS.State <> adStateClosed Then RS.Close
-    RS.Open sql, Db, adOpenKeyset, adLockOptimistic
-    If Not (RS.EOF And RS.BOF) Then
-            uf_GetUnitCode = Trim(RS!Unit_cls)
+    If Rs.State <> adStateClosed Then Rs.Close
+    Rs.Open sql, Db, adOpenKeyset, adLockOptimistic
+    If Not (Rs.EOF And Rs.BOF) Then
+            uf_GetUnitCode = Trim(Rs!Unit_cls)
     End If
-    If RS.State <> adStateClosed Then RS.Close
+    If Rs.State <> adStateClosed Then Rs.Close
+    
+End Function
+
+Public Function uf_GetBCType(ls_BCType As String) As String
+    
+    Dim Rs As New ADODB.Recordset
+    
+    sql = "select BCType_Cls from dbo.BCType_Cls where Description='" & Trim(ls_BCType) & "'"
+    If Rs.State <> adStateClosed Then Rs.Close
+    Rs.Open sql, Db, adOpenKeyset, adLockOptimistic
+    If Not (Rs.EOF And Rs.BOF) Then
+        uf_GetBCType = Trim(Rs!BCType_Cls)
+    End If
+    If Rs.State <> adStateClosed Then Rs.Close
     
 End Function
 
