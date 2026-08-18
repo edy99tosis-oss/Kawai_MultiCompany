@@ -197,7 +197,7 @@ Begin VB.Form frm_order_entry_status
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   137101315
+         Format          =   131334147
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker dodate1 
@@ -219,7 +219,7 @@ Begin VB.Form frm_order_entry_status
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   137101315
+         Format          =   131334147
          CurrentDate     =   37810
       End
       Begin VB.Label Label7 
@@ -835,45 +835,414 @@ Private Sub CmdSubMenu_Click()
     frmMainMenu.Show
 End Sub
 
-Private Sub Command1_Click(Index As Integer)
-Dim sqlGrid As String
-Dim rsGrid As New ADODB.Recordset
+'Private Sub Command1_Click(Index As Integer)
+'Dim sqlGrid As String
+'Dim rsGrid As New ADODB.Recordset
+'Dim PONo As String
+'
+'Select Case Index
+'Case 1:
+''            If hakUpdate(Me.Name) = 0 Then LblErrMsg = DisplayMsg(3008): Exit Sub
+''
+''            sqlGrid = "select * from orderentry_master"
+''            If rsGrid.State <> adStateClosed Then rsGrid.Close
+''            rsGrid.Open sqlGrid, Db, adOpenKeyset, adLockOptimistic
+''
+''            With grid
+''
+''            If f_out = False Then
+''            Else
+''                LblErrMsg = DisplayMsg(5012) '"There is no data to submit ! "
+''                Exit Sub
+''            End If
+''
+''                For i = 1 To .Rows - 1
+''                    rsGrid.filter = " po_no='" & .TextMatrix(i, bteColPONo) & "' "
+''                    If .Cell(flexcpChecked, i, bteColFix) = flexChecked Then
+''                        rsGrid("Fix_Cls") = 1
+''                    Else
+''                        rsGrid("Fix_Cls") = 0
+''                    End If
+''                    rsGrid("Last_Update") = Now
+''                    rsGrid("Last_User") = userLogin
+''                    rsGrid.update
+''                Next i
+''            End With
+''
+''            LblErrMsg.Caption = DisplayMsg(1101) '"Update Data Success !"
+''            ubah = False
+'
+'            Me.MousePointer = vbHourglass
+'
+'            If hakUpdate(Me.Name) = 0 Then
+'                LblErrMsg = DisplayMsg(3008)
+'                Exit Sub
+'            End If
+'
+'            sqlGrid = "select * from orderentry_master"
+'
+'            If rsGrid.State <> adStateClosed Then rsGrid.Close
+'
+'            rsGrid.Open sqlGrid, Db, adOpenKeyset, adLockOptimistic
+'
+'            With grid
+'
+'                If f_out = False Then
+'                Else
+'                    LblErrMsg = DisplayMsg(5012)
+'                    Exit Sub
+'                End If
+'
+'                For i = 1 To .Rows - 1
+'
+'                    PONo = Trim(.TextMatrix(i, bteColPONo))
+'
+'                    rsGrid.filter = _
+'                        "po_no='" & Replace(PONo, "'", "''") & "'"
+'
+'                    If rsGrid.EOF Then
+'                        LblErrMsg.Caption = _
+'                            "PO " & PONo & " tidak ditemukan."
+'                        Exit Sub
+'                    End If
+'
+'                    '================================================
+'                    ' CHECK APAKAH STATUS BERUBAH
+'                    '================================================
+'                    If .Cell(flexcpChecked, i, bteColFix) = flexChecked Then
+'
+'                        'Grid = FIX
+'                        If rsGrid("Fix_Cls") <> 1 Then
+'
+'                            'UNFIX ? FIX
+'                            rsGrid("Fix_Cls") = 1
+'                            rsGrid("Last_Update") = Now
+'                            rsGrid("Last_User") = userLogin
+'
+'                            rsGrid.update
+'
+'                        End If
+'
+'                    Else
+'
+'                        'Grid = UNFIX
+'                        If rsGrid("Fix_Cls") <> 0 Then
+'
+'                            'FIX ? UNFIX
+'                            'Sync terlebih dahulu
+'                            If Not uf_SyncOrderDetailToShippingDetail(PONo) Then
+'
+'                                LblErrMsg.Caption = _
+'                                    "PO " & PONo & _
+'                                    " gagal melakukan Sync Shipping Detail."
+'
+'                                Exit Sub
+'
+'                            End If
+'
+'                            'Sync berhasil ? baru UNFIX
+'                            rsGrid("Fix_Cls") = 0
+'                            rsGrid("Last_Update") = Now
+'                            rsGrid("Last_User") = userLogin
+'
+'                            rsGrid.update
+'
+'                        End If
+'
+'                    End If
+'
+'                Next i
+'
+'            End With
+'
+'            LblErrMsg.Caption = DisplayMsg(1101)
+'            ubah = False
+'
+'            LblErrMsg.Caption = DisplayMsg(1101) '"Update Data Success !"
+'            ubah = False
+'            Me.MousePointer = vbDefault
+'
+'Case 2:
+'    Kosong
+'    cbodealer.SetFocus
+'End Select
+'End Sub
 
-Select Case Index
-Case 1:
-            If hakUpdate(Me.Name) = 0 Then LblErrMsg = DisplayMsg(3008): Exit Sub
-            
-            sqlGrid = "select * from orderentry_master"
-            If rsGrid.State <> adStateClosed Then rsGrid.Close
-            rsGrid.Open sqlGrid, Db, adOpenKeyset, adLockOptimistic
-            
-            With grid
-            
+Private Sub Command1_Click(Index As Integer)
+
+    Dim sqlStatus As String
+    Dim sqlUpdate As String
+    Dim rsStatus As ADODB.Recordset
+
+    Dim dictNewFix As Object
+    Dim dictOldFix As Object
+    Dim dictProcessed As Object
+
+    Dim PONo As String
+    Dim inList As String
+    Dim newFix As Integer
+    Dim oldFix As Integer
+
+    Dim affected As Long
+    Dim i As Integer
+
+    On Error GoTo ErrHandler
+
+    Select Case Index
+
+    Case 1
+
+        '========================================================
+        ' CHECK AUTHORITY
+        '========================================================
+        If hakUpdate(Me.Name) = 0 Then
+            LblErrMsg = DisplayMsg(3008)
+            Exit Sub
+        End If
+
+        '========================================================
+        ' CHECK GRID
+        '========================================================
+        With grid
+
             If f_out = False Then
             Else
-                LblErrMsg = DisplayMsg(5012) '"There is no data to submit ! "
+                LblErrMsg = DisplayMsg(5012)
                 Exit Sub
             End If
-             
-                For i = 1 To .Rows - 1
-                    rsGrid.filter = " po_no='" & .TextMatrix(i, bteColPONo) & "' "
+
+            '====================================================
+            ' DICTIONARY
+            '====================================================
+            Set dictNewFix = CreateObject("Scripting.Dictionary")
+            Set dictOldFix = CreateObject("Scripting.Dictionary")
+            Set dictProcessed = CreateObject("Scripting.Dictionary")
+
+            '====================================================
+            ' AMBIL PO DARI GRID
+            ' SEKALIGUS BENTUK IN LIST
+            '====================================================
+            For i = 1 To .Rows - 1
+
+                PONo = Trim(.TextMatrix(i, bteColPONo))
+
+                If Len(PONo) > 0 Then
+
+                    'Status baru dari checkbox
                     If .Cell(flexcpChecked, i, bteColFix) = flexChecked Then
-                        rsGrid("Fix_Cls") = 1
+                        newFix = 1
                     Else
-                        rsGrid("Fix_Cls") = 0
+                        newFix = 0
                     End If
-                    rsGrid("Last_Update") = Now
-                    rsGrid("Last_User") = userLogin
-                    rsGrid.update
-                Next i
-            End With
-            
-            LblErrMsg.Caption = DisplayMsg(1101) '"Update Data Success !"
-            ubah = False
-Case 2:
-    Kosong
-    cbodealer.SetFocus
-End Select
+
+                    'Simpan status baru
+                    dictNewFix(PONo) = newFix
+
+                    'Hanya masukkan PO sekali ke IN (...)
+                    If Not dictProcessed.Exists(PONo) Then
+
+                        dictProcessed.Add PONo, True
+
+                        If Len(inList) > 0 Then
+                            inList = inList & ","
+                        End If
+
+                        inList = inList & _
+                                 "'" & Replace(PONo, "'", "''") & "'"
+
+                    End If
+
+                End If
+
+            Next i
+
+        End With
+
+        '========================================================
+        ' TIDAK ADA PO
+        '========================================================
+        If Len(inList) = 0 Then
+            LblErrMsg = DisplayMsg(5012)
+            Exit Sub
+        End If
+
+        '========================================================
+        ' 1x QUERY UNTUK AMBIL STATUS LAMA
+        ' TIDAK ADA rsGrid.Filter
+        '========================================================
+        sqlStatus = _
+            "SELECT PO_No, ISNULL(Fix_Cls, 0) AS Fix_Cls " & _
+            "FROM orderentry_master " & _
+            "WHERE PO_No IN (" & inList & ")"
+
+        Set rsStatus = New ADODB.Recordset
+
+        rsStatus.Open _
+            sqlStatus, _
+            Db, _
+            adOpenForwardOnly, _
+            adLockReadOnly
+
+        '========================================================
+        ' MASUKKAN STATUS DATABASE KE DICTIONARY
+        '========================================================
+        Do While Not rsStatus.EOF
+
+            PONo = Trim(rsStatus("PO_No").Value)
+
+            If Not IsNull(rsStatus("Fix_Cls").Value) Then
+                oldFix = CInt(rsStatus("Fix_Cls").Value)
+            Else
+                oldFix = 0
+            End If
+
+            dictOldFix(PONo) = oldFix
+
+            rsStatus.MoveNext
+
+        Loop
+
+        rsStatus.Close
+        Set rsStatus = Nothing
+
+        '========================================================
+        ' PROSES GRID
+        '========================================================
+        With grid
+
+            For i = 1 To .Rows - 1
+
+                PONo = Trim(.TextMatrix(i, bteColPONo))
+
+                If Len(PONo) = 0 Then
+                    GoTo NextRow
+                End If
+
+                'PO tidak ditemukan di database
+                If Not dictOldFix.Exists(PONo) Then
+
+                    LblErrMsg.Caption = _
+                        "PO " & PONo & " tidak ditemukan."
+
+                    Exit Sub
+
+                End If
+
+                oldFix = CInt(dictOldFix(PONo))
+                newFix = CInt(dictNewFix(PONo))
+
+                '================================================
+                ' STATUS TIDAK BERUBAH
+                ' SKIP
+                '================================================
+                If oldFix = newFix Then
+                    GoTo NextRow
+                End If
+
+                '================================================
+                ' FIX
+                ' 0 ? 1
+                '================================================
+                If newFix = 1 Then
+
+                    sqlUpdate = _
+                        "UPDATE orderentry_master SET " & _
+                        "Fix_Cls = 1, " & _
+                        "Last_Update = GETDATE(), " & _
+                        "Last_User = '" & _
+                        Replace(userLogin, "'", "''") & "' " & _
+                        "WHERE PO_No = '" & _
+                        Replace(PONo, "'", "''") & "' " & _
+                        "AND ISNULL(Fix_Cls, 0) = 0"
+
+                    Db.Execute sqlUpdate, affected, adExecuteNoRecords
+
+                    If affected = 0 Then
+                        err.Raise vbObjectError + 1001, , _
+                            "PO " & PONo & _
+                            " gagal diubah menjadi FIX."
+                    End If
+
+                '================================================
+                ' UNFIX
+                ' 1 ? 0
+                '================================================
+                Else
+
+                    '--------------------------------------------
+                    ' SYNC DULU
+                    '--------------------------------------------
+                    If Not uf_SyncOrderDetailToShippingDetail(PONo) Then
+
+                        err.Raise vbObjectError + 1002, , _
+                            "PO " & PONo & _
+                            " gagal melakukan Sync Shipping Detail."
+
+                    End If
+
+                    '--------------------------------------------
+                    ' SYNC SUCCESS ? BARU UNFIX
+                    '--------------------------------------------
+                    sqlUpdate = _
+                        "UPDATE orderentry_master SET " & _
+                        "Fix_Cls = 0, " & _
+                        "Last_Update = GETDATE(), " & _
+                        "Last_User = '" & _
+                        Replace(userLogin, "'", "''") & "' " & _
+                        "WHERE PO_No = '" & _
+                        Replace(PONo, "'", "''") & "' " & _
+                        "AND ISNULL(Fix_Cls, 0) = 1"
+
+                    Db.Execute sqlUpdate, affected, adExecuteNoRecords
+
+                    If affected = 0 Then
+                        err.Raise vbObjectError + 1003, , _
+                            "PO " & PONo & _
+                            " gagal diubah menjadi UNFIX."
+                    End If
+
+                End If
+
+NextRow:
+
+            Next i
+
+        End With
+
+        '========================================================
+        ' SUCCESS
+        '========================================================
+        LblErrMsg.Caption = DisplayMsg(1101)
+        ubah = False
+
+    Case 2
+
+        Kosong
+        cbodealer.SetFocus
+
+    End Select
+
+    Exit Sub
+
+ErrHandler:
+
+    On Error Resume Next
+
+    If Not rsStatus Is Nothing Then
+        If rsStatus.State <> adStateClosed Then
+            rsStatus.Close
+        End If
+    End If
+
+    Set rsStatus = Nothing
+
+    LblErrMsg.Caption = _
+        "Error " & err.number & " : " & err.Description
+
+    Me.MousePointer = vbDefault
+
+    On Error GoTo 0
+
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
@@ -883,6 +1252,40 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
   If RS.State <> adStateClosed Then RS.Close
 End Sub
+
+Private Function uf_SyncOrderDetailToShippingDetail(PONo As String) As Boolean
+
+    On Error GoTo ErrHandler
+
+    Dim RsSync As ADODB.Recordset
+    Dim strSQL As String
+
+    strSQL = "EXEC dbo.sp_Wms_Shipping_Instruction_SyncOrderDetailToShippingDetail " & _
+             "@OrderNumber = '" & Replace(PONo, "'", "''") & "', " & _
+             "@UserId = '" & Replace(userLogin, "'", "''") & "'"
+
+    Set RsSync = Db.Execute(strSQL)
+
+    uf_SyncOrderDetailToShippingDetail = True
+
+CleanExit:
+
+    If Not RsSync Is Nothing Then
+        If RsSync.State <> adStateClosed Then RsSync.Close
+        Set RsSync = Nothing
+    End If
+
+    Exit Function
+
+ErrHandler:
+
+    uf_SyncOrderDetailToShippingDetail = False
+
+    LblErrMsg.Caption = err.Description
+
+    Resume CleanExit
+
+End Function
 
 
 
