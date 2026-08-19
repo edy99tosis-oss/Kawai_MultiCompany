@@ -197,7 +197,7 @@ Begin VB.Form frm_order_entry_status
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   131334147
+         Format          =   129564675
          CurrentDate     =   37810
       End
       Begin MSComCtl2.DTPicker dodate1 
@@ -219,7 +219,7 @@ Begin VB.Form frm_order_entry_status
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   131334147
+         Format          =   129564675
          CurrentDate     =   37810
       End
       Begin VB.Label Label7 
@@ -462,6 +462,8 @@ Dim bteColTotalPO As Byte
 Dim bteColFix As Byte
 
 Dim bteHakPrice As Byte
+
+Dim vFactoryCode As String
 
 Sub Header()
     With grid
@@ -734,6 +736,8 @@ Private Sub Form_Load()
     adtocombo
     Kosong
     f_out = True
+    
+    vFactoryCode = uf_GetCompany()
 End Sub
 
 Private Sub cbodealer_Click()
@@ -970,15 +974,15 @@ End Sub
 
 Private Sub Command1_Click(Index As Integer)
 
-    Dim sqlStatus As String
+    Dim SqlStatus As String
     Dim sqlUpdate As String
-    Dim rsStatus As ADODB.Recordset
+    Dim RsStatus As ADODB.Recordset
 
     Dim dictNewFix As Object
     Dim dictOldFix As Object
     Dim dictProcessed As Object
 
-    Dim PONo As String
+    Dim PONO As String
     Dim inList As String
     Dim newFix As Integer
     Dim oldFix As Integer
@@ -1024,9 +1028,9 @@ Private Sub Command1_Click(Index As Integer)
             '====================================================
             For i = 1 To .Rows - 1
 
-                PONo = Trim(.TextMatrix(i, bteColPONo))
+                PONO = Trim(.TextMatrix(i, bteColPONo))
 
-                If Len(PONo) > 0 Then
+                If Len(PONO) > 0 Then
 
                     'Status baru dari checkbox
                     If .Cell(flexcpChecked, i, bteColFix) = flexChecked Then
@@ -1036,19 +1040,19 @@ Private Sub Command1_Click(Index As Integer)
                     End If
 
                     'Simpan status baru
-                    dictNewFix(PONo) = newFix
+                    dictNewFix(PONO) = newFix
 
                     'Hanya masukkan PO sekali ke IN (...)
-                    If Not dictProcessed.Exists(PONo) Then
+                    If Not dictProcessed.Exists(PONO) Then
 
-                        dictProcessed.Add PONo, True
+                        dictProcessed.Add PONO, True
 
                         If Len(inList) > 0 Then
                             inList = inList & ","
                         End If
 
                         inList = inList & _
-                                 "'" & Replace(PONo, "'", "''") & "'"
+                                 "'" & Replace(PONO, "'", "''") & "'"
 
                     End If
 
@@ -1070,15 +1074,15 @@ Private Sub Command1_Click(Index As Integer)
         ' 1x QUERY UNTUK AMBIL STATUS LAMA
         ' TIDAK ADA rsGrid.Filter
         '========================================================
-        sqlStatus = _
+        SqlStatus = _
             "SELECT PO_No, ISNULL(Fix_Cls, 0) AS Fix_Cls " & _
             "FROM orderentry_master " & _
             "WHERE PO_No IN (" & inList & ")"
 
-        Set rsStatus = New ADODB.Recordset
+        Set RsStatus = New ADODB.Recordset
 
-        rsStatus.Open _
-            sqlStatus, _
+        RsStatus.Open _
+            SqlStatus, _
             Db, _
             adOpenForwardOnly, _
             adLockReadOnly
@@ -1086,24 +1090,24 @@ Private Sub Command1_Click(Index As Integer)
         '========================================================
         ' MASUKKAN STATUS DATABASE KE DICTIONARY
         '========================================================
-        Do While Not rsStatus.EOF
+        Do While Not RsStatus.EOF
 
-            PONo = Trim(rsStatus("PO_No").Value)
+            PONO = Trim(RsStatus("PO_No").Value)
 
-            If Not IsNull(rsStatus("Fix_Cls").Value) Then
-                oldFix = CInt(rsStatus("Fix_Cls").Value)
+            If Not IsNull(RsStatus("Fix_Cls").Value) Then
+                oldFix = CInt(RsStatus("Fix_Cls").Value)
             Else
                 oldFix = 0
             End If
 
-            dictOldFix(PONo) = oldFix
+            dictOldFix(PONO) = oldFix
 
-            rsStatus.MoveNext
+            RsStatus.MoveNext
 
         Loop
 
-        rsStatus.Close
-        Set rsStatus = Nothing
+        RsStatus.Close
+        Set RsStatus = Nothing
 
         '========================================================
         ' PROSES GRID
@@ -1112,24 +1116,24 @@ Private Sub Command1_Click(Index As Integer)
 
             For i = 1 To .Rows - 1
 
-                PONo = Trim(.TextMatrix(i, bteColPONo))
+                PONO = Trim(.TextMatrix(i, bteColPONo))
 
-                If Len(PONo) = 0 Then
+                If Len(PONO) = 0 Then
                     GoTo NextRow
                 End If
 
                 'PO tidak ditemukan di database
-                If Not dictOldFix.Exists(PONo) Then
+                If Not dictOldFix.Exists(PONO) Then
 
                     LblErrMsg.Caption = _
-                        "PO " & PONo & " tidak ditemukan."
+                       "PO " & PONO & " could not be found."
 
                     Exit Sub
 
                 End If
 
-                oldFix = CInt(dictOldFix(PONo))
-                newFix = CInt(dictNewFix(PONo))
+                oldFix = CInt(dictOldFix(PONO))
+                newFix = CInt(dictNewFix(PONO))
 
                 '================================================
                 ' STATUS TIDAK BERUBAH
@@ -1138,69 +1142,81 @@ Private Sub Command1_Click(Index As Integer)
                 If oldFix = newFix Then
                     GoTo NextRow
                 End If
-
+                
                 '================================================
-                ' FIX
-                ' 0 ? 1
+                ' FIX / UNFIX
                 '================================================
                 If newFix = 1 Then
-
-                    sqlUpdate = _
-                        "UPDATE orderentry_master SET " & _
-                        "Fix_Cls = 1, " & _
-                        "Last_Update = GETDATE(), " & _
-                        "Last_User = '" & _
-                        Replace(userLogin, "'", "''") & "' " & _
-                        "WHERE PO_No = '" & _
-                        Replace(PONo, "'", "''") & "' " & _
-                        "AND ISNULL(Fix_Cls, 0) = 0"
-
-                    Db.Execute sqlUpdate, affected, adExecuteNoRecords
-
-                    If affected = 0 Then
-                        err.Raise vbObjectError + 1001, , _
-                            "PO " & PONo & _
-                            " gagal diubah menjadi FIX."
-                    End If
-
-                '================================================
-                ' UNFIX
-                ' 1 ? 0
-                '================================================
-                Else
-
+                
+                    '================================================
+                    ' FIX
+                    ' 0 ? 1
+                    '================================================
+                    sql = "EXEC dbo.SP_OrderEntry_UpdateFixCls " & _
+                          "@PONO = '" & Replace(PONO, "'", "''") & "', " & _
+                          "@FixCls = 1, " & _
+                          "@LastUser = '" & Replace(userLogin, "'", "''") & "'"
+                
+                    Db.Execute sql, , adExecuteNoRecords
+                
                     '--------------------------------------------
-                    ' SYNC DULU
+                    ' SYNC
                     '--------------------------------------------
-                    If Not uf_SyncOrderDetailToShippingDetail(PONo) Then
-
+                    If Not uf_SyncOrderDetailToDeliveryOrder(PONO, "1") Then
+                
                         err.Raise vbObjectError + 1002, , _
-                            "PO " & PONo & _
-                            " gagal melakukan Sync Shipping Detail."
-
+                        "Failed to sync Delivery Order for PO " & PONO & "."
+                
                     End If
-
+                
+                Else
+                
+                    '================================================
+                    ' UNFIX
+                    ' 1 ? 0
+                    '================================================
+                
+                    '--------------------------------------------
+                    ' CEK SUDAH MASUK LOADING ATAU BELUM
+                    '--------------------------------------------
+                    If uf_IsPOAlreadyLoading(PONO) Then
+                
+                        err.Raise vbObjectError + 1004, , _
+                                "PO " & PONO & _
+                                " has already been loaded and cannot be UNFIXED."
+                
+                    End If
+                
+                    '--------------------------------------------
+                    ' SYNC DELIVERY ORDER
+                    '--------------------------------------------
+                    If Not uf_SyncOrderDetailToDeliveryOrder(PONO, "2") Then
+                
+                       err.Raise vbObjectError + 1002, , _
+                                "Failed to sync Delivery Order for PO " & PONO & "."
+                
+                    End If
+                
+                    '--------------------------------------------
+                    ' SYNC SHIPPING DETAIL
+                    '--------------------------------------------
+                    If Not uf_SyncOrderDetailToShippingDetail(PONO) Then
+                
+                       err.Raise vbObjectError + 1002, , _
+                            "Failed to sync Shipping Detail for PO " & PONO & "."
+                
+                    End If
+                
                     '--------------------------------------------
                     ' SYNC SUCCESS ? BARU UNFIX
                     '--------------------------------------------
-                    sqlUpdate = _
-                        "UPDATE orderentry_master SET " & _
-                        "Fix_Cls = 0, " & _
-                        "Last_Update = GETDATE(), " & _
-                        "Last_User = '" & _
-                        Replace(userLogin, "'", "''") & "' " & _
-                        "WHERE PO_No = '" & _
-                        Replace(PONo, "'", "''") & "' " & _
-                        "AND ISNULL(Fix_Cls, 0) = 1"
-
-                    Db.Execute sqlUpdate, affected, adExecuteNoRecords
-
-                    If affected = 0 Then
-                        err.Raise vbObjectError + 1003, , _
-                            "PO " & PONo & _
-                            " gagal diubah menjadi UNFIX."
-                    End If
-
+                    sql = "EXEC dbo.SP_OrderEntry_UpdateFixCls " & _
+                          "@PONO = '" & Replace(PONO, "'", "''") & "', " & _
+                          "@FixCls = 0, " & _
+                          "@LastUser = '" & Replace(userLogin, "'", "''") & "'"
+                
+                    Db.Execute sql, , adExecuteNoRecords
+                
                 End If
 
 NextRow:
@@ -1226,22 +1242,28 @@ NextRow:
 
 ErrHandler:
 
+    Dim errNumber As Long
+    Dim errDescription As String
+    
+    errNumber = err.number
+    errDescription = err.Description
+    
     On Error Resume Next
-
-    If Not rsStatus Is Nothing Then
-        If rsStatus.State <> adStateClosed Then
-            rsStatus.Close
+    
+    If Not RsStatus Is Nothing Then
+        If RsStatus.State <> adStateClosed Then
+            RsStatus.Close
         End If
     End If
-
-    Set rsStatus = Nothing
-
-    LblErrMsg.Caption = _
-        "Error " & err.number & " : " & err.Description
-
-    Me.MousePointer = vbDefault
-
+    
+    Set RsStatus = Nothing
+    
     On Error GoTo 0
+    
+    LblErrMsg.Caption = _
+        "Error " & errNumber & " : " & errDescription
+    
+    Me.MousePointer = vbDefault
 
 End Sub
 
@@ -1253,7 +1275,7 @@ Private Sub Form_Unload(Cancel As Integer)
   If RS.State <> adStateClosed Then RS.Close
 End Sub
 
-Private Function uf_SyncOrderDetailToShippingDetail(PONo As String) As Boolean
+Private Function uf_SyncOrderDetailToShippingDetail(PONO As String) As Boolean
 
     On Error GoTo ErrHandler
 
@@ -1261,7 +1283,7 @@ Private Function uf_SyncOrderDetailToShippingDetail(PONo As String) As Boolean
     Dim strSQL As String
 
     strSQL = "EXEC dbo.sp_Wms_Shipping_Instruction_SyncOrderDetailToShippingDetail " & _
-             "@OrderNumber = '" & Replace(PONo, "'", "''") & "', " & _
+             "@OrderNumber = '" & Replace(PONO, "'", "''") & "', " & _
              "@UserId = '" & Replace(userLogin, "'", "''") & "'"
 
     Set RsSync = Db.Execute(strSQL)
@@ -1287,6 +1309,74 @@ ErrHandler:
 
 End Function
 
+Private Function uf_SyncOrderDetailToDeliveryOrder(PONO As String, PType As String) As Boolean
+
+    On Error GoTo ErrHandler
+
+    Dim RsSync As ADODB.Recordset
+    Dim strSQL As String
+
+    strSQL = "EXEC dbo.sp_DeliveryOrder_DeleteInsertShipping @PONo = '" & PONO & "'," & _
+             "@DONo = '', @WHCode = '', " & _
+             "@ForwarderCode = '00', @LastUser = '" & Replace(userLogin, "'", "''") & "', " & _
+             "@CompanyCode = '" & vFactoryCode & "', @Type='" & PType & "' "
+
+    Set RsSync = Db.Execute(strSQL)
+
+    uf_SyncOrderDetailToDeliveryOrder = True
+
+CleanExit:
+
+    If Not RsSync Is Nothing Then
+        If RsSync.State <> adStateClosed Then RsSync.Close
+        Set RsSync = Nothing
+    End If
+
+    Exit Function
+
+ErrHandler:
+
+    uf_SyncOrderDetailToDeliveryOrder = False
+
+    LblErrMsg.Caption = err.Description
+
+    Resume CleanExit
+
+End Function
+
+Private Function uf_IsPOAlreadyLoading(PONO As String) As Boolean
+
+    On Error GoTo ErrHandler
+
+    Dim RsCheck As ADODB.Recordset
+    Dim strSQL As String
+
+    strSQL = "SELECT TOP 1 PO_No " & _
+             "FROM dbo.LoadingConfirmationScan_Detail " & _
+             "WHERE PO_No = '" & Replace(PONO, "'", "''") & "'"
+
+    Set RsCheck = Db.Execute(strSQL)
+
+    uf_IsPOAlreadyLoading = Not (RsCheck.EOF And RsCheck.BOF)
+
+CleanExit:
+
+    If Not RsCheck Is Nothing Then
+        If RsCheck.State <> adStateClosed Then RsCheck.Close
+        Set RsCheck = Nothing
+    End If
+
+    Exit Function
+
+ErrHandler:
+
+    uf_IsPOAlreadyLoading = False
+
+    LblErrMsg.Caption = err.Description
+
+    Resume CleanExit
+
+End Function
 
 
 
