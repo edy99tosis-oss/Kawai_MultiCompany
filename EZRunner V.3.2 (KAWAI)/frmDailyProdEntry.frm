@@ -399,7 +399,7 @@ Begin VB.Form frmDailyProdEntry
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "dd MMM yyyy"
-      Format          =   137166851
+      Format          =   129761283
       CurrentDate     =   37859
    End
    Begin VSFlex8Ctl.VSFlexGrid grid 
@@ -529,7 +529,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   137166851
+         Format          =   129761283
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker scheduledate2 
@@ -561,7 +561,7 @@ Begin VB.Form frmDailyProdEntry
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   137166851
+         Format          =   129761283
          CurrentDate     =   37798
       End
       Begin VB.Label Label3 
@@ -1566,7 +1566,7 @@ Dim i As Integer
     End With
 End Sub
 
-Function SeqNo() As Long
+Function seqNo() As Long
 Dim sqlseqno As String
 Dim rsseqno As New Recordset
 
@@ -1576,9 +1576,9 @@ rsseqno.Open sqlseqno, Db, adOpenKeyset, adLockOptimistic
 
 If Not (rsseqno.BOF And rsseqno.EOF) Then
     rsseqno.MoveLast
-    SeqNo = rsseqno!Seq_no + 1
+    seqNo = rsseqno!Seq_no + 1
 Else
-    SeqNo = 1
+    seqNo = 1
 End If
 End Function
 
@@ -2234,7 +2234,7 @@ Select Case Index
                         If .TextMatrix(i, bteColSelect) = "D" Then
                             If IsEmpty(tanya) Then tanya = MsgBox("Do You Really Want To Delete This Data ?", vbQuestion & vbYesNo, "Confirmation")
                             If tanya = vbYes Then
-                                sql1 = "select * from part_receipt where dailyseq_no='" & .TextMatrix(i, bteColSeqNo) & "' and 1receipt_cls = 'P1'"
+                                sql1 = "select * from part_receipt where dailyseq_no='" & .TextMatrix(i, bteColSeqNo) & "' and receipt_cls = 'P1'"
                                 Set rs1 = Db.Execute(sql1)
                                 If Not (rs1.BOF And rs1.EOF) Then
                                     lblErrMsg.Caption = DisplayMsg(1204)
@@ -2534,9 +2534,9 @@ Select Case Index
                             rsUpdate.AddNew
                             rsUpdate("factory_Code") = cbocust.Text
                             rsUpdate("line_code") = cbolinecd.Text
-                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & SeqNo
+                            rsUpdate("prod_barcode") = Trim(cbocust.Text) & Trim(cbolinecd.Text) & Format(scheduledate.Value, "YYYYMMDD") & seqNo
                             
-                            NO = SeqNo
+                            NO = seqNo
                             rsUpdate("seq_no") = NO ' Udah mo nyimpen Niy
                             
                             
@@ -2642,7 +2642,7 @@ Select Case Index
                        dbw.Close
                        
                        If InStr(1, err.Description, "Violation of PRIMARY KEY constraint") > 0 Then
-                            NO = SeqNo
+                            NO = seqNo
                             rsUpdate.update
                        End If
                                                 
@@ -2814,17 +2814,17 @@ End Sub
 Private Function uf_ValidasiSerialNo() As String
 
 Dim RsSerial As New ADODB.Recordset
-Dim strSQL As String, SeqNo As Integer
+Dim strSQL As String, seqNo As Integer
 lblErrMsg.Caption = ""
 
 
 If TxtSeqNo.Text = "" Then
-    SeqNo = 0
+    seqNo = 0
 Else
-    SeqNo = TxtSeqNo.Text
+    seqNo = TxtSeqNo.Text
 End If
 
-strSQL = "exec SP_DailyProductionEntry_Validasi_SerialNo " & SeqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "
+strSQL = "exec SP_DailyProductionEntry_Validasi_SerialNo " & seqNo & ",'" & Trim(TxtSerialFrom.Text) & "','" & Trim(TxtSerialTo.Text) & "'    "
 
 Set RsSerial = Db.Execute(strSQL)
 i = 1
