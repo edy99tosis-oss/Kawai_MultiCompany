@@ -66,26 +66,6 @@ Begin VB.Form FrmValuationPriceReportWH
       Width           =   1035
    End
    Begin VB.CommandButton Cmd_Save 
-      BackColor       =   &H0080FFFF&
-      Caption         =   "Sea&rch"
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Index           =   9
-      Left            =   3750
-      Style           =   1  'Graphical
-      TabIndex        =   2
-      Top             =   2055
-      Width           =   1035
-   End
-   Begin VB.CommandButton Cmd_Save 
       BackColor       =   &H00C0E0FF&
       Caption         =   "&Sub &Menu"
       BeginProperty Font 
@@ -264,7 +244,7 @@ Begin VB.Form FrmValuationPriceReportWH
          Strikethrough   =   0   'False
       EndProperty
       CustomFormat    =   "MMM yyyy"
-      Format          =   141230083
+      Format          =   130809859
       UpDown          =   -1  'True
       CurrentDate     =   37798
    End
@@ -364,6 +344,26 @@ Begin VB.Form FrmValuationPriceReportWH
       AccessibleDescription=   ""
       AccessibleValue =   ""
       AccessibleRole  =   24
+   End
+   Begin VB.CommandButton Cmd_Save 
+      BackColor       =   &H0080FFFF&
+      Caption         =   "Sea&rch"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Index           =   9
+      Left            =   3750
+      Style           =   1  'Graphical
+      TabIndex        =   2
+      Top             =   2055
+      Width           =   1035
    End
    Begin VB.Label LblPesan 
       Alignment       =   2  'Center
@@ -636,9 +636,9 @@ Cmd_save(0).Enabled = True
 Cmd_save(9).Enabled = True
 Cmd_save(2).Enabled = True
 
-If CboLocationCD.MatchFound Then
+If CboLocationCD.matchFound Then
    LblLocationName = CboLocationCD.List(CboLocationCD.ListIndex, 1)
-   LblErrMsg = ""
+   lblErrMsg = ""
    
    If CboLocationCD.ListIndex = 0 Then
     Cmd_save(0).Enabled = False
@@ -651,7 +651,7 @@ If CboLocationCD.MatchFound Then
    End If
 Else
    LblLocationName = ""
-   LblErrMsg = DisplayMsg(4014) '"Location CD is not found !"
+   lblErrMsg = DisplayMsg(4014) '"Location CD is not found !"
 End If
 
 End Sub
@@ -675,10 +675,10 @@ For i = 0 To CboLocationCD.ListCount - 1
 Next
 
 If j = 0 Then
-    LblErrMsg = DisplayMsg(4018) '"Invalid warehouse code !"
+    lblErrMsg = DisplayMsg(4018) '"Invalid warehouse code !"
     Exit Sub
 Else
-    LblErrMsg = ""
+    lblErrMsg = ""
 End If
 
 End If
@@ -702,14 +702,14 @@ Select Case Index
                 
                 Dim i As Long
                 If CboLocationCD.Text = "" Then
-                   LblErrMsg = DisplayMsg(1042) '"Please choose warehouse !"
+                   lblErrMsg = DisplayMsg(1042) '"Please choose warehouse !"
                 Else
                     Me.MousePointer = vbHourglass
 '                    Strsql = "exec [sp_normalize_receipt_supply_BY_Warehouse] '" & Trim(CboLocationCD.Text) & "'"
 '                    Db.Execute Strsql
                 
                 
-                    LblErrMsg = ""
+                    lblErrMsg = ""
                     
                        Call Header
                        grid.Rows = 1
@@ -729,7 +729,7 @@ Private Sub CtrlMenu1_ErrMessage(ErrMsg As String)
 If ErrMsg = "" Then
     Unload Me
 Else
-    LblErrMsg.Caption = ErrMsg
+    lblErrMsg.Caption = ErrMsg
 End If
 End Sub
 
@@ -762,7 +762,7 @@ Call Header
 
 LblLocationName = ""
 
-LblErrMsg = ""
+lblErrMsg = ""
 
 End Sub
 
@@ -853,121 +853,122 @@ If RsStock.State <> adStateClosed Then RsStock.Close
 '      vbLf & "where warehouse_code = '" & CboLocationCD & "' " & _
 '      vbLf & "order by  warehouse_code, sm.item_Code"
     
-    sql = "  " & vbCrLf & _
-                " DECLARE @LastClosing AS DATETIME " & vbCrLf & _
-                " DECLARE @GetDiff AS INTEGER " & vbCrLf & _
-                " DECLARE @SelectPeriod AS DATETIME " & vbCrLf & _
-                " DECLARE @Location AS VARCHAR(30) " & vbCrLf & _
-                " DECLARE @Company_Code AS CHAR(5) " & vbCrLf & _
-                "  " & vbCrLf & _
-                " " & vbCrLf & _
-                " SET @Location='" & CboLocationCD & "' " & vbCrLf & _
-                " SET @SelectPeriod='" & DMonth.Year & "-" & DMonth.Month & "-01' " & vbCrLf & _
-                " SET @LastClosing= " & vbCrLf & _
-                "                           (SELECT CONVERT(DATETIME,CAST(Inventory_Year AS VARCHAR(4)) +'-' +CAST(Inventory_Month AS varchar(2)) +'-01') " & vbCrLf & _
-                "                               FROM Inventory_Control " & vbCrLf
+'    sql = "  " & vbCrLf & _
+'                " DECLARE @LastClosing AS DATETIME " & vbCrLf & _
+'                " DECLARE @GetDiff AS INTEGER " & vbCrLf & _
+'                " DECLARE @SelectPeriod AS DATETIME " & vbCrLf & _
+'                " DECLARE @Location AS VARCHAR(30) " & vbCrLf & _
+'                " DECLARE @Company_Code AS CHAR(5) " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                " " & vbCrLf & _
+'                " SET @Location='" & CboLocationCD & "' " & vbCrLf & _
+'                " SET @SelectPeriod='" & DMonth.Year & "-" & DMonth.Month & "-01' " & vbCrLf & _
+'                " SET @LastClosing= " & vbCrLf & _
+'                "                           (SELECT CONVERT(DATETIME,CAST(Inventory_Year AS VARCHAR(4)) +'-' +CAST(Inventory_Month AS varchar(2)) +'-01') " & vbCrLf & _
+'                "                               FROM Inventory_Control " & vbCrLf
+'
+'    sql = sql + "                                   WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control) " & vbCrLf & _
+'                "                                       AND Inventory_Month=(SELECT MAX(Inventory_Month) FROM Inventory_Control " & vbCrLf & _
+'                "                                                                               WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control)) " & vbCrLf & _
+'                "                           )                                                    " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                " SET @GetDiff=DATEDIFF(M,@LastClosing,@SelectPeriod) " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                " SELECT  RTRIM(gc.description) groupDesc , " & vbCrLf & _
+'                "         RTRIM(uc.description) Unit_Desc , " & vbCrLf & _
+'                "         RTRIM(item_name) item_name , " & vbCrLf & _
+'                "         RTRIM(address) address , " & vbCrLf
+'
+'    sql = sql + "         RTRIM(wh_name) wh_name , " & vbCrLf & _
+'                "         RTRIM(makeritem_code) makeritem_code , " & vbCrLf & _
+'                "         sm.* , " & vbCrLf & _
+'                "         ISNULL(ip.inventory_price, 0) price , " & vbCrLf & _
+'                "         ISNULL(it.in_transit, 0) in_transit " & vbCrLf & _
+'                "         --TAMBAH FIELD DiffClosing UTK HANDLE AMOUNT JIKA KONDISI SETELAH CLOSING MENGAMBIL INVENTORY (LIHAT LOOPING INTO GRID)  " & vbLf & _
+'                "         ,@GetDiff DiffClosing, " & vbLf & _
+'                "         -- Tambah Lokasi 2 dan 3 -- " & vbCrLf & _
+'                "         '' Location1, " & vbCrLf & _
+'                "         '' Location2, " & vbCrLf & _
+'                "         '' Location3 " & vbCrLf & _
+'                " FROM    " & vbCrLf & _
+'                "   (SELECT * FROM  " & vbCrLf & _
+'                "       (   SELECT warehouse_code, item_code, " & vbCrLf & _
+'                "                       SUM(Pre_MonthS) Pre_MonthS, SUM(ReceiptS) ReceiptS, " & vbCrLf & _
+'                "                       SUM(SupplyS) SupplyS, SUM(LossRejectS) LossRejectS, " & vbCrLf & _
+'                "                       SUM(CurrentS) CurrentS, SUM(InventoryS) InventoryS " & vbCrLf
+'
+'    sql = sql + "           FROM             " & vbCrLf & _
+'                "           ( " & vbCrLf & _
+'                "               SELECT warehouse_code, item_code, " & vbCrLf & _
+'                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_PreMonth " & vbCrLf & _
+'                "                            WHEN @GetDiff=1 THEN TM_PreMonth " & vbCrLf & _
+'                "                            WHEN @GetDiff=2 THEN NM_PreMonth END,0) Pre_MonthS, " & vbCrLf & _
+'                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Receipt " & vbCrLf & _
+'                "                            WHEN @GetDiff=1 THEN TM_Receipt " & vbCrLf & _
+'                "                            WHEN @GetDiff=2 THEN NM_Receipt END,0) ReceiptS, " & vbCrLf & _
+'                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Supply " & vbCrLf & _
+'                "                            WHEN @GetDiff=1 THEN TM_Supply " & vbCrLf
+'
+'    sql = sql + "                            WHEN @GetDiff=2 THEN NM_Supply END,0) SupplyS, " & vbCrLf & _
+'                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_LossReject " & vbCrLf & _
+'                "                            WHEN @GetDiff=1 THEN TM_LossReject " & vbCrLf & _
+'                "                            WHEN @GetDiff=2 THEN NM_LossReject END,0) LossRejectS, " & vbCrLf & _
+'                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Current " & vbCrLf & _
+'                "                            WHEN @GetDiff=1 THEN TM_Current " & vbCrLf & _
+'                "                            WHEN @GetDiff=2 THEN NM_Current END,0) CurrentS, " & vbCrLf & _
+'                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Inventory " & vbCrLf & _
+'                "                            WHEN @GetDiff=1 THEN TM_Inventory " & vbCrLf & _
+'                "                            WHEN @GetDiff=2 THEN NM_Inventory END,0) InventoryS " & vbCrLf & _
+'                "               FROM Stock_Master " & vbCrLf
+'
+'    sql = sql + "                   WHERE Warehouse_Code=@Location            " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                "               UNION ALL " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                "               SELECT Warehouse_Code, Item_code, PreMonth, Receipt,Supply, LossReject, [Current], COALESCE(Inventory,[Current]) " & vbCrLf & _
+'                "                   FROM Stock_history " & vbCrLf & _
+'                "                       WHERE Warehouse_Code=@Location " & vbCrLf & _
+'                "                                   AND Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
+'                "                                   AND Stock_Month=MONTH(@SelectPeriod) " & vbCrLf & _
+'                "           ) Stock GROUP BY warehouse_code, item_code " & vbCrLf & _
+'                "       )   SM " & vbCrLf
+'
+'    sql = sql + "   )sm " & vbCrLf & _
+'                "         LEFT JOIN warehouse_master wm ON sm.warehouse_code = wm.wh_code " & vbCrLf & _
+'                "         LEFT JOIN item_master im ON im.item_code = sm.item_code " & vbCrLf & _
+'                "         LEFT JOIN group_cls gc ON im.group_cls = gc.group_cls " & vbCrLf & _
+'                "         LEFT JOIN unit_cls uc ON im.unit_cls = uc.unit_cls " & vbCrLf & _
+'                "         LEFT JOIN ( SELECT  item_code , " & vbCrLf & _
+'                "                             inventory_price " & vbCrLf & _
+'                "                     FROM     " & vbCrLf & _
+'                "                       (SELECT * FROM Inventory_Price   " & vbCrLf & _
+'                "                           UNION " & vbCrLf & _
+'                "                           SELECT * FROM InventoryPrice_History  " & vbCrLf
+'
+'    sql = sql + "                       )Inventory_Price " & vbCrLf & _
+'                "                     WHERE   inventory_year = YEAR(@SelectPeriod) " & vbCrLf & _
+'                "                             AND inventory_month = MONTH(@SelectPeriod) " & vbCrLf & _
+'                "                             AND duty_status IN ( '0', '2', '3' ) " & vbCrLf & _
+'                "                   ) ip ON sm.item_code = ip.item_code " & vbCrLf & _
+'                "         LEFT JOIN ( SELECT  whcode , " & vbCrLf & _
+'                "                             item_code , " & vbCrLf & _
+'                "                             SUM(qty) in_transit " & vbCrLf & _
+'                "                     FROM    packing_master pm " & vbCrLf & _
+'                "                             INNER JOIN packing_detail pd ON pm.packing_no = pd.packing_no " & vbCrLf & _
+'                "                     WHERE   DATEDIFF(month, pm.stuffing_date, etd) > 0 " & vbCrLf
+'
+'    sql = sql + "                             AND YEAR(pm.stuffing_date) = YEAR(@SelectPeriod) " & vbCrLf & _
+'                "                             AND MONTH(pm.stuffing_date) = MONTH(@SelectPeriod) " & vbCrLf & _
+'                "                     GROUP BY whcode , " & vbCrLf & _
+'                "                             item_code " & vbCrLf & _
+'                "                   ) it ON sm.item_code = it.item_code " & vbCrLf & _
+'                "                           AND sm.warehouse_code = it.whcode " & vbCrLf & _
+'                " WHERE   warehouse_code = @Location " & vbCrLf & _
+'                " ORDER BY warehouse_code , " & vbCrLf & _
+'                "         sm.item_Code " & vbCrLf & _
+'                "  " & vbCrLf
     
-    sql = sql + "                                   WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control) " & vbCrLf & _
-                "                                       AND Inventory_Month=(SELECT MAX(Inventory_Month) FROM Inventory_Control " & vbCrLf & _
-                "                                                                               WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control)) " & vbCrLf & _
-                "                           )                                                    " & vbCrLf & _
-                "  " & vbCrLf & _
-                " SET @GetDiff=DATEDIFF(M,@LastClosing,@SelectPeriod) " & vbCrLf & _
-                "  " & vbCrLf & _
-                " SELECT  RTRIM(gc.description) groupDesc , " & vbCrLf & _
-                "         RTRIM(uc.description) Unit_Desc , " & vbCrLf & _
-                "         RTRIM(item_name) item_name , " & vbCrLf & _
-                "         RTRIM(address) address , " & vbCrLf
-    
-    sql = sql + "         RTRIM(wh_name) wh_name , " & vbCrLf & _
-                "         RTRIM(makeritem_code) makeritem_code , " & vbCrLf & _
-                "         sm.* , " & vbCrLf & _
-                "         ISNULL(ip.inventory_price, 0) price , " & vbCrLf & _
-                "         ISNULL(it.in_transit, 0) in_transit " & vbCrLf & _
-                "         --TAMBAH FIELD DiffClosing UTK HANDLE AMOUNT JIKA KONDISI SETELAH CLOSING MENGAMBIL INVENTORY (LIHAT LOOPING INTO GRID)  " & vbLf & _
-                "         ,@GetDiff DiffClosing, " & vbLf & _
-                "         -- Tambah Lokasi 2 dan 3 -- " & vbCrLf & _
-                "         '' Location1, " & vbCrLf & _
-                "         '' Location2, " & vbCrLf & _
-                "         '' Location3 " & vbCrLf & _
-                " FROM    " & vbCrLf & _
-                "   (SELECT * FROM  " & vbCrLf & _
-                "       (   SELECT warehouse_code, item_code, " & vbCrLf & _
-                "                       SUM(Pre_MonthS) Pre_MonthS, SUM(ReceiptS) ReceiptS, " & vbCrLf & _
-                "                       SUM(SupplyS) SupplyS, SUM(LossRejectS) LossRejectS, " & vbCrLf & _
-                "                       SUM(CurrentS) CurrentS, SUM(InventoryS) InventoryS " & vbCrLf
-    
-    sql = sql + "           FROM             " & vbCrLf & _
-                "           ( " & vbCrLf & _
-                "               SELECT warehouse_code, item_code, " & vbCrLf & _
-                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_PreMonth " & vbCrLf & _
-                "                            WHEN @GetDiff=1 THEN TM_PreMonth " & vbCrLf & _
-                "                            WHEN @GetDiff=2 THEN NM_PreMonth END,0) Pre_MonthS, " & vbCrLf & _
-                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Receipt " & vbCrLf & _
-                "                            WHEN @GetDiff=1 THEN TM_Receipt " & vbCrLf & _
-                "                            WHEN @GetDiff=2 THEN NM_Receipt END,0) ReceiptS, " & vbCrLf & _
-                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Supply " & vbCrLf & _
-                "                            WHEN @GetDiff=1 THEN TM_Supply " & vbCrLf
-    
-    sql = sql + "                            WHEN @GetDiff=2 THEN NM_Supply END,0) SupplyS, " & vbCrLf & _
-                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_LossReject " & vbCrLf & _
-                "                            WHEN @GetDiff=1 THEN TM_LossReject " & vbCrLf & _
-                "                            WHEN @GetDiff=2 THEN NM_LossReject END,0) LossRejectS, " & vbCrLf & _
-                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Current " & vbCrLf & _
-                "                            WHEN @GetDiff=1 THEN TM_Current " & vbCrLf & _
-                "                            WHEN @GetDiff=2 THEN NM_Current END,0) CurrentS, " & vbCrLf & _
-                "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_Inventory " & vbCrLf & _
-                "                            WHEN @GetDiff=1 THEN TM_Inventory " & vbCrLf & _
-                "                            WHEN @GetDiff=2 THEN NM_Inventory END,0) InventoryS " & vbCrLf & _
-                "               FROM Stock_Master " & vbCrLf
-    
-    sql = sql + "                   WHERE Warehouse_Code=@Location            " & vbCrLf & _
-                "  " & vbCrLf & _
-                "               UNION ALL " & vbCrLf & _
-                "  " & vbCrLf & _
-                "               SELECT Warehouse_Code, Item_code, PreMonth, Receipt,Supply, LossReject, [Current], COALESCE(Inventory,[Current]) " & vbCrLf & _
-                "                   FROM Stock_history " & vbCrLf & _
-                "                       WHERE Warehouse_Code=@Location " & vbCrLf & _
-                "                                   AND Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
-                "                                   AND Stock_Month=MONTH(@SelectPeriod) " & vbCrLf & _
-                "           ) Stock GROUP BY warehouse_code, item_code " & vbCrLf & _
-                "       )   SM " & vbCrLf
-    
-    sql = sql + "   )sm " & vbCrLf & _
-                "         LEFT JOIN warehouse_master wm ON sm.warehouse_code = wm.wh_code " & vbCrLf & _
-                "         LEFT JOIN item_master im ON im.item_code = sm.item_code " & vbCrLf & _
-                "         LEFT JOIN group_cls gc ON im.group_cls = gc.group_cls " & vbCrLf & _
-                "         LEFT JOIN unit_cls uc ON im.unit_cls = uc.unit_cls " & vbCrLf & _
-                "         LEFT JOIN ( SELECT  item_code , " & vbCrLf & _
-                "                             inventory_price " & vbCrLf & _
-                "                     FROM     " & vbCrLf & _
-                "                       (SELECT * FROM Inventory_Price   " & vbCrLf & _
-                "                           UNION " & vbCrLf & _
-                "                           SELECT * FROM InventoryPrice_History  " & vbCrLf
-    
-    sql = sql + "                       )Inventory_Price " & vbCrLf & _
-                "                     WHERE   inventory_year = YEAR(@SelectPeriod) " & vbCrLf & _
-                "                             AND inventory_month = MONTH(@SelectPeriod) " & vbCrLf & _
-                "                             AND duty_status IN ( '0', '2', '3' ) " & vbCrLf & _
-                "                   ) ip ON sm.item_code = ip.item_code " & vbCrLf & _
-                "         LEFT JOIN ( SELECT  whcode , " & vbCrLf & _
-                "                             item_code , " & vbCrLf & _
-                "                             SUM(qty) in_transit " & vbCrLf & _
-                "                     FROM    packing_master pm " & vbCrLf & _
-                "                             INNER JOIN packing_detail pd ON pm.packing_no = pd.packing_no " & vbCrLf & _
-                "                     WHERE   DATEDIFF(month, pm.stuffing_date, etd) > 0 " & vbCrLf
-    
-    sql = sql + "                             AND YEAR(pm.stuffing_date) = YEAR(@SelectPeriod) " & vbCrLf & _
-                "                             AND MONTH(pm.stuffing_date) = MONTH(@SelectPeriod) " & vbCrLf & _
-                "                     GROUP BY whcode , " & vbCrLf & _
-                "                             item_code " & vbCrLf & _
-                "                   ) it ON sm.item_code = it.item_code " & vbCrLf & _
-                "                           AND sm.warehouse_code = it.whcode " & vbCrLf & _
-                " WHERE   warehouse_code = @Location " & vbCrLf & _
-                " ORDER BY warehouse_code , " & vbCrLf & _
-                "         sm.item_Code " & vbCrLf & _
-                "  " & vbCrLf
-    
+    sql = "EXEC dbo.SP_ValuationRptPerWH_Sel @WHCode = '" & CboLocationCD.Text & "',  @Period = '" & Format(DMonth, "yyyy-MM-01") & "'"
     
 RsStock.Open sql, Db, adOpenDynamic, adLockOptimistic
 
@@ -977,7 +978,7 @@ If RsInvControl.State <> adStateClosed Then RsInvControl.Close
 RsInvControl.Open sqlControl, Db, adOpenKeyset, adLockOptimistic
 
 If RsInvControl.EOF = True And RsInvControl.BOF = True Then
-    LblErrMsg = DisplayMsg(4022) '"Inventory Stock hasn't been closed !"
+    lblErrMsg = DisplayMsg(4022) '"Inventory Stock hasn't been closed !"
     Exit Sub
 End If
 
@@ -1120,10 +1121,10 @@ Dim rsCompany As New Recordset, sql_plus As String, sqlP As String
 Dim sqlControl As String, RsInvControl As New ADODB.Recordset
 
 CboLocationCD = Trim(CboLocationCD)
-If CboLocationCD.MatchFound Then
+If CboLocationCD.matchFound Then
     LblLocationName = Trim(CboLocationCD.Column(1))
 Else
-    LblErrMsg = DisplayMsg(4018)
+    lblErrMsg = DisplayMsg(4018)
     Exit Sub
 End If
 
@@ -1134,7 +1135,7 @@ sqlControl = "select * from inventory_control where fix_cls='1' order by invento
 If RsInvControl.State <> adStateClosed Then RsInvControl.Close
 RsInvControl.Open sqlControl, Db, adOpenKeyset, adLockOptimistic
 
-If RsInvControl.EOF = True And RsInvControl.BOF = True Then LblErrMsg = "Inventory Stock hasn't been closed !": Exit Sub
+If RsInvControl.EOF = True And RsInvControl.BOF = True Then lblErrMsg = "Inventory Stock hasn't been closed !": Exit Sub
 RsInvControl.MoveLast
      
 If DateDiff("M", RsInvControl!Inventory_Year & "-" & Format(RsInvControl!Inventory_Month, "00") & "-01", Year(DMonth) & "-" & Format(Month(DMonth), "00") & "-01") = 0 Then
@@ -1273,7 +1274,7 @@ Private Sub PrintReport()
     If RsInvControl.State <> adStateClosed Then RsInvControl.Close
     RsInvControl.Open sqlControl, Db, adOpenKeyset, adLockOptimistic
     
-    If RsInvControl.EOF = True And RsInvControl.BOF = True Then LblErrMsg = "Inventory Stock hasn't been closed !": Exit Sub
+    If RsInvControl.EOF = True And RsInvControl.BOF = True Then lblErrMsg = "Inventory Stock hasn't been closed !": Exit Sub
     RsInvControl.MoveLast
     
     j = 0
@@ -1284,221 +1285,184 @@ Private Sub PrintReport()
             j = 1: Exit For
         End If
     Next
-    If j = 0 Then LblErrMsg = DisplayMsg(4018): Exit Sub  '"Invalid warehouse code !"
+    If j = 0 Then lblErrMsg = DisplayMsg(4018): Exit Sub  '"Invalid warehouse code !"
     
 '    LblErrMsg = up_ValidateDateRange(DMonth.Value, False)
 '    If Trim(LblErrMsg) <> "" Then Exit Sub
     
-    LblErrMsg = ""
+    lblErrMsg = ""
     Me.MousePointer = vbHourglass
     
     dtMPList = DMonth.Value
     datePiList = Format(DMonth.Value, "MMM yyyy")
-    
-'    sql = "select rtrim(sm.item_code) item_code, rtrim(makeritem_code) makeritem_code, rtrim(item_name) item_name, " & _
-'          vbLf & "rtrim(sm.warehouse_code) warehouse_code, rtrim(wh_name) wh_name, rtrim(address) address, " & _
-'          vbLf & "rtrim(gc.description) group_desc, rtrim(uc.description) unit_desc, " & _
-'          vbLf & "sm.lm_premonth, sm.lm_receipt, sm.lm_supply, sm.lm_lossreject, sm.lm_current, isnull(sm.lm_inventory,0) lm_inventory, " & _
-'          vbLf & "sm.tm_premonth, sm.tm_receipt, sm.tm_supply, sm.tm_lossreject, sm.tm_current, sm.tm_inventory, " & _
-'          vbLf & "sm.nm_premonth, sm.nm_receipt, sm.nm_supply, sm.nm_lossreject, sm.nm_current, sm.nm_inventory, " & _
-'          vbLf & "isnull(ip.inventory_price, 0) price, isnull(it.in_transit, 0) in_transit, " & _
-'          vbLf & "descriptions = case isnull(im.sheetcoil_cls,0) when 0 then  im.item_name else rtrim(im.item_name) + ' (' + rtrim(sh.description) + ', T' + cast(im.thickness as varchar(15)) + ' x W' + cast(im.width as varchar(15)) + ' x L' + cast(im.length as varchar(15)) + ')'  end, " & _
-'          vbLf & "case when warehouse_code = 'FG' then " & _
-'          vbLf & "case when left(sm.item_code, 1) = 'E' then 'Export' else 'Local' end else " & _
-'          vbLf & "case when isnull(tm.country_cls, 0) = 0 then 'Local' else 'Import' end " & _
-'          vbLf & "end local, im.material_cls "
-'
-'    sql = sql & _
-'          vbLf & "from stock_master sm " & _
-'          vbLf & "left join warehouse_master wm on sm.warehouse_code=wm.wh_code " & _
-'          vbLf & "left join item_master im on im.item_code=sm.item_code " & _
-'          vbLf & "left join trade_master tm on im.supplier_code = tm.trade_code " & _
-'          vbLf & "left join group_cls gc on im.group_cls=gc.group_cls " & _
-'          vbLf & "left join unit_cls uc on im.unit_cls=uc.unit_cls " & _
-'          vbLf & "left join sheetcoil_cls sh on im.sheetcoil_cls = sh.sheetcoil_cls " & _
-'          vbLf & "left join ( " & _
-'          vbLf & "select item_code, inventory_price From inventory_price " & _
-'          vbLf & "where inventory_year = '" & DMonth.year & "' and inventory_month = '" & DMonth.month & "' " & _
-'          vbLf & "and duty_status in ('0','2','3') " & _
-'          vbLf & ") ip on sm.item_code = ip.item_code " & _
-'          vbLf & "left join ( " & _
-'          vbLf & "select whcode, item_code, sum(qty) in_transit " & _
-'          vbLf & "from packing_master pm " & _
-'          vbLf & "inner join packing_detail pd on pm.packing_no = pd.packing_no " & _
-'          vbLf & "Where DateDiff(month, pm.stuffing_date, etd) > 0 " & _
-'          vbLf & "and year(pm.stuffing_date) = '" & DMonth.year & "' and month(pm.stuffing_date) = '" & DMonth.month & "' " & _
-'          vbLf & "group by whcode, item_code " & _
-'          vbLf & ") it on sm.item_code = it.item_code and sm.warehouse_code = it.whcode " & _
-'          vbLf & "where warehouse_code = '" & CboLocationCD & "' " & _
-'          vbLf & "order by sm.warehouse_code, local desc, im.material_cls, sm.item_code "
-    
+       
     
     ' --------------------------------------------------
     ' Update Query Include Valuation History
     ' --------------------------------------------------
     
-    sql = " DECLARE @LastClosing AS DATETIME " & vbCrLf & _
-                " DECLARE @GetDiff AS INTEGER " & vbCrLf & _
-                " DECLARE @SelectPeriod AS DATETIME " & vbCrLf & _
-                " DECLARE @Location AS VARCHAR(30) " & vbCrLf & _
-                "  " & vbCrLf & _
-                "  " & vbCrLf & _
-                "  " & vbCrLf & _
-                " SET @SelectPeriod='" & Format(DMonth, "yyyy-MM-01") & "' " & vbCrLf & _
-                " SET @Location='" & Trim(CboLocationCD) & "' " & vbCrLf & _
-                "  " & vbCrLf & _
-                " SET @LastClosing= " & vbCrLf & _
-                "                           (SELECT CONVERT(DATETIME,CAST(Inventory_Year AS VARCHAR(4)) +'-' +CAST(Inventory_Month AS varchar(2)) +'-01') " & vbCrLf & _
-                "                               FROM Inventory_Control " & vbCrLf
-    
-    sql = sql + "                                   WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control) " & vbCrLf & _
-                "                                       AND Inventory_Month=(SELECT MAX(Inventory_Month) FROM Inventory_Control " & vbCrLf & _
-                "                                                                               WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control)) " & vbCrLf & _
-                "                           )                                                    " & vbCrLf & _
-                "  " & vbCrLf & _
-                " SET @GetDiff=DATEDIFF(M,@LastClosing,@SelectPeriod) " & vbCrLf & _
-                "  " & vbCrLf & _
-                " SELECT  RTRIM(sm.item_code) item_code , " & vbCrLf & _
-                "         RTRIM(makeritem_code) makeritem_code , " & vbCrLf & _
-                "         RTRIM(item_name) item_name , " & vbCrLf & _
-                "         RTRIM(sm.warehouse_code) warehouse_code , " & vbCrLf
-    
-    sql = sql + "         RTRIM(wh_name) wh_name , " & vbCrLf & _
-                "         RTRIM(address) address , " & vbCrLf & _
-                "         '' Location1 , " & vbCrLf & _
-                "         '' Location2 , " & vbCrLf & _
-                "         '' Location3 , " & vbCrLf & _
-                "         RTRIM(gc.description) group_desc , " & vbCrLf & _
-                "         RTRIM(uc.description) unit_desc , " & vbCrLf & _
-                "         sm.Pre_MonthS lm_premonth , " & vbCrLf & _
-                "         sm.ReceiptS lm_receipt , " & vbCrLf & _
-                "         sm.SupplyS lm_supply , " & vbCrLf & _
-                "         sm.LossRejectS lm_lossreject , " & vbCrLf & _
-                "         sm.CurrentS lm_current , " & vbCrLf & _
-                "         ISNULL(sm.InventoryS, 0) lm_inventory , " & vbCrLf & _
-                "         sm.Pre_MonthS tm_premonth , " & vbCrLf
-    
-    sql = sql + "         sm.ReceiptS tm_receipt , " & vbCrLf & _
-                "         sm.SupplyS tm_supply , " & vbCrLf & _
-                "         sm.LossRejectS tm_lossreject , " & vbCrLf & _
-                "         sm.CurrentS tm_current , " & vbCrLf & _
-                "         sm.InventoryS tm_inventory , " & vbCrLf & _
-                "         sm.Pre_MonthS nm_premonth , " & vbCrLf & _
-                "         sm.ReceiptS nm_receipt , " & vbCrLf & _
-                "         sm.SupplyS nm_supply , " & vbCrLf & _
-                "         sm.LossRejectS nm_lossreject , " & vbCrLf & _
-                "         sm.CurrentS nm_current , " & vbCrLf & _
-                "         sm.InventoryS nm_inventory , " & vbCrLf
-    
-    sql = sql + "         ISNULL(ip.inventory_price, 0) price , " & vbCrLf & _
-                "         ISNULL(it.in_transit, 0) in_transit , " & vbCrLf & _
-                "         descriptions = CASE ISNULL(im.sheetcoil_cls, 0) " & vbCrLf & _
-                "                          WHEN 0 THEN im.item_name " & vbCrLf & _
-                "                          ELSE RTRIM(im.item_name) + ' (' " & vbCrLf & _
-                "                               + RTRIM(sh.description) + ', T' " & vbCrLf & _
-                "                               + CAST(im.thickness AS VARCHAR(15)) + ' x W' " & vbCrLf & _
-                "                               + CAST(im.width AS VARCHAR(15)) + ' x L' " & vbCrLf & _
-                "                               + CAST(im.length AS VARCHAR(15)) + ')' " & vbCrLf & _
-                "                        END , " & vbCrLf & _
-                "         " & vbCrLf
-    
-    sql = sql + "              " & vbCrLf & _
-                "               " & vbCrLf & _
-                "              " & vbCrLf & _
-                "              " & vbCrLf & _
-                "              " & vbCrLf & _
-                "                    " & vbCrLf & _
-                "         '' local , " & vbCrLf & _
-                "         im.material_cls " & vbCrLf & _
-                "         ,@GetDiff DiffClosing " & vbLf & _
-                " FROM     " & vbCrLf & _
-                "          (  " & vbCrLf & _
-                "           SELECT warehouse_code, item_code, " & vbCrLf
-    
-    sql = sql + "                        SUM(Pre_MonthS) Pre_MonthS, SUM(ReceiptS) ReceiptS,  " & vbCrLf & _
-                "                        SUM(SupplyS) SupplyS, SUM(LossRejectS) LossRejectS,  " & vbCrLf & _
-                "                        SUM(CurrentS) CurrentS, SUM(InventoryS) InventoryS  " & vbCrLf & _
-                "           FROM             " & vbCrLf & _
-                "           ( " & vbCrLf & _
-                "               SELECT warehouse_code, item_code, " & vbCrLf & _
-                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_PreMonth  " & vbCrLf & _
-                "                             WHEN @GetDiff=1 THEN TM_PreMonth  " & vbCrLf & _
-                "                             WHEN @GetDiff=2 THEN NM_PreMonth END,0) Pre_MonthS,  " & vbCrLf & _
-                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Receipt  " & vbCrLf & _
-                "                             WHEN @GetDiff=1 THEN TM_Receipt  " & vbCrLf
-    
-    sql = sql + "                             WHEN @GetDiff=2 THEN NM_Receipt END,0) ReceiptS,  " & vbCrLf & _
-                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Supply  " & vbCrLf & _
-                "                             WHEN @GetDiff=1 THEN TM_Supply  " & vbCrLf & _
-                "                             WHEN @GetDiff=2 THEN NM_Supply END,0) SupplyS,  " & vbCrLf & _
-                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_LossReject  " & vbCrLf & _
-                "                             WHEN @GetDiff=1 THEN TM_LossReject  " & vbCrLf & _
-                "                             WHEN @GetDiff=2 THEN NM_LossReject END,0) LossRejectS,  " & vbCrLf & _
-                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Current  " & vbCrLf & _
-                "                             WHEN @GetDiff=1 THEN TM_Current  " & vbCrLf & _
-                "                             WHEN @GetDiff=2 THEN NM_Current END,0) CurrentS,  " & vbCrLf & _
-                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Inventory  " & vbCrLf
-    
-    sql = sql + "                             WHEN @GetDiff=1 THEN TM_Inventory  " & vbCrLf & _
-                "                             WHEN @GetDiff=2 THEN NM_Inventory END,0) InventoryS  " & vbCrLf & _
-                "               FROM Stock_Master " & vbCrLf & _
-                "                    " & vbCrLf & _
-                "                UNION ALL  " & vbCrLf & _
-                "    " & vbCrLf & _
-                "                SELECT Warehouse_Code, Item_code, PreMonth, Receipt, Supply, LossReject, [Current], COALESCE(Inventory,[Current])  " & vbCrLf & _
-                "                    FROM Stock_history  " & vbCrLf & _
-                "                        WHERE Warehouse_Code=@Location  " & vbCrLf & _
-                "                                    AND Stock_Year=YEAR(@SelectPeriod)  " & vbCrLf & _
-                "                                    AND Stock_Month=MONTH(@SelectPeriod)  " & vbCrLf
-    
-    sql = sql + "  " & vbCrLf & _
-                "           ) Stock GROUP BY warehouse_code, item_code " & vbCrLf & _
-                "          ) sm " & vbCrLf & _
-                "  " & vbCrLf & _
-                "         LEFT JOIN warehouse_master wm ON sm.warehouse_code = wm.wh_code " & vbCrLf & _
-                "         LEFT JOIN item_master im ON im.item_code = sm.item_code " & vbCrLf & _
-                "         LEFT JOIN trade_master tm ON im.supplier_code = tm.trade_code " & vbCrLf & _
-                "         LEFT JOIN group_cls gc ON im.group_cls = gc.group_cls " & vbCrLf & _
-                "         LEFT JOIN unit_cls uc ON im.unit_cls = uc.unit_cls " & vbCrLf & _
-                "         LEFT JOIN sheetcoil_cls sh ON im.sheetcoil_cls = sh.sheetcoil_cls " & vbCrLf & _
-                "         LEFT JOIN ( SELECT  item_code , " & vbCrLf
-    
-    sql = sql + "                             inventory_price " & vbCrLf & _
-                "                     FROM   " & vbCrLf & _
-                "                       (SELECT * From Inventory_Price " & vbCrLf & _
-                "                           UNION   ALL " & vbCrLf & _
-                "                         SELECT * From InventoryPrice_History " & vbCrLf & _
-                "                       ) Inventory_Price                            " & vbCrLf & _
-                "                     WHERE   inventory_year = YEAR(@SelectPeriod) " & vbCrLf & _
-                "                             AND inventory_month = MONTH(@SelectPeriod) " & vbCrLf & _
-                "                             AND duty_status IN ( '0', '2', '3' )  " & vbCrLf & _
-                "                   ) ip ON sm.item_code = ip.item_code " & vbCrLf & _
-                "         LEFT JOIN ( SELECT  whcode , " & vbCrLf
-    
-    sql = sql + "                             item_code , " & vbCrLf & _
-                "                             SUM(qty) in_transit " & vbCrLf & _
-                "                     FROM    packing_master pm " & vbCrLf & _
-                "                             INNER JOIN packing_detail pd ON pm.packing_no = pd.packing_no " & vbCrLf & _
-                "                     WHERE   DATEDIFF(month, pm.stuffing_date, etd) > 0 " & vbCrLf & _
-                "                             AND YEAR(pm.stuffing_date) = YEAR(@SelectPeriod) " & vbCrLf & _
-                "                             AND MONTH(pm.stuffing_date) = MONTH(@SelectPeriod) " & vbCrLf & _
-                "                     GROUP BY whcode , " & vbCrLf & _
-                "                             item_code " & vbCrLf & _
-                "                   ) it ON sm.item_code = it.item_code " & vbCrLf & _
-                "                           AND sm.warehouse_code = it.whcode " & vbCrLf
-    
-    sql = sql + " WHERE   warehouse_code = @Location " & vbCrLf & _
-                " ORDER BY sm.warehouse_code , " & vbCrLf & _
-                "         local DESC , " & vbCrLf & _
-                "         im.material_cls , " & vbCrLf & _
-                "         sm.item_code  " & vbCrLf & _
-                "  "
+'    sql = " DECLARE @LastClosing AS DATETIME " & vbCrLf & _
+'                " DECLARE @GetDiff AS INTEGER " & vbCrLf & _
+'                " DECLARE @SelectPeriod AS DATETIME " & vbCrLf & _
+'                " DECLARE @Location AS VARCHAR(30) " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                " SET @SelectPeriod='" & Format(DMonth, "yyyy-MM-01") & "' " & vbCrLf & _
+'                " SET @Location='" & Trim(CboLocationCD) & "' " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                " SET @LastClosing= " & vbCrLf & _
+'                "                           (SELECT CONVERT(DATETIME,CAST(Inventory_Year AS VARCHAR(4)) +'-' +CAST(Inventory_Month AS varchar(2)) +'-01') " & vbCrLf & _
+'                "                               FROM Inventory_Control " & vbCrLf
+'
+'    sql = sql + "                                   WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control) " & vbCrLf & _
+'                "                                       AND Inventory_Month=(SELECT MAX(Inventory_Month) FROM Inventory_Control " & vbCrLf & _
+'                "                                                                               WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control)) " & vbCrLf & _
+'                "                           )                                                    " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                " SET @GetDiff=DATEDIFF(M,@LastClosing,@SelectPeriod) " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                " SELECT  RTRIM(sm.item_code) item_code , " & vbCrLf & _
+'                "         RTRIM(makeritem_code) makeritem_code , " & vbCrLf & _
+'                "         RTRIM(item_name) item_name , " & vbCrLf & _
+'                "         RTRIM(sm.warehouse_code) warehouse_code , " & vbCrLf
+'
+'    sql = sql + "         RTRIM(wh_name) wh_name , " & vbCrLf & _
+'                "         RTRIM(address) address , " & vbCrLf & _
+'                "         '' Location1 , " & vbCrLf & _
+'                "         '' Location2 , " & vbCrLf & _
+'                "         '' Location3 , " & vbCrLf & _
+'                "         RTRIM(gc.description) group_desc , " & vbCrLf & _
+'                "         RTRIM(uc.description) unit_desc , " & vbCrLf & _
+'                "         sm.Pre_MonthS lm_premonth , " & vbCrLf & _
+'                "         sm.ReceiptS lm_receipt , " & vbCrLf & _
+'                "         sm.SupplyS lm_supply , " & vbCrLf & _
+'                "         sm.LossRejectS lm_lossreject , " & vbCrLf & _
+'                "         sm.CurrentS lm_current , " & vbCrLf & _
+'                "         ISNULL(sm.InventoryS, 0) lm_inventory , " & vbCrLf & _
+'                "         sm.Pre_MonthS tm_premonth , " & vbCrLf
+'
+'    sql = sql + "         sm.ReceiptS tm_receipt , " & vbCrLf & _
+'                "         sm.SupplyS tm_supply , " & vbCrLf & _
+'                "         sm.LossRejectS tm_lossreject , " & vbCrLf & _
+'                "         sm.CurrentS tm_current , " & vbCrLf & _
+'                "         sm.InventoryS tm_inventory , " & vbCrLf & _
+'                "         sm.Pre_MonthS nm_premonth , " & vbCrLf & _
+'                "         sm.ReceiptS nm_receipt , " & vbCrLf & _
+'                "         sm.SupplyS nm_supply , " & vbCrLf & _
+'                "         sm.LossRejectS nm_lossreject , " & vbCrLf & _
+'                "         sm.CurrentS nm_current , " & vbCrLf & _
+'                "         sm.InventoryS nm_inventory , " & vbCrLf
+'
+'    sql = sql + "         ISNULL(ip.inventory_price, 0) price , " & vbCrLf & _
+'                "         ISNULL(it.in_transit, 0) in_transit , " & vbCrLf & _
+'                "         descriptions = CASE ISNULL(im.sheetcoil_cls, 0) " & vbCrLf & _
+'                "                          WHEN 0 THEN im.item_name " & vbCrLf & _
+'                "                          ELSE RTRIM(im.item_name) + ' (' " & vbCrLf & _
+'                "                               + RTRIM(sh.description) + ', T' " & vbCrLf & _
+'                "                               + CAST(im.thickness AS VARCHAR(15)) + ' x W' " & vbCrLf & _
+'                "                               + CAST(im.width AS VARCHAR(15)) + ' x L' " & vbCrLf & _
+'                "                               + CAST(im.length AS VARCHAR(15)) + ')' " & vbCrLf & _
+'                "                        END , " & vbCrLf & _
+'                "         " & vbCrLf
+'
+'    sql = sql + "              " & vbCrLf & _
+'                "               " & vbCrLf & _
+'                "              " & vbCrLf & _
+'                "              " & vbCrLf & _
+'                "              " & vbCrLf & _
+'                "                    " & vbCrLf & _
+'                "         '' local , " & vbCrLf & _
+'                "         im.material_cls " & vbCrLf & _
+'                "         ,@GetDiff DiffClosing " & vbLf & _
+'                " FROM     " & vbCrLf & _
+'                "          (  " & vbCrLf & _
+'                "           SELECT warehouse_code, item_code, " & vbCrLf
+'
+'    sql = sql + "                        SUM(Pre_MonthS) Pre_MonthS, SUM(ReceiptS) ReceiptS,  " & vbCrLf & _
+'                "                        SUM(SupplyS) SupplyS, SUM(LossRejectS) LossRejectS,  " & vbCrLf & _
+'                "                        SUM(CurrentS) CurrentS, SUM(InventoryS) InventoryS  " & vbCrLf & _
+'                "           FROM             " & vbCrLf & _
+'                "           ( " & vbCrLf & _
+'                "               SELECT warehouse_code, item_code, " & vbCrLf & _
+'                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_PreMonth  " & vbCrLf & _
+'                "                             WHEN @GetDiff=1 THEN TM_PreMonth  " & vbCrLf & _
+'                "                             WHEN @GetDiff=2 THEN NM_PreMonth END,0) Pre_MonthS,  " & vbCrLf & _
+'                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Receipt  " & vbCrLf & _
+'                "                             WHEN @GetDiff=1 THEN TM_Receipt  " & vbCrLf
+'
+'    sql = sql + "                             WHEN @GetDiff=2 THEN NM_Receipt END,0) ReceiptS,  " & vbCrLf & _
+'                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Supply  " & vbCrLf & _
+'                "                             WHEN @GetDiff=1 THEN TM_Supply  " & vbCrLf & _
+'                "                             WHEN @GetDiff=2 THEN NM_Supply END,0) SupplyS,  " & vbCrLf & _
+'                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_LossReject  " & vbCrLf & _
+'                "                             WHEN @GetDiff=1 THEN TM_LossReject  " & vbCrLf & _
+'                "                             WHEN @GetDiff=2 THEN NM_LossReject END,0) LossRejectS,  " & vbCrLf & _
+'                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Current  " & vbCrLf & _
+'                "                             WHEN @GetDiff=1 THEN TM_Current  " & vbCrLf & _
+'                "                             WHEN @GetDiff=2 THEN NM_Current END,0) CurrentS,  " & vbCrLf & _
+'                "                    COALESCE(CASE WHEN @GetDiff=0 THEN LM_Inventory  " & vbCrLf
+'
+'    sql = sql + "                             WHEN @GetDiff=1 THEN TM_Inventory  " & vbCrLf & _
+'                "                             WHEN @GetDiff=2 THEN NM_Inventory END,0) InventoryS  " & vbCrLf & _
+'                "               FROM Stock_Master " & vbCrLf & _
+'                "                    " & vbCrLf & _
+'                "                UNION ALL  " & vbCrLf & _
+'                "    " & vbCrLf & _
+'                "                SELECT Warehouse_Code, Item_code, PreMonth, Receipt, Supply, LossReject, [Current], COALESCE(Inventory,[Current])  " & vbCrLf & _
+'                "                    FROM Stock_history  " & vbCrLf & _
+'                "                        WHERE Warehouse_Code=@Location  " & vbCrLf & _
+'                "                                    AND Stock_Year=YEAR(@SelectPeriod)  " & vbCrLf & _
+'                "                                    AND Stock_Month=MONTH(@SelectPeriod)  " & vbCrLf
+'
+'    sql = sql + "  " & vbCrLf & _
+'                "           ) Stock GROUP BY warehouse_code, item_code " & vbCrLf & _
+'                "          ) sm " & vbCrLf & _
+'                "  " & vbCrLf & _
+'                "         LEFT JOIN warehouse_master wm ON sm.warehouse_code = wm.wh_code " & vbCrLf & _
+'                "         LEFT JOIN item_master im ON im.item_code = sm.item_code " & vbCrLf & _
+'                "         LEFT JOIN trade_master tm ON im.supplier_code = tm.trade_code " & vbCrLf & _
+'                "         LEFT JOIN group_cls gc ON im.group_cls = gc.group_cls " & vbCrLf & _
+'                "         LEFT JOIN unit_cls uc ON im.unit_cls = uc.unit_cls " & vbCrLf & _
+'                "         LEFT JOIN sheetcoil_cls sh ON im.sheetcoil_cls = sh.sheetcoil_cls " & vbCrLf & _
+'                "         LEFT JOIN ( SELECT  item_code , " & vbCrLf
+'
+'    sql = sql + "                             inventory_price " & vbCrLf & _
+'                "                     FROM   " & vbCrLf & _
+'                "                       (SELECT * From Inventory_Price " & vbCrLf & _
+'                "                           UNION   ALL " & vbCrLf & _
+'                "                         SELECT * From InventoryPrice_History " & vbCrLf & _
+'                "                       ) Inventory_Price                            " & vbCrLf & _
+'                "                     WHERE   inventory_year = YEAR(@SelectPeriod) " & vbCrLf & _
+'                "                             AND inventory_month = MONTH(@SelectPeriod) " & vbCrLf & _
+'                "                             AND duty_status IN ( '0', '2', '3' )  " & vbCrLf & _
+'                "                   ) ip ON sm.item_code = ip.item_code " & vbCrLf & _
+'                "         LEFT JOIN ( SELECT  whcode , " & vbCrLf
+'
+'    sql = sql + "                             item_code , " & vbCrLf & _
+'                "                             SUM(qty) in_transit " & vbCrLf & _
+'                "                     FROM    packing_master pm " & vbCrLf & _
+'                "                             INNER JOIN packing_detail pd ON pm.packing_no = pd.packing_no " & vbCrLf & _
+'                "                     WHERE   DATEDIFF(month, pm.stuffing_date, etd) > 0 " & vbCrLf & _
+'                "                             AND YEAR(pm.stuffing_date) = YEAR(@SelectPeriod) " & vbCrLf & _
+'                "                             AND MONTH(pm.stuffing_date) = MONTH(@SelectPeriod) " & vbCrLf & _
+'                "                     GROUP BY whcode , " & vbCrLf & _
+'                "                             item_code " & vbCrLf & _
+'                "                   ) it ON sm.item_code = it.item_code " & vbCrLf & _
+'                "                           AND sm.warehouse_code = it.whcode " & vbCrLf
+'
+'    sql = sql + " WHERE   warehouse_code = @Location " & vbCrLf & _
+'                " ORDER BY sm.warehouse_code , " & vbCrLf & _
+'                "         local DESC , " & vbCrLf & _
+'                "         im.material_cls , " & vbCrLf & _
+'                "         sm.item_code  " & vbCrLf & _
+'                "  "
     ' --------------------------------------------------
-    
+    sql = "EXEC dbo.SP_ValuationRptPerWH_SelRpt1 @WHCode = '" & CboLocationCD.Text & "', @Period = '" & datePiList & "'"
     
     If rsRpt.State <> adStateClosed Then rsRpt.Close
     rsRpt.Open sql, Db, adOpenDynamic, adLockOptimistic
-    If rsRpt.EOF Then LblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
+    If rsRpt.EOF Then lblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
         
     Set report = application.OpenReport(App.path & "\Reports\rpt_pi_reportwh.rpt")
     report.Database.Tables(1).SetDataSource rsRpt
@@ -1512,170 +1476,141 @@ Private Sub PrintReport()
     report.FormulaFields(6).Text = "" & gi_decimalDigitAmountIDR & ""
     report.FormulaFields(11).Text = "" & intDiffClosing & ""
     
-'    sqlprint2 = "select a.local, a.material_cls, sum(a.lm_inventory) lm_inventory, sum(a.tm_current) tm_current, sum(a.nm_current) nm_current, sum(a.in_transit) in_transit " & _
-'        vbLf & "from( " & _
-'            vbLf & "select case when warehouse_code = 'FG' " & _
-'                vbLf & "then case when left(sm.item_code, 1) = 'E' then 'Export' else 'Local' end " & _
-'                vbLf & "else case when isnull(tm.country_cls, 0) = 0 then 'Local' else 'Import' end " & _
-'            vbLf & "end local, im.material_cls, " & _
-'            vbLf & "isnull(sm.lm_inventory, 0) * isnull(ip.inventory_price, 0) lm_inventory, " & _
-'            vbLf & "isnull(sm.tm_current, 0) * isnull(ip.inventory_price, 0) tm_current, " & _
-'            vbLf & "isnull(sm.nm_current, 0) * isnull(ip.inventory_price, 0) nm_current, " & _
-'            vbLf & "isnull(it.in_transit, 0) * isnull(ip.inventory_price, 0) in_transit "
-'
-'    sqlprint2 = sqlprint2 & _
-'            vbLf & "from stock_master sm " & _
-'            vbLf & "left join item_master im on im.item_code=sm.item_code " & _
-'            vbLf & "left join trade_master tm on im.supplier_code = tm.trade_code " & _
-'            vbLf & "left join ( " & _
-'                vbLf & "select item_code, inventory_price From inventory_price " & _
-'                vbLf & "where inventory_year = '" & DMonth.year & "' and inventory_month = '" & DMonth.month & "' " & _
-'                vbLf & "and duty_status in ('0', '2', '3') " & _
-'            vbLf & ") ip on sm.item_code = ip.item_code " & _
-'            vbLf & "left join ( " & _
-'                vbLf & "select whcode, item_code, sum(qty) in_transit " & _
-'                vbLf & "from packing_master pm " & _
-'                vbLf & "inner join packing_detail pd on pm.packing_no = pd.packing_no " & _
-'                vbLf & "Where DateDiff(month, pm.stuffing_date, etd) > 0 " & _
-'                vbLf & "and year(pm.stuffing_date) = '" & DMonth.year & "' and month(pm.stuffing_date) = '" & DMonth.month & "' " & _
-'                vbLf & "group by whcode, item_code " & _
-'            vbLf & ") it on sm.item_code = it.item_code and sm.warehouse_code = it.whcode " & _
-'            vbLf & "where warehouse_code = '" & CboLocationCD & "' " & _
-'        vbLf & ") a group by a.local, a.material_cls " & _
-'        vbLf & "order by a.local desc, a.material_cls "
     
     ' --------------------------------------------------
     ' Update Query Include Valuation History
     ' --------------------------------------------------
-        sqlprint2 = " DECLARE @LastClosing AS DATETIME " & vbCrLf & _
-                    " DECLARE @GetDiff AS INTEGER " & vbCrLf & _
-                    " DECLARE @SelectPeriod AS DATETIME " & vbCrLf & _
-                    " DECLARE @Location AS VARCHAR(30) " & vbCrLf & _
-                    "  " & vbCrLf & _
-                    " SET @SelectPeriod='" & Format(DMonth, "yyyy-MM-01") & "' " & vbCrLf & _
-                    " SET @LastClosing= " & vbCrLf & _
-                    "                           (SELECT CONVERT(DATETIME,CAST(Inventory_Year AS VARCHAR(4)) +'-' +CAST(Inventory_Month AS varchar(2)) +'-01') " & vbCrLf & _
-                    "                               FROM Inventory_Control " & vbCrLf & _
-                    "                                   WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control) " & vbCrLf & _
-                    "                                       AND Inventory_Month=(SELECT MAX(Inventory_Month) FROM Inventory_Control " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "                                                                               WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control)) " & vbCrLf & _
-                    "                           )                                                    " & vbCrLf & _
-                    "  " & vbCrLf & _
-                    " SET @GetDiff=DATEDIFF(M,@LastClosing,@SelectPeriod) " & vbCrLf & _
-                    "  " & vbCrLf & _
-                    " SELECT  " & vbCrLf & _
-                    "         a.local , " & vbCrLf & _
-                    "         a.material_cls , " & vbCrLf & _
-                    "         SUM(a.lm_inventory) lm_inventory , " & vbCrLf & _
-                    "         SUM(a.tm_current) tm_current , " & vbCrLf & _
-                    "         SUM(a.nm_current) nm_current , " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "         SUM(a.in_transit) in_transit " & vbCrLf & _
-                    "          ,@GetDiff DiffClosing " & vbLf & _
-                    " FROM    ( SELECT    warehouse_code , " & vbCrLf & _
-                    "                     CASE WHEN warehouse_code = 'FG' " & vbCrLf & _
-                    "                          THEN CASE WHEN LEFT(sm.item_code, 1) = 'E' " & vbCrLf & _
-                    "                                    THEN 'Export' " & vbCrLf & _
-                    "                                    ELSE 'Local' " & vbCrLf & _
-                    "                               END " & vbCrLf & _
-                    "                          ELSE CASE WHEN ISNULL(tm.country_cls, 0) = 0 " & vbCrLf & _
-                    "                                    THEN 'Local' " & vbCrLf & _
-                    "                                    ELSE 'Import' " & vbCrLf & _
-                    "                               END " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "                     END local , " & vbCrLf & _
-                    "                     im.material_cls , " & vbCrLf & _
-                    "                     ISNULL(sm.lm_inventory, 0) * ISNULL(ip.inventory_price, 0) lm_inventory , " & vbCrLf & _
-                    "                     ISNULL(sm.tm_current, 0) * ISNULL(ip.inventory_price, 0) tm_current , " & vbCrLf & _
-                    "                     ISNULL(sm.nm_current, 0) * ISNULL(ip.inventory_price, 0) nm_current , " & vbCrLf & _
-                    "                     ISNULL(it.in_transit, 0) * ISNULL(ip.inventory_price, 0) in_transit " & vbCrLf & _
-                    "           FROM       " & vbCrLf & _
-                    "          (  " & vbCrLf & _
-                    "           SELECT warehouse_code, item_code, " & vbCrLf & _
-                    "                       SUM(LM_inventory) LM_inventory, " & vbCrLf & _
-                    "                       SUM(TM_Current) TM_Current, " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "                       SUM(NM_Current) NM_Current " & vbCrLf & _
-                    "           FROM             " & vbCrLf & _
-                    "           ( " & vbCrLf & _
-                    "               SELECT warehouse_code, item_code, " & vbCrLf & _
-                    "                   COALESCE(CASE WHEN @GetDiff=0 THEN 0 " & vbCrLf & _
-                    "                            WHEN @GetDiff=1 THEN LM_Inventory " & vbCrLf & _
-                    "                            WHEN @GetDiff=2 THEN TM_Current END,0) LM_inventory, " & vbCrLf & _
-                    "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_inventory " & vbCrLf & _
-                    "                            WHEN @GetDiff=1 THEN TM_Current " & vbCrLf & _
-                    "                            WHEN @GetDiff=2 THEN NM_Current END,0) TM_Current, " & vbCrLf & _
-                    "                   COALESCE(CASE WHEN @GetDiff=0 THEN TM_Current " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "                            WHEN @GetDiff=1 THEN NM_Current " & vbCrLf & _
-                    "                            WHEN @GetDiff=2 THEN NM_Current END,0) NM_Current " & vbCrLf & _
-                    "               FROM Stock_Master " & vbCrLf & _
-                    "                    " & vbCrLf & _
-                    "               UNION ALL " & vbCrLf & _
-                    "               -- Last Month " & vbCrLf & _
-                    "               SELECT Warehouse_Code, Item_code,  COALESCE(Inventory,[Current]) LM_inventory, 0 TM_Inventory, 0 NM_Inventory " & vbCrLf & _
-                    "                   FROM Stock_history " & vbCrLf & _
-                    "                       WHERE Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
-                    "                                   AND Stock_Month=MONTH(@SelectPeriod)-1 " & vbCrLf & _
-                    "               UNION ALL " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "               -- This Month " & vbCrLf & _
-                    "               SELECT Warehouse_Code, Item_code,  0 LM_inventory, COALESCE(Inventory,[Current]) TM_Inventory, 0 NM_Inventory " & vbCrLf & _
-                    "                   FROM Stock_history " & vbCrLf & _
-                    "                       WHERE Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
-                    "                                   AND Stock_Month=MONTH(@SelectPeriod) " & vbCrLf & _
-                    "               UNION ALL                                    " & vbCrLf & _
-                    "               -- Next Month " & vbCrLf & _
-                    "               SELECT Warehouse_Code, Item_code,  0 LM_inventory, 0 TM_Inventory, COALESCE(Inventory,[Current]) NM_Inventory " & vbCrLf & _
-                    "                   FROM Stock_history " & vbCrLf & _
-                    "                       WHERE Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
-                    "                                   AND Stock_Month=MONTH(@SelectPeriod)+1 " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "           ) Stock GROUP BY warehouse_code, item_code " & vbCrLf & _
-                    "          ) sm " & vbCrLf & _
-                    "                     LEFT JOIN item_master im ON im.item_code = sm.item_code " & vbCrLf & _
-                    "                     LEFT JOIN trade_master tm ON im.supplier_code = tm.trade_code " & vbCrLf & _
-                    "                     LEFT JOIN ( SELECT  item_code , " & vbCrLf & _
-                    "                                         inventory_price " & vbCrLf & _
-                    "                                 FROM   " & vbCrLf & _
-                    "                                   (SELECT * From Inventory_Price  " & vbCrLf & _
-                    "                                       UNION   ALL " & vbCrLf & _
-                    "                                     SELECT * From InventoryPrice_History " & vbCrLf & _
-                    "                                   ) Inventory_Price                            " & vbCrLf
-         
-        sqlprint2 = sqlprint2 + "                                 WHERE   inventory_year = YEAR(@SelectPeriod) " & vbCrLf & _
-                    "                                         AND inventory_month = MONTH(@SelectPeriod) " & vbCrLf & _
-                    "                                         AND duty_status IN ( '0', '2', '3' )  " & vbCrLf & _
-                    "                               ) ip ON sm.item_code = ip.item_code " & vbCrLf & _
-                    "                     LEFT JOIN ( SELECT  whcode , " & vbCrLf & _
-                    "                                         item_code , " & vbCrLf & _
-                    "                                         SUM(qty) in_transit " & vbCrLf & _
-                    "                                 FROM    packing_master pm " & vbCrLf & _
-                    "                                         INNER JOIN packing_detail pd ON pm.packing_no = pd.packing_no " & vbCrLf & _
-                    "                                 WHERE   DATEDIFF(month, pm.stuffing_date, etd) > 0 " & vbCrLf & _
-                    "                                         AND YEAR(pm.stuffing_date) = YEAR(@SelectPeriod) " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "                                         AND MONTH(pm.stuffing_date) = MONTH(@SelectPeriod) " & vbCrLf & _
-                    "                                 GROUP BY whcode , " & vbCrLf & _
-                    "                                         item_code " & vbCrLf & _
-                    "                               ) it ON sm.item_code = it.item_code " & vbCrLf & _
-                    "                                       AND sm.warehouse_code = it.whcode " & vbCrLf
-                    
-                    If UCase(CboLocationCD.Text) <> "ALL" Then
-       sqlprint2 = sqlprint2 + "   WHERE sm.warehouse_code = '" & Trim(CboLocationCD.Text) & "' " & vbLf
-                    End If
-                    
-       sqlprint2 = sqlprint2 & _
-                    "         ) a " & vbCrLf & _
-                    " GROUP BY  " & vbCrLf & _
-                    "         a.local , " & vbCrLf & _
-                    "         a.material_cls " & vbCrLf & _
-                    " ORDER BY  " & vbCrLf & _
-                    "         a.local DESC , " & vbCrLf
-        
-        sqlprint2 = sqlprint2 + "         a.material_cls ASC  " & vbCrLf & _
-                    "  " & vbCrLf
+'        sqlprint2 = " DECLARE @LastClosing AS DATETIME " & vbCrLf & _
+'                    " DECLARE @GetDiff AS INTEGER " & vbCrLf & _
+'                    " DECLARE @SelectPeriod AS DATETIME " & vbCrLf & _
+'                    " DECLARE @Location AS VARCHAR(30) " & vbCrLf & _
+'                    "  " & vbCrLf & _
+'                    " SET @SelectPeriod='" & Format(DMonth, "yyyy-MM-01") & "' " & vbCrLf & _
+'                    " SET @LastClosing= " & vbCrLf & _
+'                    "                           (SELECT CONVERT(DATETIME,CAST(Inventory_Year AS VARCHAR(4)) +'-' +CAST(Inventory_Month AS varchar(2)) +'-01') " & vbCrLf & _
+'                    "                               FROM Inventory_Control " & vbCrLf & _
+'                    "                                   WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control) " & vbCrLf & _
+'                    "                                       AND Inventory_Month=(SELECT MAX(Inventory_Month) FROM Inventory_Control " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "                                                                               WHERE Inventory_Year=(SELECT MAX(Inventory_Year) FROM Inventory_Control)) " & vbCrLf & _
+'                    "                           )                                                    " & vbCrLf & _
+'                    "  " & vbCrLf & _
+'                    " SET @GetDiff=DATEDIFF(M,@LastClosing,@SelectPeriod) " & vbCrLf & _
+'                    "  " & vbCrLf & _
+'                    " SELECT  " & vbCrLf & _
+'                    "         a.local , " & vbCrLf & _
+'                    "         a.material_cls , " & vbCrLf & _
+'                    "         SUM(a.lm_inventory) lm_inventory , " & vbCrLf & _
+'                    "         SUM(a.tm_current) tm_current , " & vbCrLf & _
+'                    "         SUM(a.nm_current) nm_current , " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "         SUM(a.in_transit) in_transit " & vbCrLf & _
+'                    "          ,@GetDiff DiffClosing " & vbLf & _
+'                    " FROM    ( SELECT    warehouse_code , " & vbCrLf & _
+'                    "                     CASE WHEN warehouse_code = 'FG' " & vbCrLf & _
+'                    "                          THEN CASE WHEN LEFT(sm.item_code, 1) = 'E' " & vbCrLf & _
+'                    "                                    THEN 'Export' " & vbCrLf & _
+'                    "                                    ELSE 'Local' " & vbCrLf & _
+'                    "                               END " & vbCrLf & _
+'                    "                          ELSE CASE WHEN ISNULL(tm.country_cls, 0) = 0 " & vbCrLf & _
+'                    "                                    THEN 'Local' " & vbCrLf & _
+'                    "                                    ELSE 'Import' " & vbCrLf & _
+'                    "                               END " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "                     END local , " & vbCrLf & _
+'                    "                     im.material_cls , " & vbCrLf & _
+'                    "                     ISNULL(sm.lm_inventory, 0) * ISNULL(ip.inventory_price, 0) lm_inventory , " & vbCrLf & _
+'                    "                     ISNULL(sm.tm_current, 0) * ISNULL(ip.inventory_price, 0) tm_current , " & vbCrLf & _
+'                    "                     ISNULL(sm.nm_current, 0) * ISNULL(ip.inventory_price, 0) nm_current , " & vbCrLf & _
+'                    "                     ISNULL(it.in_transit, 0) * ISNULL(ip.inventory_price, 0) in_transit " & vbCrLf & _
+'                    "           FROM       " & vbCrLf & _
+'                    "          (  " & vbCrLf & _
+'                    "           SELECT warehouse_code, item_code, " & vbCrLf & _
+'                    "                       SUM(LM_inventory) LM_inventory, " & vbCrLf & _
+'                    "                       SUM(TM_Current) TM_Current, " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "                       SUM(NM_Current) NM_Current " & vbCrLf & _
+'                    "           FROM             " & vbCrLf & _
+'                    "           ( " & vbCrLf & _
+'                    "               SELECT warehouse_code, item_code, " & vbCrLf & _
+'                    "                   COALESCE(CASE WHEN @GetDiff=0 THEN 0 " & vbCrLf & _
+'                    "                            WHEN @GetDiff=1 THEN LM_Inventory " & vbCrLf & _
+'                    "                            WHEN @GetDiff=2 THEN TM_Current END,0) LM_inventory, " & vbCrLf & _
+'                    "                   COALESCE(CASE WHEN @GetDiff=0 THEN LM_inventory " & vbCrLf & _
+'                    "                            WHEN @GetDiff=1 THEN TM_Current " & vbCrLf & _
+'                    "                            WHEN @GetDiff=2 THEN NM_Current END,0) TM_Current, " & vbCrLf & _
+'                    "                   COALESCE(CASE WHEN @GetDiff=0 THEN TM_Current " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "                            WHEN @GetDiff=1 THEN NM_Current " & vbCrLf & _
+'                    "                            WHEN @GetDiff=2 THEN NM_Current END,0) NM_Current " & vbCrLf & _
+'                    "               FROM Stock_Master " & vbCrLf & _
+'                    "                    " & vbCrLf & _
+'                    "               UNION ALL " & vbCrLf & _
+'                    "               -- Last Month " & vbCrLf & _
+'                    "               SELECT Warehouse_Code, Item_code,  COALESCE(Inventory,[Current]) LM_inventory, 0 TM_Inventory, 0 NM_Inventory " & vbCrLf & _
+'                    "                   FROM Stock_history " & vbCrLf & _
+'                    "                       WHERE Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
+'                    "                                   AND Stock_Month=MONTH(@SelectPeriod)-1 " & vbCrLf & _
+'                    "               UNION ALL " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "               -- This Month " & vbCrLf & _
+'                    "               SELECT Warehouse_Code, Item_code,  0 LM_inventory, COALESCE(Inventory,[Current]) TM_Inventory, 0 NM_Inventory " & vbCrLf & _
+'                    "                   FROM Stock_history " & vbCrLf & _
+'                    "                       WHERE Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
+'                    "                                   AND Stock_Month=MONTH(@SelectPeriod) " & vbCrLf & _
+'                    "               UNION ALL                                    " & vbCrLf & _
+'                    "               -- Next Month " & vbCrLf & _
+'                    "               SELECT Warehouse_Code, Item_code,  0 LM_inventory, 0 TM_Inventory, COALESCE(Inventory,[Current]) NM_Inventory " & vbCrLf & _
+'                    "                   FROM Stock_history " & vbCrLf & _
+'                    "                       WHERE Stock_Year=YEAR(@SelectPeriod) " & vbCrLf & _
+'                    "                                   AND Stock_Month=MONTH(@SelectPeriod)+1 " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "           ) Stock GROUP BY warehouse_code, item_code " & vbCrLf & _
+'                    "          ) sm " & vbCrLf & _
+'                    "                     LEFT JOIN item_master im ON im.item_code = sm.item_code " & vbCrLf & _
+'                    "                     LEFT JOIN trade_master tm ON im.supplier_code = tm.trade_code " & vbCrLf & _
+'                    "                     LEFT JOIN ( SELECT  item_code , " & vbCrLf & _
+'                    "                                         inventory_price " & vbCrLf & _
+'                    "                                 FROM   " & vbCrLf & _
+'                    "                                   (SELECT * From Inventory_Price  " & vbCrLf & _
+'                    "                                       UNION   ALL " & vbCrLf & _
+'                    "                                     SELECT * From InventoryPrice_History " & vbCrLf & _
+'                    "                                   ) Inventory_Price                            " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "                                 WHERE   inventory_year = YEAR(@SelectPeriod) " & vbCrLf & _
+'                    "                                         AND inventory_month = MONTH(@SelectPeriod) " & vbCrLf & _
+'                    "                                         AND duty_status IN ( '0', '2', '3' )  " & vbCrLf & _
+'                    "                               ) ip ON sm.item_code = ip.item_code " & vbCrLf & _
+'                    "                     LEFT JOIN ( SELECT  whcode , " & vbCrLf & _
+'                    "                                         item_code , " & vbCrLf & _
+'                    "                                         SUM(qty) in_transit " & vbCrLf & _
+'                    "                                 FROM    packing_master pm " & vbCrLf & _
+'                    "                                         INNER JOIN packing_detail pd ON pm.packing_no = pd.packing_no " & vbCrLf & _
+'                    "                                 WHERE   DATEDIFF(month, pm.stuffing_date, etd) > 0 " & vbCrLf & _
+'                    "                                         AND YEAR(pm.stuffing_date) = YEAR(@SelectPeriod) " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "                                         AND MONTH(pm.stuffing_date) = MONTH(@SelectPeriod) " & vbCrLf & _
+'                    "                                 GROUP BY whcode , " & vbCrLf & _
+'                    "                                         item_code " & vbCrLf & _
+'                    "                               ) it ON sm.item_code = it.item_code " & vbCrLf & _
+'                    "                                       AND sm.warehouse_code = it.whcode " & vbCrLf
+'
+'                    If UCase(CboLocationCD.Text) <> "ALL" Then
+'       sqlprint2 = sqlprint2 + "   WHERE sm.warehouse_code = '" & Trim(CboLocationCD.Text) & "' " & vbLf
+'                    End If
+'
+'       sqlprint2 = sqlprint2 & _
+'                    "         ) a " & vbCrLf & _
+'                    " GROUP BY  " & vbCrLf & _
+'                    "         a.local , " & vbCrLf & _
+'                    "         a.material_cls " & vbCrLf & _
+'                    " ORDER BY  " & vbCrLf & _
+'                    "         a.local DESC , " & vbCrLf
+'
+'        sqlprint2 = sqlprint2 + "         a.material_cls ASC  " & vbCrLf & _
+'                    "  " & vbCrLf
+
+sqlprint2 = "EXEC dbo.SP_ValuationRptPerWH_SelRpt2 @WHCode = '" & CboLocationCD.Text & "', @Period = '" & datePiList & "'"
     
     '---------------------------------------------------
     
@@ -1683,7 +1618,7 @@ Private Sub PrintReport()
     rsrpt2.Open sqlprint2, Db, adOpenDynamic, adLockOptimistic
     
     report.OpenSubreport("summary").Database.Tables(1).SetDataSource rsrpt2
-    report.OpenSubreport("summary").FormulaFields(1).Text = "" & intDiffClosing & ""
+    'report.OpenSubreport("summary").FormulaFields.Item("DiffClosing").Text = CStr(intDiffClosing)
     
     reportcode = "pireportwh"
     printorient = "2"
@@ -1717,7 +1652,7 @@ Private Sub PrintSummaryReport()
     If RsInvControl.State <> adStateClosed Then RsInvControl.Close
     RsInvControl.Open sqlControl, Db, adOpenKeyset, adLockOptimistic
     
-    If RsInvControl.EOF = True And RsInvControl.BOF = True Then LblErrMsg = "Inventory Stock hasn't been closed !": Exit Sub
+    If RsInvControl.EOF = True And RsInvControl.BOF = True Then lblErrMsg = "Inventory Stock hasn't been closed !": Exit Sub
     RsInvControl.MoveLast
     
     j = 0
@@ -1728,13 +1663,13 @@ Private Sub PrintSummaryReport()
             j = 1: Exit For
         End If
     Next
-    If j = 0 Then LblErrMsg = DisplayMsg(4018): Exit Sub  '"Invalid warehouse code !"
+    If j = 0 Then lblErrMsg = DisplayMsg(4018): Exit Sub  '"Invalid warehouse code !"
     
     
 '    LblErrMsg = up_ValidateDateRange(DMonth.Value, False)
 '    If Trim(LblErrMsg) <> "" Then Exit Sub
     
-    LblErrMsg = ""
+    lblErrMsg = ""
     Me.MousePointer = vbHourglass
     
     dtMPList = DMonth.Value
@@ -2023,7 +1958,7 @@ Private Sub PrintSummaryReport()
     
     If rsRpt.State <> adStateClosed Then rsRpt.Close
     rsRpt.Open sql, Db, adOpenDynamic, adLockOptimistic
-    If rsRpt.EOF Then LblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
+    If rsRpt.EOF Then lblErrMsg.Caption = DisplayMsg(4006): Me.MousePointer = vbDefault: Exit Sub
         
     sqlprint = sql
         
