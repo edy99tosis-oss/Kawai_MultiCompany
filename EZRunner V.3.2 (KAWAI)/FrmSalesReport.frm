@@ -66,7 +66,7 @@ Begin VB.Form FrmSalesReport
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   334954499
+         Format          =   134479875
          CurrentDate     =   37798
       End
       Begin MSComCtl2.DTPicker dtawal 
@@ -88,7 +88,7 @@ Begin VB.Form FrmSalesReport
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "dd MMM yyyy"
-         Format          =   334954499
+         Format          =   134479875
          CurrentDate     =   37798
       End
       Begin VB.Label Label2 
@@ -430,6 +430,9 @@ Option Explicit
 
 Dim sql As String
 Dim rsRpt As New ADODB.Recordset
+Dim vFactoryCode As String
+ 
+
 Sub adtocombo()
 '********Trade*************
 Call up_FillCombo(cbo_trade, "Trade_Master", "trade_code, trade_name", , True)
@@ -468,16 +471,16 @@ Else
    cbo_group = cbo_group
    cbo_item = cbo_item
                
-   If cbo_trade.MatchFound = False Then
+   If cbo_trade.matchFound = False Then
      LblErrMsg = DisplayMsg(4009) '
      cbo_trade.SetFocus
-   ElseIf Format(dtAwal, "yyyy-MM-dd") > Format(CDate(dtAkhir), "yyyy-MM-dd") Then
+   ElseIf Format(dtawal, "yyyy-MM-dd") > Format(CDate(dtakhir), "yyyy-MM-dd") Then
      LblErrMsg = DisplayMsg(4068)
-     dtAwal.SetFocus
-   ElseIf cbo_group.MatchFound = False Then
+     dtawal.SetFocus
+   ElseIf cbo_group.matchFound = False Then
      LblErrMsg = DisplayMsg(8083) '
      cbo_group.SetFocus
-   ElseIf cbo_item.MatchFound = False Then
+   ElseIf cbo_item.matchFound = False Then
      LblErrMsg = DisplayMsg(8084) '
      cbo_item.SetFocus
    Else
@@ -530,9 +533,9 @@ Else
            vbLf & "left join unit_cls uc1 on invd.unit_cls = uc1.unit_cls " & _
            vbLf & "left join unit_cls uc2 on do.unit_cls = uc2.unit_cls " & _
            vbLf & "left join region_cls rc on tm.region_cls = rc.region_cls " & _
-           vbLf & "left join group_cls gr on im.group_cls = gr.group_cls, company_profile cp " & _
-           vbLf & "where dm.do_date >= '" & Format(dtAwal, "yyyy-MM-dd") & "' " & _
-           vbLf & "and dm.do_date <= '" & Format(dtAkhir, "yyyy-MM-dd") & "' " & _
+           vbLf & "left join group_cls gr on im.group_cls = gr.group_cls, (Select * from Company_Profile WHERE Company_Code = '" & vFactoryCode & "')  cp " & _
+           vbLf & "where dm.do_date >= '" & Format(dtawal, "yyyy-MM-dd") & "' " & _
+           vbLf & "and dm.do_date <= '" & Format(dtakhir, "yyyy-MM-dd") & "' " & _
            sqltm2 & sqlgr2 & sqlim2
             
      sql = sql & vbLf & "Union All " & _
@@ -555,9 +558,9 @@ Else
            vbLf & "left join unit_cls uc1 on invd.unit_cls = uc1.unit_cls " & _
            vbLf & "left join unit_cls uc2 on pd.unit_cls = uc2.unit_cls " & _
            vbLf & "left join region_cls rc on tm.region_cls = rc.region_cls " & _
-           vbLf & "left join group_cls gr on im.group_cls = gr.group_cls, company_profile cp " & _
-           vbLf & "where pm.packing_date >= '" & Format(dtAwal, "yyyy-MM-dd") & "' " & _
-           vbLf & "and pm.packing_date <= '" & Format(dtAkhir, "yyyy-MM-dd") & "' " & _
+           vbLf & "left join group_cls gr on im.group_cls = gr.group_cls, (Select * from Company_Profile WHERE Company_Code = '" & vFactoryCode & "')  cp " & _
+           vbLf & "where pm.packing_date >= '" & Format(dtawal, "yyyy-MM-dd") & "' " & _
+           vbLf & "and pm.packing_date <= '" & Format(dtakhir, "yyyy-MM-dd") & "' " & _
            sqltm2 & sqlgr2 & sqlim2 & _
            vbLf & "order by country_cls, tm.trade_code, invm.invoice_date, invd.invoice_no, dm.do_date, dm.do_no, im.group_cls, im.item_code "
             
@@ -586,8 +589,8 @@ Dim Rpt As New FrmRpt3
           
 Set report = application.OpenReport(App.path & "\Reports\SalesReport.rpt")
 report.Database.Tables(1).SetDataSource rsRpt
-report.FormulaFields(1).Text = "'" & Format(dtAwal.Value, "dd mmmm yyyy") & "'"
-report.FormulaFields(2).Text = "'" & Format(dtAkhir.Value, "dd mmmm yyyy") & "'"
+report.FormulaFields(1).Text = "'" & Format(dtawal.Value, "dd mmmm yyyy") & "'"
+report.FormulaFields(2).Text = "'" & Format(dtakhir.Value, "dd mmmm yyyy") & "'"
 report.FormulaFields(3).Text = "'" & cbo_trade.Column(0) & "'"
 report.FormulaFields(4).Text = "'" & cbo_trade.Column(1) & "'"
 report.FormulaFields(5).Text = "'" & cbo_group.Column(0) & "'"
@@ -644,13 +647,13 @@ With xlapp
     .Range("a6", "o6").Merge
     .Range("a6") = Trim(Label21.Caption)
     .Range("b6") = ""
-    .Range("a6").HorizontalAlignment = xlLeft
+    .Range("a6").horizontalAlignment = xlLeft
     
     '.Range("a7") = rsRpt.Fields(46).Name
     .Range("a7") = "Invoice Date"
     .Range("b7", "o7").Merge
-    .Range("b7") = ": " & Format(dtAwal.Value, "[$-409]dd-mmm-yyyy;@") & " to " & Format(dtAkhir.Value, "[$-409]d-mmm-yyyy;@")
-    .Range("b7").HorizontalAlignment = xlLeft
+    .Range("b7") = ": " & Format(dtawal.Value, "[$-409]dd-mmm-yyyy;@") & " to " & Format(dtakhir.Value, "[$-409]d-mmm-yyyy;@")
+    .Range("b7").horizontalAlignment = xlLeft
     .Range("a8") = "Trade Code"
     .Range("b8", "o8").Merge
     .Range("b8") = ": " & cbo_trade.Column(0) & " / " & cbo_trade.Column(1)
@@ -739,14 +742,14 @@ With xlapp
     .Range("a2", "r2").Columns.Font.Name = "Arial"
     .Range("a2", "r2").Columns.Font.Size = "10"
     .Range("a2", "r2").Columns.Font.Bold = True
-    .Range("a2", "r4").HorizontalAlignment = xlCenter
+    .Range("a2", "r4").horizontalAlignment = xlCenter
     .Range("a6", "b6").Columns.Font.Bold = True
    
-    .Range("a12:a" & Idx).HorizontalAlignment = xlLeft
-    .Range("f12:f" & Idx).HorizontalAlignment = xlLeft
-    .Range("m12:m" & Idx).HorizontalAlignment = xlLeft
-    .Range("n12:m" & Idx).HorizontalAlignment = xlLeft
-    .Range("o12:o" & Idx).HorizontalAlignment = xlLeft
+    .Range("a12:a" & Idx).horizontalAlignment = xlLeft
+    .Range("f12:f" & Idx).horizontalAlignment = xlLeft
+    .Range("m12:m" & Idx).horizontalAlignment = xlLeft
+    .Range("n12:m" & Idx).horizontalAlignment = xlLeft
+    .Range("o12:o" & Idx).horizontalAlignment = xlLeft
     .Range("j12:j" & Idx).NumberFormat = gs_formatQty
     .Range("f12:f" & Idx).NumberFormat = "[$-409]dd-mmm-yyyy;@"
     .Range("m12:m" & Idx).NumberFormat = "[$-409]dd-mmm-yyyy;@"
@@ -769,8 +772,8 @@ End Sub
 
 Private Sub dtAwal_Change()
     LblErrMsg = ""
-    If Format(dtAwal, "yyyy-MM-dd") > _
-        Format(CDate(dtAkhir), "yyyy-MM-dd") Then _
+    If Format(dtawal, "yyyy-MM-dd") > _
+        Format(CDate(dtakhir), "yyyy-MM-dd") Then _
     LblErrMsg = DisplayMsg(4068): Exit Sub
 End Sub
 
@@ -780,8 +783,8 @@ End Sub
 
 Private Sub dtAkhir_Change()
     LblErrMsg = ""
-    If Format(dtAwal, "yyyy-MM-dd") > _
-        Format(CDate(dtAkhir), "yyyy-MM-dd") Then _
+    If Format(dtawal, "yyyy-MM-dd") > _
+        Format(CDate(dtakhir), "yyyy-MM-dd") Then _
         LblErrMsg = DisplayMsg(4066): Exit Sub
 End Sub
 
@@ -795,7 +798,7 @@ End Sub
 
 Private Sub cbo_group_Click()
 cbo_group = cbo_group
-    If cbo_group.MatchFound Then
+    If cbo_group.matchFound Then
         lbl_group = cbo_group.Column(1)
         LblErrMsg = ""
     Else
@@ -817,7 +820,7 @@ LblErrMsg = ""
 End Sub
 Private Sub cbo_trade_Click()
 cbo_trade = cbo_trade
-    If cbo_trade.MatchFound Then
+    If cbo_trade.matchFound Then
         lbl_trade = cbo_trade.Column(1)
         LblErrMsg = ""
     Else
@@ -836,7 +839,7 @@ End Sub
 
 Private Sub cbo_item_Click()
 cbo_item = cbo_item
-    If cbo_item.MatchFound Then
+    If cbo_item.matchFound Then
         lbl_item = cbo_item.Column(1)
         LblErrMsg = ""
     Else
@@ -856,8 +859,11 @@ Me.Caption = Me.Caption & " (Menu ID : " & CtrlMenu1.MenuText & ")"
 Call Kosong
 Call adtocombo
 
-dtAwal = Now
-dtAkhir = Now
+
+vFactoryCode = uf_GetCompany()
+
+dtawal = Now
+dtakhir = Now
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
